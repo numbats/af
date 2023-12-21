@@ -1,0 +1,56 @@
+project:
+  type: website
+  render:
+  - "*.qmd"
+  - "*.md"
+  - "!/slides/"
+
+website:
+  title: "ETC3550/ETC5550 Applied forecasting"
+  site-url: "https://af.numbat.space"
+  navbar:
+    background: "#006dae"
+    left:
+      - href: index.qmd
+        text: Home
+        icon: house-fill
+      - text: Schedule
+        icon: calendar
+        menu:
+          - week1.qmd
+          - week2.qmd
+          - week3.qmd
+          - week4.qmd
+          - week5.qmd
+          - week6.qmd
+          - week7.qmd
+          - week8.qmd
+          - week9.qmd
+          - week10.qmd
+          - week11.qmd
+          - week12.qmd
+      - text: Moodle
+        icon: mortarboard-fill
+        href: https://learning.monash.edu/course/view.php?id=10091
+      - text: Textbook
+        icon: book
+        href: https://OTexts.com/fpp3
+    right:
+      - icon: github
+        href: https://github.com/numbats/af
+
+date-format: "D MMMM YYYY"
+
+format:
+  html:
+    theme: [cosmo, numbat.scss]
+    highlight: textmate
+    css: styles.css
+    toc: true
+    mainfont: "Fira Sans"
+    html-math-method: katex
+
+execute:
+  echo: false
+  warning: false
+  message: false

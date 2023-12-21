@@ -1,0 +1,25 @@
+---
+title: "Week 6: Exponential smoothing"
+---
+
+## What you will learn this week
+
+* Exponential smoothing methods with trend and seasonality
+* ETS models
+* Automatic model selection using the AICc
+
+## Pre-class activities
+
+Read [Chapter 8 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos
+
+## Slides
+
+* [8. Simple exponential smoothing](slides/8-ets_b.pdf)
+
+## In-class activities
+
+Complete Exercises 1-4, 16, 17 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).
+
+## Assignments
+
+[Assignment 3](https://learning.monash.edu/mod/assign/view.php?id=1343934) is due on Friday 12 April.

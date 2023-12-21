@@ -1,0 +1,26 @@
+---
+title: "Week 8: ARIMA models"
+---
+
+## What you will learn this week
+
+* AR, MA, ARMA and ARIMA models
+* Selecting model orders manually and automatically
+
+## Pre-class activities
+
+Read [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos
+
+## Slides
+
+* [9. ARIMA models (part 2)](slides/9-arima_b.pdf)
+
+## In-class activities
+
+Complete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
+
+## Assignments
+
+[Assignment 4](https://learning.monash.edu/mod/assign/view.php?id=1343951) is due on Friday 3 May.
+
+[The retail project](https://learning.monash.edu/mod/assign/view.php?id=1343999) is due on Friday 17 May.

@@ -1,0 +1,25 @@
+---
+title: "Week 2: Time series graphics"
+---
+
+## What you will learn this week
+
+* Different types of plots for time series including time plots, season plots, subseries plots, lag plots and ACF plots
+* The difference between seasonal patterns and cyclic patterns in time series
+* What is "white noise" and how to identify it.
+
+## Pre-class activities
+
+Read [Chapter 2 of the textbook](https://otexts.com/fpp3/graphics.html) and watch all embedded videos
+
+## Slides
+
+* [2. Time series graphics](slides/2-graphics.pdf)
+
+## In-class activities
+
+Complete Exercises 1-5 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).
+
+## Assignments
+
+[Assignment 1](https://learning.monash.edu/mod/quiz/view.php?id=1343906) is due on Friday 8 March.

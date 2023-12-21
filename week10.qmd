@@ -1,0 +1,25 @@
+---
+title: "Week 10: Multiple regression and forecasting"
+---
+
+## What you will learn this week
+
+* Useful predictors for time series forecasting using regression
+* Selecting predictors
+* Ex ante and ex post forecasting
+
+## Pre-class activities
+
+Read [Chapter 7 of the textbook](https://otexts.com/fpp3/regression.html) and watch all embedded videos
+
+## Slides
+
+* [7. Time series regression](slides/7-regression.pdf)
+
+## In-class activities
+
+Complete Exercises 11-17 from [Section 9.11 of the book](https://otexts.com/fpp3/??-exercises.html).
+
+## Assignments
+
+[The retail project](https://learning.monash.edu/mod/assign/view.php?id=1343999) is due on Friday 17 May.

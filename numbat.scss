@@ -1,0 +1,69 @@
+/*-- scss:defaults --*/
+// Base document colors
+$link-color: #006DAE;
+
+// Code blocks
+$font-family-monospace: Hack;
+$code-block-bg-alpha: -.8;
+
+/*-- scss:rules --*/
+
+thead th {
+  background-color: #006DAE!important;
+  color: white !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+.navbar-default,
+.navbar-toggle,
+.navbar-toggle:focus {
+  background-color: #006DAE;
+}
+
+.navbar-nav > .active > a,
+.navbar-toggle:hover,
+.navbar-nav>li>a:hover {
+  background-color: #006DAE!important;
+}
+
+
+#sticky-footer {
+  background-color: #006DAE;
+  color: white;
+  padding: 10px;
+  position: sticky;
+  bottom: 0;
+}
+
+.d-none {
+  display: none!important;
+}
+
+@media print {
+   .navbar {
+        display: block;
+        position: absolute;
+        top:0;
+        border-width:0 !important;
+        min-height: 0!important;
+        border-bottom: 1px solid black!important;
+    }
+    .navbar-toggle {
+        display:none;
+    }
+    /* to remove the href printing */
+    a[href]:after {
+      content: none !important;
+    }
+
+    #sticky-footer {
+      display: none !important;
+    }
+
+    .d-print-block {
+      display: block!important;
+    }
+}

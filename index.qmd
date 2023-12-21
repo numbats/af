@@ -1,0 +1,163 @@
+---
+title: "ETC3550/5550 Applied forecasting"
+---
+
+```{r}
+#| label: load_packages
+#| include: false
+#| message: false
+#| warning: false
+#| echo: false
+library(tidyverse)
+options(knitr.kable.NA = '')
+```
+
+## Lecturer/Chief Examiner
+
+* [**Rob J Hyndman**](https://robjhyndman.com). Email: [Rob.Hyndman@monash.edu](mailto:Rob.Hyndman@monash.edu)
+
+## Tutors
+
+* [**Mitchell O'Hara-Wild**](https://mitchelloharawild.com). Email: [Mitch.O'Hara-Wild@monash.edu](mailto:Mitch.O'Hara-Wild@monash.edu)
+* Elena Sanina
+* Xiaoqian Wang
+* Yangzhuoran (Fin) Yang
+* Zhixiang (Elvis) Yang
+
+## Consultations
+
+* Rob
+* Mitch
+* Elena
+* Elvis
+* Fin
+* Xiaoqian
+
+## Weekly schedule
+
+* Pre-recorded lectures: 1 hour per week ([Slides](https://github.com/robjhyndman/fpp3_slides))
+* In-person lectures: 9am Fridays, [Central 1 Lecture Theatre, 25 Exhibition Walk](https://maps.app.goo.gl/RKdmJq2tBfw8ViNT9).
+* Tutorials: 1.5 hours in class per week
+
+
+```{r}
+#| label: schedule2
+#| message: false
+#| warning: false
+#| echo: false
+#| output: asis
+# Week of mid-semester break
+mid_semester_break <- 6
+# Set up schedule of topics
+schedule <- tibble(
+  Week = seq(12),
+  Date = seq(as.Date("2024-02-26"), by = "1 week", length.out = 12),
+  Topic = c(
+    "Introduction to forecasting and R",
+    "Time series graphics",
+    "Time series decomposition",
+    "The forecaster's toolbox",
+    "Exponential smoothing",
+    "Exponential smoothing",
+    "ARIMA models",
+    "ARIMA models",
+    "ARIMA models",
+    "Multiple regression and forecasting",
+    "Dynamic regression",
+    "Dynamic regression"
+  ),
+  Chapter = c(
+    "1. Getting started",
+    "2. Time series graphics",
+    "3. Time series decomposition",
+    "5. The forecaster's toolbox",
+    "8. Exponential smoothing",
+    "8. Exponential smoothing",
+    "9. ARIMA models",
+    "9. ARIMA models",
+    "9. ARIMA models",
+    "7. Time series regression models",
+    "10. Dynamic regression models",
+    "10. Dynamic regression models"
+  ),
+  Chapter_URL = c(
+    "https://OTexts.com/fpp3/intro.html",
+    "https://otexts.com/fpp3/graphics.html",
+    "https://otexts.com/fpp3/decomposition.html",
+    "https://otexts.com/fpp3/toolbox.html",
+    "https://otexts.com/fpp3/expsmooth.html",
+    "https://otexts.com/fpp3/expsmooth.html",
+    "https://otexts.com/fpp3/arima.html",
+    "https://otexts.com/fpp3/arima.html",
+    "https://otexts.com/fpp3/arima.html",
+    "https://otexts.com/fpp3/regression.html",
+    "https://otexts.com/fpp3/dynamic.html",
+    "https://otexts.com/fpp3/dynamic.html"
+  ),
+  Assessments = c(
+    "Assignment 1",
+    "",
+    "Assignment 2",
+    "",
+    "",
+    "Assignment 3",
+    "",
+    "",
+    "Assignment 4",
+    "",
+    "",
+    "Project"
+  ),
+  Assessment_URL = c(
+    "https://learning.monash.edu/mod/quiz/view.php?id=1343906",
+    "",
+    "https://learning.monash.edu/mod/assign/view.php?id=1343917",
+    "",
+    "",
+    "https://learning.monash.edu/mod/assign/view.php?id=1343934",
+    "",
+    "",
+    "https://learning.monash.edu/mod/assign/view.php?id=1343951",
+    "",
+    "",
+    "https://learning.monash.edu/mod/assign/view.php?id=1343999"
+  )
+) |>
+  mutate(
+    Date = if_else(Week < mid_semester_break, Date, Date + 7)
+  )
+# Add in mid-semester break
+bind_rows(
+  schedule |> filter(Week < mid_semester_break),
+  tibble(
+    Week = NA,
+    Date = min(schedule$Date) + 7*(mid_semester_break-1),
+    Topic = "**Mid-semester break**",
+    Chapter = NA,
+    Chapter_URL = NA,
+    Assessments = NA,
+    Assessment_URL = NA
+  ),
+  schedule |> filter(Week >= mid_semester_break)
+) |>
+  mutate(
+    Date = format(Date, "%d %b"),
+    Topic = if_else(is.na(Week), Topic, glue::glue("[{Topic}](./week{Week}.html)")),
+    Chapter = if_else(is.na(Week), Chapter, glue::glue("[{Chapter}]({Chapter_URL})")),
+    Assessments = if_else(is.na(Week), Assessments, glue::glue("[{Assessments}]({Assessment_URL})"))
+  ) |>
+  select(-Chapter_URL, -Assessment_URL) |>
+  knitr::kable(format = "markdown")
+```
+
+## Assessments
+
+Final exam 60%, project 20%, other assignments 20%
+
+## R package installation
+
+Here is the code to install the R packages we will be using in this unit.
+
+```r
+install.packages(c("tidyverse","fpp3", "GGally"), dependencies = TRUE)
+```
