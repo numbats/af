@@ -14,7 +14,7 @@ Read [Chapter 2 of the textbook](https://otexts.com/fpp3/graphics.html) and watc
 
 ## Slides
 
-* [2. Time series graphics](slides/2-graphics.pdf)
+* [2. Time series graphics](slides/2-tsgraphics.pdf)
 
 ## In-class activities
 
