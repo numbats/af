@@ -2,6 +2,11 @@
 title: "Week 2: Time series graphics"
 ---
 
+```{r}
+week <- 2
+source("course_info.R")
+```
+
 ## What you will learn this week
 
 * Different types of plots for time series including time plots, season plots, subseries plots, lag plots and ACF plots
@@ -20,6 +25,7 @@ Read [Chapter 2 of the textbook](https://otexts.com/fpp3/graphics.html) and watc
 
 Complete Exercises 1-5 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).
 
-## Assignments
-
-[Assignment 1](https://learning.monash.edu/mod/quiz/view.php?id=1343906) is due on Friday 8 March.
+```{r}
+#| output: asis
+show_assignments()
+```

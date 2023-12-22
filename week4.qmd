@@ -2,6 +2,11 @@
 title: "Week 4: The forecaster's toolbox"
 ---
 
+```{r}
+week <- 4
+source("course_info.R")
+```
+
 ## What you will learn this week
 
 * Four benchmark forecasting methods that we will use for comparison
@@ -20,6 +25,8 @@ Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html) and watch
 
 Complete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).
 
-## Assignments
 
-[Assignment 2](https://learning.monash.edu/mod/assign/view.php?id=1343917) is due on Friday 22 March.
+```{r}
+#| output: asis
+show_assignments()
+```

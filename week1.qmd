@@ -2,6 +2,11 @@
 title: "Week 1: What is forecasting?"
 ---
 
+```{r}
+week <- 1
+source("course_info.R")
+```
+
 ## What you will learn this week
 
 * How to think about forecasting from a statistical perspective
@@ -28,6 +33,8 @@ Your task this week is to make sure you are familiar with R, RStudio and the tid
 
 Work through the first five chapters of the **LearnR** tutorial at [learnr.numbat.space](https://learnr.numbat.space). Do as much of it as you think you need. For those students new to R, it is strongly recommended that you do all five chapters. For those who have previously used R, concentrate on the parts where you feel you are weakest.
 
-## Assignments
 
-[Assignment 1](https://learning.monash.edu/mod/quiz/view.php?id=1343906) is due on Friday 8 March.
+```{r}
+#| output: asis
+show_assignments()
+```

@@ -2,6 +2,11 @@
 title: "Week 9: ARIMA models"
 ---
 
+```{r}
+week <- 9
+source("course_info.R")
+```
+
 ## What you will learn this week
 
 * Seasonal ARIMA models
@@ -20,8 +25,7 @@ Read [Sections 9.8-9.10 of the textbook](https://otexts.com/fpp3/arima.html) and
 
 Complete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
 
-## Assignments
-
-[Assignment 4](https://learning.monash.edu/mod/assign/view.php?id=1343951) is due on Friday 3 May.
-
-[The retail project](https://learning.monash.edu/mod/assign/view.php?id=1343999) is due on Friday 17 May.
+```{r}
+#| output: asis
+show_assignments()
+```

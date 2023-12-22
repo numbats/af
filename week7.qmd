@@ -2,6 +2,11 @@
 title: "Week 7: ARIMA models"
 ---
 
+```{r}
+week <- 7
+source("course_info.R")
+```
+
 ## What you will learn this week
 
 * Stationarity and differencing
@@ -19,8 +24,7 @@ Read [Sections 9.1-9.4 of the textbook](https://otexts.com/fpp3/arima.html) and 
 
 Complete Exercises 5-15 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).
 
-## Assignments
-
-[Assignment 4](https://learning.monash.edu/mod/assign/view.php?id=1343951) is due on Friday 3 May.
-
-[The retail project](https://learning.monash.edu/mod/assign/view.php?id=1343999) is due on Friday 17 May.
+```{r}
+#| output: asis
+show_assignments()
+```

@@ -2,6 +2,11 @@
 title: "Week 3: Time series decomposition"
 ---
 
+```{r}
+week <- 3
+source("course_info.R")
+```
+
 ## What you will learn this week
 
 * Transforming data to remove some sources of variation
@@ -20,6 +25,8 @@ Read [Chapter 3 of the textbook](https://otexts.com/fpp3/decomposition.html) and
 
 Complete Exercises 6-11 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).
 
-## Assignments
 
-[Assignment 2](https://learning.monash.edu/mod/assign/view.php?id=1343917) is due on Friday 22 March.
+```{r}
+#| output: asis
+show_assignments()
+```

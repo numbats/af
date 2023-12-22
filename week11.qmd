@@ -2,6 +2,11 @@
 title: "Week 11: Dynamic regression"
 ---
 
+```{r}
+week <- 11
+source("course_info.R")
+```
+
 ## What you will learn this week
 
 * How to combine regression models with ARIMA models to form dynamic regression models
@@ -20,6 +25,8 @@ Read [Chapter 10 of the textbook](https://otexts.com/fpp3/dynamic.html) and watc
 
 Complete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).
 
-## Assignments
 
-[The retail project](https://learning.monash.edu/mod/assign/view.php?id=1343999) is due on Friday 17 May.
+```{r}
+#| output: asis
+show_assignments()
+```

@@ -2,6 +2,11 @@
 title: "Week 5: Exponential smoothing"
 ---
 
+```{r}
+week <- 5
+source("course_info.R")
+```
+
 ## What you will learn this week
 
 * Simple exponential smoothing
@@ -19,6 +24,7 @@ Read [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) 
 
 Complete Exercises 1-6, 8-9, 11-12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
 
-## Assignments
-
-[Assignment 3](https://learning.monash.edu/mod/assign/view.php?id=1343934) is due on Friday 12 April.
+```{r}
+#| output: asis
+show_assignments()
+```
