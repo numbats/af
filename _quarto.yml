@@ -15,7 +15,7 @@ website:
         text: Home
         icon: house-fill
       - text: Schedule
-        icon: calendar
+        icon: calendar2-fill
         menu:
           - week1.qmd
           - week2.qmd
@@ -29,9 +29,12 @@ website:
           - week10.qmd
           - week11.qmd
           - week12.qmd
+      - text: Discussion
+        icon: chat-fill
+        href: https://learning.monash.edu/mod/forum/view.php?id=1343867
       - text: Moodle
         icon: mortarboard-fill
-        href: https://learning.monash.edu/course/view.php?id=10091
+        href: https://learning.monash.edu/course/view.php?id=10091&section=1
       - text: Textbook
         icon: book
         href: https://OTexts.com/fpp3
