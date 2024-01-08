@@ -18,14 +18,14 @@
     },
     "DBI": {
       "Package": "DBI",
-      "Version": "1.1.3",
+      "Version": "1.2.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "methods"
       ],
-      "Hash": "b2866e62bab9378c3cc9476a1954226b"
+      "Hash": "3e0051431dff9acfe66c23765e55c556"
     },
     "GGally": {
       "Package": "GGally",
@@ -610,14 +610,9 @@
     },
     "fable": {
       "Package": "fable",
-      "Version": "0.3.3.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "fable",
-      "RemoteUsername": "tidyverts",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "b33661279bd65b050f0125386ed8b27e0c3286b1",
+      "Version": "0.3.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "Rcpp",
@@ -631,19 +626,13 @@
         "tsibble",
         "utils"
       ],
-      "Hash": "9aeef650be6d440bbf2c14560031af67"
+      "Hash": "63a6c529070640737804d2f0a0d9ffbc"
     },
     "fabletools": {
       "Package": "fabletools",
-      "Version": "0.3.4.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "fabletools",
-      "RemoteUsername": "tidyverts",
-      "RemotePkgRef": "tidyverts/fabletools",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "261b695a3f85e02d6967aa1918d793163d620887",
+      "Version": "0.3.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "R6",
@@ -662,7 +651,7 @@
         "utils",
         "vctrs"
       ],
-      "Hash": "a04abe481b70f97f0df41bf1db1cf80b"
+      "Hash": "025c5b49246221a17a646329f45b5abc"
     },
     "fansi": {
       "Package": "fansi",
@@ -692,15 +681,9 @@
     },
     "feasts": {
       "Package": "feasts",
-      "Version": "0.3.1.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "feasts",
-      "RemoteUsername": "tidyverts",
-      "RemotePkgRef": "tidyverts/feasts",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "2823121a73ff4b5e840c7df8844da73c2b8fd07c",
+      "Version": "0.3.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "dplyr",
@@ -719,24 +702,18 @@
         "utils",
         "vctrs"
       ],
-      "Hash": "748e86cf12b0df7867231f50376a3cb6"
+      "Hash": "4e2130fecd2802de19c69d129abab1db"
     },
     "fma": {
       "Package": "fma",
-      "Version": "2.5.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "fma",
-      "RemoteUsername": "robjhyndman",
-      "RemotePkgRef": "robjhyndman/fma",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "1a1b76cdb94ae071a43ace6eece188d57c604c72",
+      "Version": "2.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "forecast"
       ],
-      "Hash": "704655a37cbe66a3485be1929a6955c7"
+      "Hash": "374bc7e9c7b5609f6692c1692f6bfa48"
     },
     "fontawesome": {
       "Package": "fontawesome",
@@ -768,14 +745,9 @@
     },
     "forecast": {
       "Package": "forecast",
-      "Version": "8.21.1.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "forecast",
-      "RemoteUsername": "robjhyndman",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "79883e73ad91c203709489bc3bbc30d1b404dfd4",
+      "Version": "8.21.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "Rcpp",
@@ -795,19 +767,13 @@
         "urca",
         "zoo"
       ],
-      "Hash": "8b2ac0af39b8e58a96ca0d60a4f9eccb"
+      "Hash": "35f95bf10d1732ed83cec9290cb742af"
     },
     "fpp3": {
       "Package": "fpp3",
-      "Version": "0.5.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "fpp3-package",
-      "RemoteUsername": "robjhyndman",
-      "RemotePkgRef": "robjhyndman/fpp3-package",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "192164ae0c9cda54b4ec9b750642a6a3d5ecd4a7",
+      "Version": "0.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "cli",
@@ -826,7 +792,7 @@
         "tsibble",
         "tsibbledata"
       ],
-      "Hash": "066aca2884d27fc1417aea2d298c1f07"
+      "Hash": "5d8af03fcd8a2f4efa16898206df1b1a"
     },
     "fracdiff": {
       "Package": "fracdiff",
@@ -1198,11 +1164,11 @@
       "Version": "3.1.1.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "lintr",
       "RemoteUsername": "jimhester",
+      "RemoteRepo": "lintr",
       "RemoteRef": "HEAD",
-      "RemoteSha": "ccdb186ae7ef2cab7e900433efa6d0718ed3899e",
+      "RemoteSha": "11eae86373104d813c55d85cf1538108eb40082c",
+      "RemoteHost": "api.github.com",
       "Requirements": [
         "R",
         "backports",
@@ -1217,7 +1183,7 @@
         "xml2",
         "xmlparsedata"
       ],
-      "Hash": "c138a71f955b27b058cbf524aedea3c1"
+      "Hash": "9d7581c54253508d95d5f5330af5c18b"
     },
     "lmtest": {
       "Package": "lmtest",
@@ -1254,7 +1220,7 @@
     },
     "magick": {
       "Package": "magick",
-      "Version": "2.8.1",
+      "Version": "2.8.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1262,7 +1228,7 @@
         "curl",
         "magrittr"
       ],
-      "Hash": "691d5b9fd0e7ee9b56301fc8735a2e1f"
+      "Hash": "87da0066dd0d7b1a95c461abfbf10411"
     },
     "magrittr": {
       "Package": "magrittr",
@@ -1300,7 +1266,7 @@
     },
     "mgcv": {
       "Package": "mgcv",
-      "Version": "1.9-0",
+      "Version": "1.9-1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1313,7 +1279,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "086028ca0460d0c368028d3bda58f31b"
+      "Hash": "110ee9d83b496279960e162ac97764ce"
     },
     "mime": {
       "Package": "mime",
@@ -2024,14 +1990,8 @@
     "tsibble": {
       "Package": "tsibble",
       "Version": "1.1.3",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "tsibble",
-      "RemoteUsername": "tidyverts",
-      "RemotePkgRef": "tidyverts/tsibble",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "04b36e7ee9ed4c7bded6b4b938275a0f23da6bd0",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "anytime",
@@ -2046,19 +2006,13 @@
         "tidyselect",
         "vctrs"
       ],
-      "Hash": "a0e8cc567be2060cc4352cd649d28461"
+      "Hash": "a9d10100310663a7583cf7e16a990e6f"
     },
     "tsibbledata": {
       "Package": "tsibbledata",
-      "Version": "0.4.1.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "tsibbledata",
-      "RemoteUsername": "tidyverts",
-      "RemotePkgRef": "tidyverts/tsibbledata",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "4fd00371775bbe164b54f32ee0ff361f5f2b293e",
+      "Version": "0.4.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "rappdirs",
@@ -2066,7 +2020,7 @@
         "utils",
         "vctrs"
       ],
-      "Hash": "91ae04ba864e06483a2670f5dbfad422"
+      "Hash": "6b53c37a18049320fb08478aef6310c2"
     },
     "tweenr": {
       "Package": "tweenr",
