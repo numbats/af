@@ -1,0 +1,47 @@
+---
+title: Assignment 3
+---
+
+This assignment will use national population data from 1960 -- 2022. Each student will use a different time series, selected using their student ID number as follows.
+
+```r
+# Replace seed with your student ID
+set.seed(12345678)
+pop <- readr::read_rds("https://bit.ly/monashpopulationdata") |>
+  filter(Country == sample(Country, 1))
+```
+
+Population should be modelled as a logarithm as it increases exponentially.
+
+1. Using a test set of 2018--2022, fit an ETS model chosen automatically, and three benchmark methods to the training data. Which gives the best forecasts on the test set, based on RMSE?
+2. Check the residuals from the best model using an ACF plot and a Ljung-Box test. Do the residuals appear to be white noise?
+3. Now use time-series cross-validation with a minimum sample size of 15 years, a step size of 1 year, and a forecast horizon of 5 years. Calculate the RMSE of the results. Does it change the conclusion you reach based on the test set?
+4. Which of these two methods of computing accuracy is more reliable? Why?
+
+Submit an Rmd or qmd file which carries out the above analysis. You need to submit one file which implements all steps above.
+
+To receive full marks, the Rmd or qmd file must compile without errors.
+
+```{r}
+source(here::here("course_info.R"))
+ass <- schedule  |>
+  filter(Assignment == "Assignment 3")
+due <- format(ass$Due, "%e %B %Y") |> stringr::str_trim()
+url <- ass$Moodle
+```
+
+<style>
+.block {
+  display: block;
+  width: 25%;
+  border: none;
+  color: #FFF;
+  background-color: #006dae;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+</style>
+
+<a href=`r url`><button type="button" class="block">SUBMIT<br>Due `r due`</button></a>

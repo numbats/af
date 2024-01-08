@@ -80,10 +80,11 @@ lastmon <- function(x) {
   7 * floor(as.numeric(x-1+4)/7) + as.Date(1-4, origin="1970-01-01")
 }
 
-assignments <- read_csv("assignments.csv") |>
+assignments <- read_csv(here::here("assignments.csv")) |>
   mutate(
     Date = lastmon(Due),
-    Moodle = paste0("https://learning.monash.edu/mod/assign/view.php?id=", Moodle)
+    Moodle = paste0("https://learning.monash.edu/mod/assign/view.php?id=", Moodle),
+    File = paste0("assignments/", File)
   )
 
 schedule <- schedule |>
@@ -100,9 +101,8 @@ show_assignments <- function() {
   if(NROW(ass) > 0) {
     cat("\n\n## Assignments\n\n")
     for(i in seq(NROW(ass))) {
-      cat("* [", ass$Assignment[i], "](", ass$Moodle[i], ") is due on ",
+      cat("* [", ass$Assignment[i], "](", ass$File[i], ") is due on ",
           format(ass$Due[i], "%A %d %B.\n"), sep="")
     }
   }
 }
-

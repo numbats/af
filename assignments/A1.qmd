@@ -1,0 +1,44 @@
+---
+title: Assignment 1
+---
+
+**You must provide forecasts for the following items:**
+
+  1. Google closing stock price on 20 March 2024 [[Data](https://finance.yahoo.com/quote/GOOG/)].
+  2. Maximum temperature at Melbourne airport on 10 April 2024 [[Data](http://www.bom.gov.au/places/vic/melbourne-airport/observations/melbourne-airport/)].
+  3. The difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2024 [[Data](https://en.wikipedia.org/wiki/Anzac_Day_match)].
+  4. The seasonally adjusted estimate of total employment for April 2024. ABS CAT 6202, to be released around mid May 2024 [[Data](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release)].
+  5. Google closing stock price on 22 May 2024 [[Data](https://finance.yahoo.com/quote/GOOG/)].
+
+**For each of these, give a point forecast and an 80% prediction interval, and explain in a couple of sentences how each was obtained.**
+
+* The [Data] links give you possible data to start with, but you are free to use any data you like.
+* There is no need to use any fancy models or sophisticated methods. Simple is better for this assignment. The methods you use should be understandable to any high school student.
+* Full marks will be awarded if you submit the required information, and are able to meaningfully justify your results in a couple of sentences in each case.
+* Once the true values in each case are available, we will come back to this exercise and see who did the best using the scoring method described in class.
+* The student with the lowest score is the winner of our forecasting competition, and will win a $50 cash prize.
+* The assignment mark is not dependent on your score.
+
+```{r}
+source(here::here("course_info.R"))
+ass <- schedule  |>
+  filter(Assignment == "Assignment 1")
+due <- format(ass$Due, "%e %B %Y") |> stringr::str_trim()
+url <- ass$Moodle
+```
+
+<style>
+.block {
+  display: block;
+  width: 25%;
+  border: none;
+  color: #FFF;
+  background-color: #006dae;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+</style>
+
+<a href=`r url`><button type="button" class="block">SUBMIT<br>Due `r due`</button></a>

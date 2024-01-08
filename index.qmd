@@ -47,13 +47,13 @@ options(knitr.kable.NA = '')
 #| echo: false
 #| output: asis
 source("course_info.R")
-schedule |> 
+schedule |>
   transmute(
     Date = format(Date, "%d %b"),
     Topic = if_else(is.na(Week), Topic, glue::glue("[{Topic}](./week{Week}.html)")),
     Chapter = if_else(is.na(Week), Chapter, glue::glue("[{Chapter}]({Chapter_URL})")),
-    Assessments = if_else(is.na(Assignment), Assignment, glue::glue("[{Assignment}]({Moodle})"))
-  ) |> 
+    Assessments = if_else(is.na(Assignment), Assignment, glue::glue("[{Assignment}]({File})"))
+  ) |>
   knitr::kable(format = "markdown")
 ```
 
