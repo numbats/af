@@ -2,9 +2,7 @@ library(tidyverse)
 library(readxl)
 library(tsibble)
 
-# xlsx file downloaded on 8 January.
-# Need to download latest file on 6 Feb 2024 from
-# https://www.abs.gov.au/statistics/industry/retail-and-wholesale-trade/retail-trade-australia/dec-2023/8501011.xlsx
+# xlsx file downloaded on 8 January 2023
 download.file(
   url = "https://www.abs.gov.au/statistics/industry/retail-and-wholesale-trade/retail-trade-australia/oct-2023/8501011.xlsx",
   destfile = here::here("assignments/8501011.xlsx")
@@ -49,5 +47,7 @@ aus_retail <- aus_retail |>
     key = c(State, Industry)
   )
 
-# Save data
-saveRDS(aus_retail, here::here("assignments/retail.rds"))
+# Save data to end of 2022
+aus_retail |>
+  filter(Month <= yearmonth("2022 Dec")) |>
+  saveRDS(here::here("assignments/retail.rds"))
