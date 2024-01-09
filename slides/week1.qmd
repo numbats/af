@@ -14,7 +14,6 @@ format:
       opts_chunk:
         dev: "cairo_pdf"
 include-in-header: header.tex
-keep-tex: true
 execute:
   echo: false
   message: false

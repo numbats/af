@@ -24,8 +24,7 @@ source("course_info.R")
 
 ## Slides
 
-* [Introduction](slides/etc3550_intro.pdf)
-* [1. Getting started](slides/1-getting-started.pdf)
+* [Week 1 slides](slides/week1.qmd)
 
 ## In-class activities
 
