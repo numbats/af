@@ -3,7 +3,6 @@ project:
   render:
   - "*.qmd"
   - "*.md"
-  - "!/slides/"
 
 website:
   title: "ETC3550/ETC5550 Applied forecasting"
