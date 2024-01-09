@@ -43,6 +43,8 @@ website:
 
 date-format: "D MMMM YYYY"
 
+freeze: true
+
 format:
   html:
     theme: [cosmo, numbat.scss]

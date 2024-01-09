@@ -1,0 +1,15 @@
+{
+  "hash": "61d7254c10037bbf1817592f30b406cf",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 11: Dynamic regression\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* How to combine regression models with ARIMA models to form dynamic regression models\n* Dynamic harmonic regression to handle complex seasonality\n* Lagged predictors\n\n## Pre-class activities\n\nRead [Chapter 10 of the textbook](https://otexts.com/fpp3/dynamic.html) and watch all embedded videos\n\n## Slides\n\n* [10. Dynamic regression models](slides/10-dynamic-regression.pdf)\n\n## In-class activities\n\nComplete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).\n\n\n\n\n## Assignments\n\n* [Retail Project]() is due on Friday 24 May.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
