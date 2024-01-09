@@ -5,7 +5,7 @@ title: Assignment 1
 **You must provide forecasts for the following items:**
 
   1. Google closing stock price on 20 March 2024 [[Data](https://finance.yahoo.com/quote/GOOG/)].
-  2. Maximum temperature at Melbourne airport on 10 April 2024 [[Data](http://www.bom.gov.au/places/vic/melbourne-airport/observations/melbourne-airport/)].
+  2. Maximum temperature at Melbourne airport on 10 April 2024 [[Data](http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml)].
   3. The difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2024 [[Data](https://en.wikipedia.org/wiki/Anzac_Day_match)].
   4. The seasonally adjusted estimate of total employment for April 2024. ABS CAT 6202, to be released around mid May 2024 [[Data](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release)].
   5. Google closing stock price on 22 May 2024 [[Data](https://finance.yahoo.com/quote/GOOG/)].
