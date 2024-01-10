@@ -56,7 +56,7 @@ source("setup.R")
 ### Teaching and learning approach
 \vspace*{-0.2cm}
 
-* Recorded lectures embedded in the textbook at \textbf{\texttt{\href{https://OTexts.com/fpp3}{OTexts.com/fpp3}}}.
+* Approximately one hour of online videos each week.
 * One 50 minute in-person workshop each Friday.
 * One 90 minute in-person tutorial each week.
 * One tutorial will be recorded each week and posted online.
@@ -76,6 +76,7 @@ source("setup.R")
   * Free and online
   * Data sets in associated R packages
   * R code for examples
+  * Embedded online lectures
 
 ## Outline
 
@@ -118,15 +119,22 @@ source("setup.R")
   - Need at least 45\% for exam, and 50\% for total.
   - \textbf{ETC5550 students:} Extra exam question.
 
-## Moodle site
-\fontsize{18}{24}\sf
+## Unit website
+\fontsize{18}{24}\sf\vspace*{0.3cm}
+
+\begin{alertblock}{}
+\centerline{\Large\textbf{af.numbat.space}}
+\end{alertblock}
 
   - Includes all course materials
-  - Assignment submissions
-  - Forum for asking questions, etc.
+  - Links for assignment submissions
+  - Link to discussion forum.
+
+\vspace*{0.5cm}
 
 ###
-**Please don't send emails. Use the forum.**
+\vspace*{-0.5cm}
+\centerline{\textbf{Please don't send emails. Use the forum.}}
 
 ## International Institute of Forecasters
 
@@ -192,19 +200,19 @@ library(fpp3)
  * Assignment 1
 
 ## Assignment 1: forecast the following series
-\small
+\small\vspace*{-0.2cm}
 
-  1. Google closing stock price in $USD on 20 March 2023.
-  2. Maximum temperature at Melbourne airport on 4 April 2023.
-  3. The difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2023.
-  4. The seasonally adjusted estimate of total employment for April 2023. ABS CAT 6202, to be released around mid May 2023.
-  5. Google closing stock price in $USD on 22 May 2023.
+  1. Google closing stock price on 20 March 2024
+  2. Maximum temperature at Melbourne airport on 10 April 2024
+  3. The difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2024
+  4. The seasonally adjusted estimate of total employment for April 2024. ABS CAT 6202, to be released around mid May 2024
+  5. Google closing stock price on 22 May 2024
 
-\begin{block}{Due Sunday 12 March}
+\begin{block}{Due Friday 8 March}
 For each of these, give a point forecast and an 80\% prediction interval.
 \end{block}\pause
 \begin{alertblock}{}
-Prize: \$50 Amazon gift voucher
+Prize: \$50 cash prize
 \end{alertblock}
 
 ## Assignment 1: scoring
@@ -213,7 +221,7 @@ Prize: \$50 Amazon gift voucher
 $Y=$ actual, $F=$ point forecast, $[L,U]=$ prediction interval
 
 ### Point forecasts:
-
+\vspace*{-0.8cm}
 $$\text{Absolute Error} = |Y-F|
 $$\vspace*{-1cm}
 
@@ -221,7 +229,7 @@ $$\vspace*{-1cm}
  * Add ranks across all five items
 
 ### Prediction intervals:
-
+\vspace*{-0.8cm}
 $$
 \text{Interval Score} = (U - L) + 10(L - Y)_+ + 10 (Y-U)_+
 $$\vspace*{-1cm}
@@ -321,7 +329,7 @@ should this affect leasing and sales policies?
 ## CASE STUDY 4: Airline
 
 ```{r, echo=FALSE}
-melsyd <- tsibbledata::ansett |>
+tsibbledata::ansett |>
   filter(Airports == "MEL-SYD", Class == "Economy") |>
   autoplot(Passengers) +
   labs(
@@ -451,7 +459,7 @@ tribble(
 
 ## Your turn
 
-1. Download tourism.xlsx from http://robjhyndman.com/data/tourism.xlsx, and read it into R using read_excel() from the readxl package.
-2. Create a tsibble which is identical to the tourism tsibble from the tsibble package.
+1. Download `tourism.xlsx` from `http://robjhyndman.com/data/tourism.xlsx`, and read it into R using `read_excel()` from the `readxl` package.
+2. Create a tsibble which is identical to the tourism tsibble from the `tsibble` package.
 3. Find what combination of Region and Purpose had the maximum number of overnight trips on average.
 4. Create a new tsibble which combines the Purposes and Regions, and just has total trips by State.
