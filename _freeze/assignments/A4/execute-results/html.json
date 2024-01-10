@@ -1,0 +1,15 @@
+{
+  "hash": "ecd870b2226cc85092e37213bea2523e",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: Assignment 4\n---\n\n\n## Background\n\nHere is a function that generates data from an AR(1) model starting with the first value set to 0\n\n```r\ngenerate_ar1 <- function(n = 100, c = 0, phi, sigma = 1) {\n  # Generate errors\n  error <- rnorm(n, mean = 0, sd = sigma)\n  # Set up vector for the response with initial values set to 0\n  y <- rep(0, n)\n  # Generate remaining observations\n  for(i in seq(2, length = n-1)) {\n    y[i] <- c + phi * y[i-1] + error[i]\n  }\n  return(y)\n}\n```\n\nHere `n` is the number of observations to simulate, `c` is the constant, `phi` is the AR coefficient, and `sigma` is the standard deviation of the noise. The following example shows the function being used to generate 50 observations\n\n```r\nlibrary(fpp3)\ntsibble(time = 1:50, y = generate_ar1(n=50, c=1, phi=0.8), index = time) |>\n  autoplot(y)\n```\n\n## Instructions\n\n<ol>\n<li> Modify the `generate_ar1` function to generate data from any ARMA(p,q) model with parameters to be specified by the user. The first line of your function definition should be\n\n  ```r\n  generate_arma <- function(n = 100, c = 0, phi = NULL, theta = NULL, sigma = 1)\n  ```\n\n   Here `phi` and `theta` are vectors of AR and MA coefficients. Your function should return a numeric vector of length `n`.\n\n   For example `generate_arma(n = 50, c = 2, phi = c(0.4, -0.6))` should return 50 observations generated from the model\n   $$y_t = 2 + 0.4y_{t-1} - 0.6y_{t-2} + \\varepsilon_t$$\n   where $\\varepsilon \\sim N(0,1)$.\n\n<li> The noise should be generated using the `rnorm()` function.\n\n<li> Your function should check stationarity and invertibility conditions and return an error if either condition is not satisfied. You can use the `stop()` function to generate an error. The model will be stationary if the following expression returns `TRUE`:\n\n  ```r\n  !any(abs(polyroot(c(1,-phi))) <= 1)\n  ```\n\n  The MA parameters will be invertible if the following expression returns `TRUE`:\n\n  ```r\n  !any(abs(polyroot(c(1,theta))) <= 1)\n  ```\n\n<li> The above function sets the first value of every series to 0. Your function should fix this problem by generating more observations than required and then discarding the first few observations. You will need to consider how many observations to discard, to prevent the returned series from being affected by the initial values. Test that it is working by checking that the first few values of the series are close to the mean of the series, even when `c` is a large value.\n</ol>\n\nPlease submit your solution as a .R file.\n\n\n<br><br><hr><b>Due: 3 May 2024</b><br><a href=https://learning.monash.edu/mod/assign/view.php?id=2034170 class = 'badge badge-large badge-blue'><font size='+2'>&nbsp;&nbsp;<b>Submit</b>&nbsp;&nbsp;</font><br></a>\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "hash": "2fdc228899b4120f50b1f353ed12bfc8",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: Assignment 2\n---\n\n\nThis assignment will use the same data that you will use in the [retail project](Project.qmd) later in semester. Each student will use a different time series, selected using their student ID number as follows.\n\n```r\n# Replace the seed with your student ID\nset.seed(12345678)\nretail <- readr::read_rds(\"https://bit.ly/monashretaildata\") |>\n  filter(`Series ID` == sample(`Series ID`, 1))\n```\n\n  1. Plot your time series using the `autoplot()` command. What do you learn from the plot?\n  2. Plot your time series using the `gg_season()` command. What do you learn from the plot?\n  3. Plot your time series using the `gg_subseries()` command. What do you learn from the plot?\n  4. Find an appropriate Box-Cox transformation for your data and explain why you have chosen the particular transformation parameter $\\lambda$.\n  5. Produce a plot of an STL decomposition of the transformed data. What do you learn from the plot?\n\nYou need to submit one Rmarkdown or Quarto file which implements all steps above.\n\nTo receive full marks, the Rmd or qmd file must compile without errors.\n\n\n<br><br><hr><b>Due: 22 March 2024</b><br><a href=https://learning.monash.edu/mod/assign/view.php?id=2034165 class = 'badge badge-large badge-blue'><font size='+2'>&nbsp;&nbsp;<b>Submit</b>&nbsp;&nbsp;</font><br></a>\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

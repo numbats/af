@@ -1,0 +1,15 @@
+{
+  "hash": "52ed2c72c91ae4f8daa8336e7db58c5e",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: Assignment 1\n---\n\n\n**You must provide forecasts for the following items:**\n\n  1. Google closing stock price on 20 March 2024 [[Data](https://finance.yahoo.com/quote/GOOG/)].\n  2. Maximum temperature at Melbourne airport on 10 April 2024 [[Data](http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml)].\n  3. The difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2024 [[Data](https://en.wikipedia.org/wiki/Anzac_Day_match)].\n  4. The seasonally adjusted estimate of total employment for April 2024. ABS CAT 6202, to be released around mid May 2024 [[Data](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release)].\n  5. Google closing stock price on 22 May 2024 [[Data](https://finance.yahoo.com/quote/GOOG/)].\n\n**For each of these, give a point forecast and an 80% prediction interval, and explain in a couple of sentences how each was obtained.**\n\n* The [Data] links give you possible data to start with, but you are free to use any data you like.\n* There is no need to use any fancy models or sophisticated methods. Simple is better for this assignment. The methods you use should be understandable to any high school student.\n* Full marks will be awarded if you submit the required information, and are able to meaningfully justify your results in a couple of sentences in each case.\n* Once the true values in each case are available, we will come back to this exercise and see who did the best using the scoring method described in class.\n* The student with the lowest score is the winner of our forecasting competition, and will win a $50 cash prize.\n* The assignment mark is not dependent on your score.\n\n\n<br><br><hr><b>Due: 8 March 2024</b><br><a href=https://learning.monash.edu/mod/assign/view.php?id=???? class = 'badge badge-large badge-blue'><font size='+2'>&nbsp;&nbsp;<b>Submit</b>&nbsp;&nbsp;</font><br></a>\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

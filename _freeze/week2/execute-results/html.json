@@ -1,0 +1,15 @@
+{
+  "hash": "a983405c8ad0ca5ea02ff1fa15f8b08a",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 2: Time series graphics\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Different types of plots for time series including time plots, season plots, subseries plots, lag plots and ACF plots\n* The difference between seasonal patterns and cyclic patterns in time series\n* What is \"white noise\" and how to identify it.\n\n## Pre-class activities\n\nRead [Chapter 2 of the textbook](https://otexts.com/fpp3/graphics.html) and watch all embedded videos\n\n\n## Slides for seminar\n\n<iframe src='https://docs.google.com/gview?url=https://raw.githubusercontent.com/numbats/af/main/slides/week2.pdf&embedded=true' width='100%' height=465></iframe>\n<a href=https://raw.githubusercontent.com/numbats/af/main/slides/week2.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n\n## In-class activities\n\nComplete Exercises 1-5 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).\n\n\n\n## Assignments\n\n* [Assignment 1](assignments/A1.qmd) is due on Friday 08 March.\n* [Assignment 2](assignments/A2.qmd) is due on Friday 22 March.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
