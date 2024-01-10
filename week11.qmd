@@ -19,7 +19,7 @@ Read [Chapter 10 of the textbook](https://otexts.com/fpp3/dynamic.html) and watc
 
 ## Slides
 
-* [10. Dynamic regression models](slides/10-dynamic-regression.pdf)
+* [Week 11 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week11.pdf)
 
 ## In-class activities
 

@@ -19,7 +19,7 @@ Read [Sections 9.8-9.10 of the textbook](https://otexts.com/fpp3/arima.html) and
 
 ## Slides
 
-* [9. ARIMA models (part 3)](slides/9-arima_c.pdf)
+* [Week 9 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week9.pdf)
 
 ## In-class activities
 

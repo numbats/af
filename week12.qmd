@@ -19,7 +19,7 @@ Catch up on any exercises not yet done
 
 ## Slides
 
-* [Revision](slides/revision.pdf)
+* [Week 12 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week12.pdf)
 
 ## In-class activities
 

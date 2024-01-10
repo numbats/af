@@ -1,8 +1,8 @@
 {
-  "hash": "091a8a742083917cafdd943a72b58e67",
+  "hash": "c19387388241fa991bf0bc622b77bfec",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Week 9: ARIMA models\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Seasonal ARIMA models\n* Computing forecasts for ARIMA models\n* ARIMA vs ETS models\n\n## Pre-class activities\n\nRead [Sections 9.8-9.10 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n## Slides\n\n* [9. ARIMA models (part 3)](slides/9-arima_c.pdf)\n\n## In-class activities\n\nComplete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n\n\n\n## Assignments\n\n* [Assignment 4]() is due on Friday 03 May.\n",
+    "markdown": "---\ntitle: \"Week 9: ARIMA models\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Seasonal ARIMA models\n* Computing forecasts for ARIMA models\n* ARIMA vs ETS models\n\n## Pre-class activities\n\nRead [Sections 9.8-9.10 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n## Slides\n\n* [Week 9 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week9.pdf)\n\n## In-class activities\n\nComplete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n\n\n\n## Assignments\n\n* [Assignment 4]() is due on Friday 03 May.\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"

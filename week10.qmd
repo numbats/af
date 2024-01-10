@@ -19,7 +19,8 @@ Read [Chapter 7 of the textbook](https://otexts.com/fpp3/regression.html) and wa
 
 ## Slides
 
-* [7. Time series regression](slides/7-regression.pdf)
+* [Week 10 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week10.pdf)
+
 
 ## In-class activities
 

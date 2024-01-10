@@ -24,7 +24,7 @@ source("course_info.R")
 
 ## Slides
 
-* [Week 1 slides](slides/week1.qmd)
+* [Week 1 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week1.pdf)
 
 ## In-class activities
 

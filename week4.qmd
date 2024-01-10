@@ -19,7 +19,7 @@ Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html) and watch
 
 ## Slides
 
-* [5. The forecaster's toolbox](slides/5-toolbox.pdf)
+* [Week 4 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week4.pdf)
 
 ## In-class activities
 

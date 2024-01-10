@@ -1,8 +1,8 @@
 {
-  "hash": "14a7fc5f27967c7faf9e1792d4fb743a",
+  "hash": "be0bc660a07f160ff6e00a531885d711",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Week 8: ARIMA models\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* AR, MA, ARMA and ARIMA models\n* Selecting model orders manually and automatically\n\n## Pre-class activities\n\nRead [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n## Slides\n\n* [9. ARIMA models (part 2)](slides/9-arima_b.pdf)\n\n## In-class activities\n\nComplete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n\n\n\n## Assignments\n\n* [Assignment 4]() is due on Friday 03 May.\n",
+    "markdown": "---\ntitle: \"Week 8: ARIMA models\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* AR, MA, ARMA and ARIMA models\n* Selecting model orders manually and automatically\n\n## Pre-class activities\n\nRead [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n## Slides\n\n* [Week 8 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week8.pdf)\n\n## In-class activities\n\nComplete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n\n\n\n## Assignments\n\n* [Assignment 4]() is due on Friday 03 May.\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"

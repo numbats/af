@@ -1,8 +1,8 @@
 {
-  "hash": "51e3da88342739feb3fe94cb84545a0d",
+  "hash": "654b9adb7da4f2948f17cb9c385bd048",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Week 4: The forecaster's toolbox\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Four benchmark forecasting methods that we will use for comparison\n* Fitted values, residuals\n* Forecasting with transformations\n\n## Pre-class activities\n\nRead [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html) and watch all embedded videos\n\n## Slides\n\n* [5. The forecaster's toolbox](slides/5-toolbox.pdf)\n\n## In-class activities\n\nComplete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).\n\n\n\n\n## Assignments\n\n* [Assignment 2]() is due on Friday 22 March.\n* [Assignment 3]() is due on Friday 12 April.\n",
+    "markdown": "---\ntitle: \"Week 4: The forecaster's toolbox\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Four benchmark forecasting methods that we will use for comparison\n* Fitted values, residuals\n* Forecasting with transformations\n\n## Pre-class activities\n\nRead [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html) and watch all embedded videos\n\n## Slides\n\n* [Week 4 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week4.pdf)\n\n## In-class activities\n\nComplete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).\n\n\n\n\n## Assignments\n\n* [Assignment 2]() is due on Friday 22 March.\n* [Assignment 3]() is due on Friday 12 April.\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"

@@ -18,7 +18,7 @@ Read [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) 
 
 ## Slides
 
-* [8. Simple exponential smoothing](slides/8-ets_a.pdf)
+* [Week 5 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week5.pdf)
 
 ## In-class activities
 

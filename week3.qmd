@@ -19,7 +19,7 @@ Read [Chapter 3 of the textbook](https://otexts.com/fpp3/decomposition.html) and
 
 ## Slides
 
-* [3. Time series decomposition](slides/3-decomposition.pdf)
+* [Week 3 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week3.pdf)
 
 ## In-class activities
 
