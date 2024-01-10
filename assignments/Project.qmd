@@ -38,25 +38,7 @@ You should produce forecasts of the series using ETS and ARIMA models. Write a r
 * There is no need to provide the updated ABS data with your submission.
 
 ```{r}
+#| output: asis
 source(here::here("course_info.R"))
-ass <- schedule  |>
-  filter(Assignment == "Retail Project")
-due <- format(ass$Due, "%e %B %Y") |> stringr::str_trim()
-url <- ass$Moodle
+submit(schedule, "Retail Project")
 ```
-
-<style>
-.block {
-  display: block;
-  width: 25%;
-  border: none;
-  color: #FFF;
-  background-color: #006dae;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-}
-</style>
-
-<a href=`r url`><button type="button" class="block">SUBMIT<br>Due `r due`</button></a>

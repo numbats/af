@@ -22,25 +22,7 @@ You need to submit one Rmarkdown or Quarto file which implements all steps above
 To receive full marks, the Rmd or qmd file must compile without errors.
 
 ```{r}
+#| output: asis
 source(here::here("course_info.R"))
-ass <- schedule  |>
-  filter(Assignment == "Assignment 2")
-due <- format(ass$Due, "%e %B %Y") |> stringr::str_trim()
-url <- ass$Moodle
+submit(schedule, "Assignment 2")
 ```
-
-<style>
-.block {
-  display: block;
-  width: 25%;
-  border: none;
-  color: #FFF;
-  background-color: #006dae;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-}
-</style>
-
-<a href=`r url`><button type="button" class="block">SUBMIT<br>Due `r due`</button></a>

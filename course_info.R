@@ -97,7 +97,7 @@ show_assignments <- function() {
       Week < week + 3,
       !is.na(Assignment),
     ) |>
-    select(Assignment: Moodle)
+    select(Assignment:File)
   if(NROW(ass) > 0) {
     cat("\n\n## Assignments\n\n")
     for(i in seq(NROW(ass))) {
@@ -120,4 +120,28 @@ show_slides <- function(week) {
     )
   button <- paste0("<a href=", file, " class='badge badge-small badge-red'>Download pdf</a>")
   cat(paste0("## Slides for seminar\n\n", embed,"\n", button))
+}
+
+submit <- function(schedule, assignment) {
+  ass <- schedule  |>
+    filter(Assignment == assignment)
+  due <- format(ass$Due, "%e %B %Y") |> stringr::str_trim()
+  url <- ass$Moodle
+  style <- "<style>
+    .block {
+      display: block;
+      width: 25%;
+      border: none;
+      color: #FFF;
+        background-color: #006dae;
+        padding: 14px 28px;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+    }
+  </style>"
+  button <- paste0("<br><br><hr><b>Due: ", due, "</b><br>",
+                   "<a href=",url," class = 'badge badge-large badge-blue'>",
+                   "<font size='+2'>&nbsp;&nbsp;<b>Submit</b>&nbsp;&nbsp;</font><br></a>")
+  cat(button)
 }
