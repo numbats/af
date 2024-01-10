@@ -1,24 +1,5 @@
 ---
-title: "ETC3550/ETC5550 Applied&nbsp;forecasting"
 author: "Ch9. ARIMA models"
-institute: "OTexts.org/fpp3/"
-pdf-engine: pdflatex
-fig-width: 7.5
-fig-height: 3.5
-format:
-  beamer:
-    theme: monash
-    aspectratio: 169
-    fontsize: 14pt
-    section-titles: false
-    knitr:
-      opts_chunk:
-        dev: "cairo_pdf"
-include-in-header: header.tex
-execute:
-  echo: false
-  message: false
-  warning: false
 ---
 
 
