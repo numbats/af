@@ -16,9 +16,10 @@ source("course_info.R")
 
 Read [Sections 9.1-9.4 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos
 
-## Slides
-
-* [Week 7 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week7.pdf)
+```{r}
+#| output: asis
+show_slides(week)
+```
 
 ## In-class activities
 

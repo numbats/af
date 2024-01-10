@@ -17,9 +17,10 @@ source("course_info.R")
 
 Read [Chapter 10 of the textbook](https://otexts.com/fpp3/dynamic.html) and watch all embedded videos
 
-## Slides
-
-* [Week 11 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week11.pdf)
+```{r}
+#| output: asis
+show_slides(week)
+```
 
 ## In-class activities
 

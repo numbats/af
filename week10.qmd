@@ -17,10 +17,10 @@ source("course_info.R")
 
 Read [Chapter 7 of the textbook](https://otexts.com/fpp3/regression.html) and watch all embedded videos
 
-## Slides
-
-* [Week 10 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week10.pdf)
-
+```{r}
+#| output: asis
+show_slides(week)
+```
 
 ## In-class activities
 

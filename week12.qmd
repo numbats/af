@@ -17,9 +17,10 @@ source("course_info.R")
 
 Catch up on any exercises not yet done
 
-## Slides
-
-* [Week 12 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week12.pdf)
+```{r}
+#| output: asis
+show_slides(week)
+```
 
 ## In-class activities
 

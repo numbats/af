@@ -106,3 +106,18 @@ show_assignments <- function() {
     }
   }
 }
+
+show_slides <- function(week) {
+  file <- paste0(
+      "https://raw.githubusercontent.com/numbats/af/main/slides/week",
+      week,
+      ".pdf"
+  )
+  embed <- paste0(
+      "<iframe src='https://docs.google.com/gview?url=",
+      file,
+      "&embedded=true' width='100%' height=465></iframe>"
+    )
+  button <- paste0("<a href=", file, " class='badge badge-small badge-red'>Download pdf</a>")
+  cat(paste0("## Slides for seminar\n\n", embed,"\n", button))
+}

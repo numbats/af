@@ -16,9 +16,10 @@ source("course_info.R")
 
 Read [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos
 
-## Slides
-
-* [Week 5 slides](https://raw.githubusercontent.com/numbats/af/main/slides/week5.pdf)
+```{r}
+#| output: asis
+show_slides(week)
+```
 
 ## In-class activities
 
