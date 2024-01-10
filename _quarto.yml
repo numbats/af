@@ -4,6 +4,7 @@ project:
   - "*.qmd"
   - "*.md"
   - "!/slides"
+  - "!/handouts"
 
 website:
   title: "ETC3550/ETC5550 Applied forecasting"
@@ -44,13 +45,12 @@ website:
 
 date-format: "D MMMM YYYY"
 
-freeze: true
+freeze: auto
 
 format:
   html:
     theme: [cosmo, numbat.scss]
     highlight: textmate
-    css: styles.css
     toc: true
     mainfont: "Fira Sans"
     html-math-method: katex
