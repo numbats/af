@@ -1,0 +1,108 @@
+---
+title: ETC3550/ETC5550 Applied forecasting
+author: "Week 11: Dynamic regression models"
+format:
+  beamer:
+    aspectratio: 169
+    fontsize: 14pt
+    section-titles: false
+    knitr:
+      opts_chunk:
+        dev: "cairo_pdf"
+    pdf-engine: pdflatex
+    fig-width: 7.5
+    fig-height: 3.5
+    include-in-header: ../header.tex
+---
+
+
+```{r setup, include=FALSE}
+source(here::here("setup.R"))
+library(readr)
+
+vic_elec_daily <- vic_elec |>
+  filter(year(Time) == 2014) |>
+  index_by(Date = date(Time)) |>
+  summarise(
+    Demand = sum(Demand) / 1e3,
+    Temperature = max(Temperature),
+    Holiday = any(Holiday)
+  ) |>
+  mutate(Day_Type = case_when(
+    Holiday ~ "Holiday",
+    wday(Date) %in% 2:6 ~ "Weekday",
+    TRUE ~ "Weekend"
+  ))
+```
+
+## Regression with ARIMA errors
+
+\vspace*{0.2cm}\begin{block}{Regression models}\vspace*{-0.2cm}
+\[
+  y_t = \beta_0 + \beta_1 x_{1,t} + \dots + \beta_k x_{k,t} + \varepsilon_t,
+\]
+\end{block}\vspace*{-0.3cm}
+
+  * $y_t$ modeled as function of $k$ explanatory variables
+$x_{1,t},\dots,x_{k,t}$.
+  * In regression, we assume that $\varepsilon_t$ is WN.
+  * Now we want to allow $\varepsilon_t$ to be autocorrelated.
+\vspace*{0.1cm}
+\pause
+\begin{alertblock}{Example: ARIMA(1,1,1) errors}\vspace*{-0.8cm}
+\begin{align*}
+  y_t &= \beta_0 + \beta_1 x_{1,t} + \dots + \beta_k x_{k,t} + \eta_t,\\
+      & (1-\phi_1B)(1-B)\eta_t = (1+\theta_1B)\varepsilon_t,
+\end{align*}
+\end{alertblock}
+\rightline{where $\varepsilon_t$ is white noise.}
+
+## Estimation
+
+If we minimize $\sum \eta_t^2$ (by using ordinary regression):
+
+  1. Estimated coefficients $\hat{\beta}_0,\dots,\hat{\beta}_k$ are no longer optimal as some information ignored;
+  2. Statistical tests associated with the model (e.g., t-tests on the coefficients) are incorrect.
+  3. AIC of fitted models misleading.
+
+\pause\vspace*{0.4cm}
+
+ * Minimizing $\sum \varepsilon_t^2$ avoids these problems.
+ * Maximizing likelihood similar to minimizing $\sum \varepsilon_t^2$.
+
+## Regression with ARIMA errors
+\fontsize{14}{15}\sf
+
+Any regression with an ARIMA error can be rewritten as a regression with an ARMA error by differencing all variables.\pause
+
+\begin{block}{Original data}\vspace*{-0.8cm}
+\begin{align*}
+  y_t & = \beta_0 + \beta_1 x_{1,t} + \dots + \beta_k x_{k,t} + \eta_t\\
+  \mbox{where}\quad
+      & \phi(B)(1-B)^d\eta_t = \theta(B)\varepsilon_t
+\end{align*}
+\end{block}\pause\vspace*{-0.1cm}
+\begin{block}{After differencing all variables}\vspace*{-0.2cm}
+$$
+  y'_t  = \beta_1 x'_{1,t} + \dots + \beta_k x'_{k,t} + \eta'_t.
+$$
+where $\phi(B)\eta'_t = \theta(B)\varepsilon_t$,\vspace*{0.1cm}
+
+$y_t' = (1-B)^dy_t$,\quad $x_{i,t}' = (1-B)^dx_{i,t}$,\quad and $\eta_t' = (1-B)^d \eta_t$
+\end{block}
+
+## Regression with ARIMA errors
+
+  * In R, we can specify an ARIMA($p,d,q$) for the errors, and $d$ levels of differencing will be applied to all variables ($y, x_{1,t},\dots,x_{k,t}$) during estimation.
+  * Check that $\varepsilon_t$ series looks like white noise.
+  * AICc can be calculated for final model.
+  * Repeat procedure for all subsets of predictors to be considered, and select model with lowest AICc value.
+
+## Forecasting
+
+  * To forecast a regression model with ARIMA errors, we need to forecast the
+regression part of the model and the ARIMA part of the model and combine the
+results.
+  * Some predictors are known into the future (e.g., time, dummies).
+  * Separate forecasting models may be needed for other predictors.
+  * Forecast intervals ignore the uncertainty in forecasting the predictors.

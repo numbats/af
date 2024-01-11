@@ -11,7 +11,7 @@ title: "ETC3550/5550 Applied forecasting"
 #| cache: false
 library(tidyverse)
 options(knitr.kable.NA = '')
-source("course_info.R")
+source(here::here("course_info.R"))
 week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 ```
 
@@ -55,7 +55,7 @@ schedule |>
     Chapter = if_else(is.na(Week), Chapter, glue::glue("[{Chapter}]({Chapter_URL})")),
     Assessments = if_else(is.na(Assignment), Assignment, glue::glue("[{Assignment}]({File})"))
   ) |>
-  select(-Show) |> 
+  select(-Show) |>
   knitr::kable(format = "markdown")
 ```
 

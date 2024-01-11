@@ -3,6 +3,7 @@ project:
   render:
   - "*.qmd"
   - "*.md"
+  - "!slides_*.pdf"
   - "!/slides"
   - "!/handouts"
 
@@ -18,7 +19,11 @@ website:
       - text: Schedule
         icon: calendar2-fill
         menu:
-          - week1.qmd
+          - week1/index.qmd
+          - week2/index.qmd
+          - week3/index.qmd
+          - week4/index.qmd
+          - week5/index.qmd
       - text: Discussion
         icon: chat-fill
         href: https://learning.monash.edu/mod/forum/view.php?id=1343867
@@ -46,6 +51,6 @@ format:
 
 execute:
   echo: false
-  warning: false
   message: false
+  warning: false
   cache: false

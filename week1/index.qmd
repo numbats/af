@@ -1,0 +1,45 @@
+---
+title: "Week 1: What is forecasting?"
+---
+
+```{r}
+week <- 1
+source(here::here("course_info.R"))
+```
+
+## What you will learn this week
+
+* How to think about forecasting from a statistical perspective
+* What makes something easy or hard to forecast?
+* Using the `tsibble` package in R
+
+## Pre-class activities
+
+* Install R and RStudio on your personal computer. Instructions are provided at [https://otexts.com/fpp3/appendix-using-r.html](https://otexts.com/fpp3/appendix-using-r.html).
+* Read [Chapter 1 of the textbook](http://OTexts.com/fpp3/intro.html) and watch all embedded videos
+* Watch this video
+
+<iframe width="100%" height="415" src="https://www.youtube.com/embed/HNJYRf0mvxg?si=k0wfI3Sq68TPm4Ek" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+## Exercises (on your own or in tutorial)
+
+Your task this week is to make sure you are familiar with R, RStudio and the tidyverse packages. If you've already done ETC1010, then you may not need to do anything! But if you're new to R and the tidyverse, then you will need to get yourself up-to-speed.
+
+Work through the first five chapters of the **LearnR** tutorial at [learnr.numbat.space](https://learnr.numbat.space). Do as much of it as you think you need. For those students new to R, it is strongly recommended that you do all five chapters. For those who have previously used R, concentrate on the parts where you feel you are weakest.
+
+```{r}
+#| output: asis
+show_slides(week)
+```
+
+## Seminar activities
+
+1. Download `tourism.xlsx` from [`http://robjhyndman.com/data/tourism.xlsx`](http://robjhyndman.com/data/tourism.xlsx), and read it into R using `read_excel()` from the `readxl` package.
+2. Create a tsibble which is identical to the `tourism` tsibble from the `tsibble` package.
+3. Find what combination of `Region` and `Purpose` had the maximum number of overnight trips on average.
+4. Create a new tsibble which combines the Purposes and Regions, and just has total trips by State.
+
+```{r}
+#| output: asis
+show_assignments(week)
+```

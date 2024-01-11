@@ -4,7 +4,7 @@ author: "Ch12. Some practical issues"
 
 
 ```{r setup, include=FALSE}
-source("setup.R")
+source(here::here("setup.R"))
 ```
 
 # Models for different frequencies

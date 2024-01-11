@@ -1,7 +1,7 @@
 SLIDES := $(wildcard slides/*.qmd)
 SLIDE_PDFS := $(SLIDES:.qmd=.pdf)
 
-default: slides preview
+default: preview
 
 all: slides build
 

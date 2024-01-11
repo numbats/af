@@ -90,7 +90,7 @@ assignments <- read_csv(here::here("assignments.csv")) |>
 schedule <- schedule |>
   left_join(assignments, by = "Date")
 
-show_assignments <- function() {
+show_assignments <- function(week) {
   ass <- schedule |>
     filter(
       Week >= week,
@@ -101,18 +101,14 @@ show_assignments <- function() {
   if(NROW(ass) > 0) {
     cat("\n\n## Assignments\n\n")
     for(i in seq(NROW(ass))) {
-      cat("* [", ass$Assignment[i], "](", ass$File[i], ") is due on ",
+      cat("* [", ass$Assignment[i], "](../", ass$File[i], ") is due on ",
           format(ass$Due[i], "%A %d %B.\n"), sep="")
     }
   }
 }
 
 show_slides <- function(week) {
-  file <- paste0(
-      "https://raw.githubusercontent.com/numbats/af/main/slides/week",
-      week,
-      ".pdf"
-  )
+  file <- paste0("https://af.numbat.space/week", week, "slides_week", week, ".pdf")
   embed <- paste0(
       "<iframe src='https://docs.google.com/gview?url=",
       file,

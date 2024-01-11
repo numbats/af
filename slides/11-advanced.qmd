@@ -4,7 +4,7 @@ author: "Ch11. Advanced methods"
 
 
 ```{r setup, include=FALSE}
-source("setup.R")
+source(here::here("setup.R"))
 library(readr)
 ```
 

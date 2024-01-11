@@ -1,0 +1,296 @@
+---
+title: "ETC3550/ETC5550 Applied&nbsp;forecasting"
+author: "Week 10: Regression models"
+format:
+  beamer:
+    aspectratio: 169
+    fontsize: 14pt
+    section-titles: false
+    knitr:
+      opts_chunk:
+        dev: "cairo_pdf"
+    pdf-engine: pdflatex
+    fig-width: 7.5
+    fig-height: 3.5
+    include-in-header: ../header.tex
+---
+
+```{r setup, include=FALSE}
+source(here::here("setup.R"))
+```
+
+## Multiple regression and forecasting
+
+\vspace*{0.2cm}\begin{block}{}\vspace*{-0.3cm}
+$$
+  y_t = \beta_0 + \beta_1 x_{1,t} + \beta_2 x_{2,t} + \cdots + \beta_kx_{k,t} + \varepsilon_t.
+$$
+\end{block}
+
+* $y_t$ is the variable we want to predict: the "response" variable
+* Each $x_{j,t}$ is numerical and is called a "predictor".
+ They are usually assumed to be known for all past and future times.
+* The coefficients $\beta_1,\dots,\beta_k$ measure the effect of each
+predictor *after taking account of the effect of all other predictors
+in the model*.
+* $\varepsilon_t$ is a white noise error term
+
+## Trend
+
+**Linear trend**
+
+\centerline{$x_t = t,\qquad t = 1,2,\dots,$}\pause
+
+**Piecewise linear trend with bend at $\tau$**
+\vspace*{-0.6cm}
+\begin{align*}
+x_{1,t} &= t \\
+x_{2,t} &= \left\{ \begin{array}{ll}
+  0 & t <\tau\\
+  (t-\tau) & t \ge \tau
+\end{array}\right.
+\end{align*}
+\pause\vspace*{-0.8cm}
+
+**Quadratic or higher order trend**
+
+\centerline{$x_{1,t} =t,\quad x_{2,t}=t^2,\quad \dots$}
+
+\pause\vspace*{-0.1cm}
+\centerline{\textcolor{orange}{\textbf{NOT RECOMMENDED!}}}
+
+## Uses of dummy variables
+\fontsize{13}{14}\sf
+
+**Seasonal dummies**
+
+* For quarterly data: use 3 dummies
+* For monthly data: use 11 dummies
+* For daily data: use 6 dummies
+* What to do with weekly data?
+
+\pause
+
+**Outliers**
+
+* A dummy variable can remove its effect.
+
+\pause
+
+**Public holidays**
+
+* For daily data: if it is a public holiday, dummy=1, otherwise dummy=0.
+
+## Holidays
+
+**For monthly data**
+
+* Christmas: always in December so part of monthly seasonal effect
+* Easter: use a dummy variable $v_t=1$ if any part of Easter is in that month, $v_t=0$ otherwise.
+* Ramadan and Chinese New Year similar.
+
+## Fourier series
+
+Periodic seasonality can be handled using pairs of Fourier \rlap{terms:}\vspace*{-0.3cm}
+$$
+s_{k}(t) = \sin\left(\frac{2\pi k t}{m}\right)\qquad c_{k}(t) = \cos\left(\frac{2\pi k t}{m}\right)
+$$
+$$
+y_t = a + bt + \sum_{k=1}^K \left[\alpha_k s_k(t) + \beta_k c_k(t)\right] + \varepsilon_t$$\vspace*{-0.8cm}
+
+* Every periodic function can be approximated by sums of sin and cos terms for large enough $K$.
+* Choose $K$ by minimizing AICc or CV.
+* Called "harmonic regression"
+
+## Distributed lags
+
+Lagged values of a predictor.
+
+Example: $x$ is advertising which has a delayed effect
+
+\vspace*{-0.8cm}\begin{align*}
+  x_{1} &= \text{advertising for previous month;} \\
+  x_{2} &= \text{advertising for two months previously;} \\
+        & \vdots \\
+  x_{m} &= \text{advertising for $m$ months previously.}
+\end{align*}
+
+## Comparing regression models
+\fontsize{13}{14}\sf
+
+* $R^2$  does not allow for "degrees of freedom".
+* Adding *any* variable tends to increase the value of $R^2$, even if that variable is irrelevant.
+\pause
+
+To overcome this problem, we can use *adjusted $R^2$*:
+\begin{block}{}
+$$
+\bar{R}^2 = 1-(1-R^2)\frac{T-1}{T-k-1}
+$$
+where $k=$ no.\ predictors and $T=$ no.\ observations.
+\end{block}
+
+\pause
+
+\begin{alertblock}{Maximizing $\bar{R}^2$ is equivalent to minimizing $\hat\sigma^2$.}
+\centerline{$\displaystyle
+\hat{\sigma}^2 = \frac{1}{T-k-1}\sum_{t=1}^T \varepsilon_t^2$
+}
+\end{alertblock}
+
+## Akaike's Information Criterion
+
+\vspace*{0.2cm}\begin{block}{}
+\centerline{$\text{AIC} = -2\log(L) + 2(k+2)$}
+\end{block}\vspace*{-0.5cm}
+
+* $L=$ likelihood
+* $k=$ \# predictors in model.
+* AIC penalizes terms more heavily than $\bar{R}^2$.
+
+\pause\begin{block}{}
+\centerline{$\text{AIC}_{\text{C}} = \text{AIC} + \frac{2(k+2)(k+3)}{T-k-3}$}
+\end{block}
+
+* Minimizing the AIC or AICc is asymptotically equivalent to minimizing MSE via **leave-one-out cross-validation** (for any linear regression).
+
+## Leave-one-out cross-validation
+
+For regression, leave-one-out cross-validation is faster and more efficient than time-series cross-validation.
+
+* Select one observation for test set, and use *remaining* observations in training set. Compute error on test observation.
+* Repeat using each possible observation as the test set.
+* Compute accuracy measure over all errors.
+
+```{r tscvplots, echo=FALSE}
+tscv_plot <- function(.init, .step, h = 1) {
+  expand.grid(
+    time = seq(26),
+    .id = seq(trunc(20 / .step))
+  ) |>
+    group_by(.id) |>
+    mutate(
+      observation = case_when(
+        time <= ((.id - 1) * .step + .init) ~ "train",
+        time %in% c((.id - 1) * .step + .init + h) ~ "test",
+        TRUE ~ "unused"
+      )
+    ) |>
+    ungroup() |>
+    filter(.id <= 26 - .init) |>
+    ggplot(aes(x = time, y = .id)) +
+    geom_segment(
+      aes(x = 0, xend = 27, y = .id, yend = .id),
+      arrow = arrow(length = unit(0.015, "npc")),
+      col = "black", size = .25
+    ) +
+    geom_point(aes(col = observation), size = 2) +
+    scale_y_reverse() +
+    scale_color_manual(values = c(train = "#0072B2", test = "#D55E00", unused = "gray")) +
+    # theme_void() +
+    # geom_label(aes(x = 28.5, y = 1, label = "time")) +
+    guides(col = FALSE) +
+    labs(x = "time", y = "") +
+    theme_void() +
+    theme(axis.title = element_text())
+}
+loocv_plot <- function() {
+  expand.grid(time = seq(26), .id = seq(26)) |>
+    group_by(.id) |>
+    mutate(observation = if_else(time == .id, "test", "train")) |>
+    ungroup() |>
+    filter(.id <= 20) |>
+    ggplot(aes(x = time, y = .id)) +
+    geom_segment(
+      aes(x = 0, xend = 27, y = .id, yend = .id),
+      arrow = arrow(length = unit(0.015, "npc")),
+      col = "black", size = .25
+    ) +
+    geom_point(aes(col = observation), size = 2) +
+    scale_y_reverse() +
+    scale_color_manual(values = c(train = "#0072B2", test = "#D55E00", unused = "gray")) +
+    guides(col = FALSE) +
+    labs(x = "time", y = "") +
+    theme_void() +
+    theme(axis.title = element_text())
+}
+```
+
+## Cross-validation {-}
+
+**Traditional evaluation**
+
+```{r traintest1, fig.height=1, echo=FALSE}
+tscv_plot(.init = 18, .step = 20, h = 1:8) +
+  geom_text(aes(x = 10, y = 0.8, label = "Training data"), color = "#0072B2") +
+  geom_text(aes(x = 21, y = 0.8, label = "Test data"), color = "#D55E00") +
+  ylim(1, 0)
+```
+
+\pause
+
+**Time series cross-validation**
+
+```{r tscvggplot1, echo=FALSE}
+tscv_plot(.init = 3, .step = 1, h = 1) +
+  geom_text(aes(x = 21, y = 0, label = "h = 1"), color = "#D55E00")
+```
+
+## Cross-validation {-}
+
+**Traditional evaluation**
+
+```{r traintest1a, fig.height=1, echo=FALSE}
+tscv_plot(.init = 18, .step = 20, h = 1:8) +
+  geom_text(aes(x = 10, y = 0.8, label = "Training data"), color = "#0072B2") +
+  geom_text(aes(x = 21, y = 0.8, label = "Test data"), color = "#D55E00") +
+  ylim(1, 0)
+```
+
+**Leave-one-out cross-validation**
+
+```{r, echo=FALSE}
+loocv_plot() +
+  geom_text(aes(x = 21, y = 0, label = "h = 1"), color = "#ffffff")
+```
+
+\only<2>{\begin{textblock}{4}(6,6)\begin{block}{}\fontsize{13}{15}\sf
+CV = MSE on \textcolor[HTML]{D55E00}{test sets}\end{block}\end{textblock}}
+
+## Bayesian Information Criterion
+
+\begin{block}{}
+$$
+\text{BIC} = -2\log(L) + (k+2)\log(T)
+$$
+\end{block}
+where $L$ is the likelihood and $k$ is the number of predictors in the model.\pause
+
+* BIC penalizes terms more heavily than AIC
+* Also called SBIC and SC.
+* Minimizing BIC is asymptotically equivalent to leave-$v$-out cross-validation when $v = T[1-1/(log(T)-1)]$.
+
+## Choosing regression variables
+\fontsize{14}{15}\sf
+
+**Best subsets regression**
+
+* Fit all possible regression models using one or more of the predictors.
+* Choose the best model based on one of the measures of predictive ability (CV, AIC, AICc).
+\pause
+
+**Backwards stepwise regression**
+
+* Start with a model containing all variables.
+* Subtract one variable at a time. Keep model if lower CV.
+* Iterate until no further improvement.
+* Not guaranteed to lead to best model.
+
+## Ex-ante versus ex-post forecasts
+
+ * *Ex ante forecasts* are made using only information available in advance.
+    - require forecasts of predictors
+ * *Ex post forecasts* are made using later information on the predictors.
+    - useful for studying behaviour of forecasting models.
+
+ * trend, seasonal and calendar variables are all known in advance, so these don't need to be forecast.
