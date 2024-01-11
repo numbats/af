@@ -3,6 +3,7 @@ title: "Week 2: Time series graphics"
 ---
 
 ```{r}
+#| cache: false
 week <- 2
 source("course_info.R")
 ```
@@ -46,6 +47,7 @@ show_slides(week)
 #| echo: false
 #| warning: false
 #| out.width: 100%
+#| cache: false
 source("slides/setup.R")
 library(patchwork)
 cowtemp <- as_tsibble(fma::cowtemp)

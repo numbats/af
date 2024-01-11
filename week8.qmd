@@ -28,6 +28,7 @@ show_slides(week)
 
 ## Seminar activities
 
+
 ```{r}
 #| output: asis
 show_assignments()

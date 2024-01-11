@@ -25,7 +25,13 @@ Complete Exercises 5-15 from [Section 8.8 of the book](https://otexts.com/fpp3/e
 show_slides(week)
 ```
 
-# Seminar activities
+## Seminar activities
+
+For the United States GDP data (from `global_economy`):
+
+ * Fit a suitable ARIMA model for the logged data.
+ * Produce forecasts of your fitted model. Do the forecasts look reasonable?
+
 
 ```{r}
 #| output: asis
