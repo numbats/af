@@ -8,8 +8,11 @@ title: "ETC3550/5550 Applied forecasting"
 #| message: false
 #| warning: false
 #| echo: false
+#| cache: false
 library(tidyverse)
 options(knitr.kable.NA = '')
+source("course_info.R")
+week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 ```
 
 ## Lecturer/Chief Examiner
@@ -44,14 +47,15 @@ options(knitr.kable.NA = '')
 #| warning: false
 #| echo: false
 #| output: asis
-source("course_info.R")
 schedule |>
   transmute(
     Date = format(Date, "%d %b"),
-    Topic = if_else(is.na(Week), Topic, glue::glue("[{Topic}](./week{Week}.html)")),
+    Show = !is.na(Week) & (Week <= week | Week <= 1),
+    Topic = if_else(!Show, Topic, glue::glue("[{Topic}](./week{Week}.html)")),
     Chapter = if_else(is.na(Week), Chapter, glue::glue("[{Chapter}]({Chapter_URL})")),
     Assessments = if_else(is.na(Assignment), Assignment, glue::glue("[{Assignment}]({File})"))
   ) |>
+  select(-Show) |> 
   knitr::kable(format = "markdown")
 ```
 

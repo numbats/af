@@ -19,17 +19,6 @@ website:
         icon: calendar2-fill
         menu:
           - week1.qmd
-          - week2.qmd
-          - week3.qmd
-          - week4.qmd
-          - week5.qmd
-          - week6.qmd
-          - week7.qmd
-          - week8.qmd
-          - week9.qmd
-          - week10.qmd
-          - week11.qmd
-          - week12.qmd
       - text: Discussion
         icon: chat-fill
         href: https://learning.monash.edu/mod/forum/view.php?id=1343867
