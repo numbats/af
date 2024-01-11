@@ -17,15 +17,16 @@ source("course_info.R")
 
 Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html) and watch all embedded videos
 
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).
+
 ```{r}
 #| output: asis
 show_slides(week)
 ```
 
-## In-class activities
-
-Complete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).
-
+## Seminar activities
 
 ```{r}
 #| output: asis

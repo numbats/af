@@ -1,8 +1,8 @@
 {
-  "hash": "f81dcdf2c161dea834a2532ec9546228",
+  "hash": "d0af5b488bb08a59dae64e18a587dff2",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Week 5: Exponential smoothing\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Simple exponential smoothing\n* Corresponding ETS models\n\n## Pre-class activities\n\nRead [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos\n\n\n## Slides for seminar\n\n<iframe src='https://docs.google.com/gview?url=https://raw.githubusercontent.com/numbats/af/main/slides/week5.pdf&embedded=true' width='100%' height=465></iframe>\n<a href=https://raw.githubusercontent.com/numbats/af/main/slides/week5.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n\n## In-class activities\n\nComplete Exercises 1-6, 8-9, 11-12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).\n\n\n\n## Assignments\n\n* [Assignment 3](assignments/A3.qmd) is due on Friday 12 April.\n",
+    "markdown": "---\ntitle: \"Week 5: Exponential smoothing\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Simple exponential smoothing\n* Corresponding ETS models\n\n## Pre-class activities\n\nRead [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-6, 8-9, 11-12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).\n\n\n## Slides for seminar\n\n<iframe src='https://docs.google.com/gview?url=https://raw.githubusercontent.com/numbats/af/main/slides/week5.pdf&embedded=true' width='100%' height=465></iframe>\n<a href=https://raw.githubusercontent.com/numbats/af/main/slides/week5.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n\n# Seminar activities\n\n\n\n## Assignments\n\n* [Assignment 3](assignments/A3.qmd) is due on Friday 12 April.\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"

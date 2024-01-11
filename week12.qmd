@@ -17,14 +17,17 @@ source("course_info.R")
 
 Catch up on any exercises not yet done
 
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 2-6 from [Section 10.7 of the book](https://otexts.com/fpp3/dynamic-exercises.html).
+
 ```{r}
 #| output: asis
 show_slides(week)
 ```
 
-## In-class activities
+## Seminar activities
 
-Complete Exercises 2-6 from [Section 10.7 of the book](https://otexts.com/fpp3/dynamic-exercises.html).
 
 ## Post-class activities
 

@@ -16,14 +16,17 @@ source("course_info.R")
 
 Read [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos
 
+
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
+
 ```{r}
 #| output: asis
 show_slides(week)
 ```
 
-## In-class activities
-
-Complete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
+## Seminar activities
 
 ```{r}
 #| output: asis
