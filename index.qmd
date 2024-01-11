@@ -21,7 +21,6 @@ options(knitr.kable.NA = '')
 * [**Mitchell O'Hara-Wild**](https://mitchelloharawild.com). Email: [Mitch.O'Hara-Wild@monash.edu](mailto:Mitch.O'Hara-Wild@monash.edu)
 * Elena Sanina
 * Xiaoqian Wang
-* Yangzhuoran (Fin) Yang
 * Zhixiang (Elvis) Yang
 
 ## Consultations
@@ -30,14 +29,13 @@ options(knitr.kable.NA = '')
 * Mitch
 * Elena
 * Elvis
-* Fin
 * Xiaoqian
 
 ## Weekly schedule
 
-* Pre-recorded lectures: 1 hour per week ([Slides](https://github.com/robjhyndman/fpp3_slides))
-* In-person lectures: 9am Fridays, [Central 1 Lecture Theatre, 25 Exhibition Walk](https://maps.app.goo.gl/RKdmJq2tBfw8ViNT9).
+* Pre-recorded videos: approximately 1 hour per week [[Slides](https://github.com/robjhyndman/fpp3_slides)]
 * Tutorials: 1.5 hours in class per week
+* Seminars: 9am Fridays, [Central 1 Lecture Theatre, 25 Exhibition Walk](https://maps.app.goo.gl/RKdmJq2tBfw8ViNT9).
 
 
 ```{r}
