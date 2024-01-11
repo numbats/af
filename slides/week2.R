@@ -1,7 +1,5 @@
 library(fpp3)
 
-## LOTS OF EXAMPLES -------------------------------------------------------------
-
 aus_production |>
   filter(year(Quarter) >= 1980) |>
   autoplot(Electricity) +

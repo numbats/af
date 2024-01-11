@@ -143,9 +143,6 @@ the Grand Prix, advertising campaigns, competition behaviour, etc.
   * They have a highly capable team of people who are able to do
 most of the computing.
 
-
-
-
 ## Seasonal or cyclic?
 
 \alert{Differences between seasonal and cyclic patterns:}
@@ -170,7 +167,7 @@ The timing of peaks and troughs is predictable with seasonal data, but unpredict
 
 ## Which is which?
 
-```{r, fig.height=6, fig.width=12, echo=FALSE, warning=FALSE, out.width="15cm"}
+```{r, fig.height=6, fig.width=12, echo=FALSE, warning=FALSE, out.width="14.5cm"}
 cowtemp <- as_tsibble(fma::cowtemp)
 USAccDeaths <- as_tsibble(USAccDeaths)
 AirPassengers <- as_tsibble(AirPassengers)
