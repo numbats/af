@@ -108,7 +108,7 @@ show_assignments <- function(week) {
 }
 
 show_slides <- function(week) {
-  file <- paste0("https://af.numbat.space/week", week, "slides_week", week, ".pdf")
+  file <- paste0("https://af.numbat.space/week", week, "/slides.pdf")
   embed <- paste0(
       "<iframe src='https://docs.google.com/gview?url=",
       file,
