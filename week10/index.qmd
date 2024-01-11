@@ -24,11 +24,5 @@ Complete Exercises 11-17 from [Section 9.11 of the book](https://otexts.com/fpp3
 ```{r}
 #| output: asis
 show_slides(week)
-```
-
-## Seminar activities
-
-```{r}
-#| output: asis
 show_assignments(week)
 ```

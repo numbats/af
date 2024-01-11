@@ -2,10 +2,9 @@ project:
   type: website
   render:
   - "*.qmd"
-  - "*.md"
-  - "!slides_*.pdf"
   - "!/slides"
   - "!/handouts"
+  - "activities.qmd"
 
 website:
   title: "ETC3550/ETC5550 Applied forecasting"

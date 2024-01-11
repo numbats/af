@@ -1,0 +1,44 @@
+
+
+1. We have introduced various functions for time series graphics include `autoplot()`, `gg_season()`, `gg_subseries()`, `gg_lag()` and `ACF`. Use these functions to explore the quarterly tourism data for the Snowy Mountains.
+
+   ```r
+   snowy <- tourism |> filter(Region == "Snowy Mountains")
+   ```
+
+   What do you learn?
+
+2. Which time plot corresponds to which ACF plot?
+
+```{r}
+#| label: acf-quiz
+#| fig.asp: 0.5
+#| fig.width: 12
+#| echo: false
+#| warning: false
+#| out.width: 100%
+#| cache: false
+source(here::here("setup.R"))
+library(patchwork)
+cowtemp <- as_tsibble(fma::cowtemp)
+USAccDeaths <- as_tsibble(USAccDeaths)
+AirPassengers <- as_tsibble(AirPassengers)
+mink <- as_tsibble(fma::mink)
+tp1 <- autoplot(cowtemp, value) +
+  labs(x = "", y = "chirps per minute", title = "1. Daily temperature of cow")
+tp2 <- autoplot(USAccDeaths, value) +
+  labs(x = "", y = "thousands", title = "2. Monthly accidental deaths")
+tp3 <- autoplot(AirPassengers, value) +
+  labs(x = "", y = "thousands", title = "3. Monthly air passengers")
+tp4 <- autoplot(mink, value) +
+  labs(x = "", y = "thousands", title = "4. Annual mink trappings")
+acfb <- ACF(cowtemp, value) |> autoplot() +
+  labs(x = "", title = "B") + ylim(-0.4, 1)
+acfa <- ACF(USAccDeaths, value) |> autoplot() +
+  labs(x = "", title = "A") + ylim(-0.4, 1)
+acfd <- ACF(AirPassengers, value) |> autoplot() +
+  labs(x = "", title = "D") + ylim(-0.4, 1)
+acfc <- ACF(mink, value) |> autoplot() +
+  labs(x = "", title = "C") + ylim(-0.4, 1)
+(tp1 | tp2 | tp3 | tp4) / (acfa | acfb | acfc | acfd)
+```
