@@ -21,7 +21,7 @@ week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 
 ## Tutors
 
-* [**Mitchell O'Hara-Wild**](https://mitchelloharawild.com). Email: [Mitch.O'Hara-Wild@monash.edu](mailto:Mitch.O'Hara-Wild@monash.edu)
+* [**Mitchell O'Hara-Wild**](https://mitchelloharawild.com). Email: [Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
 * Elena Sanina
 * Xiaoqian Wang
 * Zhixiang (Elvis) Yang
