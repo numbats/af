@@ -43,6 +43,8 @@ format:
     toc: true
     mainfont: "Fira Sans"
     html-math-method: katex
+    include-in-header:
+      file: header.html
 
 execute:
   echo: false
