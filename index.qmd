@@ -49,7 +49,7 @@ week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 #| output: asis
 schedule |>
   transmute(
-    Date = format(Date, "%d %b"),
+    Week = format(Date, "%d %b"),
     Show = !is.na(Week) & (Week <= week | Week <= 1),
     Topic = if_else(!Show, Topic, glue::glue("[{Topic}](./week{Week}/index.html)")),
     Chapter = if_else(is.na(Week), Chapter, glue::glue("[{Chapter}]({Chapter_URL})")),
