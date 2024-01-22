@@ -17,6 +17,8 @@ retail <- readr::read_rds("https://bit.ly/monashretaildata") |>
   4. Find an appropriate Box-Cox transformation for your data and explain why you have chosen the particular transformation parameter $\lambda$.
   5. Produce a plot of an STL decomposition of the transformed data. What do you learn from the plot?
 
+For all plots, please use appropriate axis labels and titles.
+
 You need to submit one Rmarkdown or Quarto file which implements all steps above.
 
 To receive full marks, the Rmd or qmd file must compile without errors.
