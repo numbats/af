@@ -1,0 +1,29 @@
+---
+title: "Week 11: Dynamic regression"
+---
+
+```{r}
+week <- 11
+source(here::here("course_info.R"))
+```
+
+## What you will learn this week
+
+* How to combine regression models with ARIMA models to form dynamic regression models
+* Dynamic harmonic regression to handle complex seasonality
+* Lagged predictors
+
+## Pre-class activities
+
+Read [Chapter 10 of the textbook](https://otexts.com/fpp3/dynamic.html) and watch all embedded videos
+
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).
+
+```{r}
+#| output: asis
+show_slides(week)
+show_activity(week)
+show_assignments(week)
+```

@@ -1,0 +1,29 @@
+---
+title: "Week 8: ARIMA models"
+---
+
+```{r}
+week <- 8
+source(here::here("course_info.R"))
+```
+
+## What you will learn this week
+
+* AR, MA, ARMA and ARIMA models
+* Selecting model orders manually and automatically
+
+## Pre-class activities
+
+Read [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos
+
+
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
+
+
+```{r}
+#| output: asis
+show_slides(week)
+show_assignments(week)
+```

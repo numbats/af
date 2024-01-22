@@ -2,7 +2,9 @@ project:
   type: website
   render:
   - "*.qmd"
-  - "*.md"
+  - "!/slides"
+  - "!/handouts"
+  - "activities.qmd"
 
 website:
   title: "ETC3550/ETC5550 Applied forecasting"
@@ -16,18 +18,7 @@ website:
       - text: Schedule
         icon: calendar2-fill
         menu:
-          - week1.qmd
-          - week2.qmd
-          - week3.qmd
-          - week4.qmd
-          - week5.qmd
-          - week6.qmd
-          - week7.qmd
-          - week8.qmd
-          - week9.qmd
-          - week10.qmd
-          - week11.qmd
-          - week12.qmd
+          - week1/index.qmd
       - text: Discussion
         icon: chat-fill
         href: https://learning.monash.edu/mod/forum/view.php?id=1343867
@@ -43,18 +34,20 @@ website:
 
 date-format: "D MMMM YYYY"
 
-freeze: true
+freeze: auto
 
 format:
   html:
     theme: [cosmo, numbat.scss]
     highlight: textmate
-    css: styles.css
     toc: true
     mainfont: "Fira Sans"
     html-math-method: katex
+    include-in-header:
+      file: header.html
 
 execute:
   echo: false
-  warning: false
   message: false
+  warning: false
+  cache: false

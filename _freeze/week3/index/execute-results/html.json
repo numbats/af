@@ -1,0 +1,15 @@
+{
+  "hash": "5709b0707e1d835a44272bdc89d3edd1",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 3: Time series decomposition\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Transforming data to remove some sources of variation\n* Decomposing a time series into trend-cycle, seasonal and remainder components\n* Seasonal adjustment\n\n## Pre-class activities\n\nRead [Chapter 3 of the textbook](https://otexts.com/fpp3/decomposition.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 6-11 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).\n\n\n\n## Slides for seminar\n\n<embed src='https://af.numbat.space/week3/slides.pdf' type='application/pdf' width='100%' height=465></embed>\n<a href=https://af.numbat.space/week3/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n## Seminar activities\n\n\n1. For the following series, find an appropriate Box-Cox transformation in order to stabilise the variance.\n\n    * United States GDP from `global_economy`\n    * Slaughter of Victorian “Bulls, bullocks and steers” in `aus_livestock`\n    * Victorian Electricity Demand from `vic_elec`.\n    * Gas production from `aus_production`\n\n2. Why is a Box-Cox transformation unhelpful for the `canadian_gas` data?\n\n3. Produce the following decomposition\n\n    ```r\n    canadian_gas |>\n      STL(Volume ~ season(window=7) + trend(window=11)) |>\n      autoplot()\n    ```\n\n4. What happens as you change the values of the two `window` arguments?\n\n5. How does the seasonal shape change over time? [Hint: Try plotting the seasonal component using `gg_season`.]\n\n6. Can you produce a plausible seasonally adjusted series? [Hint: `season_adjust` is one of the variables returned by `STL`.]\n\n\n\n## Assignments\n\n* [Assignment 2](../assignments/A2.qmd) is due on Friday 22 March.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,30 @@
+---
+title: "Week 9: ARIMA models"
+---
+
+```{r}
+week <- 9
+source(here::here("course_info.R"))
+```
+
+## What you will learn this week
+
+* Seasonal ARIMA models
+* Computing forecasts for ARIMA models
+* ARIMA vs ETS models
+
+## Pre-class activities
+
+Read [Sections 9.8-9.10 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos
+
+
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
+
+```{r}
+#| output: asis
+show_slides(week)
+show_activity(week)
+show_assignments(week)
+```

@@ -1,0 +1,15 @@
+{
+  "hash": "fe151bdc58b6d2e908ff03741c82c12b",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 7: ARIMA models\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Stationarity and differencing\n* Autoregressive and moving average models\n\n## Pre-class activities\n\nRead [Sections 9.1-9.4 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 5-15 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).\n\n\n## Slides for seminar\n\n<embed src='https://af.numbat.space/week7/slides.pdf' type='application/pdf' width='100%' height=465></embed>\n<a href=https://af.numbat.space/week7/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n## Seminar activities\n\nFor the United States GDP data (from `global_economy`):\n\n * Fit a suitable ARIMA model for the logged data.\n * Produce forecasts of your fitted model. Do the forecasts look reasonable?\n\n\n\n## Assignments\n\n* [Assignment 4](../assignments/A4.qmd) is due on Friday 03 May.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

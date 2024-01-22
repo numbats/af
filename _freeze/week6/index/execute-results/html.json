@@ -1,0 +1,15 @@
+{
+  "hash": "ca88105c044b9d60dd9f244e8e0ddfee",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 6: Exponential smoothing\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Exponential smoothing methods with trend and seasonality\n* ETS models\n* Automatic model selection using the AICc\n\n## Pre-class activities\n\nRead [Chapter 8 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-4, 16, 17 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).\n\n\n\n## Slides for seminar\n\n<embed src='https://af.numbat.space/week6/slides.pdf' type='application/pdf' width='100%' height=465></embed>\n<a href=https://af.numbat.space/week6/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n## Seminar activities\n\n\nFind an ETS model for the Gas data from `aus_production` and forecast the next few years.\n\n  * Why is multiplicative seasonality necessary here?\n  * Experiment with making the trend damped. Does it improve the forecasts?\n\n\n\n## Assignments\n\n* [Assignment 3](../assignments/A3.qmd) is due on Friday 12 April.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "hash": "2250d8804d180e6047f2da470723d415",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 12: Review\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Review Assignment 1\n* Review initial case studies\n* Discuss exam\n\n## Pre-class activities\n\nCatch up on any exercises not yet done\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 2-6 from [Section 10.7 of the book](https://otexts.com/fpp3/dynamic-exercises.html).\n\n\n## Slides for seminar\n\n<embed src='https://af.numbat.space/week12/slides.pdf' type='application/pdf' width='100%' height=465></embed>\n<a href=https://af.numbat.space/week12/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n\n## Post-class activities\n\n* Do any exercises not yet finished.\n* Complete past exams\n* Re-read the textbook\n* Listen again to all lectures\n\n\n\n\n## Assignments\n\n* [Retail Project](../assignments/Project.qmd) is due on Friday 24 May.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

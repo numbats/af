@@ -67,3 +67,74 @@ a {
       display: block!important;
     }
 }
+
+
+/* Badges */
+
+.badge {
+  font-family: $font-family-sans-serif;
+  font-size: 12.75px;
+  display: inline-block;
+  line-height: 1;
+  padding: 4px 7px 3px 7px;
+  text-align: center;
+  font-weight: normal;
+  text-transform: uppercase;
+  border-radius: 15px;
+  opacity: .75;
+}
+
+a.badge.badge-red {
+  color: #fff;
+}
+a.badge.badge-blue {
+  color: #fff;
+}
+a.badge.badge-green {
+  color: #fff;
+}
+
+.badge-large {
+  font-size: 18px !important;
+  text-transform: none !important;
+  padding: 5px 5px 3px 5px;
+  text-transform: none;
+  font-family: $font-family-sans-serif;
+}
+
+.badge-small {
+  font-size: 11.25px;
+  padding: 5px 5px 3px 5px;
+}
+
+.badge:hover {
+  opacity: 1;
+}
+
+.badge-black,
+.badge-blue,
+.badge-red,
+.badge-green {
+  color: #ffffff !important;
+}
+.badge-black {
+  background: #0f0f0f;
+}
+.badge-blue {
+  background: #006DAE;
+}
+.badge-red {
+  background: #BD666D;
+}
+.badge-green {
+  background: #2c9f42;
+}
+.badge-yellow {
+  background: #ffc800;
+}
+.badge-white {
+  background: #ffffff;
+}
+.badge-grey {
+  background: #cccccc;
+}

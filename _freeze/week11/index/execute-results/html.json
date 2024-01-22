@@ -1,0 +1,15 @@
+{
+  "hash": "c66a0d589ae7b0bf7f888d55183e2dec",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 11: Dynamic regression\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* How to combine regression models with ARIMA models to form dynamic regression models\n* Dynamic harmonic regression to handle complex seasonality\n* Lagged predictors\n\n## Pre-class activities\n\nRead [Chapter 10 of the textbook](https://otexts.com/fpp3/dynamic.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).\n\n\n## Slides for seminar\n\n<embed src='https://af.numbat.space/week11/slides.pdf' type='application/pdf' width='100%' height=465></embed>\n<a href=https://af.numbat.space/week11/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n## Seminar activities\n\n\n\nRepeat the daily electricity example, but instead of using a quadratic function of temperature, use a piecewise linear function with the \"knot\" around 20 degrees Celsius (use predictors `Temperature` & `Temp2`). How can you optimize the choice of knot?\n\nThe data can be created as follows.\n\n```r\nvic_elec_daily <- vic_elec |>\n  filter(year(Time) == 2014) |>\n  index_by(Date = date(Time)) |>\n  summarise(\n    Demand = sum(Demand)/1e3,\n    Temperature = max(Temperature),\n    Holiday = any(Holiday)\n  ) |>\n  mutate(\n    Temp2 = I(pmax(Temperature-20,0)),\n    Day_Type = case_when(\n      Holiday ~ \"Holiday\",\n      wday(Date) %in% 2:6 ~ \"Weekday\",\n      TRUE ~ \"Weekend\"\n    )\n  )\n```\n\nRepeat but using all available data, and handling the annual seasonality using Fourier terms.\n\n\n\n## Assignments\n\n* [Retail Project](../assignments/Project.qmd) is due on Friday 24 May.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "hash": "fc32ae5afd17366c32fed33904fbcdda",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 9: ARIMA models\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Seasonal ARIMA models\n* Computing forecasts for ARIMA models\n* ARIMA vs ETS models\n\n## Pre-class activities\n\nRead [Sections 9.8-9.10 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n\n\n## Slides for seminar\n\n<embed src='https://af.numbat.space/week9/slides.pdf' type='application/pdf' width='100%' height=465></embed>\n<a href=https://af.numbat.space/week9/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n## Seminar activities\n\n\nFor the Australian tourism data (from `tourism`):\n\n * Fit a suitable ARIMA model for all data.\n * Produce forecasts of your fitted models.\n * Check the forecasts for the \"Snowy Mountains\" and \"Melbourne\" regions. Do they look reasonable?\n\n\n\n## Assignments\n\n* [Assignment 4](../assignments/A4.qmd) is due on Friday 03 May.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

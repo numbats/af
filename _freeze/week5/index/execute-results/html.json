@@ -1,0 +1,15 @@
+{
+  "hash": "20b8222433f8e5a786d02c88a4cb49c6",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 5: Exponential smoothing\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Simple exponential smoothing\n* Corresponding ETS models\n\n## Pre-class activities\n\nRead [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-6, 8-9, 11-12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).\n\n\n## Slides for seminar\n\n<embed src='https://af.numbat.space/week5/slides.pdf' type='application/pdf' width='100%' height=465></embed>\n<a href=https://af.numbat.space/week5/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n## Seminar activities\n\nTry forecasting the Chinese GDP from the `global_economy` data set using an ETS model.\n\nExperiment with the various options in the `ETS()` function to see how much the forecasts change with damped trend, or with a Box-Cox transformation. Try to develop an intuition of what each is doing to the forecasts.\n\n[Hint: use `h=20` when forecasting, so you can clearly see the differences between the various options when plotting the forecasts.]\n\n\n\n## Assignments\n\n* [Assignment 3](../assignments/A3.qmd) is due on Friday 12 April.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

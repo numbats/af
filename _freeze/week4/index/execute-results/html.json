@@ -1,0 +1,15 @@
+{
+  "hash": "e7f94273921daac99cfd07d9d41f4c79",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 4: The forecaster's toolbox\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Four benchmark forecasting methods that we will use for comparison\n* Fitted values, residuals\n* Forecasting with transformations\n\n## Pre-class activities\n\nRead [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).\n\n\n## Slides for seminar\n\n<embed src='https://af.numbat.space/week4/slides.pdf' type='application/pdf' width='100%' height=465></embed>\n<a href=https://af.numbat.space/week4/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n## Seminar activities\n\n\n\n * Produce forecasts using an appropriate benchmark method for household wealth (`hh_budget`). Plot the results using `autoplot()`.\n * Produce forecasts using an appropriate benchmark method for Australian takeaway food turnover (`aus_retail`). Plot the results using `autoplot()`.\n\n  * Compute seasonal naïve forecasts for quarterly Australian beer production from 1992.\n  * Test if the residuals are white noise. What do you conclude?\n\n * Create a training set for household wealth (`hh_budget`) by withholding the last four years as a test set.\n * Fit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.\n * Compute the accuracy of your forecasts. Which method does best?\n * Repeat the exercise using the Australian takeaway food turnover data (`aus_retail`) with a test set of four years.\n\n\n\n## Assignments\n\n* [Assignment 2](../assignments/A2.qmd) is due on Friday 22 March.\n* [Assignment 3](../assignments/A3.qmd) is due on Friday 12 April.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

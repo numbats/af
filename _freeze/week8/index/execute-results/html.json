@@ -1,0 +1,15 @@
+{
+  "hash": "9487a835ca89b3eb0f6cd98cd29f113c",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 8: ARIMA models\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* AR, MA, ARMA and ARIMA models\n* Selecting model orders manually and automatically\n\n## Pre-class activities\n\nRead [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n\n\n\n## Slides for seminar\n\n<embed src='https://af.numbat.space/week8/slides.pdf' type='application/pdf' width='100%' height=465></embed>\n<a href=https://af.numbat.space/week8/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n## Assignments\n\n* [Assignment 4](../assignments/A4.qmd) is due on Friday 03 May.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "hash": "063ddd1cd293c549965ade5c24fce827",
+  "result": {
+    "engine": "knitr",
+    "markdown": "\n\n1. We have introduced various functions for time series graphics include `autoplot()`, `gg_season()`, `gg_subseries()`, `gg_lag()` and `ACF`. Use these functions to explore the quarterly tourism data for the Snowy Mountains.\n\n   ```r\n   snowy <- tourism |> filter(Region == \"Snowy Mountains\")\n   ```\n\n   What do you learn?\n\n2. Which time plot corresponds to which ACF plot?\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](activities_files/figure-html/acf-quiz-1.png){width=100%}\n:::\n:::\n",
+    "supporting": [
+      "activities_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -90,19 +90,55 @@ assignments <- read_csv(here::here("assignments.csv")) |>
 schedule <- schedule |>
   left_join(assignments, by = "Date")
 
-show_assignments <- function() {
+show_assignments <- function(week) {
   ass <- schedule |>
     filter(
       Week >= week,
       Week < week + 3,
       !is.na(Assignment),
     ) |>
-    select(Assignment: Moodle)
+    select(Assignment:File)
   if(NROW(ass) > 0) {
     cat("\n\n## Assignments\n\n")
     for(i in seq(NROW(ass))) {
-      cat("* [", ass$Assignment[i], "](", ass$File[i], ") is due on ",
+      cat("* [", ass$Assignment[i], "](../", ass$File[i], ") is due on ",
           format(ass$Due[i], "%A %d %B.\n"), sep="")
     }
   }
+}
+
+show_slides <- function(week) {
+  file <- paste0("https://af.numbat.space/week", week, "/slides.pdf")
+  embed <- paste0(
+      "<embed src='",
+      file,
+      "' type='application/pdf' width='100%' height=465></embed>"
+    )
+  button <- paste0("<a href=", file, " class='badge badge-small badge-red'>Download pdf</a>")
+  cat(paste0("## Slides for seminar\n\n", embed,"\n", button))
+}
+
+
+show_activity <- function(week, title = TRUE) {
+  file <- here::here(paste0("week",week,"/activities.qmd"))
+  if(!fs::file_exists(file)) {
+    file <- here::here(paste0("week",week,"/activities.md"))
+  }
+  activities <- read_file(file)
+  if(title) {
+    cat("\n\n## Seminar activities\n\n")
+  }
+  cat(activities)
+  cat("\n")
+}
+
+submit <- function(schedule, assignment) {
+  ass <- schedule  |>
+    filter(Assignment == assignment)
+  due <- format(ass$Due, "%e %B %Y") |> stringr::str_trim()
+  url <- ass$Moodle
+  button <- paste0("<br><br><hr><b>Due: ", due, "</b><br>",
+                   "<a href=",url," class = 'badge badge-large badge-blue'>",
+                   "<font size='+2'>&nbsp;&nbsp;<b>Submit</b>&nbsp;&nbsp;</font><br></a>")
+  cat(button)
 }

@@ -1,0 +1,30 @@
+---
+title: "Week 3: Time series decomposition"
+---
+
+```{r}
+week <- 3
+source(here::here("course_info.R"))
+```
+
+## What you will learn this week
+
+* Transforming data to remove some sources of variation
+* Decomposing a time series into trend-cycle, seasonal and remainder components
+* Seasonal adjustment
+
+## Pre-class activities
+
+Read [Chapter 3 of the textbook](https://otexts.com/fpp3/decomposition.html) and watch all embedded videos
+
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 6-11 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).
+
+
+```{r}
+#| output: asis
+show_slides(week)
+show_activity(week)
+show_assignments(week)
+```

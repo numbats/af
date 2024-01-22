@@ -64,27 +64,8 @@ tsibble(time = 1:50, y = generate_ar1(n=50, c=1, phi=0.8), index = time) |>
 
 Please submit your solution as a .R file.
 
-
 ```{r}
+#| output: asis
 source(here::here("course_info.R"))
-ass <- schedule  |>
-  filter(Assignment == "Assignment 4")
-due <- format(ass$Due, "%e %B %Y") |> stringr::str_trim()
-url <- ass$Moodle
+submit(schedule, "Assignment 4")
 ```
-
-<style>
-.block {
-  display: block;
-  width: 25%;
-  border: none;
-  color: #FFF;
-  background-color: #006dae;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-}
-</style>
-
-<a href=`r url`><button type="button" class="block">SUBMIT<br>Due `r due`</button></a>

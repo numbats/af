@@ -1,0 +1,385 @@
+---
+title: ETC3550/ETC5550 Applied forecasting
+author: "Week 1: Introduction to forecasting and R"
+format:
+  beamer:
+    aspectratio: 169
+    fontsize: 14pt
+    section-titles: false
+    knitr:
+      opts_chunk:
+        dev: "cairo_pdf"
+    pdf-engine: pdflatex
+    fig-width: 7.5
+    fig-height: 3.5
+    include-in-header: ../header.tex
+    keep_tex: yes
+---
+
+```{r setup, include=FALSE}
+source(here::here("setup.R"))
+source(here::here("course_info.R"))
+```
+
+## Contact details
+
+\vspace*{0.2cm}
+\begin{alertblock}{Chief Examiner:  Professor Rob Hyndman}
+\href{mailto:rob.hyndman@monash.edu}{\faicon{envelope}  rob.hyndman@monash.edu}
+
+\href{https://robjhyndman.com}{\faicon{home} robjhyndman.com}
+
+\href{https://twitter.com/robjhyndman}{\faicon{twitter} @robjhyndman}
+\end{alertblock}
+
+\begin{block}{Tutors}
+\begin{itemize}\itemsep=0cm\parskip=0cm
+\item \textbf{Mitchell O'Hara-Wild}
+\item Elena Sanina
+\item Xiaoqian Wang
+\item Zhixiang (Elvis) Yang
+\end{itemize}
+\end{block}
+
+## Brief bio
+\fontsize{13}{16}\sf
+
+  - Professor of Statistics, Monash University
+  - Co-author of most popular forecasting textbook in the world
+  - Developer of most popular forecasting software in the world
+
+### How my forecasting methodology is used:
+   - Pharmaceutical Benefits Scheme
+   - Electricity demand
+   - Australian tourism demand
+   - Ageing population
+   - COVID-19 cases
+   - TAC large claims
+
+## Unit objectives
+\fontsize{13}{14}\sf
+
+  1. To obtain an understanding of common statistical methods used in business and economic forecasting.
+  2. To develop the computer skills required to forecast business and economic time series data;
+  3. To gain insights into the problems of implementing and operating large scale forecasting systems for use in business.
+
+\pause
+
+### Teaching and learning approach
+\vspace*{-0.2cm}
+
+* Approximately one hour of online videos each week.
+* One 90 minute in-person tutorial each week.
+* One 50 minute in-person seminar each Friday.
+* One tutorial will be recorded each week and posted online.
+
+## Key reference
+
+\begin{block}{}\bf
+\hangafter=1\hangindent=.3cm
+ {Hyndman, R.~J. \& Athanasopoulos, G. (2021) \emph{Forecasting: principles and practice}, 3rd edition}
+\end{block}\pause
+\begin{alertblock}{}\Large
+\centerline{\bf OTexts.com/fpp3/}
+\end{alertblock}
+
+\pause
+
+  * Free and online
+  * Data sets in associated R packages
+  * R code for examples
+  * Embedded online lectures
+
+## Outline
+
+```{r}
+#| label: schedule2
+#| message: false
+#| warning: false
+#| echo: false
+#| output: asis
+schedule |>
+  select(Week, Topic, Chapter) |>
+  filter(!is.na(Week)) |>
+  mutate(Chapter = parse_number(stringr::str_sub(Chapter, 1, 2))) |>
+  group_by(Topic) |>
+  filter(row_number()==1 | row_number()==n()) |>
+  mutate(
+    Chapter = unique(Chapter),
+    n = n(),
+    Week = if_else(n == 1, as.character(Week), paste0(Week, collapse = "--"))
+  ) |>
+  distinct() |>
+  select(-n) |>
+  kableExtra::kbl(format = "latex", booktabs = TRUE,
+                  toprule = FALSE, bottomrule = FALSE,
+                  align = "rlr", linesep = "") |>
+  kableExtra::row_spec(0, bold = TRUE)
+```
+
+## Assessment
+\vspace*{-0.2cm}
+
+  - Four assignments and one larger project: 40%
+  - Exam (2 hours): 60%.
+
+\pause
+
+```{r}
+#| label: assignments
+#| output: asis
+#| echo: false
+cat("\\begin{block}{}\\small\\centerline{")
+nassignments <- NROW(assignments) - 2
+assignments |>
+  rename(Task = Assignment) |>
+  mutate(
+    Due = format(Due, "%a %e %b"),
+    Value = paste0(c(2,rep(18/nassignments, nassignments), 20),"%")
+  ) |>
+  bind_rows(
+    tibble(Task = "Final Exam", Due = "Official exam period", Value = "60%")
+  ) |>
+  select(Task, `Due Date` = Due, Value) |>
+  kableExtra::kbl(format = "latex", booktabs = TRUE,
+                  toprule = FALSE, bottomrule = FALSE,
+                  align = "llr", linesep = "") |>
+  kableExtra::row_spec(0, bold = TRUE)
+cat("}\\end{block}")
+```
+
+\pause\vspace*{-0.4cm}
+
+  - Need at least 45\% for exam, and 50\% for total.
+  - \textbf{ETC5550 students:} Extra exam question.
+
+## Unit website
+\fontsize{18}{24}\sf\vspace*{0.3cm}
+
+\begin{alertblock}{}
+\centerline{\Large\textbf{af.numbat.space}}
+\end{alertblock}
+
+  - Includes all course materials
+  - Links for assignment submissions
+  - Link to discussion forum.
+
+\vspace*{0.5cm}
+
+###
+\vspace*{-0.5cm}
+\centerline{\textbf{Please don't send emails. Use the forum.}}
+
+## International Institute of Forecasters
+
+\placefig{1}{3}{width=4cm}{iifLOGO2}
+
+\begin{textblock}{8}(7,3)
+  \begin{block}{}
+  \begin{itemize}
+  \item The IIF provides a prize to the top student in this subject each year.
+  \item US\$100 plus one year membership.
+  \end{itemize}
+  \end{block}
+\end{textblock}
+
+## R
+\fontsize{13}{13}\sf
+
+![](figs/Rlogo.png){height=1.3cm}
+
+Available for download from CRAN:
+
+https://cran.r-project.org
+
+\vspace*{-0.5cm}\noindent\rule{\textwidth}{1pt}
+
+![](figs/RStudio-Logo-Flat.png){height=1.3cm}
+
+Available for download from RStudio:
+
+https://www.rstudio.com/products/rstudio/download/
+
+<!-- \placefig{.4}{1.2}{width=6cm}{figs/Rlogo} -->
+
+<!-- \placefig{7}{3.5}{width=5.5cm}{figs/RStudio-Ball} -->
+
+## Main packages
+
+\placefig{4.2}{1.4}{width=3.8cm}{tsibble.png}
+\placefig{8.0}{1.4}{width=3.8cm}{tsibbledata.png}
+\placefig{2.3}{4.65}{width=3.8cm}{tidyverse.png}
+\placefig{6.1}{4.65}{width=3.8cm}{feasts.png}
+\placefig{9.9}{4.65}{width=3.8cm}{fable.png}
+
+## Main packages
+
+```r
+# Install required packages (do once)
+install.packages(c("tidyverse", "fpp3", "GGally), dependencies = TRUE)
+```
+
+\pause
+
+```r
+# At the start of each session
+library(fpp3)
+```
+
+## Exercises Week 1
+\fontsize{18}{24}\sf
+
+ * Make sure you are familiar with R, RStudio and the tidyverse packages.
+ * Do first five chapters of `learnr.numbat.space`.
+ * Assignment 1
+
+## Assignment 1: forecast the following series
+\small\vspace*{-0.2cm}
+
+  1. Google closing stock price on 20 March 2024
+  2. Maximum temperature at Melbourne airport on 10 April 2024
+  3. The difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2024
+  4. The seasonally adjusted estimate of total employment for April 2024. ABS CAT 6202, to be released around mid May 2024
+  5. Google closing stock price on 22 May 2024
+
+\begin{block}{Due Friday 8 March}
+For each of these, give a point forecast and an 80\% prediction interval.
+\end{block}\pause
+\begin{alertblock}{}
+Prize: \$50 cash prize
+\end{alertblock}
+
+## Assignment 1: scoring
+\small
+
+$Y=$ actual, $F=$ point forecast, $[L,U]=$ prediction interval
+
+### Point forecasts:
+\vspace*{-0.8cm}
+$$\text{Absolute Error} = |Y-F|
+$$\vspace*{-1cm}
+
+ * Rank results for all students in class
+ * Add ranks across all five items
+
+### Prediction intervals:
+\vspace*{-0.8cm}
+$$
+\text{Interval Score} = (U - L) + 10(L - Y)_+ + 10 (Y-U)_+
+$$\vspace*{-1cm}
+
+ * $u_+ = \text{max}(u,0)$
+ * Rank results for all students
+ * Add ranks across all five items
+
+## `tsibble` objects
+
+\fontsize{10}{10.8}\sf
+
+```{r}
+#| echo: false
+global_economy <- global_economy |>
+  select(Year, Country, GDP, Imports, Exports, Population)
+```
+
+```{r}
+#| echo: true
+global_economy
+```
+
+\only<2->{\begin{textblock}{.75}(1.65,3.4)
+\begin{alertblock}{}\fontsize{9}{9}\sf Index\phantom{dg}\end{alertblock}
+\end{textblock}}
+\only<3->{\begin{textblock}{1.6}(2.78,3.4)
+\begin{alertblock}{}\fontsize{9}{9}\sf Key\phantom{dg}\end{alertblock}
+\end{textblock}}
+\only<4>{\begin{textblock}{6.7}(4.8,3.4)
+\begin{alertblock}{}\fontsize{9}{9}\sf Measured variables\phantom{dg}\end{alertblock}
+\end{textblock}}
+
+## `tsibble` objects
+
+\fontsize{10}{10.8}\sf
+
+```{r}
+#| echo: false
+tourism <- tourism |>
+  mutate(
+    State = recode(State,
+      "Australian Capital Territory" = "ACT",
+      "New South Wales" = "NSW",
+      "Northern Territory" = "NT",
+      "Queensland" = "QLD",
+      "South Australia" = "SA",
+      "Tasmania" = "TAS",
+      "Victoria" = "VIC",
+      "Western Australia" = "WA"
+    )
+  )
+```
+
+```{r}
+#| echo: true
+tourism
+```
+
+\only<3->{\begin{textblock}{.98}(1.65,3.37)
+\begin{alertblock}{}\fontsize{9}{9}\sf Index\phantom{dg}\end{alertblock}
+\end{textblock}}
+\only<4->{\begin{textblock}{3.9}(3,3.37)
+\begin{alertblock}{}\fontsize{9}{9}\sf Keys\phantom{dg}\end{alertblock}
+\end{textblock}}
+\only<5>{\begin{textblock}{1.5}(7.4,3.37)
+\begin{alertblock}{}\fontsize{9}{9}\sf Measure\phantom{dg}\end{alertblock}
+\end{textblock}}
+
+\only<2->{\begin{textblock}{3}(9,5)
+\begin{block}{}\fontsize{10}{10}\sf Domestic visitor nights in thousands by state/region and purpose.\phantom{dg}\end{block}
+\end{textblock}}
+
+## `tsibble` objects
+
+* A `tsibble` allows storage and manipulation of multiple time series in R.
+
+* It contains:
+
+  + An index: time information about the observation
+  + Measured variable(s): numbers of interest
+  + Key variable(s): optional unique identifiers for each series
+
+* It works with tidyverse functions.
+
+## The `tsibble` index
+
+Time index variables can be created with these functions:
+
+###
+\vspace*{-0.2cm}
+
+```{r}
+#| label: tstable2
+#| output: asis
+#| echo: false
+tribble(
+  ~Frequency, ~Function,
+  "Annual", "\\texttt{start:end}",
+  "Quarterly", "\\texttt{yearquarter()}",
+  "Monthly", "\\texttt{yearmonth()}",
+  "Weekly", "\\texttt{yearweek()}",
+  "Daily", "\\texttt{as\\_date()}, \\texttt{ymd()}",
+  "Sub-daily", "\\texttt{as\\_datetime()}"
+) |>
+  kableExtra::kbl(format = "latex", escape = FALSE,
+                  booktabs = TRUE, toprule = FALSE, bottomrule = FALSE, linesep = "") |>
+  kableExtra::row_spec(0, bold = TRUE)
+```
+
+
+## Your turn
+
+```{r}
+#| label: activity
+#| output: asis
+show_activity(1, title = FALSE)
+```
+

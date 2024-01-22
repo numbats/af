@@ -1,0 +1,17 @@
+{
+  "hash": "b0ee1e173572612b29afa1260c225007",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 2: Time series graphics\"\n---\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Different types of plots for time series including time plots, season plots, subseries plots, lag plots and ACF plots\n* The difference between seasonal patterns and cyclic patterns in time series\n* What is \"white noise\" and how to identify it.\n\n## Pre-class activities\n\nRead [Chapter 2 of the textbook](https://otexts.com/fpp3/graphics.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-5 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).\n\n\n## Slides for seminar\n\n<embed src='https://af.numbat.space/week2/slides.pdf' type='application/pdf' width='100%' height=465></embed>\n<a href=https://af.numbat.space/week2/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n\n## Seminar activities\n\n\n\n\n\n1. We have introduced various functions for time series graphics include `autoplot()`, `gg_season()`, `gg_subseries()`, `gg_lag()` and `ACF`. Use these functions to explore the quarterly tourism data for the Snowy Mountains.\n\n   ```r\n   snowy <- tourism |> filter(Region == \"Snowy Mountains\")\n   ```\n\n   What do you learn?\n\n2. Which time plot corresponds to which ACF plot?\n\n::: {.cell}\n::: {.cell-output-display}\n![](index_files/figure-html/acf-quiz-1.png){width=100%}\n:::\n:::\n\n\n## Assignments\n\n* [Assignment 1](../assignments/A1.qmd) is due on Friday 08 March.\n* [Assignment 2](../assignments/A2.qmd) is due on Friday 22 March.\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

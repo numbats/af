@@ -1,0 +1,40 @@
+---
+title: "Week 12: Review"
+---
+
+```{r}
+week <- 12
+source(here::here("course_info.R"))
+```
+
+## What you will learn this week
+
+* Review Assignment 1
+* Review initial case studies
+* Discuss exam
+
+## Pre-class activities
+
+Catch up on any exercises not yet done
+
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 2-6 from [Section 10.7 of the book](https://otexts.com/fpp3/dynamic-exercises.html).
+
+```{r}
+#| output: asis
+show_slides(week)
+```
+
+## Post-class activities
+
+* Do any exercises not yet finished.
+* Complete past exams
+* Re-read the textbook
+* Listen again to all lectures
+
+
+```{r}
+#| output: asis
+show_assignments(week)
+```

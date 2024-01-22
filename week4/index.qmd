@@ -1,0 +1,29 @@
+---
+title: "Week 4: The forecaster's toolbox"
+---
+
+```{r}
+week <- 4
+source(here::here("course_info.R"))
+```
+
+## What you will learn this week
+
+* Four benchmark forecasting methods that we will use for comparison
+* Fitted values, residuals
+* Forecasting with transformations
+
+## Pre-class activities
+
+Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html) and watch all embedded videos
+
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).
+
+```{r}
+#| output: asis
+show_slides(week)
+show_activity(week)
+show_assignments(week)
+```

@@ -8,8 +8,11 @@ title: "ETC3550/5550 Applied forecasting"
 #| message: false
 #| warning: false
 #| echo: false
+#| cache: false
 library(tidyverse)
 options(knitr.kable.NA = '')
+source(here::here("course_info.R"))
+week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 ```
 
 ## Lecturer/Chief Examiner
@@ -18,10 +21,9 @@ options(knitr.kable.NA = '')
 
 ## Tutors
 
-* [**Mitchell O'Hara-Wild**](https://mitchelloharawild.com). Email: [Mitch.O'Hara-Wild@monash.edu](mailto:Mitch.O'Hara-Wild@monash.edu)
+* [**Mitchell O'Hara-Wild**](https://mitchelloharawild.com). Email: [Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
 * Elena Sanina
 * Xiaoqian Wang
-* Yangzhuoran (Fin) Yang
 * Zhixiang (Elvis) Yang
 
 ## Consultations
@@ -30,14 +32,13 @@ options(knitr.kable.NA = '')
 * Mitch
 * Elena
 * Elvis
-* Fin
 * Xiaoqian
 
 ## Weekly schedule
 
-* Pre-recorded lectures: 1 hour per week ([Slides](https://github.com/robjhyndman/fpp3_slides))
-* In-person lectures: 9am Fridays, [Central 1 Lecture Theatre, 25 Exhibition Walk](https://maps.app.goo.gl/RKdmJq2tBfw8ViNT9).
+* Pre-recorded videos: approximately 1 hour per week [[Slides](https://github.com/robjhyndman/fpp3_slides)]
 * Tutorials: 1.5 hours in class per week
+* Seminars: 9am Fridays, [Central 1 Lecture Theatre, 25 Exhibition Walk](https://maps.app.goo.gl/RKdmJq2tBfw8ViNT9).
 
 
 ```{r}
@@ -46,14 +47,15 @@ options(knitr.kable.NA = '')
 #| warning: false
 #| echo: false
 #| output: asis
-source("course_info.R")
 schedule |>
   transmute(
-    Date = format(Date, "%d %b"),
-    Topic = if_else(is.na(Week), Topic, glue::glue("[{Topic}](./week{Week}.html)")),
+    Week = format(Date, "%d %b"),
+    Show = !is.na(Week) & (Week <= week | Week <= 1),
+    Topic = if_else(!Show, Topic, glue::glue("[{Topic}](./week{Week}/index.html)")),
     Chapter = if_else(is.na(Week), Chapter, glue::glue("[{Chapter}]({Chapter_URL})")),
     Assessments = if_else(is.na(Assignment), Assignment, glue::glue("[{Assignment}]({File})"))
   ) |>
+  select(-Show) |>
   knitr::kable(format = "markdown")
 ```
 

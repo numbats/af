@@ -1,0 +1,28 @@
+---
+title: "Week 5: Exponential smoothing"
+---
+
+```{r}
+week <- 5
+source(here::here("course_info.R"))
+```
+
+## What you will learn this week
+
+* Simple exponential smoothing
+* Corresponding ETS models
+
+## Pre-class activities
+
+Read [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos
+
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 1-6, 8-9, 11-12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
+
+```{r}
+#| output: asis
+show_slides(week)
+show_activity(week)
+show_assignments(week)
+```

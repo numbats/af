@@ -1,0 +1,30 @@
+---
+title: "Week 6: Exponential smoothing"
+---
+
+```{r}
+week <- 6
+source(here::here("course_info.R"))
+```
+
+## What you will learn this week
+
+* Exponential smoothing methods with trend and seasonality
+* ETS models
+* Automatic model selection using the AICc
+
+## Pre-class activities
+
+Read [Chapter 8 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos
+
+## Exercises (on your own or in tutorial)
+
+Complete Exercises 1-4, 16, 17 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).
+
+
+```{r}
+#| output: asis
+show_slides(week)
+show_activity(week)
+show_assignments(week)
+```
