@@ -57,7 +57,7 @@ tsibble(time = 1:50, y = generate_ar1(n=50, c=1, phi=0.8), index = time) |>
   !any(abs(polyroot(c(1,theta))) <= 1)
   ```
 
-<li> The above function sets the first value of every series to 0. Your function should fix this problem by generating more observations than required and then discarding the first few observations. You will need to consider how many observations to discard, to prevent the returned series from being affected by the initial values. Test that it is working by checking that the first few values of the series are close to the mean of the series, even when `c` is a large value.
+<li> The above function sets the first value of every series to 0. Your function should fix this problem by generating more observations than required and then discarding the first few observations. You will need to consider how many observations to discard, to prevent the returned series from being affected by the initial values.
 
 <li> You may find the `diffinv()` function useful.
 </ol>
