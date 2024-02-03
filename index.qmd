@@ -49,19 +49,25 @@ week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 #| output: asis
 schedule |>
   transmute(
-    Week = format(Date, "%d %b"),
-    Show = !is.na(Week) & (Week <= week | Week <= 1),
+    Show = !is.na(Week), #& (Week <= week | Week <= 1),
     Topic = if_else(!Show, Topic, glue::glue("[{Topic}](./week{Week}/index.html)")),
     Chapter = if_else(is.na(Week), Chapter, glue::glue("[{Chapter}]({Chapter_URL})")),
-    Assessments = if_else(is.na(Assignment), Assignment, glue::glue("[{Assignment}]({File})"))
+    Assessments = if_else(is.na(Assignment), Assignment, glue::glue("[{Assignment}]({File})")),
+    Week = format(Date, "%d %b")
   ) |>
   select(-Show) |>
+  select(Week, everything()) |>
   knitr::kable(format = "markdown")
 ```
 
 ## Assessments
 
-Final exam 60%, project 20%, other assignments 20%
+* [Assignment 1](assignments/A1.qmd): 2%
+* [Assignment 2](assignments/A2.qmd): 6%
+* [Assignment 3](assignments/A3.qmd): 6%
+* [Assignment 4](assignments/A4.qmd): 6%
+* [Retail project](assignments/Project.qmd): 20%
+* Final exam: 60%
 
 ## R package installation
 
