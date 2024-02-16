@@ -32,7 +32,7 @@ website:
           - week12/index.qmd
       - text: Discussion
         icon: chat-fill
-        href: https://learning.monash.edu/mod/forum/view.php?id=1343867
+        href: https://edstem.org/au/courses/15863/discussion/
       - text: Moodle
         icon: mortarboard-fill
         href: https://learning.monash.edu/course/view.php?id=10091&section=1
