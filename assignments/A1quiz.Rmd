@@ -1,0 +1,84 @@
+---
+output:
+  moodlequiz::moodlequiz:
+    self_contained: true
+title: Assignment 1
+---
+|- name: Q1 Forecasts
+
+```{r, include = FALSE}
+library(moodlequiz)
+```
+
+Produce a forecast of the Google (GOOG) closing stock price on 20 March 2024 in $USD (<https://finance.yahoo.com/quote/GOOG/> or <https://www.nasdaq.com/market-activity/stocks/goog/historical>).
+
+The forecast mean: `r answer_numerical(140, tolerance = 100)`
+
+The 80% forecast interval: [lower=`r answer_numerical(140, tolerance = 100)`, upper=`r answer_numerical(140, tolerance = 100)`]80%.
+
+---
+|- name: Q1 Explanation
+|- type: `r answer_essay()`
+
+Explanation of how you obtained your forecasts, no more than a couple of sentences.
+
+---
+|- name: Q2 Forecasts
+
+Produce a forecast of the maximum temperature at Melbourne airport on
+10 April 2024 (<http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml/>)
+
+The forecast mean: `r answer_numerical(20, tolerance = 20)`
+
+The 80% forecast interval: [lower=`r answer_numerical(20, tolerance = 20)`, upper=`r answer_numerical(20, tolerance = 20)`]80%.
+
+---
+|- name: Q2 Explanation
+|- type: `r answer_essay()`
+
+Explanation of how you obtained your forecasts, no more than a couple of sentences.
+
+---
+|- name: Q3 Forecasts
+
+Produce a forecast for the difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2024 (<https://en.wikipedia.org/wiki/Anzac_Day_match>).
+
+The forecast mean: `r answer_numerical(0, tolerance = 100)`
+
+The 80% forecast interval: [lower=`r answer_numerical(0, tolerance = 100)`, upper=`r answer_numerical(0, tolerance = 100)`]80%.
+
+---
+|- name: Q3 Explanation
+|- type: `r answer_essay()`
+
+Explanation of how you obtained your forecasts, no more than a couple of sentences.
+
+---
+|- name: Q4 Forecasts
+
+Produce a forecast for the seasonally adjusted estimate of total employment (in persons) for April 2024. ABS CAT 6202, to be released around mid May 2024 (<https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release>)
+
+The forecast mean: `r answer_numerical(14000000, tolerance = 2000000)`
+
+The 80% forecast interval: [lower=`r answer_numerical(14000000, tolerance = 2000000)`, upper=`r answer_numerical(14000000, tolerance = 2000000)`]80%.
+
+---
+|- name: Q4 Explanation
+|- type: `r answer_essay()`
+
+Explanation of how you obtained your forecasts, no more than a couple of sentences.
+
+---
+|- name: Q5 Forecasts
+
+Produce a forecast of the Google (GOOG) closing stock price on 22 May 2024 in $USD (<https://finance.yahoo.com/quote/GOOG/> or <https://www.nasdaq.com/market-activity/stocks/goog/historical>).
+
+The forecast mean: `r answer_numerical(140, tolerance = 100)`
+
+The 80% forecast interval: [lower=`r answer_numerical(140, tolerance = 100)`, upper=`r answer_numerical(140, tolerance = 100)`]80%.
+
+---
+|- name: Q5 Explanation
+|- type: `r answer_essay()`
+
+Explanation of how you obtained your forecasts, no more than a couple of sentences.
