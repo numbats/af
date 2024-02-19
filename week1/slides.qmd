@@ -28,16 +28,16 @@ source(here::here("course_info.R"))
 \href{mailto:rob.hyndman@monash.edu}{\faicon{envelope}  rob.hyndman@monash.edu}
 
 \href{https://robjhyndman.com}{\faicon{home} robjhyndman.com}
-
-\href{https://twitter.com/robjhyndman}{\faicon{twitter} @robjhyndman}
 \end{alertblock}
 
 \begin{block}{Tutors}
 \begin{itemize}\itemsep=0cm\parskip=0cm
 \item \textbf{Mitchell O'Hara-Wild}
 \item Elena Sanina
-\item Xiaoqian Wang
 \item Zhixiang (Elvis) Yang
+\item Jarryd Chapman
+\item Xiefei (Sapphire) Li
+\item Xiaoqian Wang
 \end{itemize}
 \end{block}
 
@@ -382,4 +382,3 @@ tribble(
 #| output: asis
 show_activity(1, title = FALSE)
 ```
-

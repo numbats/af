@@ -23,15 +23,18 @@ week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 
 * [**Mitchell O'Hara-Wild**](https://mitchelloharawild.com). Email: [Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
 * Elena Sanina
-* Xiaoqian Wang
 * Zhixiang (Elvis) Yang
+* Jarryd Chapman
+* Xiefei (Sapphire) Li
+* Xiaoqian Wang
 
 ## Consultations
 
-* Rob
 * Mitch
 * Elena
 * Elvis
+* Jarryd
+* Sapphire
 * Xiaoqian
 
 ## Weekly schedule
