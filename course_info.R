@@ -83,7 +83,8 @@ lastmon <- function(x) {
 assignments <- read_csv(here::here("assignments.csv")) |>
   mutate(
     Date = lastmon(Due),
-    Moodle = paste0("https://learning.monash.edu/mod/assign/view.php?id=", Moodle),
+    Moodle = paste0("https://learning.monash.edu/mod/",
+      c("quiz",rep("assign",3)), "/view.php?id=", Moodle),
     File = paste0("assignments/", File)
   )
 
