@@ -15,20 +15,55 @@ source(here::here("course_info.R"))
 week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 ```
 
-## Lecturer/Chief Examiner
+## Teaching team
+### Lecturer/Chief Examiner
 
-* [**Rob J Hyndman**](https://robjhyndman.com). Email: [Rob.Hyndman@monash.edu](mailto:Rob.Hyndman@monash.edu)
 
-## Tutors
+:::: {.columns}
 
-* [**Mitchell O'Hara-Wild**](https://mitchelloharawild.com). Email: [Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
+::: {.column width="25%"}
+
+![](https://robjhyndman.com/img/RJH_AAS_small.png){style="width: 80%; border-radius: 50%;"}
+:::
+
+::: {.column width="75%"}
+
+[**Rob J Hyndman**](https://robjhyndman.com)
+
+Email: [Rob.Hyndman@monash.edu](mailto:Rob.Hyndman@monash.edu)
+
+:::
+
+::::
+
+### Head Tutor
+
+:::: {.columns}
+
+::: {.column width="25%"}
+
+![](https://blog.mitchelloharawild.com/img/main/icon.jpg){style="width: 80%;border-radius: 50%;"}
+:::
+
+::: {.column width="75%"}
+
+[**Mitchell O'Hara-Wild**](https://mitchelloharawild.com)
+
+Email: [Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
+
+:::
+
+::::
+
+### Tutors
+
 * Elena Sanina
 * Zhixiang (Elvis) Yang
 * Jarryd Chapman
 * Xiefei (Sapphire) Li
 * Xiaoqian Wang
 
-## Consultations
+### Consultations
 
 * Mitch
 * Elena
@@ -39,7 +74,7 @@ week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 
 ## Weekly schedule
 
-* Pre-recorded videos: approximately 1 hour per week [[Slides](https://github.com/robjhyndman/fpp3_slides)]
+* [Pre-recorded videos](https://www.youtube.com/watch?v=uwKiT1o1TkI&list=PLyCNZ_xXGzpm7W9jLqbIyBAiSO5jDwJeE): approximately 1 hour per week [[Slides](https://github.com/robjhyndman/fpp3_slides)]
 * Tutorials: 1.5 hours in class per week
 * Seminars: 9am Fridays, [Central 1 Lecture Theatre, 25 Exhibition Walk](https://maps.app.goo.gl/RKdmJq2tBfw8ViNT9).
 
