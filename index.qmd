@@ -42,7 +42,7 @@ Email: [Rob.Hyndman@monash.edu](mailto:Rob.Hyndman@monash.edu)
 
 ::: {.column width="25%"}
 
-![](https://blog.mitchelloharawild.com/img/main/icon.jpg){style="width: 80%;border-radius: 50%;"}
+![](https://avatars.githubusercontent.com/u/16127127?v=4){style="width: 80%;border-radius: 50%;"}
 :::
 
 ::: {.column width="75%"}
