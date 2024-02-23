@@ -63,15 +63,6 @@ Email: [Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
 * Xiefei (Sapphire) Li
 * Xiaoqian Wang
 
-### Consultations
-
-* Mitch
-* Elena
-* Elvis
-* Jarryd
-* Sapphire: 11am - 12.30pm Tuesdays at W1105 Menzies building.
-* Xiaoqian: 4:00–4:45pm Fridays at W926, Menzies Building.
-
 ## Weekly schedule
 
 * [Pre-recorded videos](https://www.youtube.com/watch?v=uwKiT1o1TkI&list=PLyCNZ_xXGzpm7W9jLqbIyBAiSO5jDwJeE): approximately 1 hour per week [[Slides](https://github.com/robjhyndman/fpp3_slides)]
