@@ -381,5 +381,5 @@ tribble(
 #| label: activity
 #| output: asis
 #| echo: false
-show_activity(1, title = FALSE)
+show_activity(1, title = FALSE, show_solutions = FALSE)
 ```

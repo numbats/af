@@ -120,7 +120,7 @@ show_slides <- function(week) {
 }
 
 
-show_activity <- function(week, title = TRUE) {
+show_activity <- function(week, title = TRUE, show_solutions = TRUE) {
   file <- here::here(paste0("week",week,"/activities.qmd"))
   if(!fs::file_exists(file)) {
     file <- here::here(paste0("week",week,"/activities.md"))
@@ -131,10 +131,12 @@ show_activity <- function(week, title = TRUE) {
   }
   cat(activities)
   cat("\n")
-  solutions <- here::here(paste0("week", week, "/solutions.R"))
-  if(fs::file_exists(solutions)) {
-    url <- paste0("https://af.numbat.space/week",week,"/solutions.R")
-    cat(paste0("<a href=", url, " class='badge badge-small badge-green'>Solutions</a>"))
+  if(show_solutions) {
+    solutions <- here::here(paste0("week", week, "/solutions.R"))
+    if(fs::file_exists(solutions)) {
+      url <- paste0("https://af.numbat.space/week",week,"/solutions.R")
+      cat(paste0("<a href=", url, " class='badge badge-small badge-green'>Solutions</a>\n"))
+    }
   }
 }
 
