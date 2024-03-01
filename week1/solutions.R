@@ -11,7 +11,7 @@ mytourism <- mytourism |>
   as_tsibble(index = Quarter, key = c(Region, State, Purpose))
 
 #3. Find combination of Region and Purpose with maximum number of overnight trips on average
-my_tourism |>
+mytourism |>
   as_tibble() |>
   group_by(Region, Purpose) |>
   summarise(Trips = mean(Trips), .groups="drop") |>

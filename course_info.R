@@ -134,7 +134,7 @@ show_activity <- function(week, title = TRUE, show_solutions = TRUE) {
   if(show_solutions) {
     solutions <- here::here(paste0("week", week, "/solutions.R"))
     if(fs::file_exists(solutions)) {
-      url <- paste0("https://af.numbat.space/week",week,"/solutions.R")
+      url <- paste0("https://raw.githubusercontent.com/numbats/af/main/week",week,"/solutions.R")
       cat(paste0("<a href=", url, " class='badge badge-small badge-green'>Solutions</a>\n"))
     }
   }
