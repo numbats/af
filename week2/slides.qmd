@@ -156,6 +156,17 @@ the Grand Prix, advertising campaigns, competition behaviour, etc.
   * They have a highly capable team of people who are able to do
 most of the computing.
 
+## Your turn
+
+We have introduced various functions for time series graphics include `autoplot()`, `gg_season()`, `gg_subseries()`, `gg_lag()` and `ACF`. Use these functions to explore the quarterly tourism data for the Snowy Mountains.
+
+```r
+snowy <- tourism |> filter(Region == "Snowy Mountains")
+```
+
+What do you learn?
+
+
 ## Seasonal or cyclic?
 
 \alert{Differences between seasonal and cyclic patterns:}
@@ -176,16 +187,6 @@ The timing of peaks and troughs is predictable with seasonal data, but unpredict
 - When data have a trend, the autocorrelations for small lags tend to be large and positive.
 - When data are seasonal, the autocorrelations will be larger at the seasonal lags (i.e., at multiples of the seasonal frequency)
 - When data are trended and seasonal, you see a combination of these effects.
-
-## Your turn
-
-We have introduced various functions for time series graphics include `autoplot()`, `gg_season()`, `gg_subseries()`, `gg_lag()` and `ACF`. Use these functions to explore the quarterly tourism data for the Snowy Mountains.
-
-```r
-snowy <- tourism |> filter(Region == "Snowy Mountains")
-```
-
-What do you learn?
 
 
 ## Which is which?
