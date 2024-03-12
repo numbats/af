@@ -5,6 +5,7 @@ title: Assignment 2
 This assignment will use the same data that you will use in the [retail project](Project.qmd) later in semester. Each student will use a different time series, selected using their student ID number as follows.
 
 ```r
+library(fpp3)
 # Replace the seed with your student ID
 set.seed(12345678)
 retail <- readr::read_rds("https://bit.ly/monashretaildata") |>
