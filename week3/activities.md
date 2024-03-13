@@ -6,8 +6,6 @@
     * Victorian Electricity Demand from `vic_elec`.
     * Gas production from `aus_production`
 
-2. Why is a Box-Cox transformation unhelpful for the `canadian_gas` data?
-
 3. Produce the following decomposition
 
     ```r

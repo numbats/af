@@ -1,65 +1,60 @@
 library(fpp3)
 
-# Find a transformation for the following
+# Australian monthly electricity production
+elec1 <- as_tsibble(fma::elec) |>
+  transmute(Month = index, GWh = value)
 
-global_economy |>
-  filter(Country == "United States") |>
-  autoplot(GDP)
+elec1 |>
+  autoplot(box_cox(GWh, lambda = 0.3))
 
-aus_livestock |>
-  filter(Animal == "Bulls, bullocks and steers", State == "Victoria") |>
-  autoplot(Count)
-
-vic_elec |>
-  autoplot(Demand)
-
-aus_production |>
-  autoplot(Gas)
-
-canadian_gas |>
-  autoplot(Volume)
-
-
-## US retail employment ----------------------------------------------------------
-
-us_retail_employment <- us_employment |>
-  filter(year(Month) >= 1990, Title == "Retail Trade") |>
-  select(-Series_ID)
-
-us_retail_employment |>
-  autoplot(Employed) +
-  labs(
-    y = "Persons (thousands)",
-    title = "Total employment in US retail"
-  )
-
-dcmp <- us_retail_employment |>
-  model(stl = STL(Employed))
+dcmp <- elec1 |>
+  model(stl = STL(box_cox(GWh, lambda = 0.3)))
 
 dcmp |>
   components() |>
   autoplot()
 
-components(dcmp) |> gg_subseries(season_year)
+components(dcmp) |>
+  gg_subseries(season_year)
 
-us_retail_employment |>
-  autoplot(Employed, color = "gray") +
-  autolayer(components(dcmp), trend, color = "red") +
-  labs(
-    y = "Persons (thousands)",
-    title = "Total employment in US retail"
-  )
+elec1 |>
+  autoplot(GWh, color = "gray") +
+  autolayer(components(dcmp), inv_box_cox(trend, lambda = 0.3), color = "red")
 
-us_retail_employment |>
-  autoplot(Employed, color = "gray") +
-  autolayer(components(dcmp), season_adjust, color = "blue") +
-  labs(
-    y = "Persons (thousands)",
-    title = "Total employment in US retail"
-  )
+elec1 |>
+  autoplot(GWh, color = "gray") +
+  autolayer(components(dcmp), inv_box_cox(season_adjust, lambda = 0.3), color = "red")
 
-us_retail_employment |>
-  model(STL(Employed ~ season(window = 13) + trend(window = 7), robust = TRUE)) |>
+elec1 |>
+  model(STL(log(GWh) ~ season(window = 3333) + trend(window = 7), robust = TRUE)) |>
   components() |>
-  autoplot() +
-  labs(title = "STL decomposition: US retail employment")
+  autoplot()
+
+
+## Recent data
+
+
+# Monthly electricity production
+elec2 <- readr::read_csv(here::here("week3/MES_1123.csv"),
+                         skip = 8) |>
+  filter(Country == "Australia",
+         Product == "Electricity",
+         Balance == "Net Electricity Production"
+  ) |>
+  transmute(
+    Month = yearmonth(as_date(paste("1",Time), format = "%d %B %Y")),
+    GWh = Value
+  ) |>
+  as_tsibble(index = Month)
+
+elec2 |>
+  autoplot(GWh)
+
+# Find last 14 years of data from previous data set
+elec1 <- elec1 |> filter(year(Month) >= 1982)
+elec1 |> gg_season(GWh)
+
+elec2 |> gg_season(GWh)
+
+elec1 |> gg_subseries(GWh)
+elec2 |> gg_subseries(GWh)
