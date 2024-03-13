@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.3.3",
+    "Version": "4.3.2",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -621,14 +621,14 @@
     },
     "digest": {
       "Package": "digest",
-      "Version": "0.6.34",
+      "Version": "0.6.35",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "utils"
       ],
-      "Hash": "7ede2ee9ea8d3edbf1ca84c1e333ad1a"
+      "Hash": "698ece7ba5a4fa4559e3d537e7ec3d31"
     },
     "distributional": {
       "Package": "distributional",
@@ -801,9 +801,14 @@
     },
     "feasts": {
       "Package": "feasts",
-      "Version": "0.3.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Version": "0.3.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "feasts",
+      "RemoteUsername": "tidyverts",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "394be963d02f2fa2dcd6ab149a9a63f3760814a4",
       "Requirements": [
         "R",
         "dplyr",
@@ -822,7 +827,7 @@
         "utils",
         "vctrs"
       ],
-      "Hash": "4e2130fecd2802de19c69d129abab1db"
+      "Hash": "4ae0965ffbf73ec828ea51b844dc5e4b"
     },
     "fma": {
       "Package": "fma",
@@ -1593,11 +1598,11 @@
       "Version": "0.1.0.9001",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "moodlequiz",
       "RemoteUsername": "numbats",
+      "RemoteRepo": "moodlequiz",
       "RemoteRef": "HEAD",
       "RemoteSha": "db21949ffb70c961fec57ba31c898b37f90b46e9",
+      "RemoteHost": "api.github.com",
       "Requirements": [
         "bookdown",
         "knitr",
@@ -2355,7 +2360,7 @@
     },
     "tidyselect": {
       "Package": "tidyselect",
-      "Version": "1.2.0",
+      "Version": "1.2.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2367,7 +2372,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "79540e5fcd9e0435af547d885f184fd5"
+      "Hash": "829f27b9c4919c16b593794a6344d6c0"
     },
     "tidyverse": {
       "Package": "tidyverse",
