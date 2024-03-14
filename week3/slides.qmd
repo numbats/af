@@ -11,16 +11,23 @@ format:
         dev: "cairo_pdf"
     pdf-engine: pdflatex
     fig-width: 7.5
-    fig-height: 3.5
+    fig-height: 3
     include-in-header: ../header.tex
 ---
 
 ```{r setup, include=FALSE}
 source(here::here("setup.R"))
-library(purrr)
-library(transformr) # Just to get it on renv
-library(gganimate)
-library(latex2exp)
+source(here::here("course_info.R"))
+```
+
+## Your turn
+\fontsize{13}{14}\sf
+
+```{r}
+#| label: activity
+#| output: asis
+#| echo: false
+show_activity(3, title = FALSE, show_solutions = FALSE)
 ```
 
 
@@ -162,7 +169,6 @@ components(dcmp) |>
 ```
 
 ## The ABS stuff-up
-\fontsize{13}{15}\sf
 
   *  August 2014 employment numbers higher than expected.
   *  Supplementary survey usually conducted in August for employed people.

@@ -1,21 +1,13 @@
 
-1. For the following series, find an appropriate Box-Cox transformation in order to stabilise the variance.
-
-    * United States GDP from `global_economy`
-    * Slaughter of Victorian “Bulls, bullocks and steers” in `aus_livestock`
-    * Victorian Electricity Demand from `vic_elec`.
-    * Gas production from `aus_production`
-
-3. Produce the following decomposition
+1.  Produce an STL decomposition as follows
 
     ```r
-    canadian_gas |>
-      STL(Volume ~ season(window=7) + trend(window=11)) |>
-      autoplot()
+    us_construction <- us_employment |>
+      filter(Title == "Construction", year(Month) > 1980)
+    dcmp <- us_construction |>
+      model(stl = STL(Employed ~ trend(window = 9) + season(window = 11)))
+    dcmp |> components() |> autoplot()
     ```
-
-4. What happens as you change the values of the two `window` arguments?
-
-5. How does the seasonal shape change over time? [Hint: Try plotting the seasonal component using `gg_season`.]
-
-6. Can you produce a plausible seasonally adjusted series? [Hint: `season_adjust` is one of the variables returned by `STL`.]
+2. What happens as you change the values of the two `window` arguments?
+3. How does the seasonal shape change over time? *[Hint:&nbsp;Try&nbsp;plotting the seasonal component using `gg_season`.]*
+4. Can you produce a plausible seasonally adjusted series? *[Hint:&nbsp;`season_adjust` is returned by `components()`.]*
