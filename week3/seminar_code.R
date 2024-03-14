@@ -2,10 +2,16 @@ library(fpp3)
 
 # Australian monthly electricity production
 elec1 <- as_tsibble(fma::elec) |>
-  transmute(Month = index, GWh = value)
+  rename(Month = index, GWh = value)
+
+elec1
 
 elec1 |>
-  autoplot(box_cox(GWh, lambda = 0.3))
+  autoplot(GWh)
+
+lambda <- elec1 |> features(GWh, guerrero)
+elec1 |>
+  autoplot(box_cox(GWh, lambda = lambda))
 
 dcmp <- elec1 |>
   model(stl = STL(box_cox(GWh, lambda = 0.3)))
@@ -19,14 +25,16 @@ components(dcmp) |>
 
 elec1 |>
   autoplot(GWh, color = "gray") +
-  autolayer(components(dcmp), inv_box_cox(trend, lambda = 0.3), color = "red")
+  autolayer(components(dcmp), inv_box_cox(trend, lambda = 0.3),
+            color = "red")
 
 elec1 |>
   autoplot(GWh, color = "gray") +
   autolayer(components(dcmp), inv_box_cox(season_adjust, lambda = 0.3), color = "red")
 
 elec1 |>
-  model(STL(log(GWh) ~ season(window = 3333) + trend(window = 7), robust = TRUE)) |>
+  model(STL(log(GWh) ~ season(window = 11) + trend(window = 909995),
+            robust = TRUE)) |>
   components() |>
   autoplot()
 
@@ -68,13 +76,19 @@ us_construction <- us_employment |>
 us_construction |> autoplot(Employed)
 
 dcmp <- us_construction |>
-  model(stl = STL(Employed ~ trend(window = 9) + season(window = 7)))
+  model(stl = STL(Employed ~ trend(window = 9) +
+                    season(window = 9)))
 dcmp |>
   components() |>
   autoplot()
 dcmp |>
   components() |>
   gg_season(season_year)
+
+dcmp |>
+  components() |>
+  as_tsibble() |>
+  autoplot(season_adjust)
 
 
 ## ABS employment problem
