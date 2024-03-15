@@ -7,10 +7,17 @@ title: Retail Project
 **Data:** Each student will be use a different time series, selected using their student ID number as follows. This is the same series that you used in [Assignment 2](A2.qmd).
 
 ```r
-# Use your student ID as the seed
-set.seed(12345678)
-retail <- readr::read_rds("https://bit.ly/monashretaildata") |>
-  filter(`Series ID` == sample(`Series ID`, 1))
+library(fpp3)
+get_my_data <- function(student_id) {
+  set.seed(student_id)
+  all_data <- fill_gaps(readr::read_rds("https://bit.ly/monashretaildata"))
+  while(TRUE) {
+    retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1)) 
+    if(!any(is.na(retail$Turnover))) return(retail)
+  }
+}
+# Replace the argument with your student ID
+retail <- get_my_data(12345678)
 ```
 
 **Assignment value:** This assignment is worth 20% of the overall unit assessment.
