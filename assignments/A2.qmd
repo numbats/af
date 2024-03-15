@@ -6,10 +6,16 @@ This assignment will use the same data that you will use in the [retail project]
 
 ```r
 library(fpp3)
-# Replace the seed with your student ID
-set.seed(12345678)
-retail <- readr::read_rds("https://bit.ly/monashretaildata") |>
-  filter(`Series ID` == sample(`Series ID`, 1))
+get_my_data <- function(student_id) {
+  set.seed(student_id)
+  all_data <- fill_gaps(readr::read_rds("https://bit.ly/monashretaildata"))
+  while(TRUE) {
+    retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1)) 
+    if(!any(is.na(retail$Turnover))) return(retail)
+  }
+}
+# Replace the argument with your student ID
+retail <- get_my_data(12345678)
 ```
 
   1. Plot your time series using the `autoplot()` command. What do you learn from the plot?
