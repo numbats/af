@@ -1,5 +1,7 @@
 ---
 title: "Exercise Week 2: Solutions"
+execute:
+  echo: true
 ---
 
 ```{r, message = FALSE}
