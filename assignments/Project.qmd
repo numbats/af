@@ -10,10 +10,10 @@ title: Retail Project
 library(fpp3)
 get_my_data <- function(student_id) {
   set.seed(student_id)
-  all_data <- fill_gaps(readr::read_rds("https://bit.ly/monashretaildata"))
+  all_data <- readr::read_rds("https://bit.ly/monashretaildata")
   while(TRUE) {
     retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1)) 
-    if(!any(is.na(retail$Turnover))) return(retail)
+    if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)
   }
 }
 # Replace the argument with your student ID
