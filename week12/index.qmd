@@ -29,7 +29,7 @@ show_slides(week)
 ## Post-class activities
 
 * Do any exercises not yet finished.
-* Complete past exams
+* Complete past exams: [[2021](/exams/exam_2021.pdf)] [[2022](/exams/exam_2022.pdf)] [[2023](/exams/exam_2023.pdf)]
 * Re-read the textbook
 * Listen again to all lectures
 
