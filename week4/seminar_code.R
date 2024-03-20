@@ -1,6 +1,6 @@
 library(fpp3)
 
-## ---- Holiday tourism by state------------------------------------------------
+## ---- Holiday tourism by state --------------
 
 holidays <- tourism |>
   as_tibble() |>
@@ -8,9 +8,7 @@ holidays <- tourism |>
   summarise(Trips = sum(Trips), .by = c("State", "Quarter")) |>
   as_tsibble(index = Quarter, key = State)
 
-
-## Fit models ------------------------------------------------------------------
-
+## Fit models
 fit <- holidays |>
   model(
     Seasonal_naive = SNAIVE(Trips),
@@ -20,7 +18,6 @@ fit <- holidays |>
   )
 
 ## Check residuals
-
 fit |>
   filter(State == "Victoria") |>
   select(Seasonal_naive) |>
@@ -33,10 +30,10 @@ augment(fit) |>
 ## Which model fits best?
 
 accuracy(fit) |>
-  group_by(.model) |>
   summarise(
     RMSSE = sqrt(mean(RMSSE^2)),
-    MAPE = mean(MAPE)
+    MAPE = mean(MAPE),
+    .by = .model
   ) |>
   arrange(RMSSE)
 
@@ -71,12 +68,6 @@ stl_fit |>
   forecast(h = "4 years") |>
   autoplot(holidays)
 
-accuracy(stl_fit) |>
-  summarise(
-    RMSSE = sqrt(mean(RMSSE^2)),
-    MAPE = mean(MAPE)
-  )
-
 # Use a test set of last 2 years to check forecast accuracy
 
 training <- holidays |>
@@ -102,10 +93,10 @@ test_fc |>
 
 test_fc |>
   accuracy(holidays) |>
-  group_by(.model) |>
   summarise(
     RMSSE = sqrt(mean(RMSSE^2)),
-    MAPE = mean(MAPE)
+    MAPE = mean(MAPE),
+    .by = .model
   ) |>
   arrange(RMSSE)
 
@@ -136,8 +127,52 @@ cv_fc <- cv_fit |>
 
 cv_fc |>
   accuracy(holidays, by = c("h", ".model", "State")) |>
-  group_by(.model, h) |>
-  summarise(RMSSE = sqrt(mean(RMSSE^2))) |>
+  summarise(
+    RMSSE = sqrt(mean(RMSSE^2)),
+    .by = c(.model, h)
+  ) |>
   ggplot(aes(x=h, y=RMSSE, group=.model, col=.model)) +
   geom_line()
 
+
+## hh_budget exercise
+
+# 1. Create training set by withholding last four years
+train <- hh_budget |>
+  filter(Year <= max(Year) - 4)
+#2. Fit benchmarks
+fit <- train |>
+  model(
+    naive = NAIVE(Wealth),
+    drift = RW(Wealth ~ drift()),
+    mean = MEAN(Wealth)
+  )
+fc <- fit |> forecast(h = 4)
+
+# 3. Compute accuracy
+fc |>
+  accuracy(hh_budget) |>
+  arrange(Country, RMSE)
+fc |>
+  accuracy(hh_budget) |>
+  summarise(RMSE = sqrt(mean(RMSE^2)), .by=.model) |>
+  arrange(RMSE)
+
+# 4. Do the residuals resemble white noise?
+
+fit |>
+  filter(Country == "Australia") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "Canada") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "Japan") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "USA") |>
+  select(drift) |>
+  gg_tsresiduals()

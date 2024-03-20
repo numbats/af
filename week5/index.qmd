@@ -18,7 +18,7 @@ Read [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) 
 
 ## Exercises (on your own or in tutorial)
 
-Complete Exercises 1-6, 8-9, 11-12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
+Complete Exercises 1-6, 8, 11-12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
 
 ```{r}
 #| output: asis
