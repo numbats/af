@@ -62,5 +62,3 @@ execute:
   message: false
   warning: false
   cache: false
-
-latex-tinytex: false
