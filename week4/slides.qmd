@@ -8,16 +8,20 @@ format:
     section-titles: false
     knitr:
       opts_chunk:
-        dev: "cairo_pdf"
+        dev: "CairoPDF"
     pdf-engine: pdflatex
     fig-width: 7.5
     fig-height: 3.5
     include-in-header: ../header.tex
+highlight-style: tango
+execute:
+  freeze: false
 ---
 
 ```{r setup, include=FALSE}
 source(here::here("setup.R"))
 ```
+
 ```{r tscvplots, echo=FALSE}
 tscv_plot <- function(.init, .step, h = 1) {
   expand.grid(
@@ -27,8 +31,8 @@ tscv_plot <- function(.init, .step, h = 1) {
     group_by(.id) |>
     mutate(
       observation = case_when(
-        time <= ((.id - 1) * .step + .init) ~ "train",
-        time %in% c((.id - 1) * .step + .init + h) ~ "test",
+        time <= ((min(.id) - 1) * .step + .init) ~ "train",
+        time %in% c((min(.id) - 1) * .step + .init + h) ~ "test",
         TRUE ~ "unused"
       )
     ) |>
@@ -43,12 +47,11 @@ tscv_plot <- function(.init, .step, h = 1) {
     geom_point(aes(col = observation), size = 2) +
     scale_y_reverse() +
     scale_color_manual(values = c(train = "#0072B2", test = "#D55E00", unused = "gray")) +
-    # theme_void() +
-    # geom_label(aes(x = 28.5, y = 1, label = "time")) +
     guides(col = FALSE) +
     labs(x = "time", y = "") +
     theme_void() +
-    theme(axis.title = element_text())
+    theme(axis.title.x = element_text(margin = margin(t = 2))) +
+    theme(text = ggplot2::element_text(family = 'Fira Sans'))
 }
 ```
 
@@ -57,19 +60,24 @@ tscv_plot <- function(.init, .step, h = 1) {
 **Traditional evaluation**
 
 ```{r traintest1, fig.height=1, echo=FALSE}
+#| cache: false
 tscv_plot(.init = 18, .step = 10, h = 1:8) +
-  geom_text(aes(x = 10, y = 0.8, label = "Training data"), color = "#0072B2") +
-  geom_text(aes(x = 21, y = 0.8, label = "Test data"), color = "#D55E00") +
+  annotate("text", x = 10, y = 0.8, label = "Training data",
+    color = "#0072B2", family = 'Fira Sans') +
+  annotate("text", x = 21, y = 0.8, label = "Test data",
+    color = "#D55E00", family = 'Fira Sans') +
   ylim(1, 0)
 ```
 
 \pause
 
 **Time series cross-validation**
+\vspace*{-0.25cm}
 
-```{r tscvggplot1, echo=FALSE, fig.height=2.2}
+```{r tscvggplot1, echo=FALSE, fig.height=2.15}
 tscv_plot(.init = 8, .step = 1, h = 1) +
-  geom_text(aes(x = 21, y = 0, label = "h = 1"), color = "#D55E00")
+  annotate("text", x = 21, y = 0, label = "h = 1",
+    color = "#D55E00", family = 'Fira Sans')
 ```
 
 ## Time series cross-validation {-}
@@ -80,10 +88,12 @@ tscv_plot(.init = 8, .step = 1, h = 1) +
 ```
 
 **Time series cross-validation**
+\vspace*{-0.25cm}
 
-```{r tscvggplot2, echo=FALSE,  fig.height=2.2}
+```{r tscvggplot2, echo=FALSE,  fig.height=2.15}
 tscv_plot(.init = 8, .step = 1, h = 2) +
-  geom_text(aes(x = 21, y = 0, label = "h = 2"), color = "#D55E00")
+  annotate("text", x = 21, y = 0, label = "h = 2",
+    color = "#D55E00", family = 'Fira Sans')
 ```
 
 ## Time series cross-validation {-}
@@ -94,10 +104,12 @@ tscv_plot(.init = 8, .step = 1, h = 2) +
 ```
 
 **Time series cross-validation**
+\vspace*{-0.25cm}
 
-```{r tscvggplot3, echo=FALSE,  fig.height=2.2}
+```{r tscvggplot3, echo=FALSE,  fig.height=2.15}
 tscv_plot(.init = 8, .step = 1, h = 3) +
-  geom_text(aes(x = 21, y = 0, label = "h = 3"), color = "#D55E00")
+  annotate("text", x = 21, y = 0, label = "h = 3",
+    color = "#D55E00", family = 'Fira Sans')
 ```
 
 ## Time series cross-validation {-}
@@ -108,10 +120,12 @@ tscv_plot(.init = 8, .step = 1, h = 3) +
 ```
 
 **Time series cross-validation**
+\vspace*{-0.25cm}
 
-```{r tscvggplot4, echo=FALSE, fig.height=2.2}
+```{r tscvggplot4, echo=FALSE, fig.height=2.15}
 tscv_plot(.init = 8, .step = 1, h = 4) +
-  geom_text(aes(x = 21, y = 0, label = "h = 4"), color = "#D55E00")
+  annotate("text", x = 21, y = 0, label = "h = 4",
+    color = "#D55E00", family = 'Fira Sans')
 ```
 
 \only<2>{\begin{textblock}{8}(.5,6.4)\begin{block}{}\fontsize{12}{13}\sf
