@@ -24,3 +24,15 @@ title: Assignment 1
 source(here::here("course_info.R"))
 submit(schedule, "Assignment 1")
 ```
+
+## Results
+
+* [Q1](https://robjhyndman.com/etc3550/Q1.png)
+* [Q2](https://robjhyndman.com/etc3550/Q2.png)
+* [Q3](https://robjhyndman.com/etc3550/Q3.png)
+* [Q4](https://robjhyndman.com/etc3550/Q4.png)
+* [Q5](https://robjhyndman.com/etc3550/Q5.png)
+
+## Leaderboard
+
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRiDdZRiT4hQK5b67XV3SZZSXm_hVHNwg1m4Jx3uUBxVREEsfhlcCgV-nNJRg-8l3IX8OuuQz5zQBnz/pubhtml?gid=185527398&amp;single=true&amp;widget=true&amp;headers=false" width = "100%" height = 500></iframe>
