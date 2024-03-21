@@ -4,7 +4,7 @@ title: Retail Project
 
 **Objective:** To forecast a real time series using ETS and ARIMA models.
 
-**Data:** Each student will be use a different time series, selected using their student ID number as follows. This is the same series that you used in [Assignment 2](A2.qmd).
+**Data:** The data are monthly measures of retail trade volume in Australia, [obtained from the ABS](https://www.abs.gov.au/methodologies/retail-trade-australia-methodology/jan-2024). Each student will be use a different time series, selected using their student ID number as follows. This is the same series that you used in [Assignment 2](A2.qmd).
 
 ```r
 library(fpp3)
@@ -12,7 +12,7 @@ get_my_data <- function(student_id) {
   set.seed(student_id)
   all_data <- readr::read_rds("https://bit.ly/monashretaildata")
   while(TRUE) {
-    retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1)) 
+    retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1))
     if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)
   }
 }
