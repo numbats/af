@@ -24,6 +24,17 @@ Complete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/f
 ```{r}
 #| output: asis
 show_slides(week)
-show_activity(week)
+```
+
+[**R code used in seminar**](seminar_code.R)
+
+## Seminar activities
+
+```{r}
+#| child: activities.md
+```
+
+
+```{r}
 show_assignments(week)
 ```
