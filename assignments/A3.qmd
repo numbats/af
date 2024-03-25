@@ -5,6 +5,7 @@ title: Assignment 3
 This assignment will use national population data from 1960 -- 2022. Each student will use a different time series, selected using their student ID number as follows.
 
 ```r
+library(fpp3)
 # Replace seed with your student ID
 set.seed(12345678)
 pop <- readr::read_rds("https://bit.ly/monashpopulationdata") |>

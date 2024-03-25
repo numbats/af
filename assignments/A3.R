@@ -22,6 +22,8 @@ pop <- wdi |>
     Year = Year,
     Population = `Population, total`
   ) |>
+  # Remove Palestine which has no data before 1990
+  filter(Code != "PSE") |>
   as_tsibble(key = Country, index = Year)
 
 # Save data
