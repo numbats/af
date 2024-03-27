@@ -130,7 +130,7 @@ gafa_stock |>
 download.file("http://OTexts.com/fpp3/extrafiles/tute1.csv",
               tute1 <- tempfile())
 tute1 <- readr::read_csv(tute1)
-View(tute1)
+tute1
 mytimeseries <- tute1 |>
   mutate(Quarter = yearquarter(Quarter)) |>
   as_tsibble(index = Quarter)
