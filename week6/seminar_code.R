@@ -16,18 +16,42 @@ fit <- china |>
   model(
     ets = ETS(GDP),
     ets_damped = ETS(GDP ~ trend("Ad")),
-    ets_bc = ETS(box_cox(GDP, 0.6)),
+    ets_bc = ETS(box_cox(GDP, 0.2)),
     ets_log = ETS(log(GDP))
   )
 
+## Check models
 fit
-
+glance(fit)
+tidy(fit)
 augment(fit)
+fit  |>
+  select(ets)  |>
+  gg_tsresiduals()
+augment(fit) |> features(.innov, ljung_box, lag = 10)
 
+## Forecasts
 fit |>
   forecast(h = "20 years") |>
   autoplot(china, level = NULL) +
   scale_y_log10()
+
+
+## Add time series cross validation
+
+china_stretch <- china |> stretch_tsibble(.init = 20, .step = 1)
+
+fit <- china_stretch |>
+  model(
+    ets = ETS(GDP),
+    ets_damped = ETS(GDP ~ trend("Ad")),
+    ets_bc = ETS(box_cox(GDP, 0.2)),
+    ets_log = ETS(log(GDP))
+  )
+fit
+fc <- fit |> forecast(h = 10)
+accuracy(fc, china)  |>
+  arrange(RMSE)
 
 # Australian gas production
 
