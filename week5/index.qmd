@@ -24,7 +24,7 @@ Complete Exercises 1-6, 8, 11-12 from [Section 5.11 of the book](https://otexts.
 
 ```{r}
 #| output: asis
-show_slides(week)
-show_activity(week)
+#show_slides(week)
+#show_activity(week)
 show_assignments(week)
 ```
