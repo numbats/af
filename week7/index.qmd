@@ -18,7 +18,7 @@ Read [Sections 9.1-9.4 of the textbook](https://otexts.com/fpp3/arima.html) and 
 
 ## Exercises (on your own or in tutorial)
 
-Complete Exercises 5-15 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).
+Complete Exercises 5,8-15 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).
 
 ```{r}
 #| output: asis

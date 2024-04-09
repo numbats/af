@@ -1,110 +1,86 @@
 library(fpp3)
 
-## Example: Australian holiday tourism by Region
+# Chinese GDP
 
-holidays <- tourism |>
-  filter(Purpose == "Holiday")
-fit <- holidays |>
-  model(ets = ETS(Trips))
-fit |>
-  filter(Region == "Snowy Mountains") |>
-  report()
-fit |>
-  filter(Region == "Snowy Mountains") |>
-  components(fit) |>
-  autoplot()
-fit |>
-  filter(Region == "Snowy Mountains") |>
-  forecast() |>
-  autoplot(holidays, show_gap = FALSE) +
-  xlab("Year") + ylab("Overnight trips (thousands)")
+china <- global_economy |>
+  filter(Country == "China")  |>
+  transmute(GDP = GDP/1e9)
 
-# Sum over regions
+china |> autoplot(GDP)
+china |> autoplot(log(GDP))
 
-aus_holidays <- tourism |>
-  filter(Purpose == "Holiday") |>
-  summarise(Trips = sum(Trips))
-aus_holidays |> autoplot()
+china |> model(ETS(GDP)) |> report()
+china |> model(ETS(GDP)) |> forecast(h=20) |> autoplot(china, level = NULL)
 
-fit <- aus_holidays |>
+fit <- china |>
   model(
-    additive = ETS(Trips ~ error("A") + trend("A") + season("A")),
-    multiplicative = ETS(Trips ~ error("M") + trend("A") + season("M")),
-    auto = ETS(Trips)
+    ets = ETS(GDP),
+    ets_damped = ETS(GDP ~ trend("Ad")),
+    ets_bc = ETS(box_cox(GDP, 0.6)),
+    ets_log = ETS(log(GDP))
   )
 
-fit |>
-  select(multiplicative) |>
-  report()
+fit
 
-components(fit) |> autoplot()
+augment(fit)
 
 fit |>
-  select(multiplicative) |>
-  components() |>
-  autoplot()
+  forecast(h = "20 years") |>
+  autoplot(china, level = NULL) +
+  scale_y_log10()
 
-fit |> augment()
+# Australian gas production
 
-residuals(fit)
-residuals(fit, type = "innov")
+aus_production |>
+  autoplot(Gas)
+
+fit <- aus_production |>
+  model(
+    auto = ETS(Gas),
+    hw = ETS(Gas ~ error("M") + trend("A") + season("M")),
+    hwdamped = ETS(Gas ~ error("M") + trend("Ad") + season("M")),
+  )
+fit
+fit |> glance()
 
 fit |>
-  select(multiplicative) |>
+  select(hw) |>
   gg_tsresiduals()
 
-fc <- fit |> forecast()
-
-fc |>
-  autoplot(aus_holidays) + xlab("Year") +
-  ylab("Overnight trips (thousands)")
-
-
-## H02
-
-h02 <- PBS |>
-  filter(ATC2 == "H02") |>
-  summarise(Cost = sum(Cost))
-h02 |>
-  autoplot(Cost)
-
-h02 |>
-  model(ETS(Cost)) |>
-  report()
-
-h02 |>
-  model(ETS(Cost ~ error("A") + trend("A") + season("A"))) |>
-  report()
-
-h02 |>
-  model(ETS(Cost)) |>
-  forecast() |>
-  autoplot(h02)
-
-fit <- h02 |>
-  model(
-    auto = ETS(Cost),
-    AAA = ETS(Cost ~ error("A") + trend("A") + season("A")),
-    damped = ETS(Cost ~ trend("Ad")),
-    forbidden = ETS(Cost ~ error("A") + trend("Ad") + season("M"))
-  )
-
-fit |> glance()
-fit |> accuracy()
 fit |> tidy()
 
-# Example of STL + ETS
+fit |>
+  augment() |>
+  filter(.model == "hw") |>
+  features(.innov, ljung_box, lag = 24)
 
-stl_fit <- h02 |>
+fit |>
+  forecast(h = 36) |>
+  filter(.model == "hw") |>
+  autoplot(aus_production)
+
+# Try fitting model to data since 1990
+
+fit <- aus_production |>
+  filter(year(Quarter) >= 1990) |>
   model(
-    decomposition_model(
-      STL(Cost),
-      ETS(season_adjust),
-      SNAIVE(season_year)
-    )
+    auto = ETS(Gas),
+    hw = ETS(Gas ~ error("M") + trend("A") + season("M")),
+    hwdamped = ETS(Gas ~ error("M") + trend("Ad") + season("M")),
   )
-stl_fit |> report()
+fit
+fit |> glance()
 
-stl_fit |>
-  forecast(h = 24) |>
-  autoplot(h02)
+fit |>
+  select(auto) |>
+  gg_tsresiduals()
+
+fit |>
+  augment() |>
+  filter(.model == "auto") |>
+  features(.innov, ljung_box, lag = 24)
+
+fit |>
+  forecast(h = 36) |>
+  filter(.model == "auto") |>
+  autoplot(aus_production)
