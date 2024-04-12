@@ -32,6 +32,8 @@ show_slides(week)
 {{< include activity1.md >}}
 {{< include activity2.md >}}
 
+[**R code used in seminar**](seminar_code.R)
+
 ```{r}
 #| output: asis
 show_assignments(week)
