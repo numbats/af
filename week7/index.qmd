@@ -10,7 +10,7 @@ source(here::here("course_info.R"))
 ## What you will learn this week
 
 * Stationarity and differencing
-* Autoregressive and moving average models
+* Unit root tests
 
 ## Pre-class activities
 
