@@ -39,7 +39,7 @@ tsibble(time = 1:50, y = generate_ar1(n=50, c=1, phi=0.8), index = time) |>
 
    Here `phi` and `theta` are vectors of AR and MA coefficients. Your function should return a numeric vector of length `n`.
 
-   For example `generate_arima(n = 50, d = 1, c = 2, theta = c(0.3, -0.6))` should return 50 observations generated from the ARIMA(2,1,0) model
+   For example `generate_arima(n = 50, d = 1, c = 2, theta = c(0.3, -0.6))` should return 50 observations generated from the ARIMA(0,1,2) model
    $$y_t = y_{t-1} + 2 + 0.3\varepsilon_{t-1} - 0.6\varepsilon_{t-2} + \varepsilon_t$$
    where $\varepsilon \sim N(0,1)$.
 
