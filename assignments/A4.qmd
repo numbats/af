@@ -31,16 +31,16 @@ tsibble(time = 1:50, y = generate_ar1(n=50, c=1, phi=0.8), index = time) |>
 ## Instructions
 
 <ol>
-<li> Modify the `generate_ar1` function to generate data from an ARIMA(p,d,q) model with parameters to be specified by the user. The first line of your function definition should be
+<li> Modify the `generate_ar1` function to generate data from an ARIMA(p,0,q) model with parameters to be specified by the user. The first line of your function definition should be
 
   ```r
-  generate_arima <- function(n = 100, d = 0, c = 0, phi = NULL, theta = NULL, sigma = 1)
+  generate_arma <- function(n = 100, c = 0, phi = NULL, theta = NULL, sigma = 1)
   ```
 
    Here `phi` and `theta` are vectors of AR and MA coefficients. Your function should return a numeric vector of length `n`.
 
-   For example `generate_arima(n = 50, d = 1, c = 2, theta = c(0.3, -0.6))` should return 50 observations generated from the ARIMA(0,1,2) model
-   $$y_t = y_{t-1} + 2 + 0.3\varepsilon_{t-1} - 0.6\varepsilon_{t-2} + \varepsilon_t$$
+   For example `generate_arma(n = 50, c = 2, phi = 0.4, theta = c(0.3, -0.6))` should return 50 observations generated from the ARIMA(1,0,2) model
+   $$y_t = 2 + 0.4 y_{t-1} + 0.3\varepsilon_{t-1} - 0.6\varepsilon_{t-2} + \varepsilon_t$$
    where $\varepsilon \sim N(0,1)$.
 
 <li> The noise should be generated using the `rnorm()` function.
@@ -59,7 +59,6 @@ tsibble(time = 1:50, y = generate_ar1(n=50, c=1, phi=0.8), index = time) |>
 
 <li> The above function sets the first value of every series to 0. Your function should fix this problem by generating more observations than required and then discarding the first few observations. You will need to consider how many observations to discard, to prevent the returned series from being affected by the initial values.
 
-<li> You may find the `diffinv()` function useful.
 </ol>
 
 Please submit your solution as a .R file.
