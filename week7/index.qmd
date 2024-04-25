@@ -29,5 +29,6 @@ show_activity(week)
 [**R code used in seminar**](seminar_code.R)
 
 ```{r}
+#| output: asis
 show_assignments(week)
 ```
