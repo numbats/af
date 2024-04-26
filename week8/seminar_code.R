@@ -56,7 +56,8 @@ fit <- pelt |>
     auto = ARIMA(sqrt(Lynx)),
     ar2 = ARIMA(sqrt(Lynx) ~ pdq(2,0,0)),
     ar3 = ARIMA(sqrt(Lynx) ~ pdq(3,0,0)),
-    tryhard = ARIMA(sqrt(Lynx), stepwise = FALSE, approximation = FALSE,
+    tryhard = ARIMA(sqrt(Lynx), stepwise = FALSE,
+                    approximation = FALSE,
                     order_constraint = p + q <= 10)
   )
 fit
@@ -67,7 +68,7 @@ fit |>
   gg_tsresiduals()
 
 fit |>
-  forecast(h = 20) |>
+  forecast(h = 80) |>
   autoplot(pelt, level = NULL) +
   labs(y = "Number of Lynx", title = "Lynx Forecast")
 
