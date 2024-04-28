@@ -216,4 +216,6 @@ MA:& $q =$ order of the moving average part.
 
 ## Exercise
 
-* Find an ARIMA model for the `pelt::Lynx` data
+```{r}
+#| child: activities.qmd
+```
