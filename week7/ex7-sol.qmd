@@ -1,0 +1,735 @@
+---
+title: "Exercise Week 7: Solutions"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, cache=TRUE)
+```
+
+```{r, message = FALSE}
+library(fpp3)
+```
+
+# fpp3 8.8, Ex5
+
+>  Data set `global_economy` contains the annual Exports from many countries. Select one country to analyse.
+>
+>    a. Plot the Exports series and discuss the main features of the data.
+
+```{r}
+global_economy |>
+  filter(Country == "Argentina") |>
+  autoplot(Exports)
+```
+
+There is a huge jump in Exports in 2002, due to the deregulation of the Argentinian peso. Since then, Exports (as a percentage of GDP) has gradually returned to 1990 levels.
+
+>    b. Use an ETS(A,N,N) model to forecast the series, and plot the forecasts.
+
+```{r}
+etsANN <- global_economy |>
+  filter(Country == "Argentina") |>
+  model(ETS(Exports ~ error("A") + trend("N") + season("N")))
+etsANN |>
+  forecast(h = 10) |>
+  autoplot(global_economy)
+```
+
+>    c. Compute the RMSE values for the training data.
+
+```{r}
+accuracy(etsANN) |> select(RMSE)
+```
+
+>    d. Compare the results to those from an ETS(A,A,N) model. (Remember that the trended model is using one more parameter than the simpler model.) Discuss the merits of the two forecasting methods for this data set.
+
+```{r}
+fit <- global_economy |>
+  filter(Country == "Argentina") |>
+  model(
+    ses = ETS(Exports ~ error("A") + trend("N") + season("N")),
+    holt = ETS(Exports ~ error("A") + trend("A") + season("N"))
+  )
+accuracy(fit)
+```
+
+There is very little difference in training RMSE between these models. So the extra parameter is not doing much.
+
+>    e. Compare the forecasts from both methods. Which do you think is best?
+
+```{r}
+fit |>
+  forecast(h = 10) |>
+  autoplot(global_economy)
+```
+
+The forecasts are similar. In this case, the simpler model is preferred.
+
+>    f. Calculate a 95% prediction interval for the first forecast for each series, using the RMSE values and assuming normal errors. Compare your intervals with those produced using R.
+
+1.  standard error. (from RMSE)
+2.  mean (from forecast)
+
+```{r}
+s <- accuracy(fit) |> pull(RMSE)
+yhat <- forecast(fit, h = 1) |> pull(.mean)
+# SES
+yhat[1] + c(-1, 1) * qnorm(0.975) * s[1]
+# Holt
+yhat[2] + c(-1, 1) * qnorm(0.975) * s[2]
+fit |>
+  forecast(h = 1) |>
+  mutate(PI = hilo(Exports, level = 95))
+```
+
+-   Using RMSE yields narrower prediction interval while using the values from
+    `hilo()` function gives wider prediction interval.
+
+-   Using RMSE has failed to take account of the degrees of freedom for each
+    model. Compare the following
+
+```{r}
+sse <- augment(fit) |>
+  as_tibble() |>
+  group_by(.model) |>
+  summarise(s = sum(.resid^2)) |>
+  pull(s)
+
+n <- global_economy |>
+  filter(Country == "Argentina") |>
+    nrow()
+
+# sse method= alpha, level=> 2
+# holt linear = alpha, level, trend, b => 4
+
+s <- sqrt(sse / (n - c(2, 4)))
+
+# SES
+yhat[1] + c(-1, 1) * qnorm(0.975) * s[1]
+# Holt
+yhat[2] + c(-1, 1) * qnorm(0.975) * s[2]
+```
+
+# fpp3 8.8, Ex6
+
+> Forecast the Chinese GDP from the `global_economy` data set using an ETS model. Experiment with the various options in the `ETS()` function to see how much the forecasts change with damped trend, or with a Box-Cox transformation. Try to develop an intuition of what each is doing to the forecasts.
+
+> [Hint: use `h=20` when forecasting, so you can clearly see the differences between the various options when plotting the forecasts.]
+
+```{r}
+china <- global_economy |>
+  filter(Country == "China")
+china |> autoplot(GDP)
+```
+
+-   It clearly needs a relatively strong transformation due to the increasing
+    variance.
+
+```{r}
+china |> autoplot(box_cox(GDP, 0.2))
+china |> features(GDP, guerrero)
+```
+
+-   Making $\lambda=0.2$ looks ok.
+
+-   The Guerrero method suggests an even stronger transformation. Let's also try
+    a log.
+
+```{r}
+fit <- china |>
+  model(
+    ets = ETS(GDP),
+    ets_damped = ETS(GDP ~ trend("Ad")),
+    ets_bc = ETS(box_cox(GDP, 0.2)),
+    ets_log = ETS(log(GDP))
+  )
+
+fit
+
+augment(fit)
+
+fit |>
+  forecast(h = "20 years") |>
+  autoplot(china, level = NULL)
+```
+
+-   The transformations have a big effect, with small lambda values creating big
+    increases in the forecasts.
+-   The damping has relatively a small effect.
+
+# fpp3 8.8, Ex7
+
+> Find an ETS model for the Gas data from `aus_production` and forecast the next few years. Why is multiplicative seasonality necessary here? Experiment with making the trend damped. Does it improve the forecasts?
+
+```{r}
+aus_production |> autoplot(Gas)
+```
+
+-   There is a huge increase in variance as the series increases in level. =\>
+    That makes it necessary to use multiplicative seasonality.
+
+```{r}
+fit <- aus_production |>
+  model(
+    hw = ETS(Gas ~ error("M") + trend("A") + season("M")),
+    hwdamped = ETS(Gas ~ error("M") + trend("Ad") + season("M")),
+  )
+
+fit |> glance()
+```
+
+- The non-damped model seems to be doing slightly better here, probably because the trend is very strong over most of the historical data.
+
+```{r}
+fit |>
+  select(hw) |>
+  gg_tsresiduals()
+
+fit |> tidy()
+
+fit |>
+  augment() |>
+  filter(.model == "hw") |>
+  features(.innov, ljung_box, lag = 24)
+```
+
+- There is still some small *correlations* left in the residuals, showing the model has not fully captured the available information.
+- There also appears to be some *heteroskedasticity* in the residuals with larger variance in the first half the series.
+
+```{r}
+fit |>
+  forecast(h = 36) |>
+  filter(.model == "hw") |>
+  autoplot(aus_production)
+```
+
+While the point forecasts look ok, the intervals are excessively wide.
+
+# fpp3 8.8, Ex8
+
+> Recall your retail time series data (from Exercise 6 in Section 2.10).
+>
+>    a. Why is multiplicative seasonality necessary for this series?
+
+```{r 89a}
+set.seed(12345678)
+myseries <- aus_retail |>
+  filter(`Series ID` == sample(aus_retail$`Series ID`, 1))
+myseries |> autoplot(Turnover)
+```
+
+The variation in the seasonal pattern increases as the level of the series rises. (This may not be true for every series, but is true for almost all of them.)
+
+>    b. Apply Holt-Winters’ multiplicative method to the data. Experiment with making the trend damped.
+
+```{r 89b}
+fit <- myseries |>
+  model(
+    hw = ETS(Turnover ~ error("M") + trend("A") + season("M")),
+    hwdamped = ETS(Turnover ~ error("M") + trend("Ad") + season("M"))
+  )
+fc <- fit |> forecast(h = 36)
+fc |> autoplot(myseries)
+```
+
+>    c. Compare the RMSE of the one-step forecasts from the two methods. Which do you prefer?
+
+```{r 89c, dependson="89b"}
+accuracy(fit)
+```
+
+The non-damped method is doing slightly better (on RMSE), but the damped method is doing better on most other scores. I'd be inclined to use the damped method here as the trend at the end of the series seems to be flattening.
+
+>    d. Check that the residuals from the best method look like white noise.
+
+```{r 89d}
+fit |>
+  select("hwdamped") |>
+  gg_tsresiduals()
+```
+
+There are significant spikes at lags 8 and 18 in the ACF, but they are relatively small and probably of no consequence.
+
+```{r 89d2}
+augment(fit) |>
+  filter(.model == "hwdamped") |>
+  features(.innov, ljung_box, lag = 36)
+```
+
+It seems that there is enough autocorrelation in the residuals for this to be significant. But in practice it will make little difference to the forecasts or prediction intervals.
+
+>    e. Now find the test set RMSE, while training the model to the end of 2010. Can you beat the seasonal naïve approach from Exercise 7 in Section 5.10?
+
+```{r 89e}
+myseries |>
+  filter(year(Month) < 2011) |>
+  model(
+    snaive = SNAIVE(Turnover),
+    hw = ETS(Turnover ~ error("M") + trend("A") + season("M")),
+    hwdamped = ETS(Turnover ~ error("M") + trend("Ad") + season("M"))
+  ) |>
+  forecast(h = "7 years") |>
+  accuracy(myseries)
+```
+
+The SNAIVE model is doing much better than the HW model for this data set.
+
+# fpp3 8.8, Ex9
+
+> For the same retail data, try an STL decomposition applied to the Box-Cox transformed series, followed by ETS on the seasonally adjusted data. How does that compare with your best previous forecasts on the test set?
+
+```{r 810}
+stl <- decomposition_model(
+  STL(log(Turnover)),
+  ETS(season_adjust ~ season("N"))
+)
+fc <- myseries |>
+  filter(year(Month) < 2011) |>
+  model(
+    stl_ets = stl,
+    snaive = SNAIVE(Turnover),
+    hwdamped = ETS(Turnover ~ error("M") + trend("Ad") + season("M"))
+  ) |>
+  forecast(h = "7 years")
+fc |> autoplot(filter(myseries, year(Month) > 2004), level = NULL)
+fc |> accuracy(myseries)
+```
+
+The data since 2011 has been less trended than what was seen before that. So the models with the lowest trend have done better. The STL+ETS approach has the highest trends and therefore the worst accuracy.
+
+# fpp3 8.8, Ex10
+
+> Compute the total domestic overnight trips for holidays across Australia from the `tourism` dataset.
+
+>   a. Plot the data and describe the main features of the series.
+
+```{r}
+aus_trips <- tourism |>
+  summarise(Trips = sum(Trips))
+aus_trips |>
+  autoplot(Trips)
+```
+
+- The data is seasonal.
+- A slightly decreasing trend exists until 2010, after which it is replaced with a stronger upward trend.
+
+>   b. Decompose the series using STL and obtain the seasonally adjusted data.
+
+```{r}
+dcmp <- aus_trips |>
+  model(STL(Trips)) |>
+  components()
+dcmp |>
+  as_tsibble() |>
+  autoplot(season_adjust)
+```
+
+>   c. Forecast the next two years of the series using an additive damped trend method applied to the seasonally adjusted data. (This can be specified using `decomposition_model()`.)
+
+```{r}
+stletsdamped <- decomposition_model(
+  STL(Trips),
+  ETS(season_adjust ~ error("A") + trend("Ad") + season("N"))
+)
+aus_trips |>
+  model(dcmp_AAdN = stletsdamped) |>
+  forecast(h = "2 years") |>
+  autoplot(aus_trips)
+```
+
+>   d. Forecast the next two years of the series using an appropriate model for Holt’s linear method applied to the seasonally adjusted data (as before but without damped trend).
+
+```{r}
+stletstrend <- decomposition_model(
+  STL(Trips),
+  ETS(season_adjust ~ error("A") + trend("A") + season("N"))
+)
+aus_trips |>
+  model(dcmp_AAN = stletstrend) |>
+  forecast(h = "2 years") |>
+  autoplot(aus_trips)
+```
+
+>   e. Now use `ETS()` to choose a seasonal model for the data.
+
+```{r}
+fit <- aus_trips |>
+        model(ets = ETS(Trips))
+
+fit |> report()
+
+fit |> tidy()
+
+fit |> forecast(h = "2 years") |>
+  autoplot(aus_trips)
+```
+
+>   f. Compare the RMSE of the ETS model with the RMSE of the models you obtained using STL decompositions. Which gives the better in-sample fits?
+
+```{r}
+fit <- aus_trips |>
+  model(
+    dcmp_AAdN = stletsdamped,
+    dcmp_AAN = stletstrend,
+    ets = ETS(Trips)
+  )
+
+fit |>
+    select(ets) |>
+    tidy()
+
+fit |>
+    select(ets) |>
+    report()
+
+accuracy(fit)
+```
+
+- The STL decomposition forecasts using the additive trend model, ETS(A,A,N), is slightly better in-sample.
+- However, note that this is a biased comparison as the models have different numbers of parameters.
+
+>   g. Compare the forecasts from the three approaches? Which seems most reasonable?
+
+```{r}
+fit |>
+  forecast(h = "2 years") |>
+  autoplot(aus_trips, level = NULL)
+```
+
+The forecasts are almost identical. So I'll use the decomposition model with additive trend as it has the smallest RMSE.
+
+>   h. Check the residuals of your preferred model.
+
+```{r}
+best <- fit |>
+  select(dcmp_AAN)
+
+report(best)
+
+augment(best) |> gg_tsdisplay(.resid, lag_max = 24, plot_type = "histogram")
+augment(best) |> features(.innov, ljung_box, lag = 24)
+```
+
+- The residuals look okay however there still remains some significant auto-correlation. Nevertheless, the results pass the Ljung-Box test.
+- The large spike at lag 14 can probably be ignored.
+
+# fpp3 8.8, Ex11
+
+> For this exercise use the quarterly number of arrivals to Australia from New Zealand, 1981 Q1 -- 2012 Q3, from data set `aus_arrivals`.
+
+>   a. Make a time plot of your data and describe the main features of the series.
+
+```{r}
+nzarrivals <- aus_arrivals |> filter(Origin == "NZ")
+nzarrivals |> autoplot(Arrivals / 1e3) + labs(y = "Thousands of people")
+```
+
+- The data has an upward trend.
+- The data has a seasonal pattern which increases in size approximately proportionally to the average number of people who arrive per year. Therefore, the data has multiplicative seasonality.
+
+>   b. Create a training set that withholds the last two years of available data. Forecast the test set using an appropriate model for Holt-Winters’ multiplicative method.
+
+```{r}
+nz_tr <- nzarrivals |>
+  slice(1:(n() - 8))
+nz_tr |>
+  model(ETS(Arrivals ~ error("M") + trend("A") + season("M"))) |>
+  forecast(h = "2 years") |>
+  autoplot() +
+  autolayer(nzarrivals, Arrivals)
+```
+
+>   c. Why is multiplicative seasonality necessary here?
+
+- The multiplicative seasonality is important in this example because the seasonal pattern increases in size proportionally to the level of the series.
+- The behaviour of the seasonal pattern will be captured and projected in a model with multiplicative seasonality.
+
+>   d. Forecast the two-year test set using each of the following methods:
+>       i) an ETS model;
+>       ii) an additive ETS model applied to a log transformed series;
+>       iii) a seasonal naïve method;
+>       iv) an STL decomposition applied to the log transformed data followed by an ETS model applied to the seasonally adjusted (transformed) data.
+
+```{r}
+fc <- nz_tr |>
+  model(
+    ets = ETS(Arrivals),
+    log_ets = ETS(log(Arrivals)),
+    snaive = SNAIVE(Arrivals),
+    stl = decomposition_model(STL(log(Arrivals)), ETS(season_adjust))
+  ) |>
+  forecast(h = "2 years")
+
+fc |>
+  autoplot(level = NULL) +
+  autolayer(filter(nzarrivals, year(Quarter) > 2000), Arrivals)
+
+fc |>
+  autoplot(level = NULL) +
+  autolayer(nzarrivals, Arrivals)
+```
+
+>   e. Which method gives the best forecasts? Does it pass the residual tests?
+
+```{r}
+fc |>
+  accuracy(nzarrivals)
+```
+
+- The best method is the ETS model on the logged data (based on RMSE), and it passes the residuals tests.
+
+```{r}
+log_ets <- nz_tr |>
+  model(ETS(log(Arrivals)))
+log_ets |> gg_tsresiduals()
+augment(log_ets) |>
+  features(.innov, ljung_box, lag = 12)
+```
+
+>   f. Compare the same four methods using time series cross-validation instead of using a training and test set. Do you come to the same conclusions?
+
+```{r}
+nz_cv <- nzarrivals |>
+  slice(1:(n() - 3)) |>
+  stretch_tsibble(.init = 36, .step = 3)
+
+nz_cv |>
+  model(
+    ets = ETS(Arrivals),
+    log_ets = ETS(log(Arrivals)),
+    snaive = SNAIVE(Arrivals),
+    stl = decomposition_model(STL(log(Arrivals)), ETS(season_adjust))
+  ) |>
+  forecast(h = 3) |>
+  accuracy(nzarrivals)
+```
+
+- An initial fold size (`.init`) of 36 has been selected to ensure that sufficient data is available to make reasonable forecasts.
+- A step size of 3 (and forecast horizon of 3) has been used to reduce the computation time.
+- The ETS model on the log data still appears best (based on 3-step ahead forecast RMSE).
+
+# fpp3 8.8, Ex12
+
+>   a. Apply cross-validation techniques to produce 1 year ahead ETS and seasonal naïve forecasts for Portland cement production (from `aus_production`). Use a stretching data window with initial size of 5 years, and increment the window by one observation.
+
+```{r}
+cement_cv <- aus_production |>
+  slice(1:(n() - 4)) |>
+  stretch_tsibble(.init = 5 * 4)
+
+fc <- cement_cv |>
+  model(ETS(Cement), SNAIVE(Cement)) |>
+  forecast(h = "1 year")
+```
+
+>   b. Compute the MSE of the resulting $4$-step-ahead errors. Comment on which forecasts are more accurate. Is this what you expected?
+
+```{r}
+fc |>
+  group_by(.id, .model) |>
+  mutate(h = row_number()) |>
+  ungroup() |>
+  as_fable(response = "Cement", distribution = Cement) |>
+  accuracy(aus_production, by = c(".model", "h"))
+```
+
+The ETS results are better for all horizons, although getting closer as $h$ increases. With a long series like this, I would expect ETS to do better as it should have no trouble estimating the parameters, and it will include trends if required.
+
+# fpp3 8.8, Ex13
+
+> Compare `ETS()`, `SNAIVE()` and `decomposition_model(STL, ???)` on the following five time series. You might need to use a Box-Cox transformation for the STL decomposition forecasts. Use a test set of three years to decide what gives the best forecasts.
+
+>   * Beer production from `aus_production`
+
+```{r}
+fc <- aus_production |>
+  filter(Quarter < max(Quarter - 11)) |>
+  model(
+    ETS(Beer),
+    SNAIVE(Beer),
+    stlm = decomposition_model(STL(log(Beer)), ETS(season_adjust))
+  ) |>
+  forecast(h = "3 years")
+fc |>
+  autoplot(filter_index(aus_production, "2000 Q1" ~ .), level = NULL)
+fc |> accuracy(aus_production)
+```
+
+ETS and STLM do best for this dataset based on the test set performance.
+
+>   * Bricks production from `aus_production`
+
+```{r}
+tidy_bricks <- aus_production |>
+  filter(!is.na(Bricks))
+fc <- tidy_bricks |>
+  filter(Quarter < max(Quarter - 11)) |>
+  model(
+    ets = ETS(Bricks),
+    snaive = SNAIVE(Bricks),
+    STLM = decomposition_model(STL(log(Bricks)), ETS(season_adjust))
+  ) |>
+  forecast(h = "3 years")
+fc |> autoplot(filter_index(aus_production, "1980 Q1" ~ .), level = NULL)
+fc |> accuracy(tidy_bricks)
+```
+
+ETS and STLM do best for this dataset based on the test set performance.
+
+>   * Cost of drug subsidies for diabetes (`ATC2 == "A10"`) and corticosteroids (`ATC2 == "H02"`) from `PBS`
+
+```{r}
+subsidies <- PBS |>
+  filter(ATC2 %in% c("A10", "H02")) |>
+  group_by(ATC2) |>
+  summarise(Cost = sum(Cost))
+subsidies |>
+  autoplot(vars(Cost)) +
+  facet_grid(vars(ATC2), scales = "free_y")
+
+fc <- subsidies |>
+  filter(Month < max(Month) - 35) |>
+  model(
+    ETS(Cost),
+    SNAIVE(Cost),
+    STLM = decomposition_model(STL(log(Cost)), ETS(season_adjust))) |>
+  forecast(h = "3 years")
+fc |> autoplot(subsidies, level = NULL)
+fc |>
+  accuracy(subsidies) |>
+  arrange(ATC2)
+```
+
+The STLM method appears to perform best for both series.
+
+>   * Total food retailing turnover for Australia from `aus_retail`.
+
+```{r}
+food_retail <- aus_retail |>
+  filter(Industry == "Food retailing") |>
+  summarise(Turnover = sum(Turnover))
+
+fc <- food_retail |>
+  filter(Month < max(Month) - 35) |>
+  model(
+    ETS(Turnover),
+    SNAIVE(Turnover),
+    STLM = decomposition_model(STL(log(Turnover)), ETS(season_adjust))
+  ) |>
+  forecast(h = "3 years")
+fc |>
+  autoplot(filter_index(food_retail, "2005 Jan" ~ .), level = NULL)
+fc |> accuracy(food_retail)
+```
+
+The STLM model does better than other approaches for this dataset.
+
+# fpp3 8.8, Ex14
+
+>   a. Use `ETS()` to select an appropriate model for the following series: total number of trips across Australia using `tourism`, the closing prices for the four stocks in `gafa_stock`, and the lynx series in `pelt`. Does it always give good forecasts?
+
+### tourism
+
+```{r}
+aus_trips <- tourism |>
+  summarise(Trips = sum(Trips))
+aus_trips |>
+  model(ETS(Trips)) |>
+  report()
+aus_trips |>
+  model(ETS(Trips)) |>
+  forecast() |>
+  autoplot(aus_trips)
+```
+
+Forecasts appear reasonable.
+
+### GAFA stock
+
+```{r}
+gafa_regular <- gafa_stock |>
+  group_by(Symbol) |>
+  mutate(trading_day = row_number()) |>
+  ungroup() |>
+  as_tsibble(index = trading_day, regular = TRUE)
+
+gafa_stock |> autoplot(Close)
+
+gafa_regular |>
+  model(ETS(Close))
+
+gafa_regular |>
+  model(ETS(Close)) |>
+  forecast(h = 50) |>
+  autoplot(gafa_regular |> group_by_key() |> slice((n() - 100):n()))
+```
+
+Forecasts look reasonable for an efficient market.
+
+### Pelt trading records
+
+```{r}
+pelt |>
+  model(ETS(Lynx))
+pelt |>
+  model(ETS(Lynx)) |>
+  forecast(h = 10) |>
+  autoplot(pelt)
+```
+
+- Here the cyclic behaviour of the lynx data is completely lost.
+- ETS models are not designed to handle cyclic data, so there is nothing that can be done to improve this.
+
+>   b. Find an example where it does not work well. Can you figure out why?
+
+- ETS does not work well on cyclic data, as seen in the pelt dataset above.
+
+# fpp3 8.8, Ex15
+
+> Show that the point forecasts from an ETS(M,A,M) model are the same as those obtained using Holt-Winters' multiplicative method.
+
+Point forecasts from the multiplicative Holt-Winters' method:
+$$
+  \hat{y}_{t+h|t} = (\ell_t + hb_t)s_{t+ h - m(k+1)}
+$$
+where $k$ is the integer part of $(h-1)/m$.
+
+An ETS(M,A,M) model is given by
+\begin{align*}
+  y_t    & = (\ell_{t-1}+b_{t-1})s_{t-m}(1+\varepsilon_t) \\
+  \ell_t & = (\ell_{t-1}+b_{t-1})(1+\alpha\varepsilon_t) \\
+  b_t    & = b_{t-1} + \beta(\ell_{t-1}+b_{t-1})\varepsilon_t \\
+  s_t    & = s_{t-m} (1+\gamma\varepsilon_t)
+\end{align*}
+So $y_{T+h}$ is given by
+$$
+  y_{T+h} = (\ell_{T+h-1}+b_{T+h-1})s_{T+h-m}(1+\varepsilon_{T+h-m})
+$$
+Replacing $\varepsilon_{t}$ by zero for $t>T$, and substituting in from the above equations, we obtain
+$$
+  \hat{y}_{T+h} = (\ell_{T+h-2}+2b_{T+h-2})s_{T+h-m}
+$$
+Repeating the process a few times leads to
+$$
+  \hat{y}_{T+h} = (\ell_{T}+hb_{T})s_{T+h-m}
+$$
+
+Now if $h \le m$, then we know the value of $s_{T+h-m}$.
+
+If $m < h \le 2m$, then we can write
+$$s_{T+h-m} = s_{T+h-2m} (1 + \gamma\varepsilon_{T+h-m})$$
+and replace $\varepsilon_{T+h-m}$ by 0
+
+If $2m < h \le 3m$, then we can write
+$$s_{T+h-m} = s_{T+h-3m} (1 + \gamma\varepsilon_{T+h-m})(1+\gamma\varepsilon_{T+h-2m})$$
+and replace both $\varepsilon_{T+h-m}$ and $\varepsilon_{T+h-2m}$ by 0
+
+etc.
+
+So we can replace $s_{T+h-m}$ by $s_{T+h - m(k+1)}$ where $k$ is the integer part of $(k-1)/m$.
+
+Thus
+$$
+  \hat{y}_{T+h|T} = (\ell_{T}+hb_{T})s_{T+h -m(k+1)}
+$$
+as required.
