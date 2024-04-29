@@ -23,39 +23,6 @@ library(purrr)
 ```
 
 
-## Point forecasts
-
-1. Rearrange ARIMA equation so $y_t$ is on LHS.
-2. Rewrite equation by replacing $t$ by $T+h$.
-3. On RHS, replace future observations by their forecasts, future errors by zero, and past errors by corresponding residuals.
-
-Start with $h=1$. Repeat for $h=2,3,\dots$.
-
-## Prediction intervals
-\vspace*{0.2cm}\fontsize{14}{15}\sf
-
-\begin{block}{95\% prediction interval}
-$$\hat{y}_{T+h|T} \pm 1.96\sqrt{v_{T+h|T}}$$
-where $v_{T+h|T}$ is estimated forecast variance.
-\end{block}\pause\vspace*{-0.3cm}
-
-* $v_{T+1|T}=\hat{\sigma}^2$ for all ARIMA models regardless of parameters and orders.\pause
-* Multi-step prediction intervals for ARIMA(0,0,$q$):
-\centerline{$\displaystyle y_t = \varepsilon_t + \sum_{i=1}^q \theta_i \varepsilon_{t-i}.$}
-\centerline{$\displaystyle
-v_{T|T+h} = \hat{\sigma}^2 \left[ 1 + \sum_{i=1}^{h-1} \theta_i^2\right], \qquad\text{for~} h=2,3,\dots.$}
-
-## Prediction intervals
-
-* Prediction intervals **increase in size with forecast horizon**.
-* Prediction intervals can be difficult to calculate by hand
-* Calculations assume residuals are **uncorrelated** and **normally distributed**.
-* Prediction intervals tend to be too narrow.
-    * the uncertainty in the parameter estimates has not been accounted for.
-    * the ARIMA model assumes historical patterns will not change during the forecast period.
-    * the ARIMA model assumes uncorrelated future \rlap{errors}
-
-
 ## Seasonal ARIMA models
 
 | ARIMA | $~\underbrace{(p, d, q)}$ | $\underbrace{(P, D, Q)_{m}}$ |
@@ -136,6 +103,39 @@ the PACF and ACF.
   * a single significant spike at lag 12 in the PACF.
 
 
+## Point forecasts
+
+1. Rearrange ARIMA equation so $y_t$ is on LHS.
+2. Rewrite equation by replacing $t$ by $T+h$.
+3. On RHS, replace future observations by their forecasts, future errors by zero, and past errors by corresponding residuals.
+
+Start with $h=1$. Repeat for $h=2,3,\dots$.
+
+## Prediction intervals
+\fontsize{14}{15}\sf
+
+\begin{block}{95\% prediction interval}
+$$\hat{y}_{T+h|T} \pm 1.96\sqrt{v_{T+h|T}}$$
+where $v_{T+h|T}$ is estimated forecast variance.
+\end{block}\pause\vspace*{-0.3cm}
+
+* $v_{T+1|T}=\hat{\sigma}^2$ for all ARIMA models regardless of parameters and orders.\pause
+* Multi-step prediction intervals for ARIMA(0,0,$q$):
+\centerline{$\displaystyle y_t = \varepsilon_t + \sum_{i=1}^q \theta_i \varepsilon_{t-i}.$}
+\centerline{$\displaystyle
+v_{T|T+h} = \hat{\sigma}^2 \left[ 1 + \sum_{i=1}^{h-1} \theta_i^2\right], \qquad\text{for~} h=2,3,\dots.$}
+
+## Prediction intervals
+
+* Prediction intervals **increase in size with forecast horizon**.
+* Prediction intervals can be difficult to calculate by hand
+* Calculations assume residuals are **uncorrelated** and **normally distributed**.
+* Prediction intervals tend to be too narrow.
+    * the uncertainty in the parameter estimates has not been accounted for.
+    * the ARIMA model assumes historical patterns will not change during the forecast period.
+    * the ARIMA model assumes uncorrelated future \rlap{errors}
+
+
 ## ARIMA vs ETS
 \fontsize{14}{16}\sf
 
@@ -151,7 +151,7 @@ the PACF and ACF.
 
 ```{r venn, echo=FALSE}
 #| fig-height: 3
-#| fig-width: 5
+#| fig-width: 4.8
 library(latex2exp)
 cols <- c(ets = "#D55E00", arima = "#0072b2")
 tibble(
@@ -179,17 +179,18 @@ tibble(
 ```
 
 ## Equivalences
+\fontsize{14}{15}\sf
 
-\fontsize{13}{15}\sf
+|**ETS model**       | **ARIMA model**              | **Parameters**                        |
+| :------------      | :--------------------------  | :-----------------------------------  |
+| ETS(A,N,N)         | ARIMA(0,1,1)                 | $\theta_1 = \alpha-1$                 |
+| ETS(A,A,N)         | ARIMA(0,2,2)                 | $\theta_1 = \alpha+\beta-2$           |
+|                    |                              | $\theta_2 = 1-\alpha$                 |
+| ETS(A,A\damped,N)  | ARIMA(1,1,2)                 | $\phi_1=\phi$                         |
+|                    |                              | $\theta_1 = \alpha+\phi\beta-1-\phi$  |
+|                    |                              | $\theta_2 = (1-\alpha)\phi$           |
+| ETS(A,N,A)         | ARIMA(0,0,$m$)(0,1,0)$_m$    |                                       |
+| ETS(A,A,A)         | ARIMA(0,1,$m+1$)(0,1,0)$_m$  |                                       |
+| ETS(A,A\damped,A)  | ARIMA(1,0,$m+1$)(0,1,0)$_m$  |                                       |
 
-|**ETS model**  | **ARIMA model**             | **Parameters**                       |
-| :------------ | :-------------------------- | :----------------------------------- |
-| ETS(A,N,N)    | ARIMA(0,1,1)                | $\theta_1 = \alpha-1$                |
-| ETS(A,A,N)    | ARIMA(0,2,2)                | $\theta_1 = \alpha+\beta-2$          |
-|               |                             | $\theta_2 = 1-\alpha$                |
-| ETS(A,A\damped,N)    | ARIMA(1,1,2)                | $\phi_1=\phi$                        |
-|               |                             | $\theta_1 = \alpha+\phi\beta-1-\phi$ |
-|               |                             | $\theta_2 = (1-\alpha)\phi$          |
-| ETS(A,N,A)    | ARIMA(0,0,$m$)(0,1,0)$_m$   |                                      |
-| ETS(A,A,A)    | ARIMA(0,1,$m+1$)(0,1,0)$_m$ |                                      |
-| ETS(A,A\damped,A)    | ARIMA(1,0,$m+1$)(0,1,0)$_m$ |                                      |
+: {tbl-colwidths="22,43,35"}

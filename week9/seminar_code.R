@@ -9,7 +9,8 @@ leisure <- us_employment |>
   ) |>
   mutate(Employed = Employed / 1000) |>
   select(Month, Employed)
-autoplot(leisure, Employed) +
+leisure |>
+  autoplot(Employed) +
   labs(
     title = "US employment: leisure and hospitality",
     y = "Number of people (millions)"

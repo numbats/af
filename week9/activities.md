@@ -1,6 +1,6 @@
 
-For the Australian tourism data (from `tourism`):
+For the Australian accommodation data (`aus_accommodation`)
 
- * Fit a suitable ARIMA model for all data.
- * Produce forecasts of your fitted models.
- * Check the forecasts for the "Snowy Mountains" and "Melbourne" regions. Do they look reasonable?
+ * Fit a suitable ARIMA model to Occupancy for each states, using data from 2010.
+ * Produce 4-year forecasts of your fitted models.
+ * Check the forecasts for Victoria. Do they look reasonable?
