@@ -76,6 +76,16 @@ fit <- train |>
   )
 
 fit |>
+  select(ets) |>
+  report()
+gg_tsresiduals(fit |> select(ets), lag_max = 16)
+
+fit |>
+  select(ets) |>
+  augment() |>
+  features(.innov, ljung_box, lag = 16)
+
+fit |>
   select(arima) |>
   report()
 gg_tsresiduals(fit |> select(arima), lag_max = 16)
@@ -86,19 +96,8 @@ fit |>
   features(.innov, ljung_box, lag = 16, dof = 6)
 
 fit |>
-  select(ets) |>
-  report()
-
-gg_tsresiduals(fit |> select(ets), lag_max = 16)
-
-fit |>
-  select(ets) |>
-  augment() |>
-  features(.innov, ljung_box, lag = 16)
-
-fit |>
   forecast(h = "2 years 6 months") |>
-  accuracy(cement, level = 80)
+  accuracy(cement)
 
 fc <- cement |>
   model(arima = ARIMA(Cement)) |>
