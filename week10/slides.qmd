@@ -89,6 +89,19 @@ x_{2,t} &= \left\{ \begin{array}{ll}
 * Easter: use a dummy variable $v_t=1$ if any part of Easter is in that month, $v_t=0$ otherwise.
 * Ramadan and Chinese New Year similar.
 
+## Distributed lags
+
+Lagged values of a predictor.
+
+Example: $x$ is advertising which has a delayed effect
+
+\vspace*{-0.8cm}\begin{align*}
+  x_{1} &= \text{advertising for previous month;} \\
+  x_{2} &= \text{advertising for two months previously;} \\
+        & \vdots \\
+  x_{m} &= \text{advertising for $m$ months previously.}
+\end{align*}
+
 ## Fourier series
 
 Periodic seasonality can be handled using pairs of Fourier \rlap{terms:}\vspace*{-0.3cm}
@@ -102,18 +115,11 @@ y_t = a + bt + \sum_{k=1}^K \left[\alpha_k s_k(t) + \beta_k c_k(t)\right] + \var
 * Choose $K$ by minimizing AICc or CV.
 * Called "harmonic regression"
 
-## Distributed lags
+## Your turn
 
-Lagged values of a predictor.
-
-Example: $x$ is advertising which has a delayed effect
-
-\vspace*{-0.8cm}\begin{align*}
-  x_{1} &= \text{advertising for previous month;} \\
-  x_{2} &= \text{advertising for two months previously;} \\
-        & \vdots \\
-  x_{m} &= \text{advertising for $m$ months previously.}
-\end{align*}
+```{r}
+#| child: activities1.md
+```
 
 ## Comparing regression models
 \fontsize{13}{14}\sf
@@ -294,3 +300,9 @@ where $L$ is the likelihood and $k$ is the number of predictors in the model.\pa
     - useful for studying behaviour of forecasting models.
 
  * trend, seasonal and calendar variables are all known in advance, so these don't need to be forecast.
+
+## Your turn
+
+```{r}
+#| child: activities2.md
+```

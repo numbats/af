@@ -9,13 +9,21 @@ us_gasoline  |>
 fit <- us_gasoline |>
   model(
     K01 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 1)),
+    K02 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 2)),
+    K03 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 3)),
+    K04 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 4)),
     K05 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 5)),
     K06 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 6)),
     K07 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 7)),
     K08 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 8)),
     K09 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 9)),
     K10 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 10)),
+    K11 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 11)),
+    K12 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 12)),
+    K13 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 13)),
+    K14 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 14)),
     K15 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 15)),
+    K16 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 16)),
     K20 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 20)),
     K25 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 25))
   )
@@ -26,14 +34,54 @@ glance(fit) |>
 augment(fit) |>
   filter(.model %in% c("K06", "K01", "K25")) |>
   ggplot(aes(x = Week, y = Barrels)) +
-  geom_line() +
-  geom_line(aes(y = .fitted, col = .model)) +
+  geom_line(colour = "gray") +
+  geom_line(aes(y = .fitted, col = .model), linewidth = 1) +
   facet_grid(.model ~ .)
 
 fit |>
   select(K06) |>
   forecast(h = "2 years") |>
   autoplot(us_gasoline)
+
+fit |>
+  select(K06) |>
+  gg_tsresiduals()
+
+# US employment
+
+leisure <- us_employment |>
+  filter(
+    Title == "Leisure and Hospitality",
+    year(Month) > 2001
+  ) |>
+  mutate(Employed = Employed / 1000) |>
+  select(Month, Employed)
+
+autoplot(leisure)
+
+fit <- leisure |>
+  model(
+    K01 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 1)),
+    K02 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 2)),
+    K03 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 3)),
+    K04 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 4)),
+    K05 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 5)),
+    K06 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 6)),
+  )
+glance(fit) |>
+  select(.model, r_squared, adj_r_squared, df, AICc, CV) |>
+  arrange(CV)
+
+augment(fit) |>
+  filter(.model == "K06") |>
+  ggplot(aes(x = Month, y = Employed)) +
+  geom_line() +
+  geom_line(aes(y = .fitted, col = .model), linewidth = 1)
+
+fit |>
+  select(K06) |>
+  forecast(h = "2 years") |>
+  autoplot(leisure)
 
 fit |>
   select(K06) |>
@@ -118,7 +166,7 @@ augment(fit_consBest) |>
 
 future_scenarios <- scenarios(
   Increase = new_data(us_change, 4) |>
-    mutate(Income = 1, Savings = 0.5, Unemployment = 0, Production = 0),
+    mutate(Income = 2, Savings = 0.5, Unemployment = 0, Production = 0),
   Decrease = new_data(us_change, 4) |>
     mutate(Income = -1, Savings = -0.5, Unemployment = 0, Production = 0),
   names_to = "Scenario"
