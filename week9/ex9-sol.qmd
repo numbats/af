@@ -463,7 +463,7 @@ fc |>
 * Data downloaded from https://fred.stlouisfed.org/series/CEU7000000001
 
 ```{r ex10f2, message=FALSE}
-update <- readr::read_csv("data/CEU7000000001.csv") |>
+update <- readr::read_csv("CEU7000000001.csv") |>
   mutate(
     Month = yearmonth(DATE),
     Employed = CEU7000000001
