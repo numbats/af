@@ -25,14 +25,14 @@ fit <- us_gasoline |>
     K15 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 15)),
     K16 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 16)),
     K20 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 20)),
-    K25 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 25))
+    K26 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 26))
   )
 glance(fit) |>
   select(.model, r_squared, adj_r_squared, df, AICc, CV) |>
   arrange(CV)
 
 augment(fit) |>
-  filter(.model %in% c("K06", "K01", "K25")) |>
+  filter(.model %in% c("K06", "K01", "K26")) |>
   ggplot(aes(x = Week, y = Barrels)) +
   geom_line(colour = "gray") +
   geom_line(aes(y = .fitted, col = .model), linewidth = 1) +
@@ -87,6 +87,11 @@ fit |>
   select(K06) |>
   gg_tsresiduals()
 
+fc <- fit |> forecast(h=24)
+
+fc |>
+  filter(.model == "K06") |>
+  autoplot(leisure)
 
 # US consumption quarterly changes
 
