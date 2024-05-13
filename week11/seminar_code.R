@@ -36,6 +36,8 @@ elec_fit <- vic_elec_daily |>
     dhr = ARIMA(log(Demand) ~ Temperature + I(Temperature^2) +
         (Day_Type == "Weekday") + fourier(period = "year", K = 4))
   )
+elec_fit |>
+  pivot_longer(ets:dhr, names_to="model", values_to="model_fit")
 
 accuracy(elec_fit)
 
@@ -87,13 +89,6 @@ elec_fit |>
   geom_line() +
   geom_line(aes(y = .fitted), col = "red")
 
-# Forecast one day ahead
-vic_next_day <- new_data(vic_elec_daily, 1) |>
-  mutate(Temperature = 26, Day_Type = "Holiday")
-forecast(elec_fit, new_data = vic_next_day) |>
-  autoplot(vic_elec_daily |> tail(14), level = 80) +
-  labs(y = "Electricity demand (GW)")
-
 # Forecast 14 days ahead
 vic_elec_future <- new_data(vic_elec_daily, 14) |>
   mutate(
@@ -105,7 +100,8 @@ vic_elec_future <- new_data(vic_elec_daily, 14) |>
       TRUE ~ "Weekend"
     )
   )
-forecast(elec_fit, new_data = vic_elec_future) |>
+elec_fit |>
+  forecast(new_data = vic_elec_future) |>
   autoplot(vic_elec_daily |> tail(14), level = 80) +
   labs(y = "Electricity demand (GW)")
 

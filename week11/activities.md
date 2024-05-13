@@ -1,26 +1,13 @@
+1.  Fit a regression model with a piecewise linear trend and Fourier terms for the US leisure employment data.
+    
+    ```r
+    leisure <- us_employment |>
+      filter(Title == "Leisure and Hospitality", year(Month) > 2001) |>
+      mutate(Employed = Employed / 1000) |>
+      select(Month, Employed)
+    ```
 
-
-Repeat the daily electricity example, but instead of using a quadratic function of temperature, use a piecewise linear function with the "knot" around 20 degrees Celsius (use predictors `Temperature` & `Temp2`). How can you optimize the choice of knot?
-
-The data can be created as follows.
-
-```r
-vic_elec_daily <- vic_elec |>
-  filter(year(Time) == 2014) |>
-  index_by(Date = date(Time)) |>
-  summarise(
-    Demand = sum(Demand)/1e3,
-    Temperature = max(Temperature),
-    Holiday = any(Holiday)
-  ) |>
-  mutate(
-    Temp2 = I(pmax(Temperature-20,0)),
-    Day_Type = case_when(
-      Holiday ~ "Holiday",
-      wday(Date) %in% 2:6 ~ "Weekday",
-      TRUE ~ "Weekend"
-    )
-  )
-```
-
-Repeat but using all available data, and handling the annual seasonality using Fourier terms.
+2. Add a dynamic regression model with the same predictors.
+3. How do the models compare on AICc?
+4. Does the additional ARIMA component fix the residual autocorrelation problem in the regression model?
+5. How different are the forecasts from each model?

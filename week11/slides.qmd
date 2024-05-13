@@ -15,36 +15,15 @@ format:
     include-in-header: ../header.tex
 ---
 
-
-```{r setup, include=FALSE}
-source(here::here("setup.R"))
-library(readr)
-
-vic_elec_daily <- vic_elec |>
-  filter(year(Time) == 2014) |>
-  index_by(Date = date(Time)) |>
-  summarise(
-    Demand = sum(Demand) / 1e3,
-    Temperature = max(Temperature),
-    Holiday = any(Holiday)
-  ) |>
-  mutate(Day_Type = case_when(
-    Holiday ~ "Holiday",
-    wday(Date) %in% 2:6 ~ "Weekday",
-    TRUE ~ "Weekend"
-  ))
-```
-
 ## Regression with ARIMA errors
 
-\vspace*{0.2cm}\begin{block}{Regression models}\vspace*{-0.2cm}
+\begin{block}{Regression models}\vspace*{-0.2cm}
 \[
   y_t = \beta_0 + \beta_1 x_{1,t} + \dots + \beta_k x_{k,t} + \varepsilon_t,
 \]
 \end{block}\vspace*{-0.3cm}
 
-  * $y_t$ modeled as function of $k$ explanatory variables
-$x_{1,t},\dots,x_{k,t}$.
+  * $y_t$ modeled as function of $k$ explanatory variables $x_{1,t},\dots,x_{k,t}$.
   * In regression, we assume that $\varepsilon_t$ is WN.
   * Now we want to allow $\varepsilon_t$ to be autocorrelated.
 \vspace*{0.1cm}
@@ -93,7 +72,7 @@ $y_t' = (1-B)^dy_t$,\quad $x_{i,t}' = (1-B)^dx_{i,t}$,\quad and $\eta_t' = (1-B)
 
 ## Regression with ARIMA errors
 
-  * In R, we can specify an ARIMA($p,d,q$) for the errors, and $d$ levels of differencing will be applied to all variables ($y, x_{1,t},\dots,x_{k,t}$) during estimation.
+  * In R, we can specify an ARIMA($p,d,q$) for the errors, then $d$ levels of differencing will be applied to all variables ($y, x_{1,t},\dots,x_{k,t}$) during estimation.
   * Check that $\varepsilon_t$ series looks like white noise.
   * AICc can be calculated for final model.
   * Repeat procedure for all subsets of predictors to be considered, and select model with lowest AICc value.
@@ -106,3 +85,10 @@ results.
   * Some predictors are known into the future (e.g., time, dummies).
   * Separate forecasting models may be needed for other predictors.
   * Forecast intervals ignore the uncertainty in forecasting the predictors.
+
+## Your turn
+\fontsize{13}{15}\sf\vspace*{-0.2cm}
+
+```{r}
+#| child: activities.md
+```
