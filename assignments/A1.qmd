@@ -1,5 +1,6 @@
 ---
 title: Assignment 1
+fig-cap-location: top
 ---
 
 **You must provide forecasts for the following items:**
@@ -25,17 +26,32 @@ source(here::here("course_info.R"))
 submit(schedule, "Assignment 1")
 ```
 
-## Results
-
-* [Q1](Q1.png)
-* [Q2](Q2.png)
-* [Q3](Q3.png)
-* [Q4](Q4.png)
-* [Q5](Q5.png)
+___
 
 ## Leaderboard
 
 ```{r}
-readRDS(here::here("assignments/A1_leaderboard.rds")) |> 
+readRDS(here::here("assignments/A1_leaderboard.rds")) |>
   DT::datatable()
 ```
+
+## Forecasts
+
+::: {layout-ncol=5}
+
+### Q1
+[![Google closing stock price on 20 March 2024](Q1.png)](Q1.png)
+
+### Q2
+[![Maximum temperature at Melbourne airport on 10 April 2024](Q2.png)](Q2.png)
+
+### Q3
+[![Difference in points in AFL Anzac Day clash](Q3.png)](Q3.png)
+
+### Q4
+[![Seasonally adjusted total employment for April 2024](Q4.png)](Q4.png)
+
+### Q5
+[![Google closing stock price on 22 May 2024](Q5.png)](Q5.png)
+
+:::
