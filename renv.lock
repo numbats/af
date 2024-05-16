@@ -840,6 +840,16 @@
       "Repository": "CRAN",
       "Hash": "f7736a18de97dea803bde0a2daaafb27"
     },
+    "fastmatch": {
+      "Package": "fastmatch",
+      "Version": "1.1-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "8c406b7284bbaef08e01c6687367f195"
+    },
     "feasts": {
       "Package": "feasts",
       "Version": "0.3.2",
@@ -975,6 +985,29 @@
         "methods"
       ],
       "Hash": "15aeb8c27f5ea5161f9f6a641fafd93a"
+    },
+    "fst": {
+      "Package": "fst",
+      "Version": "0.9.8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "fstcore"
+      ],
+      "Hash": "34637e000c63c3de8d8aafceb82fd082"
+    },
+    "fstcore": {
+      "Package": "fstcore",
+      "Version": "0.9.18",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "4c33c7202fcfe741cdea205570305630"
     },
     "gargle": {
       "Package": "gargle",
@@ -1344,6 +1377,22 @@
         "openssl"
       ],
       "Hash": "ac107251d9d9fd72f0ca8049988f1d7f"
+    },
+    "hutils": {
+      "Package": "hutils",
+      "Version": "1.8.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "data.table",
+        "fastmatch",
+        "grDevices",
+        "magrittr",
+        "stats",
+        "utils"
+      ],
+      "Hash": "69344d4b60a7e4b57d5121e31204a06f"
     },
     "ids": {
       "Package": "ids",
@@ -2014,6 +2063,30 @@
         "R"
       ],
       "Hash": "5e3c5dc0b071b21fa128676560dbe94d"
+    },
+    "readabs": {
+      "Package": "readabs",
+      "Version": "0.4.14",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "dplyr",
+        "fst",
+        "glue",
+        "httr",
+        "hutils",
+        "labelled",
+        "purrr",
+        "readxl",
+        "rlang",
+        "rvest",
+        "stringi",
+        "tidyr",
+        "tools",
+        "xml2"
+      ],
+      "Hash": "bb094b929f7e4efb76d32e637f77a825"
     },
     "readr": {
       "Package": "readr",
