@@ -1,0 +1,400 @@
+---
+title: "Exercise Week 10: Solutions"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, cache = TRUE)
+library(fpp3)
+```
+
+# fpp3 9.11, Ex11
+
+> Choose one of the following seasonal time series: the Australian production of electricity, cement, or gas (from `aus_production`).
+>
+>   a. Do the data need transforming? If so, find a suitable transformation.
+
+```{r ex11a}
+aus_production |>
+  autoplot(Electricity)
+```
+
+Yes, these need transforming.
+
+```{r ex11a2}
+lambda <- aus_production |>
+  features(Electricity, guerrero) |>
+  pull(lambda_guerrero)
+aus_production |>
+  autoplot(box_cox(Electricity, lambda))
+```
+
+`guerrero()` suggests using Box-Cox transformation with parameter $\lambda=`r round(lambda,2)`$.
+
+>   b. Are the data stationary? If not, find an appropriate differencing which yields stationary data.
+
+The trend and seasonality show that the data are not stationary.
+
+```{r ex11b}
+aus_production |>
+  gg_tsdisplay(box_cox(Electricity, lambda) |> difference(4), plot_type = "partial")
+
+aus_production |>
+  gg_tsdisplay(box_cox(Electricity, lambda) |> difference(4) |> difference(1), plot_type = "partial")
+```
+
+It seems that we could have continued with only taking seasonal differences. You may try this option. We opt to take a first order difference as well.
+
+>   c. Identify a couple of ARIMA models that might be useful in describing the time series. Which of your models is the best according to their AIC values?
+
+From the above graph, an AR(1) or an MA(1) with a seasonal MA(2) might work. So an ARIMA(1,1,0)(0,1,2) model for the transformed data.
+
+```{r ex11c}
+fit <- aus_production |>
+  model(
+    manual = ARIMA(box_cox(Electricity, lambda) ~ 0 + pdq(1, 1, 0) + PDQ(0, 1, 2)),
+    auto = ARIMA(box_cox(Electricity, lambda))
+  )
+fit |>
+  select(auto) |>
+  report()
+glance(fit)
+```
+
+Automatic model selection with `ARIMA()` has also taken a first order difference, and so we can compare the AICc values. This is a challenging ARIMA model to select manually and the automatic model is clearly better.
+
+>   d. Estimate the parameters of your best model and do diagnostic testing on the residuals. Do the residuals resemble white noise? If not, try to find another ARIMA model which fits better.
+
+```{r ex11d}
+fit |>
+  select(auto) |>
+  gg_tsresiduals()
+fit |>
+  select(auto) |>
+  augment() |>
+  features(.innov, ljung_box, dof = 6, lag = 12)
+```
+
+Residuals look reasonable, they resemble white noise.
+
+>   e. Forecast the next 24 months of data using your preferred model.
+
+```{r ex11e}
+fit |>
+  select(auto) |>
+  forecast(h = "2 years") |>
+  autoplot(aus_production)
+```
+
+>   f. Compare the forecasts obtained using `ETS()`.
+
+```{r ex11f}
+aus_production |>
+  model(ETS(Electricity)) |>
+  forecast(h = "2 years") |>
+  autoplot(aus_production)
+
+aus_production |>
+  model(ETS(Electricity)) |>
+  forecast(h = "2 years") |>
+  autoplot(aus_production |> filter(year(Quarter) >= 2000)) +
+  autolayer(fit |> select(auto) |> forecast(h = "2 years"), colour = "red", alpha = 0.4)
+```
+
+The point forecasts appear to be quite similar. The ETS forecasts have a wider forecast interval than the ARIMA forecasts.
+
+# fpp3 9.11, Ex12
+
+> For the same time series you used in the previous exercise, try using a non-seasonal model applied to the seasonally adjusted data obtained from STL. Compare the forecasts with those obtained in the previous exercise. Which do you think is the best approach?
+
+```{r ex12}
+lambda <- aus_production |>
+  features(Electricity, guerrero) |>
+  pull(lambda_guerrero)
+stlarima <- decomposition_model(
+  STL(box_cox(Electricity, lambda)),
+  ARIMA(season_adjust)
+)
+fc <- aus_production |>
+  model(
+    ets = ETS(Electricity),
+    arima = ARIMA(box_cox(Electricity, lambda)),
+    stlarima = stlarima
+  ) |>
+  forecast(h = "2 years")
+fc |> autoplot(aus_production |> filter(year(Quarter) > 2000), level=95)
+```
+
+The STL-ARIMA approach has higher values and narrower prediction intervals. It is hard to know which is best without comparing against a test set.
+
+
+# fpp3 9.11, Ex13
+
+> For the Australian tourism data (from `tourism`):
+>   a. Fit a suitable ARIMA model for all data.
+>   b. Produce forecasts of your fitted models.
+>   c. Check the forecasts for the "Snowy Mountains" and "Melbourne" regions. Do they look reasonable?
+
+```{r ex13}
+fit <- tourism |>
+  model(arima = ARIMA(Trips))
+fc <- fit |> forecast(h="3 years")
+fc |>
+  filter(Region == "Snowy Mountains") |>
+  autoplot(tourism)
+fc |>
+  filter(Region == "Melbourne") |>
+  autoplot(tourism)
+```
+
+Both sets of forecasts appear to have captured the underlying trend and seasonality effectively.
+
+# fpp3 9.11, Ex14
+
+> For your retail time series (Exercise 5 above):
+>    a. develop an appropriate seasonal ARIMA model;
+
+```{r ex14a}
+set.seed(12345678)
+myseries <- aus_retail |>
+  filter(
+    `Series ID` == sample(aus_retail$`Series ID`, 1),
+    Month < yearmonth("2018 Jan")
+  )
+fit <- myseries |>
+  model(arima = ARIMA(log(Turnover)))
+report(fit)
+gg_tsresiduals(fit)
+```
+
+>    b. compare the forecasts with those you obtained in earlier chapters;
+
+```{r ex14b}
+stlets <- decomposition_model(
+  STL(log(Turnover)),
+  ETS(season_adjust)
+)
+stlarima <- decomposition_model(
+  STL(log(Turnover)),
+  ARIMA(season_adjust)
+)
+fit <- myseries |>
+  model(
+    ets = ETS(Turnover),
+    arima = ARIMA(log(Turnover)),
+    stlets = stlets,
+    stlarima = stlarima
+  )
+fc <- fit |>
+  forecast(h="3 years")
+fc |>
+  accuracy(aus_retail) |>
+  select(.model, RMSE, MAE)
+```
+
+From these 4 models, the STL-ARIMA model is doing better than the others.
+
+>    c. Obtain up-to-date retail data from the [ABS website](https://bit.ly/absretail) (Cat 8501.0, Table 11), and compare your forecasts with the actual numbers. How good were the forecasts from the various models?
+
+```{r ex14c, message=FALSE}
+update <- readabs::read_abs(series_id = myseries$`Series ID`[1],
+                            release_date = "2022-12-31") |>
+  mutate(
+    Month = yearmonth(date),
+    Turnover = value
+  ) |>
+  select(Month, Turnover) |>
+  filter(Month > max(myseries$Month)) |>
+  as_tsibble(index=Month)
+fc |>
+  accuracy(update)
+```
+
+With a longer test set, the STL-ARIMA model is still best.
+
+# fpp3 9.11, Ex15
+
+> Consider the number of Snowshoe Hare furs traded by the Hudson Bay Company between 1845 and 1935 (data set `pelt`).
+>
+>    a. Produce a time plot of the time series.
+
+```{r}
+pelt |>
+  autoplot(Hare)
+```
+
+>    b. Assume you decide to fit the following model:
+> $$ y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \phi_3 y_{t-3} + \phi_4 y_{t-4} + \varepsilon_t, $$
+>        where $\varepsilon_t$ is a white noise series. What sort of ARIMA model is this (i.e., what are $p$, $d$, and $q$)?
+
+- This is an ARIMA(4,0,0), hence $p=4$, $d=0$ and $q=0$.
+
+>    c. By examining the ACF and PACF of the data, explain why this model is appropriate.
+
+
+```{r}
+pelt |> gg_tsdisplay(Hare, plot="partial")
+fit <- pelt |> model(AR4 = ARIMA(Hare ~ pdq(4,0,0)))
+fit |> gg_tsresiduals()
+```
+
+- The significant spike at lag 4 of the PACF indicates an AR(4).
+- The residuals from this model are clearly whhite noise.
+
+>    d. The last five values of the series are given below:
+
+```{r hares, echo=FALSE, warning=FALSE, message=FALSE}
+pelt_table <- pelt |>
+  tail(5) |>
+  select(Year, Hare)
+tab <- as.data.frame(matrix(c(NA, pelt_table$Hare), nrow = 1))
+colnames(tab) <- c("Year", pelt_table$Year)
+tab[1, 1] <- "Number of hare pelts"
+tab |>
+  knitr::kable()
+
+fit <- pelt |> model(ARIMA(Hare ~ pdq(4, 0, 0)))
+coef <- rlang::set_names(tidy(fit)$estimate, tidy(fit)$term)
+constant <- coef["constant"]
+phi1 <- coef["ar1"]
+phi2 <- coef["ar2"]
+phi3 <- coef["ar3"]
+phi4 <- coef["ar4"]
+fc1 <- constant + sum(c(phi1,phi2,phi3,phi4)*pelt_table$Hare[5:2])
+fc2 <- constant + sum(c(phi1,phi2,phi3,phi4)*c(fc1,pelt_table$Hare[5:3]))
+fc3 <- constant + sum(c(phi1,phi2,phi3,phi4)*c(fc2,fc1,pelt_table$Hare[5:4]))
+```
+
+>   The estimated parameters are
+>    $c = `r sprintf("%.0f",constant)`$,
+>    $\phi_1 = `r sprintf("%.2f", phi1)`$,
+>    $\phi_2 = `r sprintf("%.2f", phi2)`$,
+>    $\phi_3 = `r sprintf("%.2f", phi3)`$, and
+>    $\phi_4 = `r sprintf("%.2f", phi4)`$.
+>    Without using the `forecast` function, calculate forecasts for the next three years (1936--1939).
+
+\begin{align*}
+  \hat{y}_{T+1|T} & = `r sprintf("%.0f",constant)` +
+    `r sprintf("%.2f", phi1)`* `r sprintf("%.0f",pelt_table$Hare[5])`
+    `r sprintf("%.2f", phi2)`* `r sprintf("%.0f",pelt_table$Hare[4])`
+    `r sprintf("%.2f", phi3)`* `r sprintf("%.0f",pelt_table$Hare[3])`
+    `r sprintf("%.2f", phi4)`* `r sprintf("%.0f",pelt_table$Hare[2])` =
+    `r sprintf("%.2f", fc1)` \\
+  \hat{y}_{T+2|T} & = `r sprintf("%.0f",constant)` +
+    `r sprintf("%.2f", phi1)`* `r sprintf("%.2f",fc1)`
+    `r sprintf("%.2f", phi2)`* `r sprintf("%.0f",pelt_table$Hare[5])`
+    `r sprintf("%.2f", phi3)`* `r sprintf("%.0f",pelt_table$Hare[4])`
+    `r sprintf("%.2f", phi4)`* `r sprintf("%.0f",pelt_table$Hare[3])` =
+    `r sprintf("%.2f", fc2)` \\
+  \hat{y}_{T+3|T} & = `r sprintf("%.0f",constant)` +
+    `r sprintf("%.2f", phi1)`* `r sprintf("%.2f",fc2)`
+    `r sprintf("%.2f", phi2)`* `r sprintf("%.2f",fc1)`
+    `r sprintf("%.2f", phi3)`* `r sprintf("%.0f",pelt_table$Hare[5])`
+    `r sprintf("%.2f", phi4)`* `r sprintf("%.0f",pelt_table$Hare[4])` =
+    `r sprintf("%.2f", fc3)` \\
+\end{align*}
+
+>    e. Now fit the model in R and obtain the forecasts using `forecast`. How are they different from yours? Why?
+
+```{r ex15e}
+pelt |>
+  model(ARIMA(Hare ~ pdq(4, 0, 0))) |>
+  forecast(h=3)
+```
+
+Any differences will be due to rounding errors.
+
+# fpp3 9.11, Ex16
+
+> The population of Switzerland from 1960 to 2017 is in data set `global_economy`.
+
+>    a. Produce a time plot of the data.
+
+```{r}
+swiss_pop <- global_economy |>
+  filter(Country == "Switzerland") |>
+  select(Year, Population) |>
+  mutate(Population = Population / 1e6)
+
+autoplot(swiss_pop, Population)
+```
+
+>    b. You decide to fit the following model to the series:
+>$$y_t = c + y_{t-1} + \phi_1 (y_{t-1} - y_{t-2}) + \phi_2 (y_{t-2} - y_{t-3}) + \phi_3( y_{t-3} - y_{t-4}) + \varepsilon_t$$
+> where $y_t$ is the Population in year $t$ and $\varepsilon_t$ is a white noise series. What sort of ARIMA model is this (i.e., what are $p$, $d$, and $q$)?
+
+This is an ARIMA(3,1,0), hence $p=3$, $d=1$ and $q=0$.
+
+>    c. Explain why this model was chosen using the ACF and PACF of the differenced series.
+
+```{r}
+swiss_pop |> gg_tsdisplay(Population, plot="partial")
+```
+
+```{r}
+swiss_pop |> gg_tsdisplay(difference(Population), plot="partial")
+```
+
+The significant spike at lag 3 in the PACF, coupled with the  exponential decay in the ACF, for the differenced series, signals an AR(3) for the differenced series.
+
+>    d. The last five values of the series are given below.
+
+```{r swisspop, echo=FALSE, warning=FALSE, message=FALSE}
+swiss_pop <- global_economy |>
+  filter(Country == "Switzerland") |>
+  tail(5) |>
+  select(Year, Population) |>
+  mutate(Population = Population / 1e6)
+tab <- as.data.frame(matrix(c(NA, swiss_pop$Population), nrow = 1))
+colnames(tab) <- c("Year", swiss_pop$Year)
+tab[1, 1] <- "Population (millions)"
+tab |>
+  knitr::kable(digits = 2)
+fit <- global_economy |>
+  filter(Country == "Switzerland") |>
+  mutate(Population = Population / 1e6) |>
+  model(ARIMA(Population ~ 1 + pdq(3, 1, 0)))
+coef <- rlang::set_names(tidy(fit)$estimate, tidy(fit)$term)
+phi1 <- coef["ar1"]
+phi2 <- coef["ar2"]
+phi3 <- coef["ar3"]
+intercept <- coef["constant"]
+fc1 <- intercept + swiss_pop$Population[5] + sum(c(phi1,phi2,phi3)*diff(swiss_pop$Population)[4:2])
+fc2 <- intercept + fc1 + sum(c(phi1,phi2,phi3)*diff(c(swiss_pop$Population,fc1))[5:3])
+fc3 <- intercept + fc2 + sum(c(phi1,phi2,phi3)*diff(c(swiss_pop$Population,fc1,fc2))[6:4])
+```
+
+> The estimated parameters are $c = `r sprintf("%.4f",intercept)`$, $\phi_1 = `r sprintf("%.2f", phi1)`$, $\phi_2 = `r sprintf("%.2f", phi2)`$, and $\phi_3 = `r sprintf("%.2f", phi3)`$. Without using the `forecast` function, calculate forecasts for the next three years (2018--2020).
+
+\begin{align*}
+  \hat{y}_{T+1|T} & = `r sprintf("%.4f",intercept)` +
+  `r sprintf("%.2f",swiss_pop$Population[5])`+
+    `r sprintf("%.2f", phi1)`* (`r sprintf("%.2f",swiss_pop$Population[5])` - `r sprintf("%.2f",swiss_pop$Population[4])`)
+    `r sprintf("%.2f", phi2)`* (`r sprintf("%.2f",swiss_pop$Population[4])` - `r sprintf("%.2f",swiss_pop$Population[3])`) +
+    `r sprintf("%.2f", phi3)`* (`r sprintf("%.2f",swiss_pop$Population[3])` - `r sprintf("%.2f",swiss_pop$Population[2])`) =
+    `r sprintf("%.2f", fc1)` \\
+  \hat{y}_{T+2|T} & = `r sprintf("%.4f",intercept)` +
+  `r sprintf("%.2f",fc1)`+
+    `r sprintf("%.2f", phi1)`* (`r sprintf("%.2f",fc1)` - `r sprintf("%.2f",swiss_pop$Population[5])`)
+    `r sprintf("%.2f", phi2)`* (`r sprintf("%.2f",swiss_pop$Population[5])` - `r sprintf("%.2f",swiss_pop$Population[4])`) +
+    `r sprintf("%.2f", phi3)`* (`r sprintf("%.2f",swiss_pop$Population[4])` - `r sprintf("%.2f",swiss_pop$Population[3])`) =
+    `r sprintf("%.2f", fc2)` \\
+  \hat{y}_{T+3|T} & = `r sprintf("%.4f",intercept)` +
+  `r sprintf("%.2f",fc2)`+
+    `r sprintf("%.2f", phi1)`* (`r sprintf("%.2f",fc2)` - `r sprintf("%.2f",fc1)`)
+    `r sprintf("%.2f", phi2)`* (`r sprintf("%.2f",fc1)` - `r sprintf("%.2f",swiss_pop$Population[5])`) +
+    `r sprintf("%.2f", phi3)`* (`r sprintf("%.2f",swiss_pop$Population[5])` - `r sprintf("%.2f",swiss_pop$Population[4])`) =
+    `r sprintf("%.2f", fc3)` \\
+\end{align*}
+
+>   e. Now fit the model in R and obtain the forecasts from the same model. How are they different from yours? Why?
+
+```{r ex16e}
+global_economy |>
+  filter(Country == "Switzerland") |>
+  mutate(Population = Population / 1e6) |>
+  model(ARIMA(Population ~ 1 + pdq(3, 1, 0))) |>
+  forecast(h=3)
+```
+
+Any differences will be due to rounding errors.
+
