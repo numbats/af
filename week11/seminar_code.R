@@ -198,3 +198,34 @@ gg_tsresiduals(calls_fit, lag = 338)
 calls_fit |>
   forecast(h = 1690) |>
   autoplot(calls_mdl |> filter(idx > 20000))
+
+## US Leisure
+
+leisure <- us_employment |>
+  filter(Title == "Leisure and Hospitality", year(Month) > 2001) |>
+  mutate(Employed = Employed / 1000) |>
+  select(Month, Employed)
+
+autoplot(leisure, Employed) +
+  labs(y = "Employed (millions)")
+fit <- leisure |>
+  model(
+    lm = TSLM(Employed ~
+           trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
+           fourier(K = 6)),
+    dhr = ARIMA(Employed  ~
+           trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
+           fourier(K = 6)),
+    dhr2 = ARIMA(Employed  ~
+                   trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
+                   fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0)),
+  )
+glance(fit)
+
+fit |>
+  select(dhr) |>
+  gg_tsresiduals()
+
+fc <- fit |>
+  forecast(h=24)
+autoplot(fc, leisure |> tail(12))
