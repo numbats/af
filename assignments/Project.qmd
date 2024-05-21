@@ -40,7 +40,6 @@ You should produce forecasts of the series using ETS and ARIMA models. Write a r
 
 * Your submission must include the Rmarkdown or Quarto file (.Rmd or .qmd), and should run without error.
 * There will be a 5 marks penalty if file does not run without error.
-* You may also include a knitted version of the document (HTML preferred), but it is not required.
 * When using the updated ABS data set, do not edit the downloaded file in any way.
 * There is no need to provide the updated ABS data with your submission.
 
