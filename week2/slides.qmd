@@ -57,7 +57,6 @@ to produce sensible forecasts. They want me to fix it.
 \placefig{10.2}{1.4}{width=5.8cm}{tableware2}
 
 ## CASE STUDY 1: Paperware company
-\vspace*{0.2cm}
 
 ### Methods currently used
 
@@ -151,10 +150,8 @@ Not the real data! Or is it?
 ### Additional information
 
   * They can provide a large amount of data on previous routes.
-  * Traffic is affected by school holidays, special events such as
-the Grand Prix, advertising campaigns, competition behaviour, etc.
-  * They have a highly capable team of people who are able to do
-most of the computing.
+  * Traffic is affected by school holidays, special events such as the Grand Prix, advertising campaigns, competition behaviour, etc.
+  * They have a highly capable team of people who are able to do most of the computing.
 
 ## Your turn
 

@@ -114,6 +114,7 @@ employed |>
 ## The ABS stuff-up
 
 ```{r abs4}
+#| fig-height: 2.8
 employed |>
   filter(Year >= 2005) |>
   autoplot(Employed) +
@@ -123,6 +124,7 @@ employed |>
 ## The ABS stuff-up
 
 ```{r abs5}
+#| fig-height: 2.8
 employed |>
   filter(Year >= 2005) |>
   gg_season(Employed, labels = "right") +
@@ -145,6 +147,7 @@ employed |>
 ## The ABS stuff-up
 
 ```{r abs7}
+#| fig-height: 2.8
 dcmp <- employed |>
   filter(Year >= 2005) |>
   model(stl = STL(Employed ~ season(window = 11), robust = TRUE))
@@ -154,6 +157,7 @@ components(dcmp) |> autoplot()
 ## The ABS stuff-up
 
 ```{r abs8}
+#| fig-height: 2.8
 components(dcmp) |>
   filter(year(Time) == 2013) |>
   gg_season(season_year) +
