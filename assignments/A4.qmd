@@ -68,3 +68,9 @@ Please submit your solution as a .R file.
 source(here::here("course_info.R"))
 submit(schedule, "Assignment 4")
 ```
+
+---
+
+## Solution
+
+[R code](A4.R)
