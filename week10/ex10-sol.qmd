@@ -266,31 +266,31 @@ fc3 <- constant + sum(c(phi1,phi2,phi3,phi4)*c(fc2,fc1,pelt_table$Hare[5:4]))
 
 >   The estimated parameters are
 >    $c = `r sprintf("%.0f",constant)`$,
->    $\phi_1 = `r sprintf("%.2f", phi1)`$,
->    $\phi_2 = `r sprintf("%.2f", phi2)`$,
->    $\phi_3 = `r sprintf("%.2f", phi3)`$, and
->    $\phi_4 = `r sprintf("%.2f", phi4)`$.
+>    $\phi_1 = `r sprintf("%.5f", phi1)`$,
+>    $\phi_2 = `r sprintf("%.5f", phi2)`$,
+>    $\phi_3 = `r sprintf("%.5f", phi3)`$, and
+>    $\phi_4 = `r sprintf("%.5f", phi4)`$.
 >    Without using the `forecast` function, calculate forecasts for the next three years (1936--1939).
 
 \begin{align*}
   \hat{y}_{T+1|T} & = `r sprintf("%.0f",constant)` +
-    `r sprintf("%.2f", phi1)`* `r sprintf("%.0f",pelt_table$Hare[5])`
-    `r sprintf("%.2f", phi2)`* `r sprintf("%.0f",pelt_table$Hare[4])`
-    `r sprintf("%.2f", phi3)`* `r sprintf("%.0f",pelt_table$Hare[3])`
-    `r sprintf("%.2f", phi4)`* `r sprintf("%.0f",pelt_table$Hare[2])` =
-    `r sprintf("%.2f", fc1)` \\
+    `r sprintf("%.5f", phi1)`* `r sprintf("%.0f",pelt_table$Hare[5])`
+    `r sprintf("%.5f", phi2)`* `r sprintf("%.0f",pelt_table$Hare[4])`
+    `r sprintf("%.5f", phi3)`* `r sprintf("%.0f",pelt_table$Hare[3])`
+    `r sprintf("%.5f", phi4)`* `r sprintf("%.0f",pelt_table$Hare[2])` =
+    `r sprintf("%.5f", fc1)` \\
   \hat{y}_{T+2|T} & = `r sprintf("%.0f",constant)` +
-    `r sprintf("%.2f", phi1)`* `r sprintf("%.2f",fc1)`
-    `r sprintf("%.2f", phi2)`* `r sprintf("%.0f",pelt_table$Hare[5])`
-    `r sprintf("%.2f", phi3)`* `r sprintf("%.0f",pelt_table$Hare[4])`
-    `r sprintf("%.2f", phi4)`* `r sprintf("%.0f",pelt_table$Hare[3])` =
-    `r sprintf("%.2f", fc2)` \\
+    `r sprintf("%.5f", phi1)`* `r sprintf("%.2f",fc1)`
+    `r sprintf("%.5f", phi2)`* `r sprintf("%.0f",pelt_table$Hare[5])`
+    `r sprintf("%.5f", phi3)`* `r sprintf("%.0f",pelt_table$Hare[4])`
+    `r sprintf("%.5f", phi4)`* `r sprintf("%.0f",pelt_table$Hare[3])` =
+    `r sprintf("%.5f", fc2)` \\
   \hat{y}_{T+3|T} & = `r sprintf("%.0f",constant)` +
-    `r sprintf("%.2f", phi1)`* `r sprintf("%.2f",fc2)`
-    `r sprintf("%.2f", phi2)`* `r sprintf("%.2f",fc1)`
-    `r sprintf("%.2f", phi3)`* `r sprintf("%.0f",pelt_table$Hare[5])`
-    `r sprintf("%.2f", phi4)`* `r sprintf("%.0f",pelt_table$Hare[4])` =
-    `r sprintf("%.2f", fc3)` \\
+    `r sprintf("%.5f", phi1)`* `r sprintf("%.2f",fc2)`
+    `r sprintf("%.5f", phi2)`* `r sprintf("%.2f",fc1)`
+    `r sprintf("%.5f", phi3)`* `r sprintf("%.0f",pelt_table$Hare[5])`
+    `r sprintf("%.5f", phi4)`* `r sprintf("%.0f",pelt_table$Hare[4])` =
+    `r sprintf("%.5f", fc3)` 
 \end{align*}
 
 >    e. Now fit the model in R and obtain the forecasts using `forecast`. How are they different from yours? Why?
