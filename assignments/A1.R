@@ -12,7 +12,7 @@ q1 <- 149.68 # https://finance.yahoo.com/quote/GOOG/history
 q2 <- 17.6 #http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml
 q3 <- 0
 q4 <- 14.300000 #https://www.abs.gov.au/ausstats/abs@.nsf/mf/6202.0
-#q5 <- ???? # https://finance.yahoo.com/quote/GOOG/history
+q5 <- 178.00 # https://finance.yahoo.com/quote/GOOG/history
 
 # Create leaderboard
 leaders <- tibble(
