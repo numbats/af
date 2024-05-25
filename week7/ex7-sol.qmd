@@ -703,7 +703,7 @@ An ETS(M,A,M) model is given by
 \end{align*}
 So $y_{T+h}$ is given by
 $$
-  y_{T+h} = (\ell_{T+h-1}+b_{T+h-1})s_{T+h-m}(1+\varepsilon_{T+h-m})
+  y_{T+h} = (\ell_{T+h-1}+b_{T+h-1})s_{T+h-m}(1+\varepsilon_{T+h})
 $$
 Replacing $\varepsilon_{t}$ by zero for $t>T$, and substituting in from the above equations, we obtain
 $$
