@@ -37,8 +37,11 @@ website:
         icon: mortarboard-fill
         href: https://learning.monash.edu/course/view.php?id=10091&section=1
       - text: Textbook
-        icon: book
+        icon: book-fill
         href: https://OTexts.com/fpp3
+      - text: Exam
+        icon: pencil-fill
+        href: exams/index.qmd
     right:
       - icon: github
         href: https://github.com/numbats/af

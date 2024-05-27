@@ -1,0 +1,33 @@
+---
+title: Exam preparation
+---
+
+# Past exams
+
+* [2021](/exams/exam_2021.pdf) [[solutions](/exams/exam_2021_solutions.pdf)]
+* [2022](/exams/exam_2022.pdf) [[solutions](/exams/exam_2022_solutions.pdf)]
+* [2023](/exams/exam_2023.pdf) [[solutions](/exams/exam_2023_solutions.pdf)]
+
+This year's exam will follow the same format.
+
+# Exam conditions
+
+The exam this year will be an on-campus eExam. It will be closed book with the following items allowed:
+
+* AI tools are not to be used in the exam.
+* Up to 5 blank pages for use as working sheets.
+* 1 A4 double sided page containing notes. A physical page only is allowed.
+* 4 pre-printed answer sheets for handwritten responses (e.g., equations or diagrams).
+* A physical calculator of any type or virtual calculator as follows:
+
+    * Inbuilt Mac/Windows calculator
+    * Website https://www.educalc.net/2336211.page
+    * 10bii Financial Calculator for Mac by K2 Cashflow, https://apps.apple.com/au/app/10bii-financial-calculator/id473144920
+
+The exam will include one page of ETS formulas. Here they are, so you know exactly what you will see on the exam. No other formulas will be provided, but you can write whatever you like on your single A4 page of notes.
+
+![ETS formulas](https://otexts.com/fpp3/figs/statespacemodels-1.png)
+
+Some past exams were open book due to COVID-19 and students needing to sit exams from home. But due to accreditation requirements, we are no longer using open book exams for this unit.
+
+Information about [eExams are available on the Monash website](https://www.monash.edu/students/admin/assessments/exams/on-campus).
