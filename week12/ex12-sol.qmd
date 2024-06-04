@@ -104,12 +104,6 @@ best_model |> report()
 
 The optimal knot (to 1 decimal place) is `r best_knot` degrees Celsius.
 
-
-```{r ex3check, include = FALSE}
-if(abs(best_knot - 28.1) > 1e-5)
-  stop("Optimal knot is not 28.1")
-```
-
 ```{r ex3d}
 augment(best_model) |>
   left_join(vic_elec_daily) |>
@@ -133,7 +127,7 @@ The model fails the residual tests but the significant autocorrelations are rela
 vic_next_day <- new_data(vic_elec_daily, 1) |>
   mutate(
     Temperature = 26,
-    Temp2 = I(pmax(Temperature - 28.4, 0)),
+    Temp2 = I(pmax(Temperature - best_knot, 0)),
     Day_Type = "Holiday"
   )
 forecast(best_model, vic_next_day)
@@ -141,7 +135,7 @@ forecast(best_model, vic_next_day)
 vic_elec_future <- new_data(vic_elec_daily, 14) |>
   mutate(
     Temperature = 26,
-    Temp2 = I(pmax(Temperature - 28.4, 0)),
+    Temp2 = I(pmax(Temperature - best_knot, 0)),
     Holiday = c(TRUE, rep(FALSE, 13)),
     Day_Type = case_when(
       Holiday ~ "Holiday",
