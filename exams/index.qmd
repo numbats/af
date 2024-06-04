@@ -2,6 +2,10 @@
 title: Exam preparation
 ---
 
+# Additional exercises
+
+[Solutions to exercises not covered elsewhere](/other-ex-sol.qmd)
+
 # Past exams
 
 * [2021](/exams/exam_2021.pdf) [[solutions](/exams/exam_2021_solutions.pdf)]

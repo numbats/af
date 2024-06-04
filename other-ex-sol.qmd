@@ -1,0 +1,525 @@
+---
+title: "Additional Exercise Solutions"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, cache = TRUE)
+library(fpp3)
+```
+
+# fpp3 1.8, Ex 1
+
+>For cases 3 and 4 in Section 1.5, list the possible predictor variables that might be useful, assuming that the relevant data are available.
+
+Case 3: the following predictor variables might be useful, assuming that the relevant data are available:
+
+* Model and make of the vehicle
+* Odometer reading
+* Conditions of the vehicle
+* Company the vehicle was leased to
+* Color of the vehicle
+* Date of sale
+
+Case 4: the following predictor variables might be useful, assuming that the relevant data are available:
+
+* Day of the week
+* Day of the year
+* Is the day before long weekend
+* Is the day in the end of long weekend
+* Is the day before or in the beginning of school holidays (one variable per every state)
+* Is the day in the end of school holidays (one variable per every state)
+* Is the day before or in the beginning of a major sport event
+* Is the day after of a major sport event
+* Competitors' prices (relative to the price of the airline in question)
+* Is there a pilot strike at some of the competitors' airlines
+* Is there a pilot strike at the airline in question
+
+# fpp3 1.8, Ex 2
+
+> For case 3 in Section 1.5, describe the five steps of forecasting in the context of this project.
+
+#### 1. Problem definition
+
+* The main stakeholders should be defined and everyone questioned about which way he or she can benefit from the new system. In case of the fleet company probably the group of specialists was not recognized as stakeholders which led to complications in gathering relevant information and later in finding an appropriate statistical approach and deployment of the new forecasting method.
+
+#### 2. Gathering information
+
++ Data set of past sales should be obtained, including surrounding information such as the way data were gathered, possible outliers and incorrect records, special values in the data.
+
++ Expertise knowledge should be obtained from people responsible for the sales such as seasonal price fluctuations, if there is dependency of the price on the situation in economy, also finding other possible factors which can influence the price.
+
+#### 3. Preliminary (exploratory) analysis
+
++ Possible outliers and inconsistent information should be found (for example very small, zero or even negative prices).
+
++ Graphs which show dependency of the sale price on different predictor variables should be considered.
+
++ Dependency of the sale price on month of the year should be plot.
+
+#### 4. Choosing and fitting models
+
++ A model to start from (for example a linear model) and predictor variables which most likely affect the forecasts should be chosen. Predicting performance of the model should be evaluated.
+
++ The model should be changed (for example by transforming parameters, adding or removing predictor variables) and it's performance evaluated. This should be done iteratively a few times until a satisfactory model is found.
+
+#### 5. Using and evaluating a forecasting model
+
++ The appropriate software should be deployed to the company and relevant people should be educated how to use this software.
+
++ Forecasting accuracy should be checked against new sales. If necessary the model should be updated and then the deployed software.
+
+# fpp3 3.7, Ex 6
+
+> Show that a $3\times 5$ MA is equivalent to a 7-term weighted moving average with weights of 0.067, 0.133, 0.200, 0.200, 0.200, 0.133, and 0.067.
+
+5-term moving average:
+$$z_j = \frac{1}{5}(y_{j-2}+y_{j-1}+y_j+y_{j+1}+y_{j+2}).$$
+3-term moving average:
+$$u_t = \frac{1}{3}(z_{t-1}+z_t+z_{t+1}).$$
+Substituting expression for $z_j$ into the latter formula we get
+\begin{align*}
+  u_t &= \frac{1}{3}\left(\frac{1}{5}\left(y_{t-3}+y_{t-2}+y_{t-1}+y_{t}+y_{t+1}\right)+\frac{1}{5}\left(y_{t-2}+y_{t-1}+y_t+y_{t+1}+y_{t+2}\right)+\frac{1}{5}\left(y_{t-1}+y_{t}+y_{t+1}+y_{t+2}+y_{t+3}\right)\right).\\
+  &= \frac{1}{15}\left(y_{t-3}+2y_{t-2}+3y_{t-1}+3y_{t}+3y_{t+1}+2y_{t+2}+y_{t+3}\right),
+\end{align*}
+which is a 7-term weighted moving average with weights of 0.067, 0.133, 0.200, 0.200, 0.200, 0.133, and 0.067
+
+# fpp3 3.7, Ex 7
+
+> Consider the last five years of the Gas data from `aus_production`.
+
+>    ```r
+>    gas <- tail(aus_production, 5*4) |> select(Gas)
+>    ```
+
+>    a. Plot the time series. Can you identify seasonal fluctuations and/or a trend-cycle?
+
+```{r}
+gas <- tail(aus_production, 5 * 4) |> select(Gas)
+gas |>
+  autoplot(Gas) + labs(y = "Petajoules")
+```
+
+There is some strong seasonality and a trend.
+
+>    b. Use `classical_decomposition` with `type=multiplicative` to calculate the trend-cycle and seasonal indices.
+>    c. Do the results support the graphical interpretation from part a?
+
+```{r}
+decomp <- gas |>
+  model(decomp = classical_decomposition(Gas, type = "multiplicative")) |>
+  components()
+decomp |> autoplot()
+```
+
+The decomposition has captured the seasonality and a slight trend.
+
+>    d. Compute and plot the seasonally adjusted data.
+
+```{r}
+as_tsibble(decomp) |>
+  autoplot(season_adjust) +
+  labs(title = "Seasonally adjusted data", y = "Petajoules")
+```
+
+>    e. Change one observation to be an outlier (e.g., add 300 to one observation), and recompute the seasonally adjusted data. What is the effect of the outlier?
+>    f. Does it make any difference if the outlier is near the end rather than in the middle of the time series?
+
+```{r}
+gas |>
+  mutate(Gas = if_else(Quarter == yearquarter("2007Q4"), Gas + 300, Gas)) |>
+  model(decomp = classical_decomposition(Gas, type = "multiplicative")) |>
+  components() |>
+  as_tsibble() |>
+  autoplot(season_adjust) +
+  labs(title = "Seasonally adjusted data", y = "Petajoules")
+```
+
+-   The "seasonally adjusted" data now shows some seasonality because
+    the outlier has affected the estimate of the seasonal component.
+
+```{r}
+gas |>
+  mutate(Gas = if_else(Quarter == yearquarter("2010Q2"), Gas + 300, Gas)) |>
+  model(decomp = classical_decomposition(Gas, type = "multiplicative")) |>
+  components() |>
+  as_tsibble() |>
+  autoplot(season_adjust) +
+  labs(title = "Seasonally adjusted data", y = "Petajoules")
+```
+
+The seasonally adjusted data now show no seasonality because the outlier is in the part of the data where the trend can't be estimated.
+
+# fpp3 3.7, Ex 8
+
+> Recall your retail time series data (from Exercise 8 in Section 2.10). Decompose the series using X11. Does it reveal any outliers, or unusual features that you had not noticed previously?
+
+```{r}
+set.seed(12345678)
+myseries <- aus_retail |>
+  filter(`Series ID` == sample(aus_retail$`Series ID`, 1))
+decomp <- myseries |>
+  model(x11 = X_13ARIMA_SEATS(Turnover ~ x11())) |>
+  components()
+decomp |> autoplot()
+```
+
+Two outliers are now evident in the "irregular" component --- in December 1995 and July 2010.
+
+# fpp3 5.10, Ex 7
+
+> For your retail time series (from Exercise 8 in Section 2.10):
+>
+>   a. Create a training dataset consisting of observations before 2011.
+>   b. Check that your data have been split appropriately by producing the following plot.
+>   c. Calculate seasonal naïve forecasts using `SNAIVE()` applied to your training data (`myseries_train`).
+>   d. Check the residuals. Do the residuals appear to be uncorrelated and normally distributed?
+>   e. Produce forecasts for the test data.
+>   f. Compare the accuracy of your forecasts against the actual values.
+>   g. How sensitive are the accuracy measures to the amount of training data used?
+
+```{r}
+set.seed(12345678)
+myseries <- aus_retail |>
+  filter(`Series ID` == sample(aus_retail$`Series ID`, 1))
+myseries_train <- myseries |>
+  filter(year(Month) < 2011)
+autoplot(myseries, Turnover) +
+  autolayer(myseries_train, Turnover, colour = "red")
+```
+
+The plot indicates that the training data has been extracted correctly.
+
+```{r}
+fit <- myseries_train |>
+  model(SNAIVE(Turnover))
+```
+
+```{r}
+fit |> gg_tsresiduals()
+```
+
+The residuals appear very auto-correlated as many lags exceed the significance threshold. This can also be seen in the residual plot, where there are periods of sustained high and low residuals. The distribution does not appear normally distributed, and is not centred around zero.
+
+```{r}
+fc <- fit |>
+  forecast(new_data = anti_join(myseries, myseries_train))
+fc |> autoplot(myseries)
+bind_rows(
+  accuracy(fit),
+  accuracy(fc, myseries)
+) |>
+  select(-State, -Industry, -.model)
+```
+
+The accuracy on the training data is substantially better than the out-of-sample forecast accuracy. This is common, and especially evident in this example as the model has failed to capture the trend in the data. This can be seen in the mean error, which is above zero as the model predictions do not account for the upward trend.
+
+```{r}
+myseries_accuracy <- function(data, last_training_year) {
+  myseries_train <- data |>
+    filter(year(Month) <= last_training_year)
+  fit <- myseries_train |>
+    model(SNAIVE(Turnover))
+  fc <- fit |>
+    forecast(new_data = anti_join(myseries, myseries_train))
+  bind_rows(
+    accuracy(fit),
+    accuracy(fc, myseries)
+  ) |>
+    mutate(last_training_year = last_training_year) |>
+    select(last_training_year, .type, ME:ACF1)
+}
+as.list(2011:2017) |>
+  purrr::map_dfr(myseries_accuracy, data = myseries) |>
+  ggplot(aes(x = last_training_year, y = RMSE, group = .type)) +
+  geom_line(aes(col = .type))
+```
+
+The accuracy on the training data is almost unchanged when the size of the training set is increased. However, the accuracy on the test data decreases as we are averaging RMSE over the forecast horizon, and with less training data the forecasts horizons can be longer.
+
+# fpp3 5.10, Ex 9
+
+>    a. Create a training set for household wealth (`hh_budget`) by withholding the last four years as a test set.
+
+```{r ex91}
+train <- hh_budget |>
+  filter(Year <= max(Year) - 4)
+```
+
+>    b. Fit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.
+
+```{r ex92}
+fit <- train |>
+  model(
+    naive = NAIVE(Wealth),
+    drift = RW(Wealth ~ drift()),
+    mean = MEAN(Wealth)
+  )
+fc <- fit |> forecast(h = 4)
+```
+
+>    c. Compute the accuracy of your forecasts. Which method does best?
+
+```{r ex93}
+fc |>
+  accuracy(hh_budget) |>
+  arrange(Country, MASE)
+fc |>
+  accuracy(hh_budget) |>
+  group_by(.model) |>
+  summarise(MASE = mean(MASE)) |>
+  ungroup() |>
+  arrange(MASE)
+```
+
+The drift method is better for every country, and on average.
+
+>    d. Do the residuals from the best method resemble white noise?
+
+```{r ex94}
+fit |>
+  filter(Country == "Australia") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "Canada") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "Japan") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "USA") |>
+  select(drift) |>
+  gg_tsresiduals()
+```
+
+In all cases, the residuals look like white noise.
+
+# fpp3 5.10, Ex 10
+
+>    a. Create a training set for Australian takeaway food turnover (`aus_retail`) by withholding the last four years as a test set.
+
+```{r ex101}
+takeaway <- aus_retail |>
+  filter(Industry == "Takeaway food services") |>
+  summarise(Turnover = sum(Turnover))
+train <- takeaway |>
+  filter(Month <= max(Month) - 4 * 12)
+```
+
+>    b. Fit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.
+
+```{r ex102}
+fit <- train |>
+  model(
+    naive = NAIVE(Turnover),
+    drift = RW(Turnover ~ drift()),
+    mean = MEAN(Turnover),
+    snaive = SNAIVE(Turnover)
+  )
+fc <- fit |> forecast(h = "4 years")
+```
+
+>    c. Compute the accuracy of your forecasts. Which method does best?
+
+```{r ex103}
+fc |>
+  accuracy(takeaway) |>
+  arrange(MASE)
+```
+
+The naive method is best here.
+
+>    d. Do the residuals from the best method resemble white noise?
+
+```{r ex104}
+fit |>
+  select(naive) |>
+  gg_tsresiduals()
+```
+
+This is far from white noise. There is strong seasonality and increasing variance that has not been accounted for by the naive model.
+
+# fpp3 8.8, Ex6
+
+> Forecast the Chinese GDP from the `global_economy` data set using an ETS model. Experiment with the various options in the `ETS()` function to see how much the forecasts change with damped trend, or with a Box-Cox transformation. Try to develop an intuition of what each is doing to the forecasts.
+
+> [Hint: use `h=20` when forecasting, so you can clearly see the differences between the various options when plotting the forecasts.]
+
+```{r}
+china <- global_economy |>
+  filter(Country == "China")
+china |> autoplot(GDP)
+```
+
+-   It clearly needs a relatively strong transformation due to the increasing
+    variance.
+
+```{r}
+china |> autoplot(box_cox(GDP, 0.2))
+china |> features(GDP, guerrero)
+```
+
+-   Making $\lambda=0.2$ looks ok.
+
+-   The Guerrero method suggests an even stronger transformation. Let's also try
+    a log.
+
+```{r}
+fit <- china |>
+  model(
+    ets = ETS(GDP),
+    ets_damped = ETS(GDP ~ trend("Ad")),
+    ets_bc = ETS(box_cox(GDP, 0.2)),
+    ets_log = ETS(log(GDP))
+  )
+
+fit
+
+augment(fit)
+
+fit |>
+  forecast(h = "20 years") |>
+  autoplot(china, level = NULL)
+```
+
+-   The transformations have a big effect, with small lambda values creating big
+    increases in the forecasts.
+-   The damping has relatively a small effect.
+
+# fpp3 8.8, Ex7
+
+> Find an ETS model for the Gas data from `aus_production` and forecast the next few years. Why is multiplicative seasonality necessary here? Experiment with making the trend damped. Does it improve the forecasts?
+
+```{r}
+aus_production |> autoplot(Gas)
+```
+
+-   There is a huge increase in variance as the series increases in level. =\>
+    That makes it necessary to use multiplicative seasonality.
+
+```{r}
+fit <- aus_production |>
+  model(
+    hw = ETS(Gas ~ error("M") + trend("A") + season("M")),
+    hwdamped = ETS(Gas ~ error("M") + trend("Ad") + season("M")),
+  )
+
+fit |> glance()
+```
+
+- The non-damped model seems to be doing slightly better here, probably because the trend is very strong over most of the historical data.
+
+```{r}
+fit |>
+  select(hw) |>
+  gg_tsresiduals()
+
+fit |> tidy()
+
+fit |>
+  augment() |>
+  filter(.model == "hw") |>
+  features(.innov, ljung_box, lag = 24)
+```
+
+- There is still some small *correlations* left in the residuals, showing the model has not fully captured the available information.
+- There also appears to be some *heteroskedasticity* in the residuals with larger variance in the first half the series.
+
+```{r}
+fit |>
+  forecast(h = 36) |>
+  filter(.model == "hw") |>
+  autoplot(aus_production)
+```
+
+While the point forecasts look ok, the intervals are excessively wide.
+
+# fpp3 10.7, Ex 1
+
+> This exercise uses data set `LakeHuron` giving the level of Lake Huron from 1875–1972.
+
+>   a. Convert the data to a tsibble object using the `as_tsibble()` function.
+>   b. Fit a piecewise linear trend model to the Lake Huron data with a knot at 1920 and an ARMA error structure.
+>   c. Forecast the level for the next 30 years. Do you think the extrapolated linear trend is realistic?
+
+```{r ex1}
+huron <- as_tsibble(LakeHuron)
+fit <- huron |>
+  model(ARIMA(value ~ trend(knot = 1920)))
+report(fit)
+fit |>
+  forecast(h = 30) |>
+  autoplot(huron) + labs(y = "feet")
+```
+
+It seems unlikely that there was an increasing trend from 1973 to 2002, but the prediction intervals are very wide so they probably capture the actual values. Historical data on the level of Lake Huron can be obtained from the [NOAA](https://tidesandcurrents.noaa.gov/waterlevels.html?id=9075014&bdate=19730101&edate=20020101&datum=IGLD&interval=m&action=data).
+
+# fpp3 10.7, Ex 7
+
+> For the retail time series considered in earlier chapters:
+>
+>   a. Develop an appropriate dynamic regression model with Fourier terms for the seasonality. Use the AIC to select the number of Fourier terms to include in the model. (You will probably need to use the same Box-Cox transformation you identified previously.)
+
+```{r ex7a}
+set.seed(12345678)
+myseries <- aus_retail |>
+  filter(
+    `Series ID` == sample(aus_retail$`Series ID`, 1),
+    Month < yearmonth("2018 Jan")
+  )
+
+myseries |> features(Turnover, guerrero)
+myseries |> autoplot(log(Turnover))
+
+fit <- myseries |>
+  model(
+    `K=1` = ARIMA(log(Turnover) ~ trend() + fourier(K = 1) +
+      pdq(0:2, 0, 0:2) + PDQ(0:1, 0, 0:1)),
+    `K=2` = ARIMA(log(Turnover) ~ trend() + fourier(K = 2) +
+      pdq(0:2, 0, 0:2) + PDQ(0:1, 0, 0:1)),
+    `K=3` = ARIMA(log(Turnover) ~ trend() + fourier(K = 3) +
+      pdq(0:2, 0, 0:2) + PDQ(0:1, 0, 0:1)),
+    `K=4` = ARIMA(log(Turnover) ~ trend() + fourier(K = 4) +
+      pdq(0:2, 0, 0:2) + PDQ(0:1, 0, 0:1)),
+    `K=5` = ARIMA(log(Turnover) ~ trend() + fourier(K = 5) +
+      pdq(0:2, 0, 0:2) + PDQ(0:1, 0, 0:1)),
+    `K=6` = ARIMA(log(Turnover) ~ trend() + fourier(K = 6) +
+      pdq(0:2, 0, 0:2) + PDQ(0:1, 0, 0:1))
+  )
+glance(fit)
+```
+
+Including 6 harmonics minimises the AICc (and AIC/BIC) for this series.
+
+```{r ex7a2}
+fit <- transmute(fit, best = `K=6`)
+
+report(fit)
+```
+
+The chosen model is a linear trend (will be exponential after back-transforming) and fourier terms with 5 harmonics. The error model is ARIMA(1,0,1)(1,0,1).
+
+>   b. Check the residuals of the fitted model. Does the residual series look like white noise?
+
+```{r ex7b}
+gg_tsresiduals(fit)
+```
+
+The residuals look well behaved.
+
+>   c. Compare the forecasts with those you obtained earlier using alternative models.
+
+```{r ex7c}
+fit <- myseries |>
+  model(
+    dynamic = ARIMA(log(Turnover) ~ trend() + fourier(K = 6) +
+      pdq(0:2, 0, 0:2) + PDQ(0:1, 0, 0:1)),
+    arima = ARIMA(log(Turnover)),
+    ets = ETS(Turnover)
+  )
+fit |>
+  forecast() |>
+  autoplot(filter(myseries, year(Month) > 2010), level = 80, alpha = 0.5)
+```
