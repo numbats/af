@@ -1,0 +1,17 @@
+{
+  "hash": "ec7691c9bbf87e39d293103f160ce588",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: ETC3550/ETC5550 Applied forecasting\nauthor: \"Week 9: ARIMA models\"\nformat:\n  beamer:\n    aspectratio: 169\n    fontsize: 14pt\n    section-titles: false\n    keep-tex: true\n    knitr:\n      opts_chunk:\n        dev: \"cairo_pdf\"\n    pdf-engine: pdflatex\n    fig-width: 7.5\n    fig-height: 3.5\n    include-in-header: ../header.tex\n---\n\n\n\n\n\n## Seasonal ARIMA models\n\n\n\n\n\\begin{tabular}{lll}\n\\toprule\nARIMA & $\\underbrace{(p, d, q)}$ & $\\underbrace{(P, D, Q)_{m}}$\\\\\n\\midrule\n & ${\\uparrow}$ & ${\\uparrow}$\\\\\n & Non-seasonal part & Seasonal part of\\\\\n & of the model & of the model\\\\\n\\bottomrule\n\\end{tabular}\n\n\n\nwhere $m =$ number of observations per year.\n",
+    "supporting": [
+      "slides_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}

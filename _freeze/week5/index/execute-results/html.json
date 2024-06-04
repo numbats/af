@@ -1,0 +1,15 @@
+{
+  "hash": "eb7937157b807bd233de0f14d42e3f68",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Week 5: Exponential smoothing\"\n---\n\n::: {.cell}\n\n:::\n\n\n\n\n## What you will learn this week\n\n* Simple exponential smoothing\n* Corresponding ETS models\n\n## Pre-class activities\n\nRead [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-6, 8, 11-12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).\n\n[**Solutions to Exercises**](ex5-sol.qmd)\n\n\n\n\n\n## Assignments\n\n* [Assignment 3](../assignments/A3.qmd) is due on Sunday 14 April.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
