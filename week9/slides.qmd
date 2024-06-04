@@ -15,23 +15,27 @@ format:
     include-in-header: ../header.tex
 ---
 
-
 ```{r setup, include=FALSE}
 source(here::here("setup.R"))
-library(patchwork)
-library(purrr)
 ```
-
 
 ## Seasonal ARIMA models
 
-| ARIMA | $~\underbrace{(p, d, q)}$ | $\underbrace{(P, D, Q)_{m}}$ |
-| ----: | :-----------------------: | :--------------------------: |
-|       | ${\uparrow}$              | ${\uparrow}$                 |
-|       | Non-seasonal part         | Seasonal part of             |
-|       | of the model              | of the model                 |
+\begin{center}
+\begin{tabular}{rcc}
+\toprule
+ARIMA & $\underbrace{(p, d, q)}$ & $\underbrace{(P, D, Q)_{m}}$ \\
+\midrule
+& $\uparrow$ & $\uparrow$ \\
+& Non-seasonal part & Seasonal part of \\
+& of the model & of the model \\
+\bottomrule
+\end{tabular}
 
 where $m =$ number of observations per year.
+\end{center}
+
+
 
 ## Seasonal ARIMA models
 
