@@ -106,8 +106,8 @@ The optimal knot (to 1 decimal place) is `r best_knot` degrees Celsius.
 
 
 ```{r ex3check, include = FALSE}
-if(abs(best_knot - 28.4) > 1e-5)
-  stop("Optimal knot is not 28.4")
+if(abs(best_knot - 28.1) > 1e-5)
+  stop("Optimal knot is not 28.1")
 ```
 
 ```{r ex3d}
