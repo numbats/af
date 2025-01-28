@@ -1,9 +1,11 @@
 {
-  "hash": "3371cc5ea563416f4a0111022ebe2a74",
+  "hash": "f2a997182a9e7eaba24de2f363e0c5ae",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Week 6: Exponential smoothing\"\n---\n\n::: {.cell}\n\n:::\n\n\n\n\n## What you will learn this week\n\n* Exponential smoothing methods with trend and seasonality\n* ETS models\n* Automatic model selection using the AICc\n\n## Pre-class activities\n\nRead [Chapter 8 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-4, 16, 17 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).\n\n[**Solutions to Exercises**](ex6-sol.qmd)\n\n\n\n\n## Slides for seminar\n\n<iframe src='https://docs.google.com/gview?url=https://af.numbat.space/week6/slides.pdf&embedded=true' width='100%' height=465></iframe>\n<a href=https://af.numbat.space/week6/slides.pdf class='badge badge-small badge-red'>Download pdf</a>\n\n\n\n\n## Seminar activities\n\n\n1. Try forecasting the Chinese GDP from the `global_economy` data set using an ETS model.\n\n   Experiment with the various options in the `ETS()` function to see how much the forecasts change with damped trend, or with a Box-Cox transformation. Try to develop an intuition of what each is doing to the forecasts.\n\n   [Hint: use `h=20` when forecasting, so you can clearly see the differences between the various options when plotting the forecasts.]\n\n\n2. Find an ETS model for the Gas data from `aus_production` and forecast the next few years.\n\n   * Why is multiplicative seasonality necessary here?\n   * Experiment with making the trend damped. Does it improve the forecasts?\n\n\n\n[**R code used in seminar**](seminar_code.R)\n\n\n\n\n\n## Assignments\n\n* [Assignment 3](../assignments/A3.qmd) is due on Sunday 14 April.\n",
-    "supporting": [],
+    "markdown": "---\ntitle: \"Week 6: Exponential smoothing\"\n---\n\n::: {.cell}\n\n:::\n\n## What you will learn this week\n\n* Exponential smoothing methods with trend and seasonality\n* ETS models\n* Automatic model selection using the AICc\n\n## Pre-class activities\n\nRead [Chapter 8 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-4, 16, 17 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex6-sol.qmd) -->\n\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

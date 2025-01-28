@@ -1,0 +1,15 @@
+{
+  "hash": "60ec5cf08f321cefd08197943e3304f5",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: Forecasting competition\nfig-cap-location: top\n---\n\n**You must provide forecasts for the following items:**\n\n  1. Google closing stock price on 24 March 2025 [[Data](https://finance.yahoo.com/quote/GOOG/)].\n  2. Maximum temperature at Melbourne airport on 14 April 2025 [[Data](http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml)].\n  3. The difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2025 [[Data](https://en.wikipedia.org/wiki/Anzac_Day_match)].\n  4. The seasonally adjusted estimate of total employment for April 2025. ABS CAT 6202, to be released around mid May 2025 [[Data](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release)].\n  5. Google closing stock price on 26 May 2025 [[Data](https://finance.yahoo.com/quote/GOOG/)].\n\n**For each of these, give a point forecast and an 80% prediction interval, and explain in a couple of sentences how each was obtained.**\n\n* The [Data] links give you possible data to start with, but you are free to use any data you like.\n* There is no need to use any fancy models or sophisticated methods. Simple is better for this assignment. The methods you use should be understandable to any high school student.\n* Full marks will be awarded if you submit the required information, and are able to meaningfully justify your results in a sentence or two in each case.\n* Once the true values in each case are available, we will come back to this exercise and see who did the best using the scoring method described in class.\n* The student with the lowest score is the winner of our forecasting competition, and will win a $50 cash prize.\n* The assignment mark is not dependent on your score.\n\n<br><br><hr><b>Due: 14 March 2025</b><br><a href=https://learning.monash.edu/mod/quiz/view.php?id=3444036 class = 'badge badge-large badge-blue'><font size='+2'>&nbsp;&nbsp;<b>Submit</b>&nbsp;&nbsp;</font><br></a>\n\n<!--\n___\n\n## Leaderboard\n\n::: {.cell}\n\n:::\n\n## Forecasts\n\n::: {layout-ncol=5}\n\n<!-- ### Q1\n[![Google closing stock price on 24 March 2025](Q1.png)](Q1.png)\n\n### Q2\n[![Maximum temperature at Melbourne airport on 14 April 2025](Q2.png)](Q2.png)\n\n### Q3\n[![Difference in points in AFL Anzac Day clash](Q3.png)](Q3.png)\n\n### Q4\n[![Seasonally adjusted total employment for April 2025](Q4.png)](Q4.png)\n\n### Q5\n[![Google closing stock price on 26 May 2025](Q5.png)](Q5.png) -->\n\n::: -->\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
