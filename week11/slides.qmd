@@ -2,10 +2,7 @@
 title: ETC3550/ETC5550 Applied forecasting
 author: "Week 11: Dynamic regression models"
 format:
-  beamer:
-    aspectratio: 169
-    fontsize: 14pt
-    section-titles: false
+  presentation-beamer:
     knitr:
       opts_chunk:
         dev: "cairo_pdf"
@@ -13,6 +10,7 @@ format:
     fig-width: 7.5
     fig-height: 3.5
     include-in-header: ../header.tex
+    keep_tex: yes
 ---
 
 ## Regression with ARIMA errors

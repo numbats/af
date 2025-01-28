@@ -17,7 +17,7 @@ contributes:
       pdf-engine: xelatex
       fig-width: 9
       fig-height: 4.5
-      titlegraphic: bg-02.png
+      titlegraphic: _images/background/bg-02.png
       titlecolor: black
       template-partials:
         - beamer/before-title.tex

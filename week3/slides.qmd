@@ -2,17 +2,15 @@
 title: ETC3550/ETC5550 Applied forecasting
 author: "Week 3: Time series decomposition"
 format:
-  beamer:
-    aspectratio: 169
-    fontsize: 14pt
-    section-titles: false
+  presentation-beamer:
     knitr:
       opts_chunk:
         dev: "cairo_pdf"
     pdf-engine: pdflatex
     fig-width: 7.5
-    fig-height: 3
+    fig-height: 3.5
     include-in-header: ../header.tex
+    keep_tex: yes
 ---
 
 ```{r setup, include=FALSE}

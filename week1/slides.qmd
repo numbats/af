@@ -2,10 +2,7 @@
 title: ETC3550/ETC5550 Applied forecasting
 author: "Week 1: Introduction to forecasting and R"
 format:
-  beamer:
-    aspectratio: 169
-    fontsize: 14pt
-    section-titles: false
+  presentation-beamer:
     knitr:
       opts_chunk:
         dev: "cairo_pdf"
