@@ -7,7 +7,7 @@
 ]]></text>
 </questiontext>
 
-<category><text>$course$/Assignment 1 Quiz</text></category>
+<category><text>$course$/Forecasting Competition Quiz</text></category>
 </question>
 
 <question type="cloze">
@@ -16,24 +16,24 @@
 
 <p><em>Optional</em></p>
 <p>At various points in the semester the rankings of the forecasts for this assignment will be featured in the lectures.</p>
-<p>If you would like to appear on the forecasting accuracy leaderboard under an alias, you can enter it here: {1:SHORTANSWER:%100%alias name#Correct}.</p>
+<p>If you would like to appear on the forecasting accuracy leaderboard under an alias, you can enter it here: {1:SHORTANSWER:%100%alias name#}.</p>
 ]]></text>
 </questiontext>
 
-<name><text>Q01: Leaderboard</text></name>
+<name><text>Q01: Leaderboard name</text></name>
 </question>
 
 <question type="cloze">
 <questiontext format="html">
 <text><![CDATA[
 
-<p>Produce a forecast of the Google (GOOG) closing stock price on 20 March 2024 in $USD (<a href="https://finance.yahoo.com/quote/GOOG/" class="uri">https://finance.yahoo.com/quote/GOOG/</a> or <a href="https://www.nasdaq.com/market-activity/stocks/goog/historical" class="uri">https://www.nasdaq.com/market-activity/stocks/goog/historical</a>).</p>
+<p>Produce a forecast of the Google (GOOG) closing stock price on 24 March 2025 in $USD (<a href="https://finance.yahoo.com/quote/GOOG/" class="uri">https://finance.yahoo.com/quote/GOOG/</a> or <a href="https://www.nasdaq.com/market-activity/stocks/goog/historical" class="uri">https://www.nasdaq.com/market-activity/stocks/goog/historical</a>).</p>
 <p>The forecast mean: {1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable point forecast}</p>
 <p>The 80% forecast interval: [lower={1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
 ]]></text>
 </questiontext>
 
-<name><text>Q02: Q1</text></name>
+<name><text>Q02: Q1 Forecasts</text></name>
 </question>
 
 <question type="essay">
@@ -44,21 +44,21 @@
 ]]></text>
 </questiontext>
 
-<name><text>Q03: Q1</text></name>
+<name><text>Q03: Q1 Explanation</text></name>
 </question>
 
 <question type="cloze">
 <questiontext format="html">
 <text><![CDATA[
 
-<p>Produce a forecast of the maximum temperature at Melbourne airport on
-10 April 2024 (<a href="http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml/" class="uri">http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml/</a>)</p>
+<p>Produce a forecast of the maximum temperature at Melbourne airport in degrees Celsius on
+14 April 2025 (<a href="http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml/" class="uri">http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml/</a>)</p>
 <p>The forecast mean: {1:NUMERICAL:=20.000000:20.000000#Yes, that is a reasonable point forecast}</p>
 <p>The 80% forecast interval: [lower={1:NUMERICAL:=20.000000:20.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=20.000000:20.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
 ]]></text>
 </questiontext>
 
-<name><text>Q04: Q2</text></name>
+<name><text>Q04: Q2 Forecasts</text></name>
 </question>
 
 <question type="essay">
@@ -69,20 +69,20 @@
 ]]></text>
 </questiontext>
 
-<name><text>Q05: Q2</text></name>
+<name><text>Q05: Q2 Explanation</text></name>
 </question>
 
 <question type="cloze">
 <questiontext format="html">
 <text><![CDATA[
 
-<p>Produce a forecast for the difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2024 (<a href="https://en.wikipedia.org/wiki/Anzac_Day_match" class="uri">https://en.wikipedia.org/wiki/Anzac_Day_match</a>).</p>
+<p>Produce a forecast for the difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2025 (<a href="https://en.wikipedia.org/wiki/Anzac_Day_match" class="uri">https://en.wikipedia.org/wiki/Anzac_Day_match</a>).</p>
 <p>The forecast mean: {1:NUMERICAL:=0.000000:100.000000#Yes, that is a reasonable point forecast}</p>
 <p>The 80% forecast interval: [lower={1:NUMERICAL:=0.000000:100.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=0.000000:100.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
 ]]></text>
 </questiontext>
 
-<name><text>Q06: Q3</text></name>
+<name><text>Q06: Q3 Forecasts</text></name>
 </question>
 
 <question type="essay">
@@ -93,20 +93,20 @@
 ]]></text>
 </questiontext>
 
-<name><text>Q07: Q3</text></name>
+<name><text>Q07: Q3 Explanation</text></name>
 </question>
 
 <question type="cloze">
 <questiontext format="html">
 <text><![CDATA[
 
-<p>Produce a forecast for the seasonally adjusted estimate of total employment (in persons) for April 2024. ABS CAT 6202, to be released around mid May 2024 (<a href="https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release" class="uri">https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release</a>)</p>
+<p>Produce a forecast for the seasonally adjusted estimate of total employment (in persons) for April 2025. ABS CAT 6202, to be released around mid May 2025 (<a href="https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release" class="uri">https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release</a>)</p>
 <p>The forecast mean: {1:NUMERICAL:=14000000.000000:2000000.000000#Yes, that is a reasonable point forecast}</p>
 <p>The 80% forecast interval: [lower={1:NUMERICAL:=14000000.000000:2000000.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=14000000.000000:2000000.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
 ]]></text>
 </questiontext>
 
-<name><text>Q08: Q4</text></name>
+<name><text>Q08: Q4 Forecasts</text></name>
 </question>
 
 <question type="essay">
@@ -117,20 +117,20 @@
 ]]></text>
 </questiontext>
 
-<name><text>Q09: Q4</text></name>
+<name><text>Q09: Q4 Explanation</text></name>
 </question>
 
 <question type="cloze">
 <questiontext format="html">
 <text><![CDATA[
 
-<p>Produce a forecast of the Google (GOOG) closing stock price on 22 May 2024 in $USD (<a href="https://finance.yahoo.com/quote/GOOG/" class="uri">https://finance.yahoo.com/quote/GOOG/</a> or <a href="https://www.nasdaq.com/market-activity/stocks/goog/historical" class="uri">https://www.nasdaq.com/market-activity/stocks/goog/historical</a>).</p>
+<p>Produce a forecast of the Google (GOOG) closing stock price on 26 May 2025 in $USD (<a href="https://finance.yahoo.com/quote/GOOG/" class="uri">https://finance.yahoo.com/quote/GOOG/</a> or <a href="https://www.nasdaq.com/market-activity/stocks/goog/historical" class="uri">https://www.nasdaq.com/market-activity/stocks/goog/historical</a>).</p>
 <p>The forecast mean: {1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable point forecast}</p>
 <p>The 80% forecast interval: [lower={1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
 ]]></text>
 </questiontext>
 
-<name><text>Q10: Q5</text></name>
+<name><text>Q10: Q5 Forecasts</text></name>
 </question>
 
 <question type="essay">
@@ -141,6 +141,6 @@
 ]]></text>
 </questiontext>
 
-<name><text>Q11: Q5</text></name>
+<name><text>Q11: Q5 Explanation</text></name>
 </question>
 </quiz>

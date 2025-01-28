@@ -20,15 +20,15 @@ Read [Sections 9.1-9.4 of the textbook](https://otexts.com/fpp3/arima.html) and 
 
 Complete Exercises 5,8-15 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).
 
-[**Solutions to Exercises**](ex7-sol.qmd)
+<!-- [**Solutions to Exercises**](ex7-sol.qmd) -->
 
 ```{r}
 #| output: asis
-show_slides(week)
-show_activity(week)
+#show_slides(week)
+#show_activity(week, show_solutions = FALSE)
 ```
 
-[**R code used in seminar**](seminar_code.R)
+<!-- [**R code used in seminar**](seminar_code.R) -->
 
 ```{r}
 #| output: asis

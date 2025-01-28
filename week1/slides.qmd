@@ -230,7 +230,7 @@ library(fpp3)
 \fontsize{18}{24}\sf
 
  * Make sure you are familiar with R, RStudio and the tidyverse packages.
- * Do first five chapters of `learnr.numbat.space`.
+ * Do the first five modules of `startr.numbat.space`.
  * Assignment 1
 
 ## Assignment 1: forecast the following series

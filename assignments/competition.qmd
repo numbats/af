@@ -1,0 +1,59 @@
+---
+title: Forecasting competition
+fig-cap-location: top
+---
+
+**You must provide forecasts for the following items:**
+
+  1. Google closing stock price on 24 March 2025 [[Data](https://finance.yahoo.com/quote/GOOG/)].
+  2. Maximum temperature at Melbourne airport on 14 April 2025 [[Data](http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml)].
+  3. The difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2025 [[Data](https://en.wikipedia.org/wiki/Anzac_Day_match)].
+  4. The seasonally adjusted estimate of total employment for April 2025. ABS CAT 6202, to be released around mid May 2025 [[Data](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release)].
+  5. Google closing stock price on 26 May 2025 [[Data](https://finance.yahoo.com/quote/GOOG/)].
+
+**For each of these, give a point forecast and an 80% prediction interval, and explain in a couple of sentences how each was obtained.**
+
+* The [Data] links give you possible data to start with, but you are free to use any data you like.
+* There is no need to use any fancy models or sophisticated methods. Simple is better for this assignment. The methods you use should be understandable to any high school student.
+* Full marks will be awarded if you submit the required information, and are able to meaningfully justify your results in a sentence or two in each case.
+* Once the true values in each case are available, we will come back to this exercise and see who did the best using the scoring method described in class.
+* The student with the lowest score is the winner of our forecasting competition, and will win a $50 cash prize.
+* The assignment mark is not dependent on your score.
+
+```{r}
+#| output: asis
+source(here::here("course_info.R"))
+submit(schedule, "Forecasting Competition")
+```
+
+<!--
+___
+
+## Leaderboard
+
+```{r}
+#| eval: false
+readRDS(here::here("assignments/leaderboard.rds")) |>
+  DT::datatable()
+```
+
+## Forecasts
+
+::: {layout-ncol=5}
+
+<!-- ### Q1
+[![Google closing stock price on 24 March 2025](Q1.png)](Q1.png)
+
+### Q2
+[![Maximum temperature at Melbourne airport on 14 April 2025](Q2.png)](Q2.png)
+
+### Q3
+[![Difference in points in AFL Anzac Day clash](Q3.png)](Q3.png)
+
+### Q4
+[![Seasonally adjusted total employment for April 2025](Q4.png)](Q4.png)
+
+### Q5
+[![Google closing stock price on 26 May 2025](Q5.png)](Q5.png) -->
+
+::: -->

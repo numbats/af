@@ -4,7 +4,7 @@ title: Retail Project
 
 **Objective:** To forecast a real time series using ETS and ARIMA models.
 
-**Data:** The data are monthly measures of retail trade volume in Australia, [obtained from the ABS](https://www.abs.gov.au/methodologies/retail-trade-australia-methodology/jan-2024). Each student will be use a different time series, selected using their student ID number as follows. This is the same series that you used in [Assignment 2](A2.qmd).
+**Data:** The data are monthly measures of retail trade volume in Australia, [obtained from the ABS](https://www.abs.gov.au/methodologies/retail-trade-australia-methodology/jan-2024). Each student will be use a different time series, selected using their student ID number as follows. This is the same series that you used in previous assignments.
 
 ```r
 library(fpp3)
@@ -20,14 +20,17 @@ get_my_data <- function(student_id) {
 retail <- get_my_data(12345678)
 ```
 
-**Assignment value:** This assignment is worth 20% of the overall unit assessment.
+**Assignment value:** This assignment is worth 10% of the overall unit assessment. You may copy and paste material from previous assignments, but you must take into account any feedback that you have received on these assignments.
 
 **Report:**
 
-You should produce forecasts of the series using ETS and ARIMA models. Write a report in Rmarkdown or Quarto format of your analysis explaining carefully what you have done and why you have done it. Your report should include the following elements.
+You should produce forecasts of the series using ETS and ARIMA models. Write a report in Quarto format of your analysis explaining carefully what you have done and why you have done it. Your report should include the following elements.
 
-* A discussion of the statistical features of the original data, including the effect of COVID-19 on your series. [4 marks]
-* Explanation of transformations and differencing used. You should use a unit-root test as part of the discussion. [5 marks]
+* Produce some plots of your series, and describe what you learn from each plot. [2 marks]
+* Discuss the statistical features of the data, including the effect of COVID-19 on your series. [2 marks]
+* Find an appropriate Box-Cox transformation for your data and explain why you have chosen the particular transformation parameter $\lambda$.
+* Produce a plot of an STL decomposition of the transformed data. What do you learn from the plot?
+* What differencing would be required to make the data stationary? You should use a unit-root test as part of the discussion. [4 marks]
 * A description of the methodology used to create a short-list of appropriate ARIMA models and ETS models. Include discussion of AIC values as well as results from applying the models to a test-set consisting of the last 24 months of the data provided. [6 marks]
 * Choose one ARIMA model and one ETS model based on this analysis and show parameter estimates, residual diagnostics, forecasts and prediction intervals for both models. Diagnostic checking for both models should include ACF graphs and the Ljung-Box test. [8 marks]
 * Comparison of the results from each of your preferred models. Which method do you think gives the better forecasts? Explain with reference to the test-set. [2 marks]
@@ -38,7 +41,7 @@ You should produce forecasts of the series using ETS and ARIMA models. Write a r
 
 **Notes**
 
-* Your submission must include the Rmarkdown or Quarto file (.Rmd or .qmd), and should run without error.
+* Your submission must include the Quarto file (`.qmd`), and should run without error.
 * There will be a 5 marks penalty if file does not run without error.
 * When using the updated ABS data set, do not edit the downloaded file in any way.
 * There is no need to provide the updated ABS data with your submission.

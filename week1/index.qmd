@@ -25,13 +25,13 @@ source(here::here("course_info.R"))
 
 Your task this week is to make sure you are familiar with R, RStudio and the tidyverse packages. If you've already done ETC1010, then you may not need to do anything! But if you're new to R and the tidyverse, then you will need to get yourself up-to-speed.
 
-Work through the first five chapters of the **LearnR** tutorial at [learnr.numbat.space](https://learnr.numbat.space). Do as much of it as you think you need. For those students new to R, it is strongly recommended that you do all five chapters. For those who have previously used R, concentrate on the parts where you feel you are weakest.
+Work through the first five modules of the **StartR** tutorial at [startr.numbat.space](https://startr.numbat.space). Do as much of it as you think you need. For those students new to R, it is strongly recommended that you do all five modules. For those who have previously used R, concentrate on the parts where you feel you are weakest.
 
-[**Check your understanding quiz**](https://learning.monash.edu/mod/quiz/view.php?id=2292355)
+[**Check your understanding quiz**](https://learning.monash.edu/mod/quiz/view.php?id=3444034)
 
 ```{r}
 #| output: asis
 show_slides(week)
-show_activity(week)
+show_activity(week, show_solutions = FALSE)
 show_assignments(week)
 ```

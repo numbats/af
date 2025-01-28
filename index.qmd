@@ -23,7 +23,7 @@ week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 
 ::: {.column width="25%"}
 
-![](https://robjhyndman.com/img/RJH_AAS_small.png){style="width: 80%; border-radius: 50%;"}
+![](https://robjhyndman.com/img/RJH_AAS_small.png){style="width: 80%;"}
 :::
 
 ::: {.column width="75%"}
@@ -42,7 +42,7 @@ Email: [Rob.Hyndman@monash.edu](mailto:Rob.Hyndman@monash.edu)
 
 ::: {.column width="25%"}
 
-![](https://avatars.githubusercontent.com/u/16127127?v=4){style="width: 80%;border-radius: 50%;"}
+![](/img/mitch.png){style="width: 80%;"}
 :::
 
 ::: {.column width="75%"}
@@ -57,17 +57,37 @@ Email: [Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
 
 ### Tutors
 
-* Elena Sanina
-* Zhixiang (Elvis) Yang
-* Jarryd Chapman
-* Xiefei (Sapphire) Li
-* Xiaoqian Wang
+:::: {.columns}
+
+::: {.column .centeredcolumn width = "33%"}
+![](/img/nuwani.png){style="width: 75%;"}
+
+Nuwani Palihawadana
+
+:::
+
+
+::: {.column .centeredcolumn width = "33%"}
+![](/img/oops.png){style="width: 75%;"}
+
+Xiefei (Sapphire) Li
+:::
+
+
+::: {.column .centeredcolumn width = "33%"}
+![](/img/elvis.png){style="width: 75%;"}
+
+Zhixiang (Elvis) Yang
+
+:::
+::::
 
 ## Weekly schedule
 
 * [Pre-recorded videos](https://www.youtube.com/watch?v=uwKiT1o1TkI&list=PLyCNZ_xXGzpm7W9jLqbIyBAiSO5jDwJeE): approximately 1 hour per week [[Slides](https://github.com/robjhyndman/fpp3_slides)]
-* Tutorials: 1.5 hours in class per week
-* Seminars: 9am Fridays, [Central 1 Lecture Theatre, 25 Exhibition Walk](https://maps.app.goo.gl/RKdmJq2tBfw8ViNT9).
+* Tutorials: 1 hour per week
+* Online lecture: 12noon Mondays
+* Workshop: 1pm Tuesdays, [Lecture Theatre S3, 16 Rainforest Walk](https://maps.app.goo.gl/4AmDLWkY1yYZviFz8).
 
 
 ```{r}
@@ -81,7 +101,8 @@ schedule |>
     Show = !is.na(Week), #& (Week <= week | Week <= 1),
     Topic = if_else(!Show, Topic, glue::glue("[{Topic}](./week{Week}/index.html)")),
     Chapter = if_else(is.na(Week), Chapter, glue::glue("[{Chapter}]({Chapter_URL})")),
-    Assessments = if_else(is.na(Assignment), Assignment, glue::glue("[{Assignment}]({File})")),
+    Assignments = if_else(is.na(Assignment), Assignment, glue::glue("[{Assignment}]({File})")),
+    Quizzes =  if_else(is.na(Quiz), Quiz, glue::glue("[{Quiz}]({QMoodle})")),
     Week = format(Date, "%d %b")
   ) |>
   select(-Show) |>
@@ -91,11 +112,12 @@ schedule |>
 
 ## Assessments
 
-* [Assignment 1](assignments/A1.qmd): 2%
-* [Assignment 2](assignments/A2.qmd): 6%
-* [Assignment 3](assignments/A3.qmd): 6%
-* [Assignment 4](assignments/A4.qmd): 6%
-* [Retail project](assignments/Project.qmd): 20%
+* [Forecasting competition](assignments/competition.qmd): 2%
+* Weekly quizzes: 8%
+* [Assignment 1](assignments/A1.qmd): 6%
+* [Assignment 2](assignments/A1.qmd): 6%
+* [Assignment 3](assignments/A2.qmd): 6%
+* [Retail project](assignments/Project.qmd): 12%
 * Final exam: 60%
 
 ## R package installation

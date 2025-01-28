@@ -10,7 +10,7 @@ get_my_data <- function(student_id) {
   set.seed(student_id)
   all_data <- readr::read_rds("https://bit.ly/monashretaildata")
   while(TRUE) {
-    retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1)) 
+    retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1))
     if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)
   }
 }
@@ -18,17 +18,14 @@ get_my_data <- function(student_id) {
 retail <- get_my_data(12345678)
 ```
 
-  1. Plot your time series using the `autoplot()` command. What do you learn from the plot?
-  2. Plot your time series using the `gg_season()` command. What do you learn from the plot?
-  3. Plot your time series using the `gg_subseries()` command. What do you learn from the plot?
-  4. Find an appropriate Box-Cox transformation for your data and explain why you have chosen the particular transformation parameter $\lambda$.
-  5. Produce a plot of an STL decomposition of the transformed data. What do you learn from the plot?
+1. Using a test set of 2019--2022, fit an ETS model chosen automatically, and three benchmark methods to the training data. Which gives the best forecasts on the test set, based on RMSE?
+2. Check the residuals from the best model using an ACF plot and a Ljung-Box test. Do the residuals appear to be white noise?
+3. Now use time-series cross-validation with a minimum sample size of 15 years, a step size of 1 year, and a forecast horizon of 5 years. Calculate the RMSE of the results. Does it change the conclusion you reach based on the test set?
+4. Which of these two methods of evaluating accuracy is more reliable? Why?
 
-For all plots, please use appropriate axis labels and titles.
+Submit a Quarto (`qmd`) file which carries out the above analysis. You need to submit one file which implements all steps above.
 
-You need to submit one Rmarkdown or Quarto file which implements all steps above.
-
-To receive full marks, the Rmd or qmd file must compile without errors.
+To receive full marks, the `qmd` file must compile without errors.
 
 ```{r}
 #| output: asis
