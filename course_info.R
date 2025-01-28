@@ -105,7 +105,10 @@ schedule <- schedule |>
 
 show_assignments <- function(week) {
   today <- Sys.Date()
-  monday <- as.Date(schedule$Week[week])
+  monday <- schedule |>
+    filter(Week == week) |>
+    pull(Date) |>
+    as.Date()
   # Show assignments and quizzes up to 2 weeks ahead
   # Show all assignments when in last 3 weeks of semester
   if (today > as.Date("2025-05-04") | (monday - today) <= 7 * 2 | week < 3) {
@@ -145,14 +148,22 @@ show_quiz <- function(week) {
 }
 
 show_slides <- function(week) {
-  file <- paste0("https://af.numbat.space/week", week, "/slides.pdf")
-  embed <- paste0(
-    "<iframe src='https://docs.google.com/gview?url=",
-    file,
-    "&embedded=true' width='100%' height=465></iframe>"
-  )
-  button <- paste0("<a href=", file, " class='badge badge-small badge-red'>Download pdf</a>")
-  cat(paste0("## Slides for seminar\n\n", embed, "\n", button))
+  today <- Sys.Date()
+  monday <- monday <- schedule |>
+    filter(Week == week) |>
+    pull(Date) |>
+    as.Date()
+  # Show slides one week ahead
+  if ((monday - today) <= 7 | week <= 1) {
+    file <- paste0("https://af.numbat.space/week", week, "/slides.pdf")
+    embed <- paste0(
+      "<iframe src='https://docs.google.com/gview?url=",
+      file,
+      "&embedded=true' width='100%' height=465></iframe>"
+    )
+    button <- paste0("<a href=", file, " class='badge badge-small badge-red'>Download pdf</a>")
+    cat(paste0("## Slides for seminar\n\n", embed, "\n", button))
+  }
 }
 
 
