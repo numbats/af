@@ -60,26 +60,26 @@ Email: [Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
 :::: {.columns}
 
 ::: {.column .centeredcolumn width = "33%"}
-![](/img/nuwani.png){style="width: 75%;"}
+![](/img/maliny.png){style="width: 65%;"}
+
+Maliny Poh
+
+:::
+
+::: {.column .centeredcolumn width = "33%"}
+![](/img/nuwani.png){style="width: 65%;"}
 
 Nuwani Palihawadana
 
 :::
 
-
 ::: {.column .centeredcolumn width = "33%"}
-![](/img/oops.png){style="width: 75%;"}
+![](/img/sapphire.png){style="width: 65%;"}
 
 Xiefei (Sapphire) Li
 :::
 
 
-::: {.column .centeredcolumn width = "33%"}
-![](/img/elvis.png){style="width: 75%;"}
-
-Zhixiang (Elvis) Yang
-
-:::
 ::::
 
 ## Weekly schedule
