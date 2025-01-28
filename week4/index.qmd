@@ -24,20 +24,10 @@ Complete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/f
 
 <!-- [**Solutions to Exercises**](ex4-sol.qmd) -->
 
+
 ```{r}
 #| output: asis
-#show_slides(week)
-```
-
-<!-- [**R code used in seminar**](seminar_code.R) -->
-
-## Seminar activities
-
-```{r}
-#| child: activities.md
-```
-
-
-```{r}
+show_slides(week)
+show_activity(week, show_solutions = FALSE)
 show_assignments(week)
 ```

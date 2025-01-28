@@ -26,20 +26,10 @@ Complete Exercises 1-5 from [Section 2.10 of the book](https://otexts.com/fpp3/g
 
 [**Check your understanding quiz**](https://learning.monash.edu/mod/quiz/view.php?id=3444035)
 
-```{r}
-#| output: asis
-#show_slides(week)
-```
-
-## Seminar activities
-
-```{r}
-#| child: activities.qmd
-```
-
 
 ```{r}
 #| output: asis
-#| echo: false
+show_slides(week)
+show_activity(week, show_solutions = FALSE)
 show_assignments(week)
 ```

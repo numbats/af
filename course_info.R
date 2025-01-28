@@ -168,21 +168,29 @@ show_slides <- function(week) {
 
 
 show_activity <- function(week, title = TRUE, show_solutions = TRUE) {
-  file <- here::here(paste0("week", week, "/activities.qmd"))
-  if (!fs::file_exists(file)) {
-    file <- here::here(paste0("week", week, "/activities.md"))
-  }
-  activities <- read_file(file)
-  if (title) {
-    cat("\n\n## Seminar activities\n\n")
-  }
-  cat(activities)
-  cat("\n")
-  if (show_solutions) {
-    solutions <- here::here(paste0("week", week, "/solutions.R"))
-    if (fs::file_exists(solutions)) {
-      url <- paste0("https://raw.githubusercontent.com/numbats/af/main/week", week, "/solutions.R")
-      cat(paste0("<a href=", url, " class='badge badge-small badge-green'>Solutions</a>\n"))
+  today <- Sys.Date()
+  monday <- monday <- schedule |>
+    filter(Week == week) |>
+    pull(Date) |>
+    as.Date()
+  # Show slides one week ahead
+  if ((monday - today) <= 7 | week <= 1) {
+    file <- here::here(paste0("week", week, "/activities.qmd"))
+    if (!fs::file_exists(file)) {
+      file <- here::here(paste0("week", week, "/activities.md"))
+    }
+    activities <- read_file(file)
+    if (title) {
+      cat("\n\n## Seminar activities\n\n")
+    }
+    cat(activities)
+    cat("\n")
+    if (show_solutions) {
+      solutions <- here::here(paste0("week", week, "/solutions.R"))
+      if (fs::file_exists(solutions)) {
+        url <- paste0("https://raw.githubusercontent.com/numbats/af/main/week", week, "/solutions.R")
+        cat(paste0("<a href=", url, " class='badge badge-small badge-green'>Solutions</a>\n"))
+      }
     }
   }
 }

@@ -23,20 +23,10 @@ Complete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/a
 
 <!-- [**Solutions to Exercises**](ex8-sol.qmd) -->
 
-```{r}
-#| output: asis
-#show_slides(week)
-```
-
-## Seminar activities
-
-```{r}
-#| child: activities.qmd
-```
-
-<!-- [**R code used in seminar**](seminar_code.R) -->
 
 ```{r}
 #| output: asis
+show_slides(week)
+show_activity(week, show_solutions = FALSE)
 show_assignments(week)
 ```
