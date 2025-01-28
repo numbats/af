@@ -1,0 +1,29 @@
+title: Monash Memo
+author: Rob J Hyndman
+version: 2.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    pdf:
+      papersize: a4
+      fontsize: 11pt
+      date: today
+      date-format: "D MMMM YYYY"
+      toc: false
+      pdf-engine: pdflatex
+      geometry:
+      - top=2.5cm
+      - bottom=2.5cm
+      - left=2cm
+      - right=2cm
+      block-headings: false
+      cite-method: biblatex
+      biblio-style: authoryear-comp
+      template-partials:
+        - before-title.tex
+      format-resources:
+        - monash2.png
+        - MBSportrait.jpg
+        - EQUIS.png
+        - AMBA.png
+        - AACSB.png
