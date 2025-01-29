@@ -26,7 +26,7 @@ retail <- get_my_data(12345678)
 
 For all plots, please use appropriate axis labels and titles.
 
-You need to submit one Quarto (`qmd`) file which implements all steps above. You may use <a href="https://af.numbat.space/assignments/Assignment_template.qmd">this file</a> as a starting point.
+You need to submit one Quarto (`qmd`) file which implements all steps above. You may use <a href="https://github.com/numbats/af/raw/main/assignments/Assignment_template.qmd">this file</a> as a starting point.
 
 To receive full marks, the `qmd` file must compile without errors.
 

@@ -26,7 +26,7 @@ Use a training set up to and including 2018.
 * Which model is best based on AIC? Which model is best based on the test set RMSE? Which do you think is best to use for future forecasts? Why?
 * Check the residuals from your preferred model, using an ACF plot and a Ljung-Box test. Do the residuals appear to be white noise?
 
-Submit a Quarto (`qmd`) file which carries out the above analysis. You need to submit one file which implements all steps above. You may use <a href="https://af.numbat.space/assignments/Assignment_template.qmd">this file</a> as a starting point.
+Submit a Quarto (`qmd`) file which carries out the above analysis. You need to submit one file which implements all steps above. You may use <a href="https://github.com/numbats/af/raw/main/assignments/Assignment_template.qmd">this file</a> as a starting point.
 
 ```{r}
 #| output: asis
