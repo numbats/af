@@ -3,9 +3,7 @@
   "result": {
     "engine": "knitr",
     "markdown": "---\ntitle: \"Week 11: Dynamic regression\"\n---\n\n::: {.cell}\n\n:::\n\n## What you will learn this week\n\n* How to combine regression models with ARIMA models to form dynamic regression models\n* Dynamic harmonic regression to handle complex seasonality\n* Lagged predictors\n\n## Pre-class activities\n\nRead [Chapter 10 of the textbook](https://otexts.com/fpp3/dynamic.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex11-sol.qmd) -->\n\n\n\n",
-    "supporting": [
-      "index_files"
-    ],
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

@@ -3,9 +3,7 @@
   "result": {
     "engine": "knitr",
     "markdown": "---\ntitle: \"Week 10: Multiple regression and forecasting\"\n---\n\n::: {.cell}\n\n:::\n\n## What you will learn this week\n\n* Useful predictors for time series forecasting using regression\n* Selecting predictors\n* Ex ante and ex post forecasting\n\n## Pre-class activities\n\nRead [Chapter 7 of the textbook](https://otexts.com/fpp3/regression.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 11-16 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex10-sol.qmd) -->\n\n\n\n",
-    "supporting": [
-      "index_files"
-    ],
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

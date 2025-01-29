@@ -3,9 +3,7 @@
   "result": {
     "engine": "knitr",
     "markdown": "---\ntitle: \"Week 8: ARIMA models\"\n---\n\n::: {.cell}\n\n:::\n\n## What you will learn this week\n\n* AR, MA, ARMA and ARIMA models\n* Selecting model orders manually and automatically\n\n## Pre-class activities\n\nRead [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex8-sol.qmd) -->\n\n\n\n",
-    "supporting": [
-      "index_files"
-    ],
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

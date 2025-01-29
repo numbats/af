@@ -77,7 +77,7 @@ source(here::here("course_info.R"))
  {Hyndman, R.~J. \& Athanasopoulos, G. (2021) \emph{Forecasting: principles and practice}, 3rd edition}
 \end{block}\pause
 \begin{alertblock}{}\Large
-\centerline{\bf OTexts.com/fpp3/}
+\centerline{\bf otexts.com/fpp3/}
 \end{alertblock}
 
 \pause

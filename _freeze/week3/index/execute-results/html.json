@@ -3,9 +3,7 @@
   "result": {
     "engine": "knitr",
     "markdown": "---\ntitle: \"Week 3: Time series decomposition\"\n---\n\n::: {.cell}\n\n:::\n\n## What you will learn this week\n\n* Transforming data to remove some sources of variation\n* Decomposing a time series into trend-cycle, seasonal and remainder components\n* Seasonal adjustment\n\n## Pre-class activities\n\nRead [Chapter 3 of the textbook](https://otexts.com/fpp3/decomposition.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 6-11 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex3-sol.qmd) -->\n\n\n\n",
-    "supporting": [
-      "index_files"
-    ],
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
