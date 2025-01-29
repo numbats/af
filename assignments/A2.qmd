@@ -2,7 +2,7 @@
 title: Assignment 2
 ---
 
-This assignment will use the same data that you will use in the [retail project](Project.qmd) later in semester. Each student will use a different time series, selected using their student ID number as follows.
+This assignment will use the same data that you will use in the [retail project](Project.qmd) later in the semester. Each student will use a different time series, selected using their student ID number as follows.
 
 ```r
 library(fpp3)
@@ -23,7 +23,7 @@ retail <- get_my_data(12345678)
 3. Now use time-series cross-validation with a minimum sample size of 15 years, a step size of 1 year, and a forecast horizon of 5 years. Calculate the RMSE of the results. Does it change the conclusion you reach based on the test set?
 4. Which of these two methods of evaluating accuracy is more reliable? Why?
 
-Submit a Quarto (`qmd`) file which carries out the above analysis. You need to submit one file which implements all steps above.
+Submit a Quarto (`qmd`) file which carries out the above analysis. You need to submit one file which implements all steps above. You may use <a href="https://af.numbat.space/assignments/Assignment_template.qmd">this file</a> as a starting point.
 
 To receive full marks, the `qmd` file must compile without errors.
 

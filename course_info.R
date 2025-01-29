@@ -94,8 +94,8 @@ quizzes <- read_csv(here::here("quizzes.csv")) |>
   mutate(
     Date = lastmon(QDue),
     QMoodle = paste0(
-      "https://learning.monash.edu/mod/",
-      c("quiz", rep("assign", 4)), "/view.php?id=", QMoodle
+      "https://learning.monash.edu/mod/quiz/view.php?id=",
+      QMoodle
     )
   )
 
