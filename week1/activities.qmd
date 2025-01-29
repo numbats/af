@@ -183,14 +183,53 @@ It is disaggregated by 3 key variables:
 * `Region`: The tourism regions are formed through the aggregation of Statistical Local Areas (SLAs) which are defined by the various State and Territory tourism authorities according to their research and marketing needs
 * `Purpose`: Stopover purpose of visit: "Holiday", "Visiting friends and relatives", "Business", "Other reason".
 
-::: {.callout-caution}
-## Your turn!
-
 Calculate the total quarterly tourists visiting Victoria from the `tourism` dataset.
-:::
 
+```{webr-teachr}
+tourism |>
+  filter(<<State == "Victoria">>) |>
+  summarise(<<Trips == sum(Trips)>>)
 
-1. Download `tourism.xlsx` from [`http://robjhyndman.com/data/tourism.xlsx`](http://robjhyndman.com/data/tourism.xlsx), and read it into R using `read_excel()` from the `readxl` package.
-2. Create a tsibble which is identical to the `tourism` tsibble from the `tsibble` package.
-3. Find what combination of `Region` and `Purpose` had the maximum number of overnight trips on average.
-4. Create a new tsibble which combines the Purposes and Regions, and just has total trips by State.
+???
+
+if(!("fpp3" %in% .packages())) return(c("You need to load the fpp3 package!" = TRUE))
+
+c(
+  "You need to use the filter() function to extract only Victorian tourists." = !search_ast(.code, .fn = filter),
+  "You need to use the summarise() function to sum over the Region and Purpose keys." = !search_ast(.code, .fn = summarise),
+)
+```
+
+Find what combination of `Region` and `Purpose` had the maximum number of overnight trips on average.
+
+```{webr-teachr}
+tourism |>
+  as_tibble() |>
+  group_by(<<Region, Purpose>>) |>
+  summarise(<<Trips = mean(Trips), .groups = "drop">>) |>
+  filter(<<Trips == max(Trips)>>)
+
+???
+
+if(!("fpp3" %in% .packages())) return(c("You need to load the fpp3 package!" = TRUE))
+
+c(
+  "You need to use the as_tibble() function to convert back to a tibble object." = !search_ast(.code, .fn = as_tibble),
+  "You need to use the group_by() function to group by Region and Purpose." = !search_ast(.code, .fn = group_by),
+)
+```
+
+Create a new tsibble which combines the Purposes and Regions, and just has total trips by State.
+
+```{webr-teachr}
+tourism
+
+???
+
+if(!("fpp3" %in% .packages())) return(c("You need to load the fpp3 package!" = TRUE))
+
+c(
+  "You need to use the filter() function to extract only Victorian tourists." = !search_ast(.code, .fn = filter),
+  "You need to use the summarise() function to sum over the Region and Purpose keys." = !search_ast(.code, .fn = summarise),
+)
+```
