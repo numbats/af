@@ -1,6 +1,6 @@
 ---
 title: ETC3550/ETC5550 Applied forecasting
-author: "Week 1: Introduction to forecasting and R"
+author: "Week 1: Introduction to forecasting & R"
 format:
   presentation-beamer:
     knitr:
@@ -30,11 +30,9 @@ source(here::here("course_info.R"))
 \begin{block}{Tutors}
 \begin{itemize}\itemsep=0cm\parskip=0cm
 \item \textbf{Mitchell O'Hara-Wild}
-\item Elena Sanina
-\item Zhixiang (Elvis) Yang
-\item Jarryd Chapman
+\item Maliny Poh
+\item Nuwani Palihawadana
 \item Xiefei (Sapphire) Li
-\item Xiaoqian Wang
 \end{itemize}
 \end{block}
 
@@ -51,7 +49,6 @@ source(here::here("course_info.R"))
    - Australian tourism demand
    - Ageing population
    - COVID-19 cases
-   - TAC large claims
 
 ## Unit objectives
 \fontsize{13}{14}\sf
@@ -65,10 +62,10 @@ source(here::here("course_info.R"))
 ### Teaching and learning approach
 \vspace*{-0.2cm}
 
-* Approximately one hour of online videos each week.
-* One 90 minute in-person tutorial each week.
-* One 50 minute in-person seminar each Friday.
-* One tutorial will be recorded each week and posted online.
+* Approximately one hour of pre-recorded online videos each week.
+* One hour in-person tutorial each week.
+* One hour online lecture each Monday.
+* One hour in-person workshop each Tuesday.
 
 ## Key reference
 
@@ -115,12 +112,6 @@ schedule |>
 ```
 
 ## Assessment
-\vspace*{-0.2cm}
-
-  - Four assignments and one larger project: 40%
-  - Exam (2 hours): 60%.
-
-\pause
 
 ```{r}
 #| label: assignments
@@ -128,16 +119,22 @@ schedule |>
 #| echo: false
 cat("\\begin{block}{}\\small\\centerline{")
 nassignments <- NROW(assignments) - 2
-assignments |>
+ass <- assignments |>
   rename(Task = Assignment) |>
   mutate(
     Due = format(Due, "%a %e %b"),
-    Value = paste0(c(2,rep(18/nassignments, nassignments), 20),"%")
+    Value = paste0(c(2,rep(18/nassignments, nassignments), 12),"%")
   ) |>
   bind_rows(
     tibble(Task = "Final Exam", Due = "Official exam period", Value = "60%")
   ) |>
-  select(Task, `Due Date` = Due, Value) |>
+  select(Task, `Due Date` = Due, Value)
+ass <- bind_rows(
+  ass[1,],
+  tibble(Task = "Weekly Quizzes", `Due Date` = "end of weeks 2--11", Value = "8%"),
+  ass[-1,]
+)
+ass |>
   kableExtra::kbl(format = "latex", booktabs = TRUE,
                   toprule = FALSE, bottomrule = FALSE,
                   align = "llr", linesep = "") |>
@@ -148,7 +145,7 @@ cat("}\\end{block}")
 \pause\vspace*{-0.4cm}
 
   - Need at least 45\% for exam, and 50\% for total.
-  - \textbf{ETC5550 students:} Extra exam question.
+  - \textbf{ETC5550 students:} Extra project and exam questions.
 
 ## Unit website
 \fontsize{18}{24}\sf\vspace*{0.3cm}
@@ -233,13 +230,13 @@ library(fpp3)
 ## Assignment 1: forecast the following series
 \small\vspace*{-0.2cm}
 
-  1. Google closing stock price on 20 March 2024
-  2. Maximum temperature at Melbourne airport on 10 April 2024
-  3. The difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2024
-  4. The seasonally adjusted estimate of total employment for April 2024. ABS CAT 6202, to be released around mid May 2024
-  5. Google closing stock price on 22 May 2024
+  1. Google closing stock price on 24 March 2025
+  2. Maximum temperature at Melbourne airport on 14 April 2025
+  3. The difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2025
+  4. The seasonally adjusted estimate of total employment for April 2025. ABS CAT 6202, to be released around mid May 2025
+  5. Google closing stock price on 26 May 2025
 
-\begin{block}{Due Friday 8 March}
+\begin{block}{Due Friday 14 March}
 For each of these, give a point forecast and an 80\% prediction interval.
 \end{block}\pause
 \begin{alertblock}{}
@@ -284,13 +281,13 @@ global_economy <- global_economy |>
 global_economy
 ```
 
-\only<2->{\begin{textblock}{.75}(1.65,3.4)
+\only<2->{\begin{textblock}{.75}(1.65,3.1)
 \begin{alertblock}{}\fontsize{9}{9}\sf Index\phantom{dg}\end{alertblock}
 \end{textblock}}
-\only<3->{\begin{textblock}{1.6}(2.78,3.4)
+\only<3->{\begin{textblock}{1.6}(2.78,3.1)
 \begin{alertblock}{}\fontsize{9}{9}\sf Key\phantom{dg}\end{alertblock}
 \end{textblock}}
-\only<4>{\begin{textblock}{6.7}(4.8,3.4)
+\only<4>{\begin{textblock}{6.7}(4.8,3.1)
 \begin{alertblock}{}\fontsize{9}{9}\sf Measured variables\phantom{dg}\end{alertblock}
 \end{textblock}}
 
@@ -320,13 +317,13 @@ tourism <- tourism |>
 tourism
 ```
 
-\only<3->{\begin{textblock}{.98}(1.65,3.37)
+\only<3->{\begin{textblock}{.98}(1.65,3.05)
 \begin{alertblock}{}\fontsize{9}{9}\sf Index\phantom{dg}\end{alertblock}
 \end{textblock}}
-\only<4->{\begin{textblock}{3.9}(3,3.37)
+\only<4->{\begin{textblock}{3.9}(3,3.05)
 \begin{alertblock}{}\fontsize{9}{9}\sf Keys\phantom{dg}\end{alertblock}
 \end{textblock}}
-\only<5>{\begin{textblock}{1.5}(7.4,3.37)
+\only<5>{\begin{textblock}{1.5}(7.4,3.05)
 \begin{alertblock}{}\fontsize{9}{9}\sf Measure\phantom{dg}\end{alertblock}
 \end{textblock}}
 
