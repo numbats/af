@@ -162,7 +162,7 @@ show_slides <- function(week) {
       "&embedded=true' width='100%' height=465></iframe>"
     )
     button <- paste0("<a href=", file, " class='badge badge-small badge-red'>Download pdf</a>")
-    cat(paste0("## Slides for seminar\n\n", embed, "\n", button))
+    cat(paste0("## Slides for Monday lecture\n\n", embed, "\n", button))
   }
 }
 
@@ -176,21 +176,8 @@ show_activity <- function(week, title = TRUE, show_solutions = TRUE) {
   # Show slides one week ahead
   if ((monday - today) <= 7 | week <= 1) {
     file <- here::here(paste0("week", week, "/activities.qmd"))
-    if (!fs::file_exists(file)) {
-      file <- here::here(paste0("week", week, "/activities.md"))
-    }
-    activities <- read_file(file)
-    if (title) {
-      cat("\n\n## Seminar activities\n\n")
-    }
-    cat(activities)
-    cat("\n")
-    if (show_solutions) {
-      solutions <- here::here(paste0("week", week, "/solutions.R"))
-      if (fs::file_exists(solutions)) {
-        url <- paste0("https://raw.githubusercontent.com/numbats/af/main/week", week, "/solutions.R")
-        cat(paste0("<a href=", url, " class='badge badge-small badge-green'>Solutions</a>\n"))
-      }
+    if (fs::file_exists(file)) {
+      cat("\n\n## [Activities for Tuesday workshop](activities.qmd)\n\n")
     }
   }
 }
