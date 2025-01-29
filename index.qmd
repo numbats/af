@@ -115,8 +115,8 @@ schedule |>
 * [Forecasting competition](assignments/competition.qmd): 2%
 * Weekly quizzes: 8%
 * [Assignment 1](assignments/A1.qmd): 6%
-* [Assignment 2](assignments/A1.qmd): 6%
-* [Assignment 3](assignments/A2.qmd): 6%
+* [Assignment 2](assignments/A2.qmd): 6%
+* [Assignment 3](assignments/A3.qmd): 6%
 * [Retail project](assignments/Project.qmd): 12%
 * Final exam: 60%
 
