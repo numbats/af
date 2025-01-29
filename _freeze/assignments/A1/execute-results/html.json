@@ -3,9 +3,7 @@
   "result": {
     "engine": "knitr",
     "markdown": "---\ntitle: Assignment 1\n---\n\nThis assignment will use the same data that you will use in the [retail project](Project.qmd) later in the semester. Each student will use a different time series, selected using their student ID number as follows.\n\n```r\nlibrary(fpp3)\nget_my_data <- function(student_id) {\n  set.seed(student_id)\n  all_data <- readr::read_rds(\"https://bit.ly/monashretaildata\")\n  while(TRUE) {\n    retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1))\n    if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)\n  }\n}\n# Replace the argument with your student ID\nretail <- get_my_data(12345678)\n```\n\n  1. Plot your time series using the `autoplot()` command. What do you learn from the plot?\n  2. Plot your time series using the `gg_season()` command. What do you learn from the plot?\n  3. Plot your time series using the `gg_subseries()` command. What do you learn from the plot?\n  4. Find an appropriate Box-Cox transformation for your data and explain why you have chosen the particular transformation parameter $\\lambda$.\n  5. Produce a plot of an STL decomposition of the transformed data. What do you learn from the plot?\n\nFor all plots, please use appropriate axis labels and titles.\n\nYou need to submit one Quarto (`qmd`) file which implements all steps above. You may use <a href=\"https://github.com/numbats/af/raw/main/assignments/Assignment_template.qmd\">this file</a> as a starting point.\n\nTo receive full marks, the `qmd` file must compile without errors.\n\n<br><br><hr><b>Due: 28 March 2025</b><br><a href=https://learning.monash.edu/mod/assign/view.php?id=3444030 class = 'badge badge-large badge-blue'><font size='+2'>&nbsp;&nbsp;<b>Submit</b>&nbsp;&nbsp;</font><br></a>\n",
-    "supporting": [
-      "A1_files"
-    ],
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
