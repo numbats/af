@@ -370,13 +370,3 @@ tribble(
                   booktabs = TRUE, toprule = FALSE, bottomrule = FALSE, linesep = "") |>
   kableExtra::row_spec(0, bold = TRUE)
 ```
-
-
-## Your turn
-
-```{r}
-#| label: activity
-#| output: asis
-#| echo: false
-show_activity(1, title = FALSE, show_solutions = FALSE)
-```

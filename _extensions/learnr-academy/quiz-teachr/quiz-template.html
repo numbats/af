@@ -1,0 +1,68 @@
+<div id = "qforms-quiz-{{QUIZCOUNTER}}" class = "radio-group">
+</div>
+
+<script>
+  var compareArrays = (a, b) =>
+    a.length === b.length && a.every((element, index) => element === b[index]);
+  var quiz_container = document.getElementById("qforms-quiz-{{QUIZCOUNTER}}");
+  var questions = "{{QUIZQUESTIONS}}";
+  questions = questions.split("!@!");
+  
+  // console.log("hints", hints)
+  if (typeof hints === 'undefined') {
+    var hints = []
+    // Your variable is undefined
+  }
+  hints[{{QUIZCOUNTER}} - 1] = "{{QUIZHINTS}}".split("!@!");
+
+  for([index, question] of questions.entries()) {
+    var radio_row = document.createElement("div");
+
+    var label = document.createElement("label");
+    label.setAttribute("class", "radio-label");
+    label.setAttribute("for", question);
+    label.textContent = question;
+
+    var input_elem = document.createElement("input");
+    input_elem.setAttribute("type", "{{QUIZTYPE}}");
+    input_elem.setAttribute("class", "quiz-radio");
+    input_elem.setAttribute("name", `qforms-quiz-name-{{QUIZCOUNTER}}`);
+    input_elem.setAttribute("value", (index+1));
+
+    radio_row.append(input_elem, label);
+    quiz_container.append(radio_row);
+  }
+
+
+  var result_section = document.createElement("div")
+  result_section.setAttribute("id", "qforms-quiz-results-{{QUIZCOUNTER}}")
+  result_section.setAttribute("class", "result-section")
+
+  var submit_btn = document.createElement("input")
+  submit_btn.setAttribute("type", "button")
+  submit_btn.setAttribute("id", "qforms-quiz-submit-{{QUIZCOUNTER}}")
+  submit_btn.setAttribute("class", "submit-btn")
+  submit_btn.setAttribute("value", "Submit")
+  submit_btn.addEventListener("click", event => {
+    var selected = document.querySelectorAll('input[name=qforms-quiz-name-{{QUIZCOUNTER}}]:checked')
+    var values = Array.from(selected).map(element => element.value);
+    var results = document.getElementById("qforms-quiz-results-{{QUIZCOUNTER}}")
+    var solutions = "{{QUIZSOLUTIONS}}".split("!@!")
+    if(selected != undefined) {
+      var success = compareArrays(values, solutions)
+      results.classList.toggle(success ? "success": "failure")
+      results.innerHTML = (success ? "✅ That's correct!<br>": "❌ Incorrect, try again!<br>") + hints[{{QUIZCOUNTER}} - 1][values-1]
+    }
+
+  })
+  quiz_container.append(submit_btn)
+
+  quiz_container.append(result_section)
+</script>
+
+<style>
+  input.quiz-radio {
+    margin: 0.4rem;
+  }
+</style>
+

@@ -1,0 +1,196 @@
+---
+title: "Activities: Week 1"
+editor: source
+engine: knitr
+filters:
+  - webr-teachr
+  - quiz-teachr
+webr:
+  packages: ["fpp3", "urca"]
+  autoload-packages: false
+---
+
+# Time series data and patterns
+
+## Exercise 1
+
+The `pedestrian` dataset contains hourly pedestrian counts from 2015-01-01 to 2016-12-31 at 4 sensors in the city of Melbourne.
+
+The data is shown below:
+
+```{r}
+#| echo: false
+#| message: false
+library(tibble)
+as_tibble(tsibble::pedestrian)
+```
+
+::: {.callout-caution}
+## Your turn!
+
+Identify the `index` variable, `key` variable(s), and measured variable(s) of this dataset.
+:::
+
+::: {.callout-tip}
+## Hint
+
+* The `index` variable contains the complete time information
+* The `key` variable(s) identify each time series
+* The measured variable(s) are what you want to explore/forecast.
+:::
+
+::: columns
+
+::: {.column width="30%"}
+
+## `index` variable
+:::{.quiz-singlechoice}
+- [ ] [Sensor]{hint="x"}
+- [X] [Date_Time]{hint="o"}
+- [ ] [Date]{hint="x"}
+- [ ] [Time]{hint="x"}
+- [ ] [Count]{hint="x"}
+:::
+:::
+
+::: {.column width="30%"}
+
+## `key` variable(s)
+:::{.quiz-multichoice}
+- [X] [Sensor]{hint="o"}
+- [ ] [Date_Time]{hint="x"}
+- [ ] [Date]{hint="x"}
+- [ ] [Time]{hint="x"}
+- [ ] [Count]{hint="x"}
+:::
+:::
+
+::: {.column width="40%"}
+
+## measured variable(s)
+:::{.quiz-multichoice}
+- [ ] [Sensor]{hint="x"}
+- [ ] [Date_Time]{hint="x"}
+- [ ] [Date]{hint="x"}
+- [ ] [Time]{hint="x"}
+- [X] [Count]{hint="o"}
+:::
+:::
+:::
+
+## Exercise 2
+
+The `aus_accommodation` dataset contains quarterly data on Australian tourist accommodation from short-term non-residential accommodation with 15 or more rooms, 1998 Q1 - 2016 Q2.
+
+The units of the measured variables are as follows:
+
+* Takings are in millions of Australian dollars
+* Occupancy is a percentage of rooms occupied
+* CPI is an index with value 100 in 2012 Q1.
+
+::: {.callout-caution}
+## Your turn!
+
+Complete the code to convert this dataset into a tsibble.
+:::
+
+```{webr-teachr}
+library(<<fpp3>>)
+
+aus_accommodation <- read.csv(
+  "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
+) |>
+  mutate(Date = as.Date(Date)) |>
+  as_tsibble(
+    <<key = State, index = Date>>
+  )
+???
+
+if(!("fpp3" %in% .packages())) return(c("You need to load the fpp3 package!" = TRUE))
+
+checks <- c(
+  "You need to use the as_tsibble() function to convert the data into a tsibble." = !search_ast(.code, .fn = as_tsibble),
+  "You should specify which column provides the time of the measurements with `index`." = !search_ast(.code, .fn = as_tsibble, index = Date),
+  "You need to specify the key variables that identify each time series" = exists_in(.errored, grepl, pattern = "distinct rows", fixed = TRUE)
+)
+
+if(any(checks)) return(checks)
+
+if(!is_yearquarter(aus_accommodation$Date)) cat("Great, you've got a tsibble!\nAlthough something doesn't look right - check the frequency of the data, why isn't it quarterly?\n")
+FALSE
+```
+
+
+## Exercise 3
+
+:::{.callout-important}
+## Temporal granularity
+
+The previous exercise produced a dataset with daily frequency - although clearly the data is quarterly! This is because we are using a daily granularity which is inappropriate for this data.
+:::
+
+Common temporal granularities can be created with these functions:
+
+```{r}
+#| echo: false
+tribble(
+  ~`Granularity`, ~Function,
+  "Annual", "`as.integer()`",
+  "Quarterly", "`yearquarter()`",
+  "Monthly", "`yearmonth()`",
+  "Weekly", "`yearweek()`",
+  "Daily", "`as_date()`, `ymd()`",
+  "Sub-daily", "`as_datetime()`"
+) |>
+  knitr::kable(booktabs = TRUE)
+```
+
+
+::: {.callout-caution}
+## Your turn!
+
+Use the appropriate granularity for the `aus_accommodation` dataset, and verify that the frequency is now quarterly.
+:::
+
+
+```{webr-teachr}
+aus_accommodation <- read.csv(
+  "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
+) |>
+  mutate(<<Quarter = yearquarter(Date)>>) |>
+  as_tsibble(
+    key = State, index = <<Quarter>>
+  )
+???
+
+if(!("fpp3" %in% .packages())) return(c("You need to load the fpp3 package!" = TRUE))
+
+c(
+  "You need to save the dataset as `aus_accommodation`" = !exists("aus_accommodation"),
+  "You need to use the as_tsibble() function to convert the data into a tsibble." = !search_ast(.code, .fn = as_tsibble),
+  "You need to specify the key variables that identify each time series" = exists_in(.errored, grepl, pattern = "distinct rows", fixed = TRUE),
+  "You should use `yearquarter()` to change the time column into a quarterly granularity" = !is_yearquarter(aus_accommodation[[index_var(aus_accommodation)]])
+)
+```
+
+## Exercise 4
+
+The `tourism` dataset contains the quarterly overnight trips from 1998 Q1 to 2016 Q4 across Australia.
+
+It is disaggregated by 3 key variables:
+
+* `State`: States and territories of Australia
+* `Region`: The tourism regions are formed through the aggregation of Statistical Local Areas (SLAs) which are defined by the various State and Territory tourism authorities according to their research and marketing needs
+* `Purpose`: Stopover purpose of visit: "Holiday", "Visiting friends and relatives", "Business", "Other reason".
+
+::: {.callout-caution}
+## Your turn!
+
+Calculate the total quarterly tourists visiting Victoria from the `tourism` dataset.
+:::
+
+
+1. Download `tourism.xlsx` from [`http://robjhyndman.com/data/tourism.xlsx`](http://robjhyndman.com/data/tourism.xlsx), and read it into R using `read_excel()` from the `readxl` package.
+2. Create a tsibble which is identical to the `tourism` tsibble from the `tsibble` package.
+3. Find what combination of `Region` and `Purpose` had the maximum number of overnight trips on average.
+4. Create a new tsibble which combines the Purposes and Regions, and just has total trips by State.

@@ -18,17 +18,6 @@ source(here::here("setup.R"))
 source(here::here("course_info.R"))
 ```
 
-## Your turn
-\fontsize{13}{14}\sf
-
-```{r}
-#| label: activity
-#| output: asis
-#| echo: false
-show_activity(3, title = FALSE, show_solutions = FALSE)
-```
-
-
 ## The ABS stuff-up
 
 \fullheight{abs1}
