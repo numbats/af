@@ -50,7 +50,7 @@ jobs:
         uses: quarto-dev/quarto-actions/render@v2
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           # hard-coding `_site` feels a little gross, but it works
           path: _site
