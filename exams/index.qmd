@@ -4,6 +4,7 @@ title: Exam preparation
 
 # Past exams
 
+* [2021](/exams/exam_2021.pdf)
 * [2022](/exams/exam_2022.pdf)
 * [2023](/exams/exam_2023.pdf)
 * [2024](/exams/exam_2024.pdf)
