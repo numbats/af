@@ -20,7 +20,7 @@ get_my_data <- function(student_id) {
 retail <- get_my_data(12345678)
 ```
 
-**Assignment value:** This assignment is worth 10% of the overall unit assessment. You may copy and paste material from previous assignments, but you must take into account any feedback that you have received on these assignments.
+**Assignment value:** This assignment is worth 12% of the overall unit assessment. You may copy and paste material from previous assignments, but you must take into account any feedback that you have received on these assignments.
 
 **Report:**
 

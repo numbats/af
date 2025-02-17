@@ -21,7 +21,7 @@ retail <- get_my_data(12345678)
 Use a training set up to and including 2018.
 
 * What transformations (Box-Cox and/or differencing) would be required to make the data stationary? You should use a unit-root test as part of the discussion.
-* Use a plot of the ACF and PACF of the (possibly differenced) data to determine two plausible models for this data set.
+* Use a plot of the ACF and PACF of the (possibly differenced) data to determine two plausible ARIMA models for this data set.
 * Fit both models, along with an automatically chosen model, and produce forecasts for 2019--2022.
 * Which model is best based on AIC? Which model is best based on the test set RMSE? Which do you think is best to use for future forecasts? Why?
 * Check the residuals from your preferred model, using an ACF plot and a Ljung-Box test. Do the residuals appear to be white noise?
