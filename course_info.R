@@ -14,14 +14,14 @@ schedule <- tibble(
     "Introduction to forecasting and R",
     "Time series graphics",
     "Time series decomposition",
-    "The forecaster's toolbox",
+    "Simple forecasting methods",
+    "Accuracy evaluation",
     "Exponential smoothing",
     "Exponential smoothing",
     "ARIMA models",
     "ARIMA models",
     "ARIMA models",
     "Multiple regression and forecasting",
-    "Dynamic regression",
     "Dynamic regression"
   ),
   Chapter = c(
@@ -29,13 +29,13 @@ schedule <- tibble(
     "2. Time series graphics",
     "3. Time series decomposition",
     "5. The forecaster's toolbox",
+    "5. The forecaster's toolbox",
     "8. Exponential smoothing",
     "8. Exponential smoothing",
     "9. ARIMA models",
     "9. ARIMA models",
     "9. ARIMA models",
     "7. Time series regression models",
-    "10. Dynamic regression models",
     "10. Dynamic regression models"
   ),
   Chapter_URL = c(
@@ -43,13 +43,13 @@ schedule <- tibble(
     "https://OTexts.com/fpp3/graphics.html",
     "https://OTexts.com/fpp3/decomposition.html",
     "https://OTexts.com/fpp3/toolbox.html",
+    "https://OTexts.com/fpp3/toolbox.html",
     "https://OTexts.com/fpp3/expsmooth.html",
     "https://OTexts.com/fpp3/expsmooth.html",
     "https://OTexts.com/fpp3/arima.html",
     "https://OTexts.com/fpp3/arima.html",
     "https://OTexts.com/fpp3/arima.html",
     "https://OTexts.com/fpp3/regression.html",
-    "https://OTexts.com/fpp3/dynamic.html",
     "https://OTexts.com/fpp3/dynamic.html"
   )
 )
