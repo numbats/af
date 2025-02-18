@@ -107,7 +107,7 @@ Complete the code to convert this dataset into a tsibble.
 
 ```{webr}
 #| exercise: make_tsibble
-library(______ )
+library(______)
 
 aus_accommodation <- read.csv(
   "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
@@ -216,7 +216,7 @@ Use the appropriate granularity for the `aus_accommodation` dataset, and verify 
 aus_accommodation <- read.csv(
   "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
 ) |>
-  mutate(______ ) |>
+  mutate(______) |>
   as_tsibble(
     key = State, index = ______
   )
