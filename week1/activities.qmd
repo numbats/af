@@ -3,12 +3,21 @@ title: "Activities: Week 1"
 editor: source
 engine: knitr
 filters:
-  - webr-teachr
+  - live
   - quiz-teachr
+ojs-engine: true
 webr:
-  packages: ["fpp3", "urca"]
+  packages:
+    - qlcheckr
+    - fpp3
+    - urca
   autoload-packages: false
+  repos:
+    - https://repo.r-wasm.org/
+    - https://learnr-academy.github.io/qlcheckr
 ---
+
+{{< include /_extensions/r-wasm/live/_knitr.qmd >}}
 
 # Time series data and patterns
 
@@ -94,32 +103,78 @@ The units of the measured variables are as follows:
 Complete the code to convert this dataset into a tsibble.
 :::
 
-```{webr-teachr}
-library(<<fpp3>>)
+```{webr}
+#| exercise: make_tsibble
+library(______ )
 
 aus_accommodation <- read.csv(
   "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
 ) |>
   mutate(Date = as.Date(Date)) |>
   as_tsibble(
-    <<key = State, index = Date>>
+    ______
   )
-???
-
-if(!("fpp3" %in% .packages())) return(c("You need to load the fpp3 package!" = TRUE))
-
-checks <- c(
-  "You need to use the as_tsibble() function to convert the data into a tsibble." = !search_ast(.code, .fn = as_tsibble),
-  "You should specify which column provides the time of the measurements with `index`." = !search_ast(.code, .fn = as_tsibble, index = Date),
-  "You need to specify the key variables that identify each time series" = exists_in(.errored, grepl, pattern = "distinct rows", fixed = TRUE)
-)
-
-if(any(checks)) return(checks)
-
-if(!is_yearquarter(aus_accommodation$Date)) cat("Great, you've got a tsibble!\nAlthough something doesn't look right - check the frequency of the data, why isn't it quarterly?\n")
-FALSE
+aus_accommodation
 ```
 
+```{webr}
+#| exercise: make_tsibble
+#| check: true
+library(qlcheckr)
+apply_checks(
+  c(
+    "You need to load the fpp3 package!" = !("fpp3" %in% .packages()),
+    "You need to use the as_tsibble() function to convert the data into a tsibble." = !search_ast(ql_ast(), .fn = as_tsibble),
+    "You should specify which column provides the time of the measurements with `index`." = !search_ast(ql_ast(), .fn = as_tsibble, index = Date),
+    "You need to specify the key variables that identify each time series" = exists_in(ql_errors(), grepl, pattern = "distinct rows", fixed = TRUE)
+  ),
+  .msg_correct = if (!is_yearquarter(aus_accommodation$Date)) "Great, you've got a tsibble!<br>Although something doesn't look right - check the frequency of the data, why isn't it quarterly?" else "That's correct! Well done."
+)
+```
+
+::: { .hint exercise="make_tsibble"}
+::: { .callout-note collapse="false"}
+## Hint
+
+Begin by loading the `fpp3` library to use its time series functions.
+
+```r
+library(fpp3)
+```
+:::
+:::
+
+::: { .hint exercise="make_tsibble"}
+::: { .callout-note collapse="false"}
+## Hint
+
+After loading the `fpp3` package, convert the data frame into a tsibble.
+
+```r
+library(fpp3)
+aus_accommodation <- read.csv(
+  "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
+) |> mutate(Date = as.Date(Date))
+```
+:::
+:::
+
+::: { .hint exercise="make_tsibble"}
+::: { .callout-note collapse="false"}
+## Hint
+
+Remember to specify the time index and key for `as_tsibble()` to function correctly.
+
+```r
+library(fpp3)
+aus_accommodation <- read.csv(
+  "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
+) |> 
+  mutate(Date = as.Date(Date)) |> 
+  as_tsibble(key = State, index = Date)
+```
+:::
+:::
 
 ## Exercise 3
 
@@ -153,25 +208,62 @@ Use the appropriate granularity for the `aus_accommodation` dataset, and verify 
 :::
 
 
-```{webr-teachr}
+```{webr}
+#| exercise: process_accommodation_data
 aus_accommodation <- read.csv(
   "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
 ) |>
-  mutate(<<Quarter = yearquarter(Date)>>) |>
+  mutate(______ ) |>
   as_tsibble(
-    key = State, index = <<Quarter>>
+    key = State, index = ______ 
   )
-???
+```
 
-if(!("fpp3" %in% .packages())) return(c("You need to load the fpp3 package!" = TRUE))
-
-c(
-  "You need to save the dataset as `aus_accommodation`" = !exists("aus_accommodation"),
-  "You need to use the as_tsibble() function to convert the data into a tsibble." = !search_ast(.code, .fn = as_tsibble),
-  "You need to specify the key variables that identify each time series" = exists_in(.errored, grepl, pattern = "distinct rows", fixed = TRUE),
-  "You should use `yearquarter()` to change the time column into a quarterly granularity" = !is_yearquarter(aus_accommodation[[index_var(aus_accommodation)]])
+```{webr}
+#| exercise: process_accommodation_data
+#| check: true
+library(qlcheckr)
+apply_checks(
+  c(
+    "You need to load the fpp3 package!" = !("fpp3" %in% .packages()),
+    "You need to save the dataset as `aus_accommodation`" = !exists("aus_accommodation"),
+    "You need to use the as_tsibble() function to convert the data into a tsibble." = !search_ast(ql_ast(), .fn = as_tsibble),
+    "You need to specify the key variables that identify each time series" = exists_in(ql_errors(), grepl, pattern = "distinct rows", fixed = TRUE),
+    "You should use `yearquarter()` to change the time column into a quarterly granularity" = !is_yearquarter(aus_accommodation[[index_var(aus_accommodation)]])
+  )
 )
 ```
+
+::: { .hint exercise="process_accommodation_data"}
+::: { .callout-note collapse="false"}
+## Hint
+
+Start by reading the CSV file and transform the data using `mutate()` and `yearquarter()` for the Date column.
+
+```r
+aus_accommodation <- read.csv(
+  "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
+) |> 
+  mutate(Quarter = yearquarter(Date))
+```
+:::
+:::
+
+::: { .hint exercise="process_accommodation_data"}
+::: { .callout-note collapse="false"}
+## Hint
+
+After transforming the Date column, make sure you convert the data frame to a tsibble.
+
+```r
+aus_accommodation <- read.csv(
+  "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
+) |> 
+  mutate(Quarter = yearquarter(Date)) |> 
+  as_tsibble(key = State, index = Quarter)
+```
+:::
+:::
 
 ## Exercise 4
 
@@ -185,51 +277,151 @@ It is disaggregated by 3 key variables:
 
 Calculate the total quarterly tourists visiting Victoria from the `tourism` dataset.
 
-```{webr-teachr}
+```{webr}
+#| exercise: filter_summarise_tourism
 tourism |>
-  filter(<<State == "Victoria">>) |>
-  summarise(<<Trips == sum(Trips)>>)
+  filter(______) |>
+  summarise(______)
+```
 
-???
-
-if(!("fpp3" %in% .packages())) return(c("You need to load the fpp3 package!" = TRUE))
-
-c(
-  "You need to use the filter() function to extract only Victorian tourists." = !search_ast(.code, .fn = filter),
-  "You need to use the summarise() function to sum over the Region and Purpose keys." = !search_ast(.code, .fn = summarise),
+```{webr}
+#| exercise: filter_summarise_tourism
+#| check: true
+library(qlcheckr)
+apply_checks(
+  c(
+    "You need to load the fpp3 package!" = !("fpp3" %in% .packages()),
+    "You need to use the filter() function to extract only Victorian tourists." = !search_ast(ql_ast(), .fn = filter),
+    "You need to use the summarise() function to sum over the Region and Purpose keys." = !search_ast(ql_ast(), .fn = summarise)
+  )
 )
 ```
+
+::: { .hint exercise="filter_summarise_tourism"}
+::: { .callout-note collapse="false"}
+## Hint
+
+To start off, filter the `tourism` dataset for only Victoria.
+
+```r
+tourism |> 
+  filter(State == "Victoria")
+```
+:::
+:::
+
+::: { .hint exercise="filter_summarise_tourism"}
+::: { .callout-note collapse="false"}
+## Hint
+
+After filtering, summarise the total trips for Victoria.
+
+```r
+tourism |> 
+  filter(State == "Victoria") |> 
+  summarise(Trips = sum(Trips))
+```
+:::
+:::
 
 Find what combination of `Region` and `Purpose` had the maximum number of overnight trips on average.
 
-```{webr-teachr}
+```{webr}
+#| exercise: group_summarise_filter_tourism
 tourism |>
   as_tibble() |>
-  group_by(<<Region, Purpose>>) |>
-  summarise(<<Trips = mean(Trips), .groups = "drop">>) |>
-  filter(<<Trips == max(Trips)>>)
+  group_by(______) |>
+  summarise(______) |>
+  filter(______)
+```
 
-???
-
-if(!("fpp3" %in% .packages())) return(c("You need to load the fpp3 package!" = TRUE))
-
-c(
-  "You need to use the as_tibble() function to convert back to a tibble object." = !search_ast(.code, .fn = as_tibble),
-  "You need to use the group_by() function to group by Region and Purpose." = !search_ast(.code, .fn = group_by),
+```{webr}
+#| exercise: group_summarise_filter_tourism
+#| check: true
+library(qlcheckr)
+apply_checks(
+  c(
+    "You need to load the fpp3 package!" = !("fpp3" %in% .packages()),
+    "You need to use the as_tibble() function to convert back to a tibble object." = !search_ast(ql_ast(), .fn = as_tibble),
+    "You need to use the group_by() function to group by Region and Purpose." = !search_ast(ql_ast(), .fn = group_by)
+  )
 )
 ```
+
+::: { .hint exercise="group_summarise_filter_tourism"}
+::: { .callout-note collapse="false"}
+## Hint
+
+Start by using `as_tibble()` to convert `tourism` back to a tibble and group it by Region and Purpose.
+
+```r
+tourism |> 
+  as_tibble() |> 
+  group_by(Region, Purpose)
+```
+:::
+:::
+
+::: { .hint exercise="group_summarise_filter_tourism"}
+::: { .callout-note collapse="false"}
+## Hint
+
+After grouping, summarise the mean number of trips and filter for maximum trips.
+
+```r
+tourism |> 
+  as_tibble() |> 
+  group_by(Region, Purpose) |> 
+  summarise(Trips = mean(Trips), .groups = "drop") |> 
+  filter(Trips == max(Trips))
+```
+:::
+:::
 
 Create a new tsibble which combines the Purposes and Regions, and just has total trips by State.
 
-```{webr-teachr}
-tourism
+```{webr}
+#| exercise: summarise_tourism_by_state
+tourism |> 
+  group_by(______) |> 
+  summarise(______)
+```
 
-???
-
-if(!("fpp3" %in% .packages())) return(c("You need to load the fpp3 package!" = TRUE))
-
-c(
-  "You need to use the filter() function to extract only Victorian tourists." = !search_ast(.code, .fn = filter),
-  "You need to use the summarise() function to sum over the Region and Purpose keys." = !search_ast(.code, .fn = summarise),
+```{webr}
+#| exercise: summarise_tourism_by_state
+#| check: true
+library(qlcheckr)
+apply_checks(
+  c(
+    "You need to group by the State to summarise trips for each state." = !search_ast(ql_ast(), .expr = group_by(State)),
+    "You need to use the summarise() function to sum trips for each state." = !search_ast(ql_ast(), .expr = summarise(Trips = sum(Trips)))
+  )
 )
 ```
+
+::: { .hint exercise="summarise_tourism_by_state"}
+::: { .callout-note collapse="false"}
+## Hint
+
+To summarise the number of trips by each State, start by grouping the data by State.
+
+```r
+tourism |> 
+  group_by(State)
+```
+:::
+:::
+
+::: { .hint exercise="summarise_tourism_by_state"}
+::: { .callout-note collapse="false"}
+## Hint
+
+After grouping, use the `summarise()` function to sum the trips.
+
+```r
+tourism |> 
+  group_by(State) |> 
+  summarise(Trips = sum(Trips))
+```
+:::
+:::
