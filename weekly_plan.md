@@ -20,6 +20,7 @@
 
 * tsibble: data from files, frequency, interval, temporal gaps (20 min)
 * autoplot() time plots (15 min)
+* time series patterns: trend and seasonality
 * Time series graphics: season, subseries (15 min)
 
 ## Workshop
@@ -27,6 +28,7 @@
 2.10: Q9, Q10, Q11
 
 * Exam question B.1 from 2024 and 2023
+* time series patterns: difference between seasonality and cyclicity
 * lag plots, ACF graphs
 * cross-sectional visualization
 
