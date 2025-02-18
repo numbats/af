@@ -123,14 +123,15 @@ aus_accommodation
 #| exercise: make_tsibble
 #| check: true
 library(qlcheckr)
+
 apply_checks(
   c(
     "You need to load the fpp3 package!" = !("fpp3" %in% .packages()),
     "You need to use the as_tsibble() function to convert the data into a tsibble." = !search_ast(ql_ast(), .fn = as_tsibble),
-    "You should specify which column provides the time of the measurements with `index`." = !search_ast(ql_ast(), .fn = as_tsibble, index = Date),
+    "You should specify which column provides the time of the measurements with `index`." = exists_in(ql_messages(), grepl, pattern = "as index variable", fixed = TRUE),
     "You need to specify the key variables that identify each time series" = exists_in(ql_errors(), grepl, pattern = "distinct rows", fixed = TRUE)
   ),
-  .msg_correct = if (!is_yearquarter(aus_accommodation$Date)) "Great, you've got a tsibble!<br>Although something doesn't look right - check the frequency of the data, why isn't it quarterly?" else "That's correct! Well done."
+  .msg_correct = if (!exists_in(ql_results(), \(x) is_tsibble(x) && is_yearquarter(x[[index_var(x)]]))) "Great, you've got a tsibble!<br>Although something doesn't look right - check the frequency of the data, why isn't it quarterly?" else "That's correct! Well done."
 )
 ```
 
