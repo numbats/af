@@ -17,7 +17,7 @@ source(here::here("course_info.R"))
 
 * Before we start classes, make sure that are familiar with R, RStudio and the tidyverse packages. If you've already done ETC1010, then you may not need to do anything! But if you're new to R and the tidyverse, then you will need to get yourself up-to-speed. Work through the first five modules of the **StartR** tutorial at [startr.numbat.space](https://startr.numbat.space). Do as much of it as you think you need. For those students new to R, it is strongly recommended that you do all five modules. For those who have previously used R, concentrate on the parts where you feel you are weakest.
 
-* Install R and RStudio on your personal computer. Instructions are provided at [https://otexts.com/fpp3/appendix-using-r.html](https://otexts.com/fpp3/appendix-using-r.html).
+* Install R and RStudio on your personal computer. Instructions are provided at [OTexts.com/fpp3/appendix-using-r.html](https://otexts.com/fpp3/appendix-using-r.html).
 
 * Read [Chapter 1 of the textbook](http://otexts.com/fpp3/intro.html) and watch all embedded videos
 
