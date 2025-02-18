@@ -89,7 +89,9 @@ Identify the `index` variable, `key` variable(s), and measured variable(s) of th
 
 ## Exercise 2
 
-The `aus_accommodation` dataset contains quarterly data on Australian tourist accommodation from short-term non-residential accommodation with 15 or more rooms, 1998 Q1 - 2016 Q2.
+The `aus_accommodation` dataset contains quarterly data on Australian tourist accommodation from short-term non-residential accommodation with 15 or more rooms, 1998 Q1 - 2016 Q2. The first few lines are shown below.
+
+![](figs/spreadsheet.png)
 
 The units of the measured variables are as follows:
 
@@ -169,8 +171,8 @@ Remember to specify the time index and key for `as_tsibble()` to function correc
 library(fpp3)
 aus_accommodation <- read.csv(
   "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
-) |> 
-  mutate(Date = as.Date(Date)) |> 
+) |>
+  mutate(Date = as.Date(Date)) |>
   as_tsibble(key = State, index = Date)
 ```
 :::
@@ -215,7 +217,7 @@ aus_accommodation <- read.csv(
 ) |>
   mutate(______ ) |>
   as_tsibble(
-    key = State, index = ______ 
+    key = State, index = ______
   )
 ```
 
@@ -243,7 +245,7 @@ Start by reading the CSV file and transform the data using `mutate()` and `yearq
 ```r
 aus_accommodation <- read.csv(
   "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
-) |> 
+) |>
   mutate(Quarter = yearquarter(Date))
 ```
 :::
@@ -258,8 +260,8 @@ After transforming the Date column, make sure you convert the data frame to a ts
 ```r
 aus_accommodation <- read.csv(
   "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
-) |> 
-  mutate(Quarter = yearquarter(Date)) |> 
+) |>
+  mutate(Quarter = yearquarter(Date)) |>
   as_tsibble(key = State, index = Quarter)
 ```
 :::
@@ -304,7 +306,7 @@ apply_checks(
 To start off, filter the `tourism` dataset for only Victoria.
 
 ```r
-tourism |> 
+tourism |>
   filter(State == "Victoria")
 ```
 :::
@@ -317,8 +319,8 @@ tourism |>
 After filtering, summarise the total trips for Victoria.
 
 ```r
-tourism |> 
-  filter(State == "Victoria") |> 
+tourism |>
+  filter(State == "Victoria") |>
   summarise(Trips = sum(Trips))
 ```
 :::
@@ -355,8 +357,8 @@ apply_checks(
 Start by using `as_tibble()` to convert `tourism` back to a tibble and group it by Region and Purpose.
 
 ```r
-tourism |> 
-  as_tibble() |> 
+tourism |>
+  as_tibble() |>
   group_by(Region, Purpose)
 ```
 :::
@@ -369,10 +371,10 @@ tourism |>
 After grouping, summarise the mean number of trips and filter for maximum trips.
 
 ```r
-tourism |> 
-  as_tibble() |> 
-  group_by(Region, Purpose) |> 
-  summarise(Trips = mean(Trips), .groups = "drop") |> 
+tourism |>
+  as_tibble() |>
+  group_by(Region, Purpose) |>
+  summarise(Trips = mean(Trips), .groups = "drop") |>
   filter(Trips == max(Trips))
 ```
 :::
@@ -382,8 +384,8 @@ Create a new tsibble which combines the Purposes and Regions, and just has total
 
 ```{webr}
 #| exercise: summarise_tourism_by_state
-tourism |> 
-  group_by(______) |> 
+tourism |>
+  group_by(______) |>
   summarise(______)
 ```
 
@@ -406,7 +408,7 @@ apply_checks(
 To summarise the number of trips by each State, start by grouping the data by State.
 
 ```r
-tourism |> 
+tourism |>
   group_by(State)
 ```
 :::
@@ -419,8 +421,8 @@ tourism |>
 After grouping, use the `summarise()` function to sum the trips.
 
 ```r
-tourism |> 
-  group_by(State) |> 
+tourism |>
+  group_by(State) |>
   summarise(Trips = sum(Trips))
 ```
 :::
