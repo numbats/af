@@ -88,7 +88,7 @@ Xiefei (Sapphire) Li
 * Tutorials: 1 hour per week
 * Online lecture: 12noon Mondays
 * Workshop: 1pm Tuesdays, [Lecture Theatre S3, 16 Rainforest Walk](https://maps.app.goo.gl/4AmDLWkY1yYZviFz8).
-
+* [Recordings](https://learning.monash.edu/mod/lti/view.php?id=3444022)
 
 ```{r}
 #| label: schedule2
