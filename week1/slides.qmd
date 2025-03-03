@@ -342,9 +342,9 @@ library(fpp3)
 
  * Make sure you are familiar with R, RStudio and the tidyverse packages.
  * Do the first five modules of `startr.numbat.space`.
- * Assignment 1
+ * Forecasting competition
 
-## Assignment 1: forecast the following series
+## Forecasting competition: forecast the following series
 \small\vspace*{-0.2cm}
 
   1. Google closing stock price on 24 March 2025
@@ -360,7 +360,7 @@ For each of these, give a point forecast and an 80\% prediction interval.
 Prize: \$50 cash prize
 \end{alertblock}
 
-## Assignment 1: scoring
+## Forecasting competition: scoring
 \small
 
 $Y=$ actual, $F=$ point forecast, $[L,U]=$ prediction interval
