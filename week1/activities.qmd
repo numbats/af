@@ -338,6 +338,8 @@ tourism |>
 :::
 :::
 
+## Exercise 5
+
 Find what combination of `Region` and `Purpose` had the maximum number of overnight trips on average.
 
 ```{webr}
@@ -391,6 +393,8 @@ tourism |>
 ```
 :::
 :::
+
+## Exercise 6
 
 Create a new tsibble which combines the Purposes and Regions, and just has total trips by State.
 
