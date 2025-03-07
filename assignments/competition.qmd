@@ -17,7 +17,7 @@ fig-cap-location: top
 * There is no need to use any fancy models or sophisticated methods. Simple is better for this assignment. The methods you use should be understandable to any high school student.
 * Full marks will be awarded if you submit the required information, and are able to meaningfully justify your results in a sentence or two in each case.
 * Once the true values in each case are available, we will come back to this exercise and see who did the best using the scoring method described in class.
-* The student with the lowest score is the winner of our forecasting competition, and will win a $50 cash prize.
+* The student with the most accurate forecasts is the winner of our forecasting competition, and will win a $50 cash prize.
 * The assignment mark is not dependent on your score.
 
 ```{r}
