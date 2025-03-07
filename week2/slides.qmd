@@ -9,6 +9,7 @@ format:
     pdf-engine: pdflatex
     fig-width: 7.5
     fig-height: 3.5
+    toc: true
     include-in-header: ../header.tex
     keep_tex: yes
 ---
@@ -34,14 +35,49 @@ tourism <- tourism |>
   )
 ```
 
+# dplyr functions
 
-## Seasonal or cyclic?
+## dplyr functions
+
+* filter: choose rows
+* select: choose columns
+* mutate: make new columns
+* group_by: group rows
+* summarise: summarise across groups
+* reframe: summarise multiple rows across groups
+
+
+# Time series graphics
+
+## Time series graphics
+
+* Time plots: `autoplot()`
+* Seasonal plots: `gg_season()`
+* Seasonal subseries plots: `gg_subseries()`
+* Lag plots: `gg_lag()`
+* ACF plots: `ACF() |> autoplot()`
+
+# Seasonality and cyclicity
+
+
+## Time series patterns
+
+Trend
+  : pattern exists when there is a long-term increase or decrease in the data.
+
+Seasonal
+  : pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
+
+Cyclic
+  : pattern exists when data exhibit rises and falls that are \emph{not of fixed period} (duration usually of at least 2 years).
+
+## Time series components
 
 \alert{Differences between seasonal and cyclic patterns:}
 
-  * seasonal pattern constant length; cyclic pattern variable length
-  * average length of cycle longer than length of seasonal pattern
-  * magnitude of cycle more variable than magnitude of seasonal pattern
+* seasonal pattern constant length; cyclic pattern variable length
+* average length of cycle longer than length of seasonal pattern
+* magnitude of cycle more variable than magnitude of seasonal pattern
 
 \pause
 
@@ -49,15 +85,35 @@ tourism <- tourism |>
 The timing of peaks and troughs is predictable with seasonal data, but unpredictable in the long term with cyclic data.
 \end{alertblock}
 
-## Your turn
 
-We have introduced various functions for time series graphics include `autoplot()`, `gg_season()`, `gg_subseries()`, `gg_lag()` and `ACF`. Use these functions to explore the quarterly tourism data for the Snowy Mountains.
+# Scatterplots
 
-```r
-snowy <- tourism |> filter(Region == "Snowy Mountains")
-```
 
-What do you learn?
+# White noise and random walks
+
+## White noise and random walks
+
+### White noise
+
+$\varepsilon_t\sim$ independent and identically distributed with mean zero and constant variance. 
+
+### Random walks
+$y_t = y_{t-1} + \varepsilon_t$
+
+where $\varepsilon_t$ is a white noise variable.
+
+
+# Lag plots and ACFs
+
+
+## \large Sampling distribution of autocorrelations
+
+Sampling distribution of $r_k$ for white noise data is asymptotically N(0,$1/T$).\pause
+
+  *  95% of all $r_k$ for white noise must lie within $\pm 1.96/\sqrt{T}$.
+  * If this is not the case, the series is probably not WN.
+  * Common to plot lines at $\pm 1.96/\sqrt{T}$ when plotting ACF.
+These are the \alert{critical values}.
 
 
 ## Trend and seasonality in ACF plots
@@ -67,28 +123,3 @@ What do you learn?
 - When data are trended and seasonal, you see a combination of these effects.
 
 
-## Which is which?
-
-```{r, fig.height=6, fig.width=12, echo=FALSE, warning=FALSE, out.width="14.5cm"}
-cowtemp <- as_tsibble(fma::cowtemp)
-USAccDeaths <- as_tsibble(USAccDeaths)
-AirPassengers <- as_tsibble(AirPassengers)
-mink <- as_tsibble(fma::mink)
-tp1 <- autoplot(cowtemp, value) +
-  labs(x = "", y = "chirps per minute", title = "1. Daily temperature of cow")
-tp2 <- autoplot(USAccDeaths, value) +
-  labs(x = "", y = "thousands", title = "2. Monthly accidental deaths")
-tp3 <- autoplot(AirPassengers, value) +
-  labs(x = "", y = "thousands", title = "3. Monthly air passengers")
-tp4 <- autoplot(mink, value) +
-  labs(x = "", y = "thousands", title = "4. Annual mink trappings")
-acfb <- ACF(cowtemp, value) |> autoplot() +
-  labs(x = "", title = "B") + ylim(-0.4, 1)
-acfa <- ACF(USAccDeaths, value) |> autoplot() +
-  labs(x = "", title = "A") + ylim(-0.4, 1)
-acfd <- ACF(AirPassengers, value) |> autoplot() +
-  labs(x = "", title = "D") + ylim(-0.4, 1)
-acfc <- ACF(mink, value) |> autoplot() +
-  labs(x = "", title = "C") + ylim(-0.4, 1)
-(tp1 | tp2 | tp3 | tp4) / (acfa | acfb | acfc | acfd)
-```
