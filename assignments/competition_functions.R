@@ -1,8 +1,8 @@
 # Functions used for plotting and scoring Assignment 1 results
 
-plotass1 <- function(data, F, L, U, Actual = NULL, xlab = NULL) {
+plotcompetition <- function(data, F, L, U, Actual = NULL, xlab = NULL) {
   Fquo <- rlang::as_label(enquo(F))
-  p <- ass1 %>%
+  p <- competition %>%
     arrange({{ F }}) %>%
     mutate(
       Name = factor(Name, ordered = TRUE, levels = data$Name[order(data[[Fquo]])])
