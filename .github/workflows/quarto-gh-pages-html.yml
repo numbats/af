@@ -3,12 +3,12 @@
 #  - https://github.com/actions/starter-workflows/blob/main/pages/static.yml
 
 on:
-  push:
-    branches: main
-  pull_request:
-    branches: main
+  #push:
+  #  branches: main
+  #pull_request:
+  #  branches: main
   # to be able to trigger a manual build
-  workflow_dispatch:
+  #workflow_dispatch:
 
 name: Build and deploy Quarto site
 
