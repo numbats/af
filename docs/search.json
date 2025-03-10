@@ -600,5 +600,40 @@
     "title": "Week 9: ARIMA models",
     "section": "Exercises (on your own or in tutorial)",
     "text": "Exercises (on your own or in tutorial)\nComplete Exercises 6-10 from Section 9.11 of the book."
+  },
+  {
+    "objectID": "week2/activities.html#exercise-1-cyclic-data",
+    "href": "week2/activities.html#exercise-1-cyclic-data",
+    "title": "Activities: Week 2",
+    "section": "Exercise 1: cyclic data",
+    "text": "Exercise 1: cyclic data\nA famous data set containing cycles is the Canadian lynx data, contained in pelts.\n\n\n\n\n\n\n\n\nHow far apart are the peaks and troughs on average?\nProduce a lag plot for the Lynx series.\n\n\n\n\n\n\n\n\nWhich lags have the strongest correlation? Why?\nProduce an ACF plot for the Lynx series.\n\n\n\n\n\n\n\n\n\nWhy does the ACF peak around lag 10?\nWhy can’t this data be seasonal?"
+  },
+  {
+    "objectID": "week2/activities.html#exercise-2-seasonal-and-cyclic-data",
+    "href": "week2/activities.html#exercise-2-seasonal-and-cyclic-data",
+    "title": "Activities: Week 2",
+    "section": "Exercise 2: seasonal and cyclic data",
+    "text": "Exercise 2: seasonal and cyclic data\nSometime trend, seasonality and cyclicity can occur together, such as in the Bricks production data.\n\n\n\n\n\n\n\n\n\nCan you see the seasonality in the time plot? How about the ACF plot?\nCan you see the cyclicity in the time plot? How about the ACF plot?"
+  },
+  {
+    "objectID": "week2/activities.html#exercise-3-acf-plots",
+    "href": "week2/activities.html#exercise-3-acf-plots",
+    "title": "Activities: Week 2",
+    "section": "Exercise 3: ACF plots",
+    "text": "Exercise 3: ACF plots\nWhich time plot corresponds to which ACF plot?\n\n\n\n\n\n\n\n\n\n\n\n\nPlot 1.\n\n\n\n\n\n\n\n\n\n\n\nPlot 2.\n\n\n\n\n\n\n\n\n\n\n\nPlot 3.\n\n\n\n\n\n\n\n\n\n\n\nPlot 4."
+  },
+  {
+    "objectID": "week2/activities.html#exercise-4-white-noise",
+    "href": "week2/activities.html#exercise-4-white-noise",
+    "title": "Activities: Week 2",
+    "section": "Exercise 4: white noise",
+    "text": "Exercise 4: white noise\nWhite noise data consists of purely random draws from the same distribution with mean zero and constant variance. y_t = \\varepsilon_t, \\qquad \\text{where $\\varepsilon_t \\mathop{\\sim}\\limits^{\\mathrm{iid}} N(0, \\sigma^2)$}\nWhite noise data can be simulated using the rnorm() function. By setting the seed at the start of the code, we ensure the same random numbers are generated each time it is run. Change the seed to get different random numbers.\n\n\n\n\n\n\n\n\nCan you find a seed value that gives data which appear NOT to be white noise?"
+  },
+  {
+    "objectID": "week2/activities.html#exercise-5-random-walks",
+    "href": "week2/activities.html#exercise-5-random-walks",
+    "title": "Activities: Week 2",
+    "section": "Exercise 5: random walks",
+    "text": "Exercise 5: random walks\nRandom walks are a type of time series where the value at time t is equal to the previous value plus a random amount from a white noise process. y_t = y_{t-1} + \\varepsilon_t, \\qquad \\text{where $\\varepsilon_t \\mathop{\\sim}\\limits^{\\mathrm{iid}} N(0, \\sigma^2)$} Equivalently, we can take the cumulative sum of a white noise process. y_t = y_{0} + \\sum_{t=1}^{T} \\varepsilon_t, \\qquad \\text{where $\\varepsilon_t \\mathop{\\sim}\\limits^{\\mathrm{iid}} N(0, \\sigma^2)$}\n\n\n\n\n\n\n\n\nExperiment by re-running the code with different seed values. Try to find a random walk which appears to have a strong positive trend, and another with a strong negative trend. Remember, it can’t really have a trend because it is simply being generated from summing random numbers which have zero mean."
   }
 ]

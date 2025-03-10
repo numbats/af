@@ -37,209 +37,7 @@ library(fpp3)
 source(here::here("setup.R"))
 ```
 
-## Exercise 1: data exploration
-
-The `nsw_offences` dataset contains monthly data on criminal offences in NSW  counts from January 1995 to December 2023.
-
-```{r}
-#| echo: false
-#| message: false
-nsw_offences
-```
-
-#### How many types of offences are recorded?
-
-:::{.quiz-singlechoice}
-- [ ] [3]{hint="x"}
-- [X] [21]{hint="o"}
-- [ ] [7,308]{hint="x"}
-- [ ] [7,298]{hint="x"}
-- [ ] [Unknown]{hint="x"}
-:::
-
-&nbsp;<br>
-
-#### Which is the most common?
-
-```{webr}
-#| exercise: find_most_common_offence
-nsw_offences |>
-  as_tibble() |>
-  group_by(Type) |>
-  summarise(______) |>
-  arrange(desc(______))
-```
-
-:::{.quiz-singlechoice}
-- [ ] [Abduction and kidnapping]{hint="x"}
-- [ ] [Against justice procedures]{hint="x"}
-- [ ] [Arson]{hint="x"}
-- [ ] [Assault]{hint="x"}
-- [ ] [Betting and gaming offences]{hint="x"}
-- [ ] [Blackmail and extortion]{hint="x"}
-- [ ] [Disorderly conduct]{hint="x"}
-- [ ] [Drug offences]{hint="x"}
-- [ ] [Homicide]{hint="x"}
-- [ ] [Intimidation, stalking and harassment]{hint="x"}
-- [ ] [Liquor offences]{hint="x"}
-- [ ] [Malicious damage to property]{hint="x"}
-- [ ] [Other offences]{hint="x"}
-- [ ] [Other offences against the person]{hint="x"}
-- [ ] [Pornography offences]{hint="x"}
-- [ ] [Prohibited and regulated weapons offences]{hint="x"}
-- [ ] [Prostitution offences]{hint="x"}
-- [ ] [Robbery]{hint="x"}
-- [ ] [Sexual offences]{hint="x"}
-- [X] [Theft]{hint=""}
-- [ ] [Transport regulatory offences]{hint=""}
-:::
-
-#### Which is the least common?
-
-```{webr}
-#| exercise: find_least_common_offence
-nsw_offences |>
-  as_tibble() |>
-  group_by(Type) |>
-  summarise(______) |>
-  arrange(______)
-```
-
-:::{.quiz-singlechoice}
-- [ ] [Abduction and kidnapping]{hint="x"}
-- [ ] [Against justice procedures]{hint="x"}
-- [ ] [Arson]{hint="x"}
-- [ ] [Assault]{hint="x"}
-- [X] [Betting and gaming offences]{hint="o"}
-- [ ] [Blackmail and extortion]{hint="x"}
-- [ ] [Disorderly conduct]{hint="x"}
-- [ ] [Drug offences]{hint="x"}
-- [ ] [Homicide]{hint="x"}
-- [ ] [Intimidation, stalking and harassment]{hint="x"}
-- [ ] [Liquor offences]{hint="x"}
-- [ ] [Malicious damage to property]{hint="x"}
-- [ ] [Other offences]{hint="x"}
-- [ ] [Other offences against the person]{hint="x"}
-- [ ] [Pornography offences]{hint="x"}
-- [ ] [Prohibited and regulated weapons offences]{hint="x"}
-- [ ] [Prostitution offences]{hint="x"}
-- [ ] [Robbery]{hint="x"}
-- [ ] [Sexual offences]{hint="x"}
-- [ ] [Theft]{hint="x"}
-- [ ] [Transport regulatory offences]{hint=""}
-:::
-
-## Exercise 2: autoplots
-
-Try using `autoplot()` on the `nsw_offences` dataset.
-
-```{webr}
-#| exercise: autoplot
-nsw_offences |>
-  autoplot(____)
-```
-
-#### What problems do you see? (Choose all that apply)
-
-:::{.quiz-multichoice}
-- [X] [It is cramped because of the large legend.]{hint="o"}
-- [X] [It is hard to distinguish which line corresponds to which series because the colors are too similar.]{hint="o"}
-- [ ] [It is hard to distinguish which series is which because the legend is too small.]{hint="x"}
-- [X] [There is so much overplotting, you can't distinguish the lines.]{hint="o"}
-:::
-
-#### Here is a graph that works a little better. Figure out what each line of code is doing.
-
-```{webr}
-#| exercise: better_autoplot
-nsw_offences |>
-  as_tibble() |>
-  mutate(Type = forcats::fct_lump_n(Type, 5, w=Count)) |>
-  group_by(Month, Type) |>
-  summarise(Count = sum(Count), .groups = "drop") |>
-  as_tsibble(index = Month, key = Type) |>
-  autoplot(Count) +
-  theme(legend.position = "bottom") +
-  scale_color_brewer(palette = "Set2")
-```
-
-#### Produce a time plot for "Liquor offences" using the `autoplot()` function.
-
-```{webr}
-#| exercise: liquor_offences
-nsw_offences |>
-  filter(____) |>
-  autoplot(____)
-```
-
-What do you think is causing the spikes around 2008-2011? What do you think is causing the troughs in 2020 and 2021?
-
-#### Produce a time plot combining all offences for each month.
-
-```{webr}
-#| exercise: all_offences
-nsw_offences |>
-  summarise(____) |>
-  autoplot(____)
-```
-
-#### One of the series has an outlier. Can you identify which one?
-
-```{webr}
-#| exercise: outlier
-outlier_type <- nsw_offences |>
-  group_by(Type) |>
-  filter(___) |>
-  pull(Type)
-
-nsw_offences |>
-  filter(____) |>
-  autoplot(____)
-```
-
-::: {.callout-tip}
-### Hint
-
-* An outlier often has a large jump between observations.
-* The `difference()` function computes differences between consecutive observations.
-* When comparing values across groups, it is often better to use percentage changes rather than absolute changes.
-:::
-
-## Exercise 3: seasonal plots
-
-#### Produce a season plot to find which month contains the outlier
-
-```{webr}
-#| exercise: assaults
-nsw_offences |>
-  filter(____) |>
-  gg_season(____)
-```
-
-#### Produce a season plot combining all offences for each month.
-
-```{webr}
-#| exercise: all_offences_seasonality
-nsw_offences |>
-  summarise(____) |>
-  gg_season(____)
-```
-
-Which month usually has the most offences in each year?
-
-#### Produce a subseries plot of assaults.
-
-```{webr}
-#| exercise: all_offences_subseries
-#| fig-height: 2.5
-nsw_offences |>
-  summarise(____) |>
-  gg_subseries(____)
-```
-
-Which month has changed the most relative to the other months?
-
-## Exercise 4: cyclic data
+## Exercise 1: cyclic data
 
 A famous data set containing cycles is the Canadian lynx data, contained in `pelts`.
 
@@ -250,6 +48,16 @@ pelt |>
 ```
 
 How far apart are the peaks and troughs on average?
+
+Produce a lag plot for the `Lynx` series.
+
+```{webr}
+#| exercise: lag_lynx
+pelt |>
+  gg_lag(___, lags = ____, geom = "point")
+```
+
+Which lags have the strongest correlation? Why?
 
 Produce an ACF plot for the `Lynx` series.
 
@@ -263,7 +71,20 @@ pelt |>
 * Why does the ACF peak around lag 10?
 * Why can't this data be seasonal?
 
-## Exercise 5: ACF plots
+## Exercise 2: seasonal and cyclic data
+
+Sometime trend, seasonality and cyclicity can occur together, such as in the Bricks production data.
+
+```{webr}
+#| exercise: bricks
+aus_production |> autoplot(____)
+aus_production |> ACF(___) |> autoplot()
+```
+
+* Can you see the seasonality in the time plot? How about the ACF plot?
+* Can you see the cyclicity in the time plot? How about the ACF plot?
+
+## Exercise 3: ACF plots
 
 Which time plot corresponds to which ACF plot?
 
@@ -347,6 +168,41 @@ acfc <- ACF(mink, value) |> autoplot() +
 :::
 
 :::
+
+## Exercise 4: white noise
+
+White noise data consists of purely random draws from the same distribution with mean zero and constant variance.
+$$y_t = \varepsilon_t, \qquad \text{where $\varepsilon_t \mathop{\sim}\limits^{\mathrm{iid}} N(0, \sigma^2)$}$$
+
+White noise data can be simulated using the `rnorm()` function. By setting the seed at the start of the code, we ensure the same random numbers are generated each time it is run. Change the seed to get different random numbers.
+
+```{webr}
+#| exercise: white-noise
+set.seed(1)
+my_data <- tsibble(t = seq(100), y = rnorm(100), index = t)
+my_data |> autoplot(y)
+my_data |> ACF(y) |> autoplot()
+```
+
+Can you find a seed value that gives data which appear NOT to be white noise?
+
+## Exercise 5: random walks
+
+Random walks are a type of time series where the value at time $t$ is equal to the previous value plus a random amount from a white noise process.
+$$y_t = y_{t-1} + \varepsilon_t, \qquad \text{where $\varepsilon_t \mathop{\sim}\limits^{\mathrm{iid}} N(0, \sigma^2)$}$$
+Equivalently, we can take the cumulative sum of a white noise process.
+$$y_t = y_{0} + \sum_{t=1}^{T} \varepsilon_t, \qquad \text{where $\varepsilon_t \mathop{\sim}\limits^{\mathrm{iid}} N(0, \sigma^2)$}$$
+
+```{webr}
+#| exercise: random-walk
+set.seed(1)
+my_data <- tsibble(t = seq(100), y = cumsum(rnorm(100)), index = t)
+my_data |> autoplot(y)
+my_data |> ACF(y) |> autoplot()
+```
+
+Experiment by re-running the code with different seed values. Try to find a random walk which appears to have a strong positive trend, and another with a strong negative trend. Remember, it can't really have a trend because it is simply being generated from summing random numbers which have zero mean.
+
 
 ## Weekly quiz
 
