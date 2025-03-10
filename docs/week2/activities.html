@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>activities – ETC3550/ETC5550 Applied forecasting</title>
+<title>Activities: Week 2 – ETC3550/ETC5550 Applied forecasting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -74,6 +40,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-7925253777a6f5c44a5f94ea197ed42e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -101,6 +69,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
 
@@ -224,21 +194,548 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#more-r-functions" id="toc-more-r-functions" class="nav-link active" data-scroll-target="#more-r-functions">More R functions</a></li>
+  <li><a href="#exercise-1-data-exploration" id="toc-exercise-1-data-exploration" class="nav-link" data-scroll-target="#exercise-1-data-exploration">Exercise 1: data exploration</a></li>
+  <li><a href="#exercise-2-autoplots" id="toc-exercise-2-autoplots" class="nav-link" data-scroll-target="#exercise-2-autoplots">Exercise 2: autoplots</a></li>
+  <li><a href="#exercise-3-seasonal-plots" id="toc-exercise-3-seasonal-plots" class="nav-link" data-scroll-target="#exercise-3-seasonal-plots">Exercise 3: seasonal plots</a></li>
+  <li><a href="#exercise-4-cyclic-data" id="toc-exercise-4-cyclic-data" class="nav-link" data-scroll-target="#exercise-4-cyclic-data">Exercise 4: cyclic data</a></li>
+  <li><a href="#exercise-5-acf-plots" id="toc-exercise-5-acf-plots" class="nav-link" data-scroll-target="#exercise-5-acf-plots">Exercise 5: ACF plots</a></li>
+  <li><a href="#weekly-quiz" id="toc-weekly-quiz" class="nav-link" data-scroll-target="#weekly-quiz">Weekly quiz</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Activities: Week 2</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<ol type="1">
-<li><p>We have introduced various functions for time series graphics include <code>autoplot()</code>, <code>gg_season()</code>, <code>gg_subseries()</code>, <code>gg_lag()</code> and <code>ACF</code>. Use these functions to explore the quarterly tourism data for the Snowy Mountains.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>snowy <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span> <span class="fu">filter</span>(Region <span class="sc">==</span> <span class="st">"Snowy Mountains"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>What do you learn?</p></li>
-<li><p>Which time plot corresponds to which ACF plot?</p></li>
-</ol>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="more-r-functions" class="level2">
+<h2 class="anchored" data-anchor-id="more-r-functions">More R functions</h2>
+<ul>
+<li><code>gg_season()</code> with <code>period</code> argument</li>
+<li><code>pivot_longer()</code></li>
+<li><code>facet_grid()</code></li>
+<li><code>GGally::ggpairs()</code></li>
+<li><code>gg_lag()</code></li>
+<li><code>ACF()</code></li>
+</ul>
+<p><a href="workshop.R">R examples</a></p>
+</section>
+<section id="exercise-1-data-exploration" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1-data-exploration">Exercise 1: data exploration</h2>
+<p>The <code>nsw_offences</code> dataset contains monthly data on criminal offences in NSW counts from January 1995 to December 2023.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 7,308 x 3 [1M]
+# Key:       Type [21]
+      Month Type                     Count
+      &lt;mth&gt; &lt;chr&gt;                    &lt;dbl&gt;
+ 1 1995 Jan Abduction and kidnapping    15
+ 2 1995 Feb Abduction and kidnapping    16
+ 3 1995 Mar Abduction and kidnapping    23
+ 4 1995 Apr Abduction and kidnapping    22
+ 5 1995 May Abduction and kidnapping    14
+ 6 1995 Jun Abduction and kidnapping    13
+ 7 1995 Jul Abduction and kidnapping    19
+ 8 1995 Aug Abduction and kidnapping    23
+ 9 1995 Sep Abduction and kidnapping    13
+10 1995 Oct Abduction and kidnapping    21
+# ℹ 7,298 more rows</code></pre>
+</div>
+</div>
+<section id="how-many-types-of-offences-are-recorded" class="level4">
+<h4 class="anchored" data-anchor-id="how-many-types-of-offences-are-recorded">How many types of offences are recorded?</h4>
+<div id="qforms-quiz-1" class="radio-group">
+</div>
+
+<script>
+  var compareArrays = (a, b) =>
+    a.length === b.length && a.every((element, index) => element === b[index]);
+  var quiz_container = document.getElementById("qforms-quiz-1");
+  var questions = "3!@!21!@!7,308!@!7,298!@!Unknown";
+  questions = questions.split("!@!");
+  
+  // console.log("hints", hints)
+  if (typeof hints === 'undefined') {
+    var hints = []
+    // Your variable is undefined
+  }
+  hints[1 - 1] = "x!@!o!@!x!@!x!@!x".split("!@!");
+
+  for([index, question] of questions.entries()) {
+    var radio_row = document.createElement("div");
+
+    var label = document.createElement("label");
+    label.setAttribute("class", "radio-label");
+    label.setAttribute("for", question);
+    label.textContent = question;
+
+    var input_elem = document.createElement("input");
+    input_elem.setAttribute("type", "radio");
+    input_elem.setAttribute("class", "quiz-radio");
+    input_elem.setAttribute("name", `qforms-quiz-name-1`);
+    input_elem.setAttribute("value", (index+1));
+
+    radio_row.append(input_elem, label);
+    quiz_container.append(radio_row);
+  }
+
+
+  var result_section = document.createElement("div")
+  result_section.setAttribute("id", "qforms-quiz-results-1")
+  result_section.setAttribute("class", "result-section")
+
+  var submit_btn = document.createElement("input")
+  submit_btn.setAttribute("type", "button")
+  submit_btn.setAttribute("id", "qforms-quiz-submit-1")
+  submit_btn.setAttribute("class", "submit-btn")
+  submit_btn.setAttribute("value", "Submit")
+  submit_btn.addEventListener("click", event => {
+    var selected = document.querySelectorAll('input[name=qforms-quiz-name-1]:checked')
+    var values = Array.from(selected).map(element => element.value);
+    var results = document.getElementById("qforms-quiz-results-1")
+    var solutions = "2".split("!@!")
+    if(selected != undefined) {
+      var success = compareArrays(values, solutions)
+      results.classList.toggle(success ? "success": "failure")
+      results.innerHTML = (success ? "✅ That's correct!<br>": "❌ Incorrect, try again!<br>") + hints[1 - 1][values-1]
+    }
+
+  })
+  quiz_container.append(submit_btn)
+
+  quiz_container.append(result_section)
+</script>
+
+<style>
+  input.quiz-radio {
+    margin: 0.4rem;
+  }
+</style>
+
+
+<p>&nbsp;<br></p>
+</section>
+<section id="which-is-the-most-common" class="level4">
+<h4 class="anchored" data-anchor-id="which-is-the-most-common">Which is the most common?</h4>
+<div class="cell" data-exercise="find_most_common_offence">
+<div>
+<div id="webr-1" class="exercise-cell">
+
+</div>
+<script type="webr-1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZmluZF9tb3N0X2NvbW1vbl9vZmZlbmNlIn0sImNvZGUiOiJuc3dfb2ZmZW5jZXMgfD5cbiAgYXNfdGliYmxlKCkgfD5cbiAgZ3JvdXBfYnkoVHlwZSkgfD5cbiAgc3VtbWFyaXNlKF9fX19fXykgfD5cbiAgYXJyYW5nZShkZXNjKF9fX19fXykpIn0=
+</script>
+</div>
+</div>
+<div id="qforms-quiz-2" class="radio-group">
+</div>
+
+<script>
+  var compareArrays = (a, b) =>
+    a.length === b.length && a.every((element, index) => element === b[index]);
+  var quiz_container = document.getElementById("qforms-quiz-2");
+  var questions = "Abduction and kidnapping!@!Against justice procedures!@!Arson!@!Assault!@!Betting and gaming offences!@!Blackmail and extortion!@!Disorderly conduct!@!Drug offences!@!Homicide!@!Intimidation, stalking and harassment!@!Liquor offences!@!Malicious damage to property!@!Other offences!@!Other offences against the person!@!Pornography offences!@!Prohibited and regulated weapons offences!@!Prostitution offences!@!Robbery!@!Sexual offences!@!Theft!@!Transport regulatory offences";
+  questions = questions.split("!@!");
+  
+  // console.log("hints", hints)
+  if (typeof hints === 'undefined') {
+    var hints = []
+    // Your variable is undefined
+  }
+  hints[2 - 1] = "x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!!@!".split("!@!");
+
+  for([index, question] of questions.entries()) {
+    var radio_row = document.createElement("div");
+
+    var label = document.createElement("label");
+    label.setAttribute("class", "radio-label");
+    label.setAttribute("for", question);
+    label.textContent = question;
+
+    var input_elem = document.createElement("input");
+    input_elem.setAttribute("type", "radio");
+    input_elem.setAttribute("class", "quiz-radio");
+    input_elem.setAttribute("name", `qforms-quiz-name-2`);
+    input_elem.setAttribute("value", (index+1));
+
+    radio_row.append(input_elem, label);
+    quiz_container.append(radio_row);
+  }
+
+
+  var result_section = document.createElement("div")
+  result_section.setAttribute("id", "qforms-quiz-results-2")
+  result_section.setAttribute("class", "result-section")
+
+  var submit_btn = document.createElement("input")
+  submit_btn.setAttribute("type", "button")
+  submit_btn.setAttribute("id", "qforms-quiz-submit-2")
+  submit_btn.setAttribute("class", "submit-btn")
+  submit_btn.setAttribute("value", "Submit")
+  submit_btn.addEventListener("click", event => {
+    var selected = document.querySelectorAll('input[name=qforms-quiz-name-2]:checked')
+    var values = Array.from(selected).map(element => element.value);
+    var results = document.getElementById("qforms-quiz-results-2")
+    var solutions = "20".split("!@!")
+    if(selected != undefined) {
+      var success = compareArrays(values, solutions)
+      results.classList.toggle(success ? "success": "failure")
+      results.innerHTML = (success ? "✅ That's correct!<br>": "❌ Incorrect, try again!<br>") + hints[2 - 1][values-1]
+    }
+
+  })
+  quiz_container.append(submit_btn)
+
+  quiz_container.append(result_section)
+</script>
+
+<style>
+  input.quiz-radio {
+    margin: 0.4rem;
+  }
+</style>
+
+
+</section>
+<section id="which-is-the-least-common" class="level4">
+<h4 class="anchored" data-anchor-id="which-is-the-least-common">Which is the least common?</h4>
+<div class="cell" data-exercise="find_least_common_offence">
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZmluZF9sZWFzdF9jb21tb25fb2ZmZW5jZSJ9LCJjb2RlIjoibnN3X29mZmVuY2VzIHw+XG4gIGFzX3RpYmJsZSgpIHw+XG4gIGdyb3VwX2J5KFR5cGUpIHw+XG4gIHN1bW1hcmlzZShfX19fX18pIHw+XG4gIGFycmFuZ2UoX19fX19fKSJ9
+</script>
+</div>
+</div>
+<div id="qforms-quiz-3" class="radio-group">
+</div>
+
+<script>
+  var compareArrays = (a, b) =>
+    a.length === b.length && a.every((element, index) => element === b[index]);
+  var quiz_container = document.getElementById("qforms-quiz-3");
+  var questions = "Abduction and kidnapping!@!Against justice procedures!@!Arson!@!Assault!@!Betting and gaming offences!@!Blackmail and extortion!@!Disorderly conduct!@!Drug offences!@!Homicide!@!Intimidation, stalking and harassment!@!Liquor offences!@!Malicious damage to property!@!Other offences!@!Other offences against the person!@!Pornography offences!@!Prohibited and regulated weapons offences!@!Prostitution offences!@!Robbery!@!Sexual offences!@!Theft!@!Transport regulatory offences";
+  questions = questions.split("!@!");
+  
+  // console.log("hints", hints)
+  if (typeof hints === 'undefined') {
+    var hints = []
+    // Your variable is undefined
+  }
+  hints[3 - 1] = "x!@!x!@!x!@!x!@!o!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!x!@!".split("!@!");
+
+  for([index, question] of questions.entries()) {
+    var radio_row = document.createElement("div");
+
+    var label = document.createElement("label");
+    label.setAttribute("class", "radio-label");
+    label.setAttribute("for", question);
+    label.textContent = question;
+
+    var input_elem = document.createElement("input");
+    input_elem.setAttribute("type", "radio");
+    input_elem.setAttribute("class", "quiz-radio");
+    input_elem.setAttribute("name", `qforms-quiz-name-3`);
+    input_elem.setAttribute("value", (index+1));
+
+    radio_row.append(input_elem, label);
+    quiz_container.append(radio_row);
+  }
+
+
+  var result_section = document.createElement("div")
+  result_section.setAttribute("id", "qforms-quiz-results-3")
+  result_section.setAttribute("class", "result-section")
+
+  var submit_btn = document.createElement("input")
+  submit_btn.setAttribute("type", "button")
+  submit_btn.setAttribute("id", "qforms-quiz-submit-3")
+  submit_btn.setAttribute("class", "submit-btn")
+  submit_btn.setAttribute("value", "Submit")
+  submit_btn.addEventListener("click", event => {
+    var selected = document.querySelectorAll('input[name=qforms-quiz-name-3]:checked')
+    var values = Array.from(selected).map(element => element.value);
+    var results = document.getElementById("qforms-quiz-results-3")
+    var solutions = "5".split("!@!")
+    if(selected != undefined) {
+      var success = compareArrays(values, solutions)
+      results.classList.toggle(success ? "success": "failure")
+      results.innerHTML = (success ? "✅ That's correct!<br>": "❌ Incorrect, try again!<br>") + hints[3 - 1][values-1]
+    }
+
+  })
+  quiz_container.append(submit_btn)
+
+  quiz_container.append(result_section)
+</script>
+
+<style>
+  input.quiz-radio {
+    margin: 0.4rem;
+  }
+</style>
+
+
+</section>
+</section>
+<section id="exercise-2-autoplots" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2-autoplots">Exercise 2: autoplots</h2>
+<p>Try using <code>autoplot()</code> on the <code>nsw_offences</code> dataset.</p>
+<div class="cell" data-exercise="autoplot">
+<div>
+<div id="webr-3" class="exercise-cell">
+
+</div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiYXV0b3Bsb3QifSwiY29kZSI6Im5zd19vZmZlbmNlcyB8PlxuICBhdXRvcGxvdChfX19fKSJ9
+</script>
+</div>
+</div>
+<section id="what-problems-do-you-see-choose-all-that-apply" class="level4">
+<h4 class="anchored" data-anchor-id="what-problems-do-you-see-choose-all-that-apply">What problems do you see? (Choose all that apply)</h4>
+<div id="qforms-quiz-4" class="radio-group">
+</div>
+
+<script>
+  var compareArrays = (a, b) =>
+    a.length === b.length && a.every((element, index) => element === b[index]);
+  var quiz_container = document.getElementById("qforms-quiz-4");
+  var questions = "It is cramped because of the large legend.!@!It is hard to distinguish which line corresponds to which series because the colors are too similar.!@!It is hard to distinguish which series is which because the legend is too small.!@!There is so much overplotting, you can’t distinguish the lines.";
+  questions = questions.split("!@!");
+  
+  // console.log("hints", hints)
+  if (typeof hints === 'undefined') {
+    var hints = []
+    // Your variable is undefined
+  }
+  hints[4 - 1] = "o!@!o!@!x!@!o".split("!@!");
+
+  for([index, question] of questions.entries()) {
+    var radio_row = document.createElement("div");
+
+    var label = document.createElement("label");
+    label.setAttribute("class", "radio-label");
+    label.setAttribute("for", question);
+    label.textContent = question;
+
+    var input_elem = document.createElement("input");
+    input_elem.setAttribute("type", "checkbox");
+    input_elem.setAttribute("class", "quiz-radio");
+    input_elem.setAttribute("name", `qforms-quiz-name-4`);
+    input_elem.setAttribute("value", (index+1));
+
+    radio_row.append(input_elem, label);
+    quiz_container.append(radio_row);
+  }
+
+
+  var result_section = document.createElement("div")
+  result_section.setAttribute("id", "qforms-quiz-results-4")
+  result_section.setAttribute("class", "result-section")
+
+  var submit_btn = document.createElement("input")
+  submit_btn.setAttribute("type", "button")
+  submit_btn.setAttribute("id", "qforms-quiz-submit-4")
+  submit_btn.setAttribute("class", "submit-btn")
+  submit_btn.setAttribute("value", "Submit")
+  submit_btn.addEventListener("click", event => {
+    var selected = document.querySelectorAll('input[name=qforms-quiz-name-4]:checked')
+    var values = Array.from(selected).map(element => element.value);
+    var results = document.getElementById("qforms-quiz-results-4")
+    var solutions = "1!@!2!@!4".split("!@!")
+    if(selected != undefined) {
+      var success = compareArrays(values, solutions)
+      results.classList.toggle(success ? "success": "failure")
+      results.innerHTML = (success ? "✅ That's correct!<br>": "❌ Incorrect, try again!<br>") + hints[4 - 1][values-1]
+    }
+
+  })
+  quiz_container.append(submit_btn)
+
+  quiz_container.append(result_section)
+</script>
+
+<style>
+  input.quiz-radio {
+    margin: 0.4rem;
+  }
+</style>
+
+
+</section>
+<section id="here-is-a-graph-that-works-a-little-better.-figure-out-what-each-line-of-code-is-doing." class="level4">
+<h4 class="anchored" data-anchor-id="here-is-a-graph-that-works-a-little-better.-figure-out-what-each-line-of-code-is-doing.">Here is a graph that works a little better. Figure out what each line of code is doing.</h4>
+<div class="cell" data-exercise="better_autoplot">
+<div>
+<div id="webr-4" class="exercise-cell">
+
+</div>
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiYmV0dGVyX2F1dG9wbG90In0sImNvZGUiOiJuc3dfb2ZmZW5jZXMgfD5cbiAgYXNfdGliYmxlKCkgfD5cbiAgbXV0YXRlKFR5cGUgPSBmb3JjYXRzOjpmY3RfbHVtcF9uKFR5cGUsIDUsIHc9Q291bnQpKSB8PlxuICBncm91cF9ieShNb250aCwgVHlwZSkgfD5cbiAgc3VtbWFyaXNlKENvdW50ID0gc3VtKENvdW50KSwgLmdyb3VwcyA9IFwiZHJvcFwiKSB8PlxuICBhc190c2liYmxlKGluZGV4ID0gTW9udGgsIGtleSA9IFR5cGUpIHw+XG4gIGF1dG9wbG90KENvdW50KSArXG4gIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbiA9IFwiYm90dG9tXCIpICtcbiAgc2NhbGVfY29sb3JfYnJld2VyKHBhbGV0dGUgPSBcIlNldDJcIikifQ==
+</script>
+</div>
+</div>
+</section>
+<section id="produce-a-time-plot-for-liquor-offences-using-the-autoplot-function." class="level4">
+<h4 class="anchored" data-anchor-id="produce-a-time-plot-for-liquor-offences-using-the-autoplot-function.">Produce a time plot for “Liquor offences” using the <code>autoplot()</code> function.</h4>
+<div class="cell" data-exercise="liquor_offences">
+<div>
+<div id="webr-5" class="exercise-cell">
+
+</div>
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoibGlxdW9yX29mZmVuY2VzIn0sImNvZGUiOiJuc3dfb2ZmZW5jZXMgfD5cbiAgZmlsdGVyKF9fX18pIHw+XG4gIGF1dG9wbG90KF9fX18pIn0=
+</script>
+</div>
+</div>
+<p>What do you think is causing the spikes around 2008-2011? What do you think is causing the troughs in 2020 and 2021?</p>
+</section>
+<section id="produce-a-time-plot-combining-all-offences-for-each-month." class="level4">
+<h4 class="anchored" data-anchor-id="produce-a-time-plot-combining-all-offences-for-each-month.">Produce a time plot combining all offences for each month.</h4>
+<div class="cell" data-exercise="all_offences">
+<div>
+<div id="webr-6" class="exercise-cell">
+
+</div>
+<script type="webr-6-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiYWxsX29mZmVuY2VzIn0sImNvZGUiOiJuc3dfb2ZmZW5jZXMgfD5cbiAgc3VtbWFyaXNlKF9fX18pIHw+XG4gIGF1dG9wbG90KF9fX18pIn0=
+</script>
+</div>
+</div>
+</section>
+<section id="one-of-the-series-has-an-outlier.-can-you-identify-which-one" class="level4">
+<h4 class="anchored" data-anchor-id="one-of-the-series-has-an-outlier.-can-you-identify-which-one">One of the series has an outlier. Can you identify which one?</h4>
+<div class="cell" data-exercise="outlier">
+<div>
+<div id="webr-7" class="exercise-cell">
+
+</div>
+<script type="webr-7-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoib3V0bGllciJ9LCJjb2RlIjoib3V0bGllcl90eXBlIDwtIG5zd19vZmZlbmNlcyB8PlxuICBncm91cF9ieShUeXBlKSB8PlxuICBmaWx0ZXIoX19fKSB8PlxuICBwdWxsKFR5cGUpXG5cbm5zd19vZmZlbmNlcyB8PlxuICBmaWx0ZXIoX19fXykgfD5cbiAgYXV0b3Bsb3QoX19fXykifQ==
+</script>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>An outlier often has a large jump between observations.</li>
+<li>The <code>difference()</code> function computes differences between consecutive observations.</li>
+<li>When comparing values across groups, it is often better to use percentage changes rather than absolute changes.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-3-seasonal-plots" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3-seasonal-plots">Exercise 3: seasonal plots</h2>
+<section id="produce-a-season-plot-to-find-which-month-contains-the-outlier" class="level4">
+<h4 class="anchored" data-anchor-id="produce-a-season-plot-to-find-which-month-contains-the-outlier">Produce a season plot to find which month contains the outlier</h4>
+<div class="cell" data-exercise="assaults">
+<div>
+<div id="webr-8" class="exercise-cell">
+
+</div>
+<script type="webr-8-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiYXNzYXVsdHMifSwiY29kZSI6Im5zd19vZmZlbmNlcyB8PlxuICBmaWx0ZXIoX19fXykgfD5cbiAgZ2dfc2Vhc29uKF9fX18pIn0=
+</script>
+</div>
+</div>
+</section>
+<section id="produce-a-season-plot-combining-all-offences-for-each-month." class="level4">
+<h4 class="anchored" data-anchor-id="produce-a-season-plot-combining-all-offences-for-each-month.">Produce a season plot combining all offences for each month.</h4>
+<div class="cell" data-exercise="all_offences_seasonality">
+<div>
+<div id="webr-9" class="exercise-cell">
+
+</div>
+<script type="webr-9-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiYWxsX29mZmVuY2VzX3NlYXNvbmFsaXR5In0sImNvZGUiOiJuc3dfb2ZmZW5jZXMgfD5cbiAgc3VtbWFyaXNlKF9fX18pIHw+XG4gIGdnX3NlYXNvbihfX19fKSJ9
+</script>
+</div>
+</div>
+<p>Which month usually has the most offences in each year?</p>
+</section>
+<section id="produce-a-subseries-plot-of-assaults." class="level4">
+<h4 class="anchored" data-anchor-id="produce-a-subseries-plot-of-assaults.">Produce a subseries plot of assaults.</h4>
+<div class="cell" data-exercise="all_offences_subseries">
+<div>
+<div id="webr-10" class="exercise-cell">
+
+</div>
+<script type="webr-10-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiYWxsX29mZmVuY2VzX3N1YnNlcmllcyIsImZpZy1oZWlnaHQiOjIuNX0sImNvZGUiOiJuc3dfb2ZmZW5jZXMgfD5cbiAgc3VtbWFyaXNlKF9fX18pIHw+XG4gIGdnX3N1YnNlcmllcyhfX19fKSJ9
+</script>
+</div>
+</div>
+<p>Which month has changed the most relative to the other months?</p>
+</section>
+</section>
+<section id="exercise-4-cyclic-data" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4-cyclic-data">Exercise 4: cyclic data</h2>
+<p>A famous data set containing cycles is the Canadian lynx data, contained in <code>pelts</code>.</p>
+<div class="cell" data-exercise="lynx">
+<div>
+<div id="webr-11" class="exercise-cell">
+
+</div>
+<script type="webr-11-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoibHlueCJ9LCJjb2RlIjoicGVsdCB8PlxuICBhdXRvcGxvdChfX19fKSJ9
+</script>
+</div>
+</div>
+<p>How far apart are the peaks and troughs on average?</p>
+<p>Produce an ACF plot for the <code>Lynx</code> series.</p>
+<div class="cell" data-exercise="acf_lynx">
+<div>
+<div id="webr-12" class="exercise-cell">
+
+</div>
+<script type="webr-12-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiYWNmX2x5bngifSwiY29kZSI6InBlbHQgfD5cbiAgQUNGKF9fXykgfD5cbiAgYXV0b3Bsb3QoX19fXykifQ==
+</script>
+</div>
+</div>
+<ul>
+<li>Why does the ACF peak around lag 10?</li>
+<li>Why can’t this data be seasonal?</li>
+</ul>
+</section>
+<section id="exercise-5-acf-plots" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5-acf-plots">Exercise 5: ACF plots</h2>
+<p>Which time plot corresponds to which ACF plot?</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -248,10 +745,338 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<div class="columns">
+<div class="column" style="width:25%;">
+<section id="plot-1." class="level4">
+<h4 class="anchored" data-anchor-id="plot-1.">Plot 1.</h4>
+<div id="qforms-quiz-5" class="radio-group">
+</div>
+
+<script>
+  var compareArrays = (a, b) =>
+    a.length === b.length && a.every((element, index) => element === b[index]);
+  var quiz_container = document.getElementById("qforms-quiz-5");
+  var questions = "A!@!B!@!C!@!D";
+  questions = questions.split("!@!");
+  
+  // console.log("hints", hints)
+  if (typeof hints === 'undefined') {
+    var hints = []
+    // Your variable is undefined
+  }
+  hints[5 - 1] = "x!@!o!@!x!@!x".split("!@!");
+
+  for([index, question] of questions.entries()) {
+    var radio_row = document.createElement("div");
+
+    var label = document.createElement("label");
+    label.setAttribute("class", "radio-label");
+    label.setAttribute("for", question);
+    label.textContent = question;
+
+    var input_elem = document.createElement("input");
+    input_elem.setAttribute("type", "radio");
+    input_elem.setAttribute("class", "quiz-radio");
+    input_elem.setAttribute("name", `qforms-quiz-name-5`);
+    input_elem.setAttribute("value", (index+1));
+
+    radio_row.append(input_elem, label);
+    quiz_container.append(radio_row);
+  }
 
 
+  var result_section = document.createElement("div")
+  result_section.setAttribute("id", "qforms-quiz-results-5")
+  result_section.setAttribute("class", "result-section")
+
+  var submit_btn = document.createElement("input")
+  submit_btn.setAttribute("type", "button")
+  submit_btn.setAttribute("id", "qforms-quiz-submit-5")
+  submit_btn.setAttribute("class", "submit-btn")
+  submit_btn.setAttribute("value", "Submit")
+  submit_btn.addEventListener("click", event => {
+    var selected = document.querySelectorAll('input[name=qforms-quiz-name-5]:checked')
+    var values = Array.from(selected).map(element => element.value);
+    var results = document.getElementById("qforms-quiz-results-5")
+    var solutions = "2".split("!@!")
+    if(selected != undefined) {
+      var success = compareArrays(values, solutions)
+      results.classList.toggle(success ? "success": "failure")
+      results.innerHTML = (success ? "✅ That's correct!<br>": "❌ Incorrect, try again!<br>") + hints[5 - 1][values-1]
+    }
+
+  })
+  quiz_container.append(submit_btn)
+
+  quiz_container.append(result_section)
+</script>
+
+<style>
+  input.quiz-radio {
+    margin: 0.4rem;
+  }
+</style>
+
+
+</section>
+</div><div class="column" style="width:25%;">
+<section id="plot-2." class="level4">
+<h4 class="anchored" data-anchor-id="plot-2.">Plot 2.</h4>
+<div id="qforms-quiz-6" class="radio-group">
+</div>
+
+<script>
+  var compareArrays = (a, b) =>
+    a.length === b.length && a.every((element, index) => element === b[index]);
+  var quiz_container = document.getElementById("qforms-quiz-6");
+  var questions = "A!@!B!@!C!@!D";
+  questions = questions.split("!@!");
+  
+  // console.log("hints", hints)
+  if (typeof hints === 'undefined') {
+    var hints = []
+    // Your variable is undefined
+  }
+  hints[6 - 1] = "o!@!x!@!x!@!x".split("!@!");
+
+  for([index, question] of questions.entries()) {
+    var radio_row = document.createElement("div");
+
+    var label = document.createElement("label");
+    label.setAttribute("class", "radio-label");
+    label.setAttribute("for", question);
+    label.textContent = question;
+
+    var input_elem = document.createElement("input");
+    input_elem.setAttribute("type", "checkbox");
+    input_elem.setAttribute("class", "quiz-radio");
+    input_elem.setAttribute("name", `qforms-quiz-name-6`);
+    input_elem.setAttribute("value", (index+1));
+
+    radio_row.append(input_elem, label);
+    quiz_container.append(radio_row);
+  }
+
+
+  var result_section = document.createElement("div")
+  result_section.setAttribute("id", "qforms-quiz-results-6")
+  result_section.setAttribute("class", "result-section")
+
+  var submit_btn = document.createElement("input")
+  submit_btn.setAttribute("type", "button")
+  submit_btn.setAttribute("id", "qforms-quiz-submit-6")
+  submit_btn.setAttribute("class", "submit-btn")
+  submit_btn.setAttribute("value", "Submit")
+  submit_btn.addEventListener("click", event => {
+    var selected = document.querySelectorAll('input[name=qforms-quiz-name-6]:checked')
+    var values = Array.from(selected).map(element => element.value);
+    var results = document.getElementById("qforms-quiz-results-6")
+    var solutions = "1".split("!@!")
+    if(selected != undefined) {
+      var success = compareArrays(values, solutions)
+      results.classList.toggle(success ? "success": "failure")
+      results.innerHTML = (success ? "✅ That's correct!<br>": "❌ Incorrect, try again!<br>") + hints[6 - 1][values-1]
+    }
+
+  })
+  quiz_container.append(submit_btn)
+
+  quiz_container.append(result_section)
+</script>
+
+<style>
+  input.quiz-radio {
+    margin: 0.4rem;
+  }
+</style>
+
+
+</section>
+</div><div class="column" style="width:25%;">
+<section id="plot-3." class="level4">
+<h4 class="anchored" data-anchor-id="plot-3.">Plot 3.</h4>
+<div id="qforms-quiz-7" class="radio-group">
+</div>
+
+<script>
+  var compareArrays = (a, b) =>
+    a.length === b.length && a.every((element, index) => element === b[index]);
+  var quiz_container = document.getElementById("qforms-quiz-7");
+  var questions = "A!@!B!@!C!@!D";
+  questions = questions.split("!@!");
+  
+  // console.log("hints", hints)
+  if (typeof hints === 'undefined') {
+    var hints = []
+    // Your variable is undefined
+  }
+  hints[7 - 1] = "x!@!x!@!x!@!o".split("!@!");
+
+  for([index, question] of questions.entries()) {
+    var radio_row = document.createElement("div");
+
+    var label = document.createElement("label");
+    label.setAttribute("class", "radio-label");
+    label.setAttribute("for", question);
+    label.textContent = question;
+
+    var input_elem = document.createElement("input");
+    input_elem.setAttribute("type", "checkbox");
+    input_elem.setAttribute("class", "quiz-radio");
+    input_elem.setAttribute("name", `qforms-quiz-name-7`);
+    input_elem.setAttribute("value", (index+1));
+
+    radio_row.append(input_elem, label);
+    quiz_container.append(radio_row);
+  }
+
+
+  var result_section = document.createElement("div")
+  result_section.setAttribute("id", "qforms-quiz-results-7")
+  result_section.setAttribute("class", "result-section")
+
+  var submit_btn = document.createElement("input")
+  submit_btn.setAttribute("type", "button")
+  submit_btn.setAttribute("id", "qforms-quiz-submit-7")
+  submit_btn.setAttribute("class", "submit-btn")
+  submit_btn.setAttribute("value", "Submit")
+  submit_btn.addEventListener("click", event => {
+    var selected = document.querySelectorAll('input[name=qforms-quiz-name-7]:checked')
+    var values = Array.from(selected).map(element => element.value);
+    var results = document.getElementById("qforms-quiz-results-7")
+    var solutions = "4".split("!@!")
+    if(selected != undefined) {
+      var success = compareArrays(values, solutions)
+      results.classList.toggle(success ? "success": "failure")
+      results.innerHTML = (success ? "✅ That's correct!<br>": "❌ Incorrect, try again!<br>") + hints[7 - 1][values-1]
+    }
+
+  })
+  quiz_container.append(submit_btn)
+
+  quiz_container.append(result_section)
+</script>
+
+<style>
+  input.quiz-radio {
+    margin: 0.4rem;
+  }
+</style>
+
+
+</section>
+</div><div class="column" style="width:25%;">
+<section id="plot-4." class="level4">
+<h4 class="anchored" data-anchor-id="plot-4.">Plot 4.</h4>
+<div id="qforms-quiz-8" class="radio-group">
+</div>
+
+<script>
+  var compareArrays = (a, b) =>
+    a.length === b.length && a.every((element, index) => element === b[index]);
+  var quiz_container = document.getElementById("qforms-quiz-8");
+  var questions = "A!@!B!@!C!@!D";
+  questions = questions.split("!@!");
+  
+  // console.log("hints", hints)
+  if (typeof hints === 'undefined') {
+    var hints = []
+    // Your variable is undefined
+  }
+  hints[8 - 1] = "x!@!x!@!o!@!x".split("!@!");
+
+  for([index, question] of questions.entries()) {
+    var radio_row = document.createElement("div");
+
+    var label = document.createElement("label");
+    label.setAttribute("class", "radio-label");
+    label.setAttribute("for", question);
+    label.textContent = question;
+
+    var input_elem = document.createElement("input");
+    input_elem.setAttribute("type", "checkbox");
+    input_elem.setAttribute("class", "quiz-radio");
+    input_elem.setAttribute("name", `qforms-quiz-name-8`);
+    input_elem.setAttribute("value", (index+1));
+
+    radio_row.append(input_elem, label);
+    quiz_container.append(radio_row);
+  }
+
+
+  var result_section = document.createElement("div")
+  result_section.setAttribute("id", "qforms-quiz-results-8")
+  result_section.setAttribute("class", "result-section")
+
+  var submit_btn = document.createElement("input")
+  submit_btn.setAttribute("type", "button")
+  submit_btn.setAttribute("id", "qforms-quiz-submit-8")
+  submit_btn.setAttribute("class", "submit-btn")
+  submit_btn.setAttribute("value", "Submit")
+  submit_btn.addEventListener("click", event => {
+    var selected = document.querySelectorAll('input[name=qforms-quiz-name-8]:checked')
+    var values = Array.from(selected).map(element => element.value);
+    var results = document.getElementById("qforms-quiz-results-8")
+    var solutions = "3".split("!@!")
+    if(selected != undefined) {
+      var success = compareArrays(values, solutions)
+      results.classList.toggle(success ? "success": "failure")
+      results.innerHTML = (success ? "✅ That's correct!<br>": "❌ Incorrect, try again!<br>") + hints[8 - 1][values-1]
+    }
+
+  })
+  quiz_container.append(submit_btn)
+
+  quiz_container.append(result_section)
+</script>
+
+<style>
+  input.quiz-radio {
+    margin: 0.4rem;
+  }
+</style>
+
+
+</section>
+</div>
+</div>
+</section>
+<section id="weekly-quiz" class="level2">
+<h2 class="anchored" data-anchor-id="weekly-quiz">Weekly quiz</h2>
+<p><a href="https://learning.monash.edu/mod/quiz/view.php?id=3868353">Go to week 2 quiz</a></p>
+
+
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC40LjEvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsInFsY2hlY2tyIiwiZnBwMyIsInVyY2EiLCJmb3JjYXRzIl0sInJlcG9zIjpbImh0dHBzOi8vcmVwby5yLXdhc20ub3JnLyIsImh0dHBzOi8vbGVhcm5yLWFjYWRlbXkuZ2l0aHViLmlvL3FsY2hlY2tyIl19LCJyZW5kZXJfZGYiOiJkZWZhdWx0In0=
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEyID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xMi1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzEyID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMiwge30pO1xuX3dlYnJfZmVlZGJhY2tfMTIgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzEyLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzExID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xMS1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzExID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMSwge30pO1xuX3dlYnJfZmVlZGJhY2tfMTEgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzExLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xMC1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzEwID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMCwge30pO1xuX3dlYnJfZmVlZGJhY2tfMTAgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzEwLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC05IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV85O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzkgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItOS1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzkgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzksIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzkgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzkuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzg7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici04IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfOCA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTgtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici04LWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfOCwge30pO1xuX3dlYnJfZmVlZGJhY2tfOCA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfOC5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNztcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTciLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl83ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNy1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTctY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV83ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl83LCB7fSk7XG5fd2Vicl9mZWVkYmFja183ID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV83LmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC02IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV82O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItNi1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzYgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzYsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzYuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzU7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici01IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNSA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici01LWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNSwge30pO1xuX3dlYnJfZmVlZGJhY2tfNSA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfNS5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNDtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl80ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTQtY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV80ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl80LCB7fSk7XG5fd2Vicl9mZWVkYmFja180ID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV80LmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItMy1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzMgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzMsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzMuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMiA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0yLWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMiwge30pO1xuX3dlYnJfZmVlZGJhY2tfMiA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfMi5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl8xID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTEtY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV8xID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xLCB7fSk7XG5fd2Vicl9mZWVkYmFja18xID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV8xLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ3ZWJST2pzID0ge1xuICBjb25zdCB7IFdlYlIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWUuV2ViUjtcbiAgY29uc3Qge1xuICAgIFdlYlJFdmFsdWF0b3IsXG4gICAgV2ViUkVudmlyb25tZW50TWFuYWdlcixcbiAgICBzZXR1cFIsXG4gICAgYjY0RGVjb2RlLFxuICAgIGNvbGxhcHNlUGF0aFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gd2ViUiBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICAvLyBJbml0aWFsaXNlIHdlYlIgYW5kIHNldHVwIGZvciBSIGNvZGUgZXZhbHVhdGlvblxuICBsZXQgd2ViUlByb21pc2UgPSAoYXN5bmMgKHdlYlIpID0+IHtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHdlYlJgO1xuICAgIGF3YWl0IHdlYlIuaW5pdCgpO1xuXG4gICAgLy8gSW5zdGFsbCBwcm92aWRlZCBsaXN0IG9mIHBhY2thZ2VzXG4gICAgLy8gRW5zdXJlIHdlYlIgZGVmYXVsdCByZXBvIGlzIGluY2x1ZGVkXG4gICAgZGF0YS5wYWNrYWdlcy5yZXBvcy5wdXNoKFwiaHR0cHM6Ly9yZXBvLnItd2FzbS5vcmdcIilcbiAgICBhd2FpdCBkYXRhLnBhY2thZ2VzLnBrZ3MubWFwKChwa2cpID0+ICgpID0+IHtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcGFja2FnZTogJHtwa2d9YDtcbiAgICAgIHJldHVybiB3ZWJSLmV2YWxSVm9pZChgXG4gICAgICAgIHdlYnI6Omluc3RhbGwocGtnLCByZXBvcyA9IHJlcG9zKVxuICAgICAgICBsaWJyYXJ5KHBrZywgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKVxuICAgICAgYCwgeyBlbnY6IHtcbiAgICAgICAgcGtnOiBwa2csXG4gICAgICAgIHJlcG9zOiBkYXRhLnBhY2thZ2VzLnJlcG9zLFxuICAgICAgfX0pO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgLy8gRG93bmxvYWQgYW5kIGluc3RhbGwgcmVzb3VyY2VzXG4gICAgYXdhaXQgZmlsZXMubWFwKChmaWxlKSA9PiBhc3luYyAoKSA9PiB7XG4gICAgICBjb25zdCBuYW1lID0gZmlsZS5zdWJzdHJpbmcoZmlsZS5sYXN0SW5kZXhPZignLycpICsgMSk7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHJlc291cmNlOiAke25hbWV9YDtcbiAgICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgZmV0Y2goZmlsZSk7XG4gICAgICBpZiAoIXJlc3BvbnNlLm9rKSB7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgQ2FuJ3QgZG93bmxvYWQgXFxgJHtmaWxlfVxcYC4gRXJyb3IgJHtyZXNwb25zZS5zdGF0dXN9OiBcIiR7cmVzcG9uc2Uuc3RhdHVzVGV4dH1cIi5gKTtcbiAgICAgIH1cbiAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwb25zZS5hcnJheUJ1ZmZlcigpO1xuXG4gICAgICAvLyBTdG9yZSBVUkxzIGluIHRoZSBjd2Qgd2l0aG91dCBhbnkgc3ViZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgaWYgKGZpbGUuaW5jbHVkZXMoXCI6Ly9cIikpIHtcbiAgICAgICAgZmlsZSA9IG5hbWU7XG4gICAgICB9XG5cbiAgICAgIC8vIENvbGxhcHNlIGhpZ2hlciBkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBmaWxlID0gY29sbGFwc2VQYXRoKGZpbGUpO1xuXG4gICAgICAvLyBDcmVhdGUgZGlyZWN0b3J5IHRyZWUsIGlnbm9yaW5nIFwiZGlyZWN0b3J5IGV4aXN0c1wiIFZGUyBlcnJvcnNcbiAgICAgIGNvbnN0IHBhcnRzID0gZmlsZS5zcGxpdCgnLycpLnNsaWNlKDAsIC0xKTtcbiAgICAgIGxldCBwYXRoID0gJyc7XG4gICAgICB3aGlsZSAocGFydHMubGVuZ3RoID4gMCkge1xuICAgICAgICBwYXRoICs9IHBhcnRzLnNoaWZ0KCkgKyAnLyc7XG4gICAgICAgIHRyeSB7XG4gICAgICAgICAgYXdhaXQgd2ViUi5GUy5ta2RpcihwYXRoKTtcbiAgICAgICAgfSBjYXRjaCAoZSkge1xuICAgICAgICAgIGlmICghZS5tZXNzYWdlLmluY2x1ZGVzKFwiRlMgZXJyb3JcIikpIHtcbiAgICAgICAgICAgIHRocm93IGU7XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG5cbiAgICAgIC8vIFdyaXRlIHRoaXMgZmlsZSB0byB0aGUgVkZTXG4gICAgICByZXR1cm4gYXdhaXQgd2ViUi5GUy53cml0ZUZpbGUoZmlsZSwgbmV3IFVpbnQ4QXJyYXkoZGF0YSkpO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbnN0YWxsaW5nIHdlYlIgc2hpbXNgO1xuICAgIGF3YWl0IHdlYlIuZXZhbFJWb2lkKGB3ZWJyOjpzaGltX2luc3RhbGwoKWApO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBXZWJSIGVudmlyb25tZW50IHNldHVwYDtcbiAgICBhd2FpdCBzZXR1cFIod2ViUiwgZGF0YSk7XG5cbiAgICBzdGF0dXNUZXh0LnJlbW92ZSgpO1xuICAgIGlmIChzdGF0dXNDb250YWluZXIuY2hpbGRyZW4ubGVuZ3RoID09IDApIHtcbiAgICAgIHN0YXR1c0NvbnRhaW5lci5wYXJlbnROb2RlLnJlbW92ZSgpO1xuICAgIH1cbiAgICByZXR1cm4gd2ViUjtcbiAgfSkobmV3IFdlYlIoZGF0YS5vcHRpb25zKSk7XG5cbiAgLy8gS2VlcCB0cmFjayBvZiBpbml0aWFsIE9KUyBibG9jayByZW5kZXJcbiAgY29uc3QgcmVuZGVyZWRPanMgPSB7fTtcblxuICBjb25zdCBwcm9jZXNzID0gYXN5bmMgKGNvbnRleHQsIGlucHV0cykgPT4ge1xuICAgIGNvbnN0IHdlYlIgPSBhd2FpdCB3ZWJSUHJvbWlzZTtcbiAgICBjb25zdCBldmFsdWF0b3IgPSBuZXcgV2ViUkV2YWx1YXRvcih3ZWJSLCBjb250ZXh0KVxuICAgIGF3YWl0IGV2YWx1YXRvci5wcm9jZXNzKGlucHV0cyk7XG4gICAgcmV0dXJuIGV2YWx1YXRvci5jb250YWluZXI7XG4gIH1cblxuICByZXR1cm4ge1xuICAgIHByb2Nlc3MsXG4gICAgd2ViUlByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gIH07XG59XG4ifV19
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../week2";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

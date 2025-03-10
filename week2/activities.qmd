@@ -1,14 +1,271 @@
+---
+title: "Activities: Week 2"
+editor: source
+engine: knitr
+filters:
+  - live
+  - quiz-teachr
+ojs-engine: true
+webr:
+  packages:
+    - qlcheckr
+    - fpp3
+    - urca
+    - forcats
+  autoload-packages: false
+  repos:
+    - https://repo.r-wasm.org/
+    - https://learnr-academy.github.io/qlcheckr
+---
 
+{{< include /_extensions/r-wasm/live/_knitr.qmd >}}
 
-1. We have introduced various functions for time series graphics include `autoplot()`, `gg_season()`, `gg_subseries()`, `gg_lag()` and `ACF`. Use these functions to explore the quarterly tourism data for the Snowy Mountains.
+## More R functions
 
-   ```r
-   snowy <- tourism |> filter(Region == "Snowy Mountains")
-   ```
+* `gg_season()` with `period` argument
+* `pivot_longer()`
+* `facet_grid()`
+* `GGally::ggpairs()`
+* `gg_lag()`
+* `ACF()`
 
-   What do you learn?
+[R examples](workshop.R)
 
-2. Which time plot corresponds to which ACF plot?
+```{r}
+#| echo: false
+library(fpp3)
+source(here::here("setup.R"))
+```
+
+## Exercise 1: data exploration
+
+The `nsw_offences` dataset contains monthly data on criminal offences in NSW  counts from January 1995 to December 2023.
+
+```{r}
+#| echo: false
+#| message: false
+nsw_offences
+```
+
+#### How many types of offences are recorded?
+
+:::{.quiz-singlechoice}
+- [ ] [3]{hint="x"}
+- [X] [21]{hint="o"}
+- [ ] [7,308]{hint="x"}
+- [ ] [7,298]{hint="x"}
+- [ ] [Unknown]{hint="x"}
+:::
+
+&nbsp;<br>
+
+#### Which is the most common?
+
+```{webr}
+#| exercise: find_most_common_offence
+nsw_offences |>
+  as_tibble() |>
+  group_by(Type) |>
+  summarise(______) |>
+  arrange(desc(______))
+```
+
+:::{.quiz-singlechoice}
+- [ ] [Abduction and kidnapping]{hint="x"}
+- [ ] [Against justice procedures]{hint="x"}
+- [ ] [Arson]{hint="x"}
+- [ ] [Assault]{hint="x"}
+- [ ] [Betting and gaming offences]{hint="x"}
+- [ ] [Blackmail and extortion]{hint="x"}
+- [ ] [Disorderly conduct]{hint="x"}
+- [ ] [Drug offences]{hint="x"}
+- [ ] [Homicide]{hint="x"}
+- [ ] [Intimidation, stalking and harassment]{hint="x"}
+- [ ] [Liquor offences]{hint="x"}
+- [ ] [Malicious damage to property]{hint="x"}
+- [ ] [Other offences]{hint="x"}
+- [ ] [Other offences against the person]{hint="x"}
+- [ ] [Pornography offences]{hint="x"}
+- [ ] [Prohibited and regulated weapons offences]{hint="x"}
+- [ ] [Prostitution offences]{hint="x"}
+- [ ] [Robbery]{hint="x"}
+- [ ] [Sexual offences]{hint="x"}
+- [X] [Theft]{hint=""}
+- [ ] [Transport regulatory offences]{hint=""}
+:::
+
+#### Which is the least common?
+
+```{webr}
+#| exercise: find_least_common_offence
+nsw_offences |>
+  as_tibble() |>
+  group_by(Type) |>
+  summarise(______) |>
+  arrange(______)
+```
+
+:::{.quiz-singlechoice}
+- [ ] [Abduction and kidnapping]{hint="x"}
+- [ ] [Against justice procedures]{hint="x"}
+- [ ] [Arson]{hint="x"}
+- [ ] [Assault]{hint="x"}
+- [X] [Betting and gaming offences]{hint="o"}
+- [ ] [Blackmail and extortion]{hint="x"}
+- [ ] [Disorderly conduct]{hint="x"}
+- [ ] [Drug offences]{hint="x"}
+- [ ] [Homicide]{hint="x"}
+- [ ] [Intimidation, stalking and harassment]{hint="x"}
+- [ ] [Liquor offences]{hint="x"}
+- [ ] [Malicious damage to property]{hint="x"}
+- [ ] [Other offences]{hint="x"}
+- [ ] [Other offences against the person]{hint="x"}
+- [ ] [Pornography offences]{hint="x"}
+- [ ] [Prohibited and regulated weapons offences]{hint="x"}
+- [ ] [Prostitution offences]{hint="x"}
+- [ ] [Robbery]{hint="x"}
+- [ ] [Sexual offences]{hint="x"}
+- [ ] [Theft]{hint="x"}
+- [ ] [Transport regulatory offences]{hint=""}
+:::
+
+## Exercise 2: autoplots
+
+Try using `autoplot()` on the `nsw_offences` dataset.
+
+```{webr}
+#| exercise: autoplot
+nsw_offences |>
+  autoplot(____)
+```
+
+#### What problems do you see? (Choose all that apply)
+
+:::{.quiz-multichoice}
+- [X] [It is cramped because of the large legend.]{hint="o"}
+- [X] [It is hard to distinguish which line corresponds to which series because the colors are too similar.]{hint="o"}
+- [ ] [It is hard to distinguish which series is which because the legend is too small.]{hint="x"}
+- [X] [There is so much overplotting, you can't distinguish the lines.]{hint="o"}
+:::
+
+#### Here is a graph that works a little better. Figure out what each line of code is doing.
+
+```{webr}
+#| exercise: better_autoplot
+nsw_offences |>
+  as_tibble() |>
+  mutate(Type = forcats::fct_lump_n(Type, 5, w=Count)) |>
+  group_by(Month, Type) |>
+  summarise(Count = sum(Count), .groups = "drop") |>
+  as_tsibble(index = Month, key = Type) |>
+  autoplot(Count) +
+  theme(legend.position = "bottom") +
+  scale_color_brewer(palette = "Set2")
+```
+
+#### Produce a time plot for "Liquor offences" using the `autoplot()` function.
+
+```{webr}
+#| exercise: liquor_offences
+nsw_offences |>
+  filter(____) |>
+  autoplot(____)
+```
+
+What do you think is causing the spikes around 2008-2011? What do you think is causing the troughs in 2020 and 2021?
+
+#### Produce a time plot combining all offences for each month.
+
+```{webr}
+#| exercise: all_offences
+nsw_offences |>
+  summarise(____) |>
+  autoplot(____)
+```
+
+#### One of the series has an outlier. Can you identify which one?
+
+```{webr}
+#| exercise: outlier
+outlier_type <- nsw_offences |>
+  group_by(Type) |>
+  filter(___) |>
+  pull(Type)
+
+nsw_offences |>
+  filter(____) |>
+  autoplot(____)
+```
+
+::: {.callout-tip}
+### Hint
+
+* An outlier often has a large jump between observations.
+* The `difference()` function computes differences between consecutive observations.
+* When comparing values across groups, it is often better to use percentage changes rather than absolute changes.
+:::
+
+## Exercise 3: seasonal plots
+
+#### Produce a season plot to find which month contains the outlier
+
+```{webr}
+#| exercise: assaults
+nsw_offences |>
+  filter(____) |>
+  gg_season(____)
+```
+
+#### Produce a season plot combining all offences for each month.
+
+```{webr}
+#| exercise: all_offences_seasonality
+nsw_offences |>
+  summarise(____) |>
+  gg_season(____)
+```
+
+Which month usually has the most offences in each year?
+
+#### Produce a subseries plot of assaults.
+
+```{webr}
+#| exercise: all_offences_subseries
+#| fig-height: 2.5
+nsw_offences |>
+  summarise(____) |>
+  gg_subseries(____)
+```
+
+Which month has changed the most relative to the other months?
+
+## Exercise 4: cyclic data
+
+A famous data set containing cycles is the Canadian lynx data, contained in `pelts`.
+
+```{webr}
+#| exercise: lynx
+pelt |>
+  autoplot(____)
+```
+
+How far apart are the peaks and troughs on average?
+
+Produce an ACF plot for the `Lynx` series.
+
+```{webr}
+#| exercise: acf_lynx
+pelt |>
+  ACF(___) |>
+  autoplot(____)
+```
+
+* Why does the ACF peak around lag 10?
+* Why can't this data be seasonal?
+
+## Exercise 5: ACF plots
+
+Which time plot corresponds to which ACF plot?
 
 ```{r}
 #| label: acf-quiz
@@ -18,7 +275,6 @@
 #| warning: false
 #| out.width: 100%
 #| cache: false
-source(here::here("setup.R"))
 library(patchwork)
 cowtemp <- as_tsibble(fma::cowtemp)
 USAccDeaths <- as_tsibble(USAccDeaths)
@@ -42,3 +298,56 @@ acfc <- ACF(mink, value) |> autoplot() +
   labs(x = "", title = "C") + ylim(-0.4, 1)
 (tp1 | tp2 | tp3 | tp4) / (acfa | acfb | acfc | acfd)
 ```
+
+
+::: columns
+
+::: {.column width="25%"}
+
+#### Plot 1.
+:::{.quiz-singlechoice}
+- [ ] [A]{hint="x"}
+- [X] [B]{hint="o"}
+- [ ] [C]{hint="x"}
+- [ ] [D]{hint="x"}
+:::
+:::
+
+::: {.column width="25%"}
+
+#### Plot 2.
+:::{.quiz-multichoice}
+- [X] [A]{hint="o"}
+- [ ] [B]{hint="x"}
+- [ ] [C]{hint="x"}
+- [ ] [D]{hint="x"}
+:::
+:::
+
+::: {.column width="25%"}
+
+#### Plot 3.
+:::{.quiz-multichoice}
+- [ ] [A]{hint="x"}
+- [ ] [B]{hint="x"}
+- [ ] [C]{hint="x"}
+- [X] [D]{hint="o"}
+:::
+:::
+
+::: {.column width="25%"}
+
+#### Plot 4.
+:::{.quiz-multichoice}
+- [ ] [A]{hint="x"}
+- [ ] [B]{hint="x"}
+- [X] [C]{hint="o"}
+- [ ] [D]{hint="x"}
+:::
+:::
+
+:::
+
+## Weekly quiz
+
+[Go to week 2 quiz](https://learning.monash.edu/mod/quiz/view.php?id=3868353)

@@ -179,7 +179,7 @@
     "href": "week2/index.html#slides-for-monday-lecture",
     "title": "Week 2: Time series graphics",
     "section": "Slides for Monday lecture",
-    "text": "Slides for Monday lecture\n\n\nDownload pdf"
+    "text": "Slides for Monday lecture\n\n\nDownload pdf\nCode used in lecture"
   },
   {
     "objectID": "week2/index.html#activities-for-tuesday-workshop",
@@ -492,9 +492,9 @@
   {
     "objectID": "week2/activities.html",
     "href": "week2/activities.html",
-    "title": "ETC3550/ETC5550 Applied forecasting",
+    "title": "Activities: Week 2",
     "section": "",
-    "text": "We have introduced various functions for time series graphics include autoplot(), gg_season(), gg_subseries(), gg_lag() and ACF. Use these functions to explore the quarterly tourism data for the Snowy Mountains.\nsnowy &lt;- tourism |&gt; filter(Region == \"Snowy Mountains\")\nWhat do you learn?\nWhich time plot corresponds to which ACF plot?"
+    "text": "gg_season() with period argument\npivot_longer()\nfacet_grid()\nGGally::ggpairs()\ngg_lag()\nACF()\n\nR examples"
   },
   {
     "objectID": "week8/index.html",
@@ -551,5 +551,103 @@
     "title": "Week 9: ARIMA models",
     "section": "Exercises (on your own or in tutorial)",
     "text": "Exercises (on your own or in tutorial)\nComplete Exercises 6-10 from Section 9.11 of the book."
+  },
+  {
+    "objectID": "week2/activities.html#exercise-1-data-exploration",
+    "href": "week2/activities.html#exercise-1-data-exploration",
+    "title": "Activities: Week 2",
+    "section": "Exercise 1: data exploration",
+    "text": "Exercise 1: data exploration\nThe nsw_offences dataset contains monthly data on criminal offences in NSW counts from January 1995 to December 2023.\n\n\n# A tsibble: 7,308 x 3 [1M]\n# Key:       Type [21]\n      Month Type                     Count\n      &lt;mth&gt; &lt;chr&gt;                    &lt;dbl&gt;\n 1 1995 Jan Abduction and kidnapping    15\n 2 1995 Feb Abduction and kidnapping    16\n 3 1995 Mar Abduction and kidnapping    23\n 4 1995 Apr Abduction and kidnapping    22\n 5 1995 May Abduction and kidnapping    14\n 6 1995 Jun Abduction and kidnapping    13\n 7 1995 Jul Abduction and kidnapping    19\n 8 1995 Aug Abduction and kidnapping    23\n 9 1995 Sep Abduction and kidnapping    13\n10 1995 Oct Abduction and kidnapping    21\n# ℹ 7,298 more rows\n\n\n\nHow many types of offences are recorded?\n\n\n\n\n\n\n\n\n \n\n\nWhich is the most common?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhich is the least common?"
+  },
+  {
+    "objectID": "week2/activities.html#exercise-2-autoplots",
+    "href": "week2/activities.html#exercise-2-autoplots",
+    "title": "Activities: Week 2",
+    "section": "Exercise 2: autoplots",
+    "text": "Exercise 2: autoplots\nTry using autoplot() on the nsw_offences dataset.\n\n\n\n\n\n\n\n\n\nWhat problems do you see? (Choose all that apply)\n\n\n\n\n\n\n\n\n\n\nHere is a graph that works a little better. Figure out what each line of code is doing.\n\n\n\n\n\n\n\n\n\n\nProduce a time plot for “Liquor offences” using the autoplot() function.\n\n\n\n\n\n\n\n\nWhat do you think is causing the spikes around 2008-2011? What do you think is causing the troughs in 2020 and 2021?\n\n\nProduce a time plot combining all offences for each month.\n\n\n\n\n\n\n\n\n\n\nOne of the series has an outlier. Can you identify which one?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHint\n\n\n\n\nAn outlier often has a large jump between observations.\nThe difference() function computes differences between consecutive observations.\nWhen comparing values across groups, it is often better to use percentage changes rather than absolute changes."
+  },
+  {
+    "objectID": "week2/activities.html#exercise-3-seasonal-plots",
+    "href": "week2/activities.html#exercise-3-seasonal-plots",
+    "title": "Activities: Week 2",
+    "section": "Exercise 3: seasonal plots",
+    "text": "Exercise 3: seasonal plots\n\nProduce a season plot to find which month contains the outlier\n\n\n\n\n\n\n\n\n\n\nProduce a season plot combining all offences for each month.\n\n\n\n\n\n\n\n\nWhich month usually has the most offences in each year?\n\n\nProduce a subseries plot of assaults.\n\n\n\n\n\n\n\n\nWhich month has changed the most relative to the other months?"
+  },
+  {
+    "objectID": "week2/activities.html#exercise-4-acf-plots",
+    "href": "week2/activities.html#exercise-4-acf-plots",
+    "title": "Activities: Week 2",
+    "section": "Exercise 4: ACF plots",
+    "text": "Exercise 4: ACF plots\nProduce plots of the same data from Exercise 2, but using ACF() |&gt; autoplot().\n\nWhich time plot corresponds to which ACF plot?"
+  },
+  {
+    "objectID": "week2/activities.html#weekly-quiz",
+    "href": "week2/activities.html#weekly-quiz",
+    "title": "Activities: Week 2",
+    "section": "Weekly quiz",
+    "text": "Weekly quiz\nGo to week 2 quiz"
+  },
+  {
+    "objectID": "week2/activities.html#index-variable",
+    "href": "week2/activities.html#index-variable",
+    "title": "Activities: Week 2",
+    "section": "index variable",
+    "text": "index variable\n\n\n\n\n\n\n\n\n\nWhich is the most common?\nWhich is the least common?"
+  },
+  {
+    "objectID": "week2/activities.html#number-of-types-of-offences",
+    "href": "week2/activities.html#number-of-types-of-offences",
+    "title": "Activities: Week 2",
+    "section": "Number of types of offences",
+    "text": "Number of types of offences\n\n\n\n\n\n\n\n\n\nWhich is the most common?\nWhich is the least common?"
+  },
+  {
+    "objectID": "week2/activities.html#exercise-4-cyclic-data",
+    "href": "week2/activities.html#exercise-4-cyclic-data",
+    "title": "Activities: Week 2",
+    "section": "Exercise 4: cyclic data",
+    "text": "Exercise 4: cyclic data\nA famous data set containing cycles is the Canadian lynx data, contained in pelts.\n\n\n\n\n\n\n\n\nHow far apart are the peaks and troughs on average?\nProduce an ACF plot for the Lynx series.\n\n\n\n\n\n\n\n\n\nWhy does the ACF peak around lag 10?\nWhy can’t this data be seasonal?"
+  },
+  {
+    "objectID": "week2/activities.html#exercise-5-acf-plots",
+    "href": "week2/activities.html#exercise-5-acf-plots",
+    "title": "Activities: Week 2",
+    "section": "Exercise 5: ACF plots",
+    "text": "Exercise 5: ACF plots\nWhich time plot corresponds to which ACF plot?\n\n\n\n\n\n\n\n\n\n\n\n\nPlot 1.\n\n\n\n\n\n\n\n\n\n\n\nPlot 2.\n\n\n\n\n\n\n\n\n\n\n\nPlot 3.\n\n\n\n\n\n\n\n\n\n\n\nPlot 4."
+  },
+  {
+    "objectID": "week2/activities.html#plot-1.-daily-temperature-of-a-cow",
+    "href": "week2/activities.html#plot-1.-daily-temperature-of-a-cow",
+    "title": "Activities: Week 2",
+    "section": "Plot 1. Daily temperature of a cow",
+    "text": "Plot 1. Daily temperature of a cow"
+  },
+  {
+    "objectID": "week2/activities.html#plot-2.-monthly-accidental-deaths",
+    "href": "week2/activities.html#plot-2.-monthly-accidental-deaths",
+    "title": "Activities: Week 2",
+    "section": "Plot 2. Monthly accidental deaths",
+    "text": "Plot 2. Monthly accidental deaths"
+  },
+  {
+    "objectID": "week2/activities.html#plot-3.-monthly-air-passengers",
+    "href": "week2/activities.html#plot-3.-monthly-air-passengers",
+    "title": "Activities: Week 2",
+    "section": "Plot 3. Monthly air passengers",
+    "text": "Plot 3. Monthly air passengers"
+  },
+  {
+    "objectID": "week2/activities.html#plot-4.-annual-mink-trappings",
+    "href": "week2/activities.html#plot-4.-annual-mink-trappings",
+    "title": "Activities: Week 2",
+    "section": "Plot 4. Annual mink trappings",
+    "text": "Plot 4. Annual mink trappings"
+  },
+  {
+    "objectID": "week2/activities.html#more-r-functions",
+    "href": "week2/activities.html#more-r-functions",
+    "title": "Activities: Week 2",
+    "section": "",
+    "text": "gg_season() with period argument\npivot_longer()\nfacet_grid()\nGGally::ggpairs()\ngg_lag()\nACF()\n\nR examples"
   }
 ]
