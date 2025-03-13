@@ -11,12 +11,79 @@ format:
     fig-height: 3.5
     include-in-header: ../header.tex
     keep_tex: yes
+    toc: true
 ---
 
 ```{r setup, include=FALSE}
 source(here::here("setup.R"))
 source(here::here("course_info.R"))
+set.seed(3550)
 ```
+
+# White noise and random walks
+
+## White noise
+
+White noise data consists of purely random draws from the same distribution with mean zero and constant variance.
+\begin{block}{}
+\centerline{$y_t = \varepsilon_t, \qquad \text{where $\varepsilon_t \mathop{\sim}\limits^{\mathrm{iid}} N(0, \sigma^2)$}$}
+\end{block}
+
+```{r}
+#| label: white-noise
+#| fig-height: 2
+my_data <- tsibble(t = seq(100), y = rnorm(100), index = t)
+my_data |> autoplot(y)
+```
+
+## White noise
+
+White noise data consists of purely random draws from the same distribution with mean zero and constant variance.
+\begin{block}{}
+\centerline{$y_t = \varepsilon_t, \qquad \text{where $\varepsilon_t \mathop{\sim}\limits^{\mathrm{iid}} N(0, \sigma^2)$}$}
+\end{block}
+
+```{r}
+#| label: white-noise2
+#| fig-height: 2
+my_data |> ACF(y) |> autoplot()
+```
+
+## Random walks
+
+Random walks are a type of time series where the value at time $t$ is equal to the previous value plus a random amount from a white noise process.
+\begin{block}{}
+\centerline{$y_t = y_{t-1} + \varepsilon_t, \qquad \text{where $\varepsilon_t \mathop{\sim}\limits^{\mathrm{iid}} N(0, \sigma^2)$}$}
+\end{block}
+Equivalently, we can take the cumulative sum of a white noise process.
+$$y_t = y_{0} + \sum_{t=1}^{T} \varepsilon_t, \qquad \text{where $\varepsilon_t \mathop{\sim}\limits^{\mathrm{iid}} N(0, \sigma^2)$}$$
+
+```{r}
+#| label: random-walk
+my_data <- tsibble(t = seq(100), y = cumsum(rnorm(100)), index = t)
+```
+
+## Random walks
+
+```{r}
+#| label: random-walk2
+#| fig-height: 3.5
+my_data |> autoplot(y)
+```
+
+## Random walks
+
+```{r}
+#| label: random-walk3
+#| fig-height: 3
+my_data |> ACF(y) |> autoplot()
+```
+
+# Transformations
+
+# Time series decomposition
+
+# The ABS stuff-up
 
 ## The ABS stuff-up
 

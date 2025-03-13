@@ -1,5 +1,19 @@
 library(fpp3)
 
+# White noise
+
+my_data <- tsibble(t = seq(100), y = rnorm(100), index = t)
+my_data |> autoplot(y)
+my_data |> ACF(y) |> autoplot()
+my_data |> gg_tsdisplay(y, plot_type = "histogram")
+tsibble(t = seq(100), y = rnorm(100), index = t) |>
+  gg_tsdisplay(y, plot_type = "histogram")
+
+# Random walks
+
+tsibble(t = seq(100), y = cumsum(rnorm(100)), index = t) |>
+  gg_tsdisplay(y, plot_type = "histogram")
+
 # Australian electricity production
 
 aus_production
