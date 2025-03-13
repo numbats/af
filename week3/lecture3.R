@@ -1,20 +1,21 @@
 library(fpp3)
 
-# Australian monthly electricity production
-elec1 <- as_tsibble(fma::elec) |>
-  rename(Month = index, GWh = value)
+# Australian electricity production
 
-elec1
+aus_production
 
-elec1 |>
-  autoplot(GWh)
+aus_production |>
+  autoplot(Electricity)
 
-lambda <- elec1 |> features(GWh, guerrero)
-elec1 |>
-  autoplot(box_cox(GWh, lambda = lambda))
+aus_production |>
+  autoplot(box_cox(Electricity, lambda = 0.5))
 
-dcmp <- elec1 |>
-  model(stl = STL(box_cox(GWh, lambda = 0.3)))
+lambda <- aus_production |> features(Electricity, guerrero)
+aus_production |>
+  autoplot(box_cox(Electricity, lambda = lambda))
+
+dcmp <- aus_production |>
+  model(stl = STL(box_cox(Electricity, lambda = 0.5)))
 
 dcmp |>
   components() |>
@@ -23,75 +24,36 @@ dcmp |>
 components(dcmp) |>
   gg_subseries(season_year)
 
-elec1 |>
-  autoplot(GWh, color = "gray") +
-  autolayer(components(dcmp), inv_box_cox(trend, lambda = 0.3),
-            color = "red")
+aus_production |>
+  autoplot(Electricity, color = "gray") +
+  autolayer(components(dcmp), inv_box_cox(trend, lambda = 0.5),
+    color = "red"
+  )
 
-elec1 |>
-  autoplot(GWh, color = "gray") +
-  autolayer(components(dcmp), inv_box_cox(season_adjust, lambda = 0.3), color = "red")
+aus_production |>
+  autoplot(Electricity, color = "gray") +
+  autolayer(components(dcmp), inv_box_cox(season_adjust, lambda = 0.5), color = "red")
 
-elec1 |>
-  model(STL(log(GWh) ~ season(window = 11) + trend(window = 909995),
-            robust = TRUE)) |>
+aus_production |>
+  model(STL(box_cox(Electricity, 0.5) ~ season(window = 11) + trend(window = 909995),
+    robust = TRUE
+  )) |>
+  components() |>
+  autoplot()
+
+# OTexts STl decomposition (from 2022 exam)
+
+otexts_views |>
+  autoplot(Pageviews) 
+
+otexts_views |>
+  model(STL(Pageviews)) |>
   components() |>
   autoplot()
 
 
-## Recent data
 
-
-# Monthly electricity production
-elec2 <- readr::read_csv(here::here("week3/MES_1123.csv"),
-                         skip = 8) |>
-  filter(Country == "Australia",
-         Product == "Electricity",
-         Balance == "Net Electricity Production"
-  ) |>
-  transmute(
-    Month = yearmonth(as_date(paste("1",Time), format = "%d %B %Y")),
-    GWh = Value
-  ) |>
-  as_tsibble(index = Month)
-
-elec2 |>
-  autoplot(GWh)
-
-# Find last 14 years of data from previous data set
-elec1 <- elec1 |> filter(year(Month) >= 1982)
-elec1 |> gg_season(GWh)
-
-elec2 |> gg_season(GWh)
-
-elec1 |> gg_subseries(GWh)
-elec2 |> gg_subseries(GWh)
-
-
-## Souvenirs
-
-us_construction <- us_employment |>
-  filter(Title == "Construction", year(Month) > 1980)
-
-us_construction |> autoplot(Employed)
-
-dcmp <- us_construction |>
-  model(stl = STL(Employed ~ trend(window = 9) +
-                    season(window = 9)))
-dcmp |>
-  components() |>
-  autoplot()
-dcmp |>
-  components() |>
-  gg_season(season_year)
-
-dcmp |>
-  components() |>
-  as_tsibble() |>
-  autoplot(season_adjust)
-
-
-## ABS employment problem
+# ABS employment problem
 
 employed <- tsibble(
   Time = yearmonth("1978 Feb") + 0:439,
