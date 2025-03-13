@@ -6,25 +6,6 @@ otexts_views |> autoplot()
 otexts_views |> gg_season(Pageviews)
 otexts_views |> gg_season(Pageviews, period = "week")
 
-## Scatterplots
-
-aus_production
-
-aus_production |> autoplot(Cement)
-
-aus_production |>
-  pivot_longer(-Quarter, values_to = "value", names_to = "Commodity") |>
-  autoplot(value)
-
-aus_production |>
-  pivot_longer(-Quarter, values_to = "value", names_to = "Commodity") |>
-  autoplot(value) +
-  facet_grid(Commodity ~ ., scales = "free_y")
-
-aus_production |>
-  as_tibble() |>
-  select(-Quarter) |>
-  GGally::ggpairs()
 
 ## Cyclic data
 
