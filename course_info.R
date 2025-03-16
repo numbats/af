@@ -161,8 +161,8 @@ show_slides <- function(week) {
       file,
       "&embedded=true' width='100%' height=465></iframe>"
     )
-    button <- paste0("<a href=", file, " class='badge badge-small badge-red'>Download pdf</a>")
-    cat(paste0("## Slides for Monday lecture\n\n", embed, "\n", button))
+    button <- paste0("<a href=", file, " class='badge badge-small badge-red'>Download slides</a>")
+    cat(paste0("## Monday lecture\n\n", embed, "\n", button))
   }
 }
 
@@ -177,7 +177,8 @@ show_activity <- function(week, title = TRUE, show_solutions = TRUE) {
   if ((monday - today) <= 7 | week <= 1) {
     file <- here::here(paste0("week", week, "/activities.qmd"))
     if (fs::file_exists(file)) {
-      cat("\n\n## [Activities for Tuesday workshop](activities.qmd)\n\n")
+      cat("\n\n## Tuesday workshop\n\n")
+      cat("[Activities for Tuesday workshop](activities.qmd)\n\n")
     }
   }
 }

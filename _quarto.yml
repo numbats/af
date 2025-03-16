@@ -5,7 +5,6 @@ project:
   - "*.qmd"
   - "!/slides"
   - "!/handouts"
-  - "activities.qmd"
 
 website:
   title: "ETC3550/ETC5550 Applied forecasting"

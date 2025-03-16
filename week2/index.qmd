@@ -20,23 +20,24 @@ Read [Chapter 2 of the textbook](https://otexts.com/fpp3/graphics.html) and watc
 
 ## Exercises (on your own or in tutorial)
 
-Complete Exercises 1-5 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).
-
-<!-- [**Solutions to Exercises**](ex2-sol.qmd) -->
-
-[**Check your understanding quiz**](https://learning.monash.edu/mod/quiz/view.php?id=3444035)
+* Complete Exercises 1-5 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).
+* [Solutions to Exercises](ex2-sol.qmd)
+* [Check your understanding quiz](https://learning.monash.edu/mod/quiz/view.php?id=3444035)
 
 ```{r}
 #| output: asis
 show_slides(week)
 ```
 
-[Code used in lecture](lecture2.R)
-
-[Code used in workshop](workshop.R)
+* [Code used in lecture](lecture2.R)
 
 ```{r}
 #| output: asis
 show_activity(week, show_solutions = FALSE)
+```
+
+* [Code used in workshop](workshop.R)
+
+```{r}
 show_assignments(week)
 ```
