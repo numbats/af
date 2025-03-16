@@ -18,26 +18,45 @@ webr:
 
 {{< include /_extensions/r-wasm/live/_knitr.qmd >}}
 
-# Was there a COVID baby boom?
 
-```{r}
-#| include: false
-vic_births <- fpp3::aus_births |> 
-  filter(State == "VIC") |>
-  select(-State)
-```
+## Was there a COVID baby boom in Victoria?
 
-The following data shows the number of births in Victoria each month from January 1975 to December 2021.
+The first Melbourne COVID-19 lockdown was from 31 March 2020 to 12 May 2020. We are interested in whether more babies than usual were born 9 months later --- in January or February 2021.
+
+First extract the data for Victoria from the `aus_births` dataset.
 
 ```{webr}
-#| exercise: births
+#| exercise: extract_data
+vic_births <- fpp3::aus_births |>
+  ____(State == "VIC") |>
+  ____(-State)
 vic_births
 ```
 
 ```{webr}
-#| exercise: births
-vic_births |> autoplot(Births)
-vic_births |> gg_season(Births)
+#| context: setup
+#| include: false
+vic_births <- fpp3::aus_births |>
+  filter(State == "VIC") |>
+  select(-State)
+months <- tibble(
+  month_name = month.abb,
+  month_length = c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+)
+vic_ave_births <- vic_births |>
+  mutate(month_name = month(Month, label = TRUE)) |>
+  left_join(months, by = "month_name") |>
+  mutate(Daily_average = Births / month_length)
+```
+
+This shows the number of births in Victoria each month from January 1975 to December 2021.
+
+Now produce a time plot and a season plot of the data, to better understand the trend and seasonal patterns.
+
+```{webr}
+#| exercise: births_plots
+vic_births |> ____(____)
+vic_births |> ____(____)
 ```
 
 The see-saw seasonal pattern is due to month length variation.
@@ -46,59 +65,151 @@ So let's remove it by taking the average of the daily births over the month.
 First we create a tibble with the number of days in each month, then we join it to the `vic_births` data so we can compute the daily average for each month.
 
 ```{webr}
+#| exercise: daily_average
 months <- tibble(
   month_name = month.abb,
   month_length = c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 )
-months
-vic_births <- vic_births |>
+vic_ave_births <- vic_births |>
   mutate(month_name = month(Month, label = TRUE)) |>
   left_join(months, by = "month_name") |>
-  mutate(daily_average = Births / month_length) 
-vic_births
+  mutate(Daily_average = Births / month_length)
+vic_ave_births
 ```
 
+Try to understand what each line of the above code is doing.
 
-```{r}
-vic_births |> autoplot(daily_average)
-vic_births |> gg_season(daily_average)
+#### The `months` tibble contains abbreviated month names and month lengths for:
+:::{.quiz-singlechoice}
+- [ ] [Every year in the `vic_births` data set]{hint="x"}
+- [ ] [A single year]{hint="x"}
+- [X] [A single non-leap year]{hint="o"}
+- [ ] [A single leap year]{hint="x"}
+:::
+
+#### The first `mutate` line:
+:::{.quiz-multichoice}
+- [ ] [Adds the full name of the month]{hint="o"}
+- [X] [Adds the abbreviated name of the month]{hint="o"}
+- [ ] [Adds the number of the month]{hint="o"}
+- [ ] [Causes an error]{hint="x"}
+:::
+
+#### The `left-join` line:
+:::{.quiz-multichoice}
+- [X] [Finds the month length for every month in `vic_births` ]{hint="o"}
+- [ ] [Finds the number of births for every month in `months`]{hint="x"}
+- [ ] [Tries to join the two data sets by every column that matches]{hint="x"}
+- [ ] [Causes an error]{hint="x"}
+:::
+
+#### The `daily_average` calculation will be correct:
+:::{.quiz-multichoice}
+- [ ] [For no years]{hint="x"}
+- [ ] [For all years]{hint="x"}
+- [ ] [For all leap years]{hint="x"}
+- [X] [For all non-leap years]{hint="o"}
+:::
+
+<br>
+
+Now repeat the time and season plot, but using the daily average variable, rather than the monthly total.
+
+```{webr}
+#| exercise: daily_average_plots
+vic_ave_births |> ____(____)
+vic_ave_births |> ____(____)
 ```
 
 * Has the peak month for having babies changed compared to the previous `gg_season` plot? Why?
 * Why has the unusual fluctuation after January 2020 apparently increased in size compared to the previous `gg_season` plot?
 
-Let's do an STL decomposition. Experiment with the value of `window` and `robust` to see how the seasonal component changes over time. We need `robust  = TRUE` here so the unusual behaviour near the end of the series does not have a strong effect on the trend or seasonal components
+Let's do an STL decomposition. Experiment with the value of `window` and `robust` to see how the seasonal component changes over time. We need `robust  = TRUE` here, so the unusual behaviour near the end of the series does not have a strong effect on the trend or seasonal components
 
-```{r}
-dmp <- vic_births |>
-  model(stl = STL(daily_average ~ season(window = 19), robust = TRUE))
+```{webr}
+#| exercise: stl
+dmp <- vic_ave_births |>
+  model(stl = STL(Daily_average ~ season(window = ___), robust = ___))
 components(dmp) |> autoplot()
 ```
 
-```{r}
-components(dmp) |> gg_season(season_year)
-components(dmp) |> gg_subseries(season_year)
-```
+With your preferred values of `window` and `robust`, plot the remainder component
 
-How has the seasonal pattern changed over time?
-
-```{r}
+```{webr}
+#| exercise: remainder
+dmp <- vic_ave_births |>
+  model(stl = STL(Daily_average ~ season(window = ___), robust = ___))
 components(dmp) |>
   filter(Month >= yearmonth("2020 Jan")) |>
   autoplot(remainder)
 ```
 
-Once we remove the 
+Once we remove the trend and seasonal component, and just look at the remainder, we can see any effects that are not simply seasonality or trend. Here we are plotting the remainder for the last year.
 
-# STL decomposition: Canadian gas data
+How many extra births per month than normal were there in February 2021?
+
+:::{.quiz-singlechoice}
+- [ ] [About 20]{hint="x"}
+- [ ] [About 25]{hint="x"}
+- [X] [About 750]{hint="o"}
+- [ ] [It's impossible to tell from this graph]{hint="x"}
+:::
+
+
+## Canadian gas production
 
 This exercise uses the `canadian_gas` data (monthly Canadian gas production in billions of cubic metres, January 1960 – February 2005).
 
-* Plot the data using `autoplot()`, `gg_subseries()` and `gg_season()` to look at the effect of the changing seasonality over time.
-* Do an STL decomposition of the data. You will need to choose a seasonal window to allow for the changing shape of the seasonal component.
-* How does the seasonal shape change over time? 
-* Can you produce a plausible seasonally adjusted series?
+Try to find a Box-Cox transformation to stabilise the variance. Why isn't it possible?
 
-# STL decomposition: Canberra public transport usage data
+```{webr}
+#| exercise: gas1
+canadian_gas |>
+  autoplot(box_cox(Volume, ___))
+```
 
-* Exam 2024 B2.
+Without using a transformation, do a time plot, season plot and subseries plot to look at the effect of the changing seasonality over time.
+
+```{webr}
+#| exercise: gas2
+canadian_gas |> ___(___)
+canadian_gas |> ___(___)
+canadian_gas |> ___(___)
+```
+
+Do an STL decomposition of the data. You will need to choose a seasonal window to allow for the changing shape of the seasonal component.
+
+```{webr}
+#| exercise: gas3
+canadian_gas |>
+  model(STL(___ ~ season(window = ___))) |>
+  components() |>
+  autoplot()
+```
+
+How does the seasonal shape change over time?
+
+```{webr}
+#| exercise: gas4
+fit <- canadian_gas |>
+  model(STL(___ ~ season(window = ___))) |>
+  components()
+fit |> gg_subseries(___)
+fit |> gg_season(___)
+```
+
+Can you produce a plausible seasonally adjusted series?
+
+```{webr}
+#| exercise: gas5
+fit <- canadian_gas |>
+  model(STL(___ ~ season(window = ___))) |>
+  components()
+canadian_gas |>
+  autoplot(___) +
+  autolayer(fit, ___, col = "blue")
+```
+
+## Canberra public transport usage
+
+* Do Exam 2024, Question B2.
