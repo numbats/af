@@ -1,0 +1,17 @@
+{
+  "hash": "3463ff3518c996dc23c409709f10b522",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Activities: Week 3\"\neditor: source\nengine: knitr\nfilters:\n  - live\n  - quiz-teachr\nojs-engine: true\nwebr:\n  packages:\n    - qlcheckr\n    - fpp3\n  autoload-packages: false\n  repos:\n    - https://repo.r-wasm.org/\n    - https://learnr-academy.github.io/qlcheckr\n---\n\n::: {.cell}\n\n:::\n\n\n# Trading day adjustment\n\n# STL decomposition: Canadian gas data\n\nThis exercise uses the `canadian_gas` data (monthly Canadian gas production in billions of cubic metres, January 1960 – February 2005).\n\n* Plot the data using `autoplot()`, `gg_subseries()` and `gg_season()` to look at the effect of the changing seasonality over time.\n* Do an STL decomposition of the data. You will need to choose a seasonal window to allow for the changing shape of the seasonal component.\n* How does the seasonal shape change over time? \n* Can you produce a plausible seasonally adjusted series?\n\n# STL decomposition: Canberra public transport usage data\n\n* Exam 2024 B2.\n",
+    "supporting": [
+      "activities_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

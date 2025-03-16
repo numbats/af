@@ -621,5 +621,12 @@
     "title": "Week 3: Time series decomposition",
     "section": "Weekly quiz",
     "text": "Weekly quiz\n\nWeek 3 quiz is due on Sunday 23 March."
+  },
+  {
+    "objectID": "week3/activities.html",
+    "href": "week3/activities.html",
+    "title": "Activities: Week 3",
+    "section": "",
+    "text": "Trading day adjustment\n\n\nSTL decomposition: Canadian gas data\nThis exercise uses the canadian_gas data (monthly Canadian gas production in billions of cubic metres, January 1960 – February 2005).\n\nPlot the data using autoplot(), gg_subseries() and gg_season() to look at the effect of the changing seasonality over time.\nDo an STL decomposition of the data. You will need to choose a seasonal window to allow for the changing shape of the seasonal component.\nHow does the seasonal shape change over time?\nCan you produce a plausible seasonally adjusted series?\n\n\n\nSTL decomposition: Canberra public transport usage data\n\nExam 2024 B2."
   }
 ]

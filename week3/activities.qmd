@@ -1,0 +1,104 @@
+---
+title: "Activities: Week 3"
+editor: source
+engine: knitr
+filters:
+  - live
+  - quiz-teachr
+ojs-engine: true
+webr:
+  packages:
+    - qlcheckr
+    - fpp3
+  autoload-packages: false
+  repos:
+    - https://repo.r-wasm.org/
+    - https://learnr-academy.github.io/qlcheckr
+---
+
+{{< include /_extensions/r-wasm/live/_knitr.qmd >}}
+
+# Was there a COVID baby boom?
+
+```{r}
+#| include: false
+vic_births <- fpp3::aus_births |> 
+  filter(State == "VIC") |>
+  select(-State)
+```
+
+The following data shows the number of births in Victoria each month from January 1975 to December 2021.
+
+```{webr}
+#| exercise: births
+vic_births
+```
+
+```{webr}
+#| exercise: births
+vic_births |> autoplot(Births)
+vic_births |> gg_season(Births)
+```
+
+The see-saw seasonal pattern is due to month length variation.
+
+So let's remove it by taking the average of the daily births over the month.
+First we create a tibble with the number of days in each month, then we join it to the `vic_births` data so we can compute the daily average for each month.
+
+```{webr}
+months <- tibble(
+  month_name = month.abb,
+  month_length = c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+)
+months
+vic_births <- vic_births |>
+  mutate(month_name = month(Month, label = TRUE)) |>
+  left_join(months, by = "month_name") |>
+  mutate(daily_average = Births / month_length) 
+vic_births
+```
+
+
+```{r}
+vic_births |> autoplot(daily_average)
+vic_births |> gg_season(daily_average)
+```
+
+* Has the peak month for having babies changed compared to the previous `gg_season` plot? Why?
+* Why has the unusual fluctuation after January 2020 apparently increased in size compared to the previous `gg_season` plot?
+
+Let's do an STL decomposition. Experiment with the value of `window` and `robust` to see how the seasonal component changes over time. We need `robust  = TRUE` here so the unusual behaviour near the end of the series does not have a strong effect on the trend or seasonal components
+
+```{r}
+dmp <- vic_births |>
+  model(stl = STL(daily_average ~ season(window = 19), robust = TRUE))
+components(dmp) |> autoplot()
+```
+
+```{r}
+components(dmp) |> gg_season(season_year)
+components(dmp) |> gg_subseries(season_year)
+```
+
+How has the seasonal pattern changed over time?
+
+```{r}
+components(dmp) |>
+  filter(Month >= yearmonth("2020 Jan")) |>
+  autoplot(remainder)
+```
+
+Once we remove the 
+
+# STL decomposition: Canadian gas data
+
+This exercise uses the `canadian_gas` data (monthly Canadian gas production in billions of cubic metres, January 1960 – February 2005).
+
+* Plot the data using `autoplot()`, `gg_subseries()` and `gg_season()` to look at the effect of the changing seasonality over time.
+* Do an STL decomposition of the data. You will need to choose a seasonal window to allow for the changing shape of the seasonal component.
+* How does the seasonal shape change over time? 
+* Can you produce a plausible seasonally adjusted series?
+
+# STL decomposition: Canberra public transport usage data
+
+* Exam 2024 B2.
