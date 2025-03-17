@@ -29,7 +29,7 @@ Complete Exercises 6-11 from [Section 2.10 of the book](https://otexts.com/fpp3/
 show_slides(week)
 ```
 
-<!-- [Code used in lecture](lecture3.R) -->
+[Code used in lecture](lecture3.R)
 
 ```{r}
 #| output: asis

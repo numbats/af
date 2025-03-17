@@ -22,7 +22,7 @@ aus_production |>
   autoplot(Electricity)
 
 aus_production |>
-  autoplot(box_cox(Electricity, lambda = 0.5))
+  autoplot(box_cox(Electricity, lambda = .52))
 
 lambda <- aus_production |> features(Electricity, guerrero)
 aus_production |>
@@ -49,19 +49,17 @@ aus_production |>
   autolayer(components(dcmp), inv_box_cox(season_adjust, lambda = 0.5), color = "red")
 
 aus_production |>
-  model(STL(box_cox(Electricity, 0.5) ~ season(window = 11) + trend(window = 909995),
-    robust = TRUE
-  )) |>
+  model(STL(box_cox(Electricity, 0.5))) |>
   components() |>
   autoplot()
 
 # OTexts STl decomposition (from 2022 exam)
 
 otexts_views |>
-  autoplot(Pageviews) 
+  autoplot(Pageviews)
 
 otexts_views |>
-  model(STL(Pageviews)) |>
+  model(STL(Pageviews ~ trend(window = 31))) |>
   components() |>
   autoplot()
 
