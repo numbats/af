@@ -39,14 +39,8 @@ vic_births
 vic_births <- fpp3::aus_births |>
   filter(State == "VIC") |>
   select(-State)
-months <- tibble(
-  month_name = month.abb,
-  month_length = c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-)
 vic_ave_births <- vic_births |>
-  mutate(month_name = month(Month, label = TRUE)) |>
-  left_join(months, by = "month_name") |>
-  mutate(Daily_average = Births / month_length)
+  mutate(Daily_average = Births / days_in_month(Month))
 ```
 
 This shows the number of births in Victoria each month from January 1975 to December 2021.
@@ -61,57 +55,14 @@ vic_births |> ____(____)
 
 The see-saw seasonal pattern is due to month length variation.
 
-So let's remove it by taking the average of the daily births over the month.
-First we create a tibble with the number of days in each month, then we join it to the `vic_births` data so we can compute the daily average for each month.
+So let's remove it by taking the daily average of births in the month.
 
 ```{webr}
 #| exercise: daily_average
-months <- tibble(
-  month_name = month.abb,
-  month_length = c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-)
 vic_ave_births <- vic_births |>
-  mutate(month_name = month(Month, label = TRUE)) |>
-  left_join(months, by = "month_name") |>
-  mutate(Daily_average = Births / month_length)
+  mutate(Daily_average = ____ / days_in_month(____))
 vic_ave_births
 ```
-
-Try to understand what each line of the above code is doing.
-
-#### The `months` tibble contains abbreviated month names and month lengths for:
-:::{.quiz-singlechoice}
-- [ ] [Every year in the `vic_births` data set]{hint="x"}
-- [ ] [A single year]{hint="x"}
-- [X] [A single non-leap year]{hint="o"}
-- [ ] [A single leap year]{hint="x"}
-:::
-
-#### The first `mutate` line:
-:::{.quiz-multichoice}
-- [ ] [Adds the full name of the month]{hint="o"}
-- [X] [Adds the abbreviated name of the month]{hint="o"}
-- [ ] [Adds the number of the month]{hint="o"}
-- [ ] [Causes an error]{hint="x"}
-:::
-
-#### The `left-join` line:
-:::{.quiz-multichoice}
-- [X] [Finds the month length for every month in `vic_births` ]{hint="o"}
-- [ ] [Finds the number of births for every month in `months`]{hint="x"}
-- [ ] [Tries to join the two data sets by every column that matches]{hint="x"}
-- [ ] [Causes an error]{hint="x"}
-:::
-
-#### The `daily_average` calculation will be correct:
-:::{.quiz-multichoice}
-- [ ] [For no years]{hint="x"}
-- [ ] [For all years]{hint="x"}
-- [ ] [For all leap years]{hint="x"}
-- [X] [For all non-leap years]{hint="o"}
-:::
-
-<br>
 
 Now repeat the time and season plot, but using the daily average variable, rather than the monthly total.
 
@@ -151,7 +102,7 @@ How many extra births per month than normal were there in February 2021?
 :::{.quiz-singlechoice}
 - [ ] [About 20]{hint="x"}
 - [ ] [About 25]{hint="x"}
-- [X] [About 750]{hint="o"}
+- [X] [About 800]{hint="o"}
 - [ ] [It's impossible to tell from this graph]{hint="x"}
 :::
 
