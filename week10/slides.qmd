@@ -1,6 +1,6 @@
 ---
-title: "ETC3550/ETC5550 Applied&nbsp;forecasting"
-author: "Week 10: Regression models"
+title: ETC3550/ETC5550 Applied forecasting
+author: "Week 9: ARIMA models"
 format:
   presentation-beamer:
     knitr:
@@ -17,290 +17,182 @@ format:
 source(here::here("setup.R"))
 ```
 
-## Multiple regression and forecasting
+## Seasonal ARIMA models
 
-\vspace*{0.2cm}\begin{block}{}\vspace*{-0.3cm}
-$$
-  y_t = \beta_0 + \beta_1 x_{1,t} + \beta_2 x_{2,t} + \cdots + \beta_kx_{k,t} + \varepsilon_t.
-$$
-\end{block}
+\begin{center}
+\begin{tabular}{rcc}
+\toprule
+ARIMA & $\underbrace{(p, d, q)}$ & $\underbrace{(P, D, Q)_{m}}$ \\
+\midrule
+& $\uparrow$ & $\uparrow$ \\
+& Non-seasonal part & Seasonal part of \\
+& of the model & of the model \\
+\bottomrule
+\end{tabular}
 
-* $y_t$ is the variable we want to predict: the "response" variable
-* Each $x_{j,t}$ is numerical and is called a "predictor".
- They are usually assumed to be known for all past and future times.
-* The coefficients $\beta_1,\dots,\beta_k$ measure the effect of each
-predictor *after taking account of the effect of all other predictors
-in the model*.
-* $\varepsilon_t$ is a white noise error term
+where $m =$ number of observations per year.
+\end{center}
 
-## Trend
 
-**Linear trend**
 
-\centerline{$x_t = t,\qquad t = 1,2,\dots,$}\pause
+## Seasonal ARIMA models
 
-**Piecewise linear trend with bend at $\tau$**
-\vspace*{-0.6cm}
+E.g., ARIMA$(1, 1, 1)(1, 1, 1)_{4}$ model (without constant)\pause
+$$(1 - \phi_{1}B)(1 - \Phi_{1}B^{4}) (1 - B) (1 - B^{4})y_{t} ~= ~
+(1 + \theta_{1}B) (1 + \Theta_{1}B^{4})\varepsilon_{t}.
+$$\pause\vspace*{-1cm}
+
+\setlength{\unitlength}{1mm}
+\begin{footnotesize}
+\begin{picture}(100,25)(-5,0)
+\thinlines
+{\put(15,22){\vector(0,1){6}}}
+{\put(32,10){\vector(0,1){18}}}
+{\put(48,22){\vector(0,1){6}}}
+{\put(66,10){\vector(0,1){18}}}
+{\put(97,22){\vector(0,1){6}}}
+{\put(115,10){\vector(0,1){18}}}
+{\put(0,17){$\left(\begin{array}{@{}c@{}} \text{Non-seasonal} \\ \text{AR(1)}
+                    \end{array}\right)$}}
+{\put(22,5){$\left(\begin{array}{@{}c@{}} \text{Seasonal} \\ \text{AR(1)}
+                    \end{array}\right)$}}
+{\put(35,17){$\left(\begin{array}{@{}c@{}} \text{Non-seasonal} \\ \text{difference}
+                    \end{array}\right)$}}
+{\put(55,5){$\left(\begin{array}{@{}c@{}} \text{Seasonal} \\ \text{difference}
+                    \end{array}\right)$}}
+{\put(85,17){$\left(\begin{array}{@{}c@{}} \text{Non-seasonal} \\ \text{MA(1)}
+                    \end{array}\right)$}}
+{\put(105,5){$\left(\begin{array}{@{}c@{}} \text{Seasonal} \\ \text{MA(1)}
+                    \end{array}\right)$}}
+\end{picture}
+\end{footnotesize}
+
+\vspace*{10cm}
+
+## Seasonal ARIMA models
+
+E.g., ARIMA$(1, 1, 1)(1, 1, 1)_{4}$ model (without constant)
+$$(1 - \phi_{1}B)(1 - \Phi_{1}B^{4}) (1 - B) (1 - B^{4})y_{t} ~= ~
+(1 + \theta_{1}B) (1 + \Theta_{1}B^{4})\varepsilon_{t}.
+$$\vspace*{-1cm}
+
+All the factors can be multiplied out and the general model
+written as follows:\vspace*{-0.7cm}
 \begin{align*}
-x_{1,t} &= t \\
-x_{2,t} &= \left\{ \begin{array}{ll}
-  0 & t <\tau\\
-  (t-\tau) & t \ge \tau
-\end{array}\right.
+y_{t} &= (1 + \phi_{1})y_{t - 1} - \phi_1y_{t-2} + (1 + \Phi_{1})y_{t - 4}\\
+&\text{}
+ - (1 + \phi_{1} + \Phi_{1} + \phi_{1}\Phi_{1})y_{t - 5}
+ + (\phi_{1} + \phi_{1} \Phi_{1}) y_{t - 6} \\
+& \text{} - \Phi_{1} y_{t - 8} + (\Phi_{1} + \phi_{1} \Phi_{1}) y_{t - 9}
+  - \phi_{1} \Phi_{1} y_{t - 10}\\
+  &\text{}
+  + \varepsilon_{t} + \theta_{1}\varepsilon_{t - 1} + \Theta_{1}\varepsilon_{t - 4} + \theta_{1}\Theta_{1}\varepsilon_{t - 5}.
 \end{align*}
-\pause\vspace*{-0.8cm}
+\vspace*{10cm}
 
-**Quadratic or higher order trend**
+## Seasonal ARIMA models
+The seasonal part of an AR or MA model will be seen in the seasonal lags of
+the PACF and ACF.
 
-\centerline{$x_{1,t} =t,\quad x_{2,t}=t^2,\quad \dots$}
+\alert{ARIMA(0,0,0)(0,0,1)$_{12}$ will show:}\vspace*{-0.2cm}
 
-\pause\vspace*{-0.1cm}
-\centerline{\textcolor{orange}{\textbf{NOT RECOMMENDED!}}}
+  * a spike at lag 12 in the ACF but no other significant spikes.
+  * The PACF will show exponential decay in the seasonal lags; that is, at lags 12, 24, 36, \dots.
 
-## Uses of dummy variables
-\fontsize{13}{14}\sf
+\alert{ARIMA(0,0,0)(1,0,0)$_{12}$ will show:}\vspace*{-0.2cm}
 
-**Seasonal dummies**
+  * exponential decay in the seasonal lags of the ACF
+  * a single significant spike at lag 12 in the PACF.
 
-* For quarterly data: use 3 dummies
-* For monthly data: use 11 dummies
-* For daily data: use 6 dummies
-* What to do with weekly data?
 
-\pause
+## Point forecasts
 
-**Outliers**
+1. Rearrange ARIMA equation so $y_t$ is on LHS.
+2. Rewrite equation by replacing $t$ by $T+h$.
+3. On RHS, replace future observations by their forecasts, future errors by zero, and past errors by corresponding residuals.
 
-* A dummy variable can remove its effect.
+Start with $h=1$. Repeat for $h=2,3,\dots$.
 
-\pause
-
-**Public holidays**
-
-* For daily data: if it is a public holiday, dummy=1, otherwise dummy=0.
-
-## Holidays
-
-**For monthly data**
-
-* Christmas: always in December so part of monthly seasonal effect
-* Easter: use a dummy variable $v_t=1$ if any part of Easter is in that month, $v_t=0$ otherwise.
-* Ramadan and Chinese New Year similar.
-
-## Distributed lags
-
-Lagged values of a predictor.
-
-Example: $x$ is advertising which has a delayed effect
-
-\vspace*{-0.8cm}\begin{align*}
-  x_{1} &= \text{advertising for previous month;} \\
-  x_{2} &= \text{advertising for two months previously;} \\
-        & \vdots \\
-  x_{m} &= \text{advertising for $m$ months previously.}
-\end{align*}
-
-## Fourier series
-
-Periodic seasonality can be handled using pairs of Fourier \rlap{terms:}\vspace*{-0.3cm}
-$$
-s_{k}(t) = \sin\left(\frac{2\pi k t}{m}\right)\qquad c_{k}(t) = \cos\left(\frac{2\pi k t}{m}\right)
-$$
-$$
-y_t = a + bt + \sum_{k=1}^K \left[\alpha_k s_k(t) + \beta_k c_k(t)\right] + \varepsilon_t$$\vspace*{-0.8cm}
-
-* Every periodic function can be approximated by sums of sin and cos terms for large enough $K$.
-* Choose $K$ by minimizing AICc or CV.
-* Called "harmonic regression"
-
-## Your turn
-
-```{r}
-#| child: activities1.md
-```
-
-## Comparing regression models
-\fontsize{13}{14}\sf
-
-* $R^2$  does not allow for "degrees of freedom".
-* Adding *any* variable tends to increase the value of $R^2$, even if that variable is irrelevant.
-\pause
-
-To overcome this problem, we can use *adjusted $R^2$*:
-\begin{block}{}
-$$
-\bar{R}^2 = 1-(1-R^2)\frac{T-1}{T-k-1}
-$$
-where $k=$ no.\ predictors and $T=$ no.\ observations.
-\end{block}
-
-\pause
-
-\begin{alertblock}{Maximizing $\bar{R}^2$ is equivalent to minimizing $\hat\sigma^2$.}
-\centerline{$\displaystyle
-\hat{\sigma}^2 = \frac{1}{T-k-1}\sum_{t=1}^T \varepsilon_t^2$
-}
-\end{alertblock}
-
-## Akaike's Information Criterion
-
-\vspace*{0.2cm}\begin{block}{}
-\centerline{$\text{AIC} = -2\log(L) + 2(k+2)$}
-\end{block}\vspace*{-0.5cm}
-
-* $L=$ likelihood
-* $k=$ \# predictors in model.
-* AIC penalizes terms more heavily than $\bar{R}^2$.
-
-\pause\begin{block}{}
-\centerline{$\text{AIC}_{\text{C}} = \text{AIC} + \frac{2(k+2)(k+3)}{T-k-3}$}
-\end{block}
-
-* Minimizing the AIC or AICc is asymptotically equivalent to minimizing MSE via **leave-one-out cross-validation** (for any linear regression).
-
-## Leave-one-out cross-validation
-
-For regression, leave-one-out cross-validation is faster and more efficient than time-series cross-validation.
-
-* Select one observation for test set, and use *remaining* observations in training set. Compute error on test observation.
-* Repeat using each possible observation as the test set.
-* Compute accuracy measure over all errors.
-
-```{r tscvplots, echo=FALSE}
-tscv_plot <- function(.init, .step, h = 1) {
-  expand.grid(
-    time = seq(26),
-    .id = seq(trunc(20 / .step))
-  ) |>
-    group_by(.id) |>
-    mutate(
-      observation = case_when(
-        time <= ((.id - 1) * .step + .init) ~ "train",
-        time %in% c((.id - 1) * .step + .init + h) ~ "test",
-        TRUE ~ "unused"
-      )
-    ) |>
-    ungroup() |>
-    filter(.id <= 26 - .init) |>
-    ggplot(aes(x = time, y = .id)) +
-    geom_segment(
-      aes(x = 0, xend = 27, y = .id, yend = .id),
-      arrow = arrow(length = unit(0.015, "npc")),
-      col = "black", size = .25
-    ) +
-    geom_point(aes(col = observation), size = 2) +
-    scale_y_reverse() +
-    scale_color_manual(values = c(train = "#0072B2", test = "#D55E00", unused = "gray")) +
-    # theme_void() +
-    # geom_label(aes(x = 28.5, y = 1, label = "time")) +
-    guides(col = FALSE) +
-    labs(x = "time", y = "") +
-    theme_void() +
-    theme(axis.title = element_text())
-}
-loocv_plot <- function() {
-  expand.grid(time = seq(26), .id = seq(26)) |>
-    group_by(.id) |>
-    mutate(observation = if_else(time == .id, "test", "train")) |>
-    ungroup() |>
-    filter(.id <= 20) |>
-    ggplot(aes(x = time, y = .id)) +
-    geom_segment(
-      aes(x = 0, xend = 27, y = .id, yend = .id),
-      arrow = arrow(length = unit(0.015, "npc")),
-      col = "black", size = .25
-    ) +
-    geom_point(aes(col = observation), size = 2) +
-    scale_y_reverse() +
-    scale_color_manual(values = c(train = "#0072B2", test = "#D55E00", unused = "gray")) +
-    guides(col = FALSE) +
-    labs(x = "time", y = "") +
-    theme_void() +
-    theme(axis.title = element_text())
-}
-```
-
-## Cross-validation {-}
-
-**Traditional evaluation**
-
-```{r traintest1, fig.height=1, echo=FALSE}
-tscv_plot(.init = 18, .step = 20, h = 1:8) +
-  geom_text(aes(x = 10, y = 0.8, label = "Training data"), color = "#0072B2") +
-  geom_text(aes(x = 21, y = 0.8, label = "Test data"), color = "#D55E00") +
-  ylim(1, 0)
-```
-
-\pause
-
-**Time series cross-validation**
-
-```{r tscvggplot1, echo=FALSE}
-tscv_plot(.init = 3, .step = 1, h = 1) +
-  geom_text(aes(x = 21, y = 0, label = "h = 1"), color = "#D55E00")
-```
-
-## Cross-validation {-}
-
-**Traditional evaluation**
-
-```{r traintest1a, fig.height=1, echo=FALSE}
-tscv_plot(.init = 18, .step = 20, h = 1:8) +
-  geom_text(aes(x = 10, y = 0.8, label = "Training data"), color = "#0072B2") +
-  geom_text(aes(x = 21, y = 0.8, label = "Test data"), color = "#D55E00") +
-  ylim(1, 0)
-```
-
-**Leave-one-out cross-validation**
-
-```{r, echo=FALSE}
-loocv_plot() +
-  geom_text(aes(x = 21, y = 0, label = "h = 1"), color = "#ffffff")
-```
-
-\only<2>{\begin{textblock}{4}(6,6)\begin{block}{}\fontsize{13}{15}\sf
-CV = MSE on \textcolor[HTML]{D55E00}{test sets}\end{block}\end{textblock}}
-
-## Bayesian Information Criterion
-
-\begin{block}{}
-$$
-\text{BIC} = -2\log(L) + (k+2)\log(T)
-$$
-\end{block}
-where $L$ is the likelihood and $k$ is the number of predictors in the model.\pause
-
-* BIC penalizes terms more heavily than AIC
-* Also called SBIC and SC.
-* Minimizing BIC is asymptotically equivalent to leave-$v$-out cross-validation when $v = T[1-1/(log(T)-1)]$.
-
-## Choosing regression variables
+## Prediction intervals
 \fontsize{14}{15}\sf
 
-**Best subsets regression**
+\begin{block}{95\% prediction interval}
+$$\hat{y}_{T+h|T} \pm 1.96\sqrt{v_{T+h|T}}$$
+where $v_{T+h|T}$ is estimated forecast variance.
+\end{block}\pause\vspace*{-0.3cm}
 
-* Fit all possible regression models using one or more of the predictors.
-* Choose the best model based on one of the measures of predictive ability (CV, AIC, AICc).
-\pause
+* $v_{T+1|T}=\hat{\sigma}^2$ for all ARIMA models regardless of parameters and orders.\pause
+* Multi-step prediction intervals for ARIMA(0,0,$q$):
+\centerline{$\displaystyle y_t = \varepsilon_t + \sum_{i=1}^q \theta_i \varepsilon_{t-i}.$}
+\centerline{$\displaystyle
+v_{T|T+h} = \hat{\sigma}^2 \left[ 1 + \sum_{i=1}^{h-1} \theta_i^2\right], \qquad\text{for~} h=2,3,\dots.$}
 
-**Backwards stepwise regression**
+## Prediction intervals
 
-* Start with a model containing all variables.
-* Subtract one variable at a time. Keep model if lower CV.
-* Iterate until no further improvement.
-* Not guaranteed to lead to best model.
+* Prediction intervals **increase in size with forecast horizon**.
+* Prediction intervals can be difficult to calculate by hand
+* Calculations assume residuals are **uncorrelated** and **normally distributed**.
+* Prediction intervals tend to be too narrow.
+    * the uncertainty in the parameter estimates has not been accounted for.
+    * the ARIMA model assumes historical patterns will not change during the forecast period.
+    * the ARIMA model assumes uncorrelated future \rlap{errors}
 
-## Ex-ante versus ex-post forecasts
 
- * *Ex ante forecasts* are made using only information available in advance.
-    - require forecasts of predictors
- * *Ex post forecasts* are made using later information on the predictors.
-    - useful for studying behaviour of forecasting models.
+## ARIMA vs ETS
+\fontsize{14}{16}\sf
 
- * trend, seasonal and calendar variables are all known in advance, so these don't need to be forecast.
+  * Myth that ARIMA models are more general than exponential smoothing.
+  * Linear exponential smoothing models all special cases of ARIMA models.
+  * Non-linear exponential smoothing models have no equivalent ARIMA counterparts.
+  * Many ARIMA models have no exponential smoothing counterparts.
+  * ETS models all non-stationary. Models with seasonality or non-damped trend (or both) have two unit roots; all other models have one unit \rlap{root.}
 
-## Your turn
+\vspace*{10cm}
 
-```{r}
-#| child: activities2.md
+## ARIMA vs ETS
+
+```{r venn, echo=FALSE}
+#| fig-height: 3
+#| fig-width: 4.8
+library(latex2exp)
+cols <- c(ets = "#D55E00", arima = "#0072b2")
+tibble(
+  x = c(-1, 1),
+  y = c(-0.5, -0.5),
+  labels = c("ets", "arima"),
+) |>
+  ggplot(aes(colour = labels, fill = labels)) +
+  ggforce::geom_circle(aes(x0 = x, y0 = y, r = 1.6), alpha = 0.3, linewidth = 1) +
+  scale_colour_manual(values = cols) +
+  scale_fill_manual(values = cols) +
+  coord_fixed() +
+  guides(fill = "none") +
+  annotate("text", label = "ETS models", x = -1.5, y = 1.35, col = cols["ets"], fontface = "bold", size = 6, family = "Fira Sans") +
+  annotate("text", label = "Combination\n of components", x = -1.3, y = 0.5, col = cols["ets"], size = 2.8, fontface = "bold", family = "Fira Sans") +
+  annotate("text", label = "9 ETS models with\n multiplicative errors", x = -1.6, y = -0.5, col = cols["ets"], size = 2.8, family = "Fira Sans") +
+  annotate("text", label = "3 ETS models with\n additive errors and\n multiplicative\n seasonality", x = -1.3, y = -1.4, col = cols["ets"], size = 2.8, family = "Fira Sans") +
+  annotate("text", label = "ARIMA models", x = 1.5, y = 1.35, col = cols["arima"], fontface = "bold", size = 6, family = "Fira Sans") +
+  annotate("text", label = "Modelling\n autocorrelations", x = 1.3, y = 0.5, col = cols["arima"], size = 2.8, fontface = "bold", family = "Fira Sans") +
+  annotate("text", label = TeX("Potentially $\\infty$ models"), x = 1.6, y = -0.6, col = cols["arima"], size = 2.8, family = "Fira Sans") +
+  annotate("text", label = "All stationary models\n Many large models", x = 1.25, y = -1.5, col = cols["arima"], size = 2.8, family = "Fira Sans") +
+  annotate("text", label = "6 fully additive\n ETS models", x = 0, y = -0.6, col = "#6b6859", size = 2.8, family = "Fira Sans") +
+  guides(colour = "none", fill = "none") +
+  theme_void()
 ```
+
+## Equivalences
+\fontsize{14}{15}\sf
+
+|**ETS model**       | **ARIMA model**              | **Parameters**                        |
+| :------------      | :--------------------------  | :-----------------------------------  |
+| ETS(A,N,N)         | ARIMA(0,1,1)                 | $\theta_1 = \alpha-1$                 |
+| ETS(A,A,N)         | ARIMA(0,2,2)                 | $\theta_1 = \alpha+\beta-2$           |
+|                    |                              | $\theta_2 = 1-\alpha$                 |
+| ETS(A,A\damped,N)  | ARIMA(1,1,2)                 | $\phi_1=\phi$                         |
+|                    |                              | $\theta_1 = \alpha+\phi\beta-1-\phi$  |
+|                    |                              | $\theta_2 = (1-\alpha)\phi$           |
+| ETS(A,N,A)         | ARIMA(0,0,$m$)(0,1,0)$_m$    |                                       |
+| ETS(A,A,A)         | ARIMA(0,1,$m+1$)(0,1,0)$_m$  |                                       |
+| ETS(A,A\damped,A)  | ARIMA(1,0,$m+1$)(0,1,0)$_m$  |                                       |
+
+: {tbl-colwidths="22,43,35"}

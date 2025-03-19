@@ -1,6 +1,6 @@
 ---
 title: ETC3550/ETC5550 Applied forecasting
-author: "Week 4: The Forecasters' toolbox"
+author: "Week 4: Simple forecasting methods"
 format:
   presentation-beamer:
     knitr:
@@ -11,133 +11,223 @@ format:
     fig-height: 3.5
     include-in-header: ../header.tex
     keep_tex: yes
-highlight-style: tango
-execute:
-  freeze: false
+    toc: true
 ---
 
 ```{r setup, include=FALSE}
 source(here::here("setup.R"))
+source(here::here("course_info.R"))
+set.seed(3550)
+options(width = 100)
 ```
 
-```{r tscvplots, echo=FALSE}
-tscv_plot <- function(.init, .step, h = 1) {
-  expand.grid(
-    time = seq(26),
-    .id = seq(trunc(11 / .step))
-  ) |>
-    group_by(.id) |>
-    mutate(
-      observation = case_when(
-        time <= ((min(.id) - 1) * .step + .init) ~ "train",
-        time %in% c((min(.id) - 1) * .step + .init + h) ~ "test",
-        TRUE ~ "unused"
-      )
-    ) |>
-    ungroup() |>
-    filter(.id <= 26 - .init) |>
-    ggplot(aes(x = time, y = .id)) +
-    geom_segment(
-      aes(x = 0, xend = 27, y = .id, yend = .id),
-      arrow = arrow(length = unit(0.015, "npc")),
-      col = "black", size = .25
-    ) +
-    geom_point(aes(col = observation), size = 2) +
-    scale_y_reverse() +
-    scale_color_manual(values = c(train = "#0072B2", test = "#D55E00", unused = "gray")) +
-    guides(col = FALSE) +
-    labs(x = "time", y = "") +
-    theme_void() +
-    theme(axis.title.x = element_text(margin = margin(t = 2))) +
-    theme(text = ggplot2::element_text(family = 'Fira Sans'))
-}
+# Four benchmark methods
+
+## Four benchmark methods
+\fontsize{13}{14}\sf
+
+### `MEAN(y)`: Average method
+
+  * Forecast of all future values is equal to mean of historical data $\{y_1,\dots,y_T\}$.
+  * Forecasts: $\hat{y}_{T+h|T} = \bar{y} = (y_1+\dots+y_T)/T$
+
+```{r mean-method-explained, echo=FALSE, message=FALSE, warning=FALSE, fig.height = 2.7}
+bricks <- aus_production |>
+  filter(!is.na(Bricks)) |>
+  mutate(average = mean(Bricks))
+
+fc <- bricks |>
+  filter(row_number() == n()) |>
+  as_tibble() |>
+  unnest(Quarter = list(as.Date(Quarter) + months(c(0, 12 * 5))))
+
+bricks |>
+  ggplot(aes(x = Quarter, y = Bricks)) +
+  geom_line() +
+  geom_line(aes(y = average), colour = "#0072B2", linetype = "dashed") +
+  geom_line(aes(y = average), data = fc, colour = "#0072B2") +
+  labs(title = "Clay brick production in Australia")
 ```
 
-## Time series cross-validation {-}
+\vspace*{10cm}
 
-**Traditional evaluation**
+## Four benchmark methods
+\fontsize{13}{14}\sf
 
-```{r traintest1, fig.height=1, echo=FALSE}
-#| cache: false
-tscv_plot(.init = 18, .step = 10, h = 1:8) +
-  annotate("text", x = 10, y = 0.8, label = "Training data",
-    color = "#0072B2", family = 'Fira Sans') +
-  annotate("text", x = 21, y = 0.8, label = "Test data",
-    color = "#D55E00", family = 'Fira Sans') +
-  ylim(1, 0)
+### `NAIVE(y)`: Naïve method
+
+  * Forecasts equal to last observed value.
+  * Forecasts: $\hat{y}_{T+h|T} =y_T$.
+  * Consequence of efficient market hypothesis.
+
+```{r naive-method-explained, echo = FALSE, warning = FALSE, fig.height = 2.75}
+bricks |>
+  filter(!is.na(Bricks)) |>
+  model(NAIVE(Bricks)) |>
+  forecast(h = "5 years") |>
+  autoplot(filter(bricks, year(Quarter) > 1990), level = NULL) +
+  geom_point(data = slice(bricks, n()), aes(y = Bricks), colour = "#0072B2") +
+  labs(title = "Clay brick production in Australia")
 ```
 
-\pause
+\vspace*{10cm}
 
-**Time series cross-validation**
-\vspace*{-0.25cm}
+## Four benchmark methods
+\fontsize{13}{14}\sf
 
-```{r tscvggplot1, echo=FALSE, fig.height=2.15}
-tscv_plot(.init = 8, .step = 1, h = 1) +
-  annotate("text", x = 21, y = 0, label = "h = 1",
-    color = "#D55E00", family = 'Fira Sans')
+### `SNAIVE(y ~ lag(m))`: Seasonal naïve method
+
+  * Forecasts equal to last value from same season.
+  * Forecasts: $\hat{y}_{T+h|T} =y_{T+h-m(k+1)}$, where $m=$ seasonal period and $k$ is the integer part of $(h-1)/m$.
+
+```{r snaive-method-explained, echo = FALSE, warning = FALSE, fig.height = 2.75}
+bricks |>
+  model(SNAIVE(Bricks ~ lag("year"))) |>
+  forecast(h = "5 years") |>
+  autoplot(filter(bricks, year(Quarter) > 1990), level = NULL) +
+  geom_point(data = slice(bricks, (n() - 3):n()), aes(y = Bricks), colour = "#0072B2") +
+  labs(title = "Clay brick production in Australia")
 ```
 
-## Time series cross-validation {-}
+\vspace*{10cm}
 
-**Traditional evaluation**
+## Four benchmark methods
+\fontsize{13}{14}\sf
 
-```{r traintest2, ref.label="traintest1", fig.height=1, echo=FALSE}
+### `RW(y ~ drift())`: Drift method
+
+ * Forecasts equal to last value plus average change.
+ * Forecasts:\vspace*{-.7cm}
+
+ \begin{align*}
+ \hat{y}_{T+h|T} & =  y_{T} + \frac{h}{T-1}\sum_{t=2}^T (y_t-y_{t-1})\\
+                 & = y_T + \frac{h}{T-1}(y_T -y_1).
+ \end{align*}\vspace*{-0.2cm}
+
+   * Equivalent to extrapolating a line drawn between first and last observations.
+
+## Four benchmark methods
+
+### Drift method
+
+```{r drift-method-explained, echo = FALSE, warning = FALSE}
+aus_production |>
+  filter(!is.na(Bricks)) |>
+  model(RW(Bricks ~ drift())) |>
+  forecast(h = "5 years") |>
+  autoplot(aus_production, level = NULL) +
+  geom_line(
+    data = slice(aus_production, range(cumsum(!is.na(Bricks)))),
+    aes(y = Bricks), linetype = "dashed", colour = "#0072B2"
+  ) +
+  labs(title = "Clay brick production in Australia")
 ```
-
-**Time series cross-validation**
-\vspace*{-0.25cm}
-
-```{r tscvggplot2, echo=FALSE,  fig.height=2.15}
-tscv_plot(.init = 8, .step = 1, h = 2) +
-  annotate("text", x = 21, y = 0, label = "h = 2",
-    color = "#D55E00", family = 'Fira Sans')
-```
-
-## Time series cross-validation {-}
-
-**Traditional evaluation**
-
-```{r traintest3, ref.label="traintest1", fig.height=1, echo=FALSE}
-```
-
-**Time series cross-validation**
-\vspace*{-0.25cm}
-
-```{r tscvggplot3, echo=FALSE,  fig.height=2.15}
-tscv_plot(.init = 8, .step = 1, h = 3) +
-  annotate("text", x = 21, y = 0, label = "h = 3",
-    color = "#D55E00", family = 'Fira Sans')
-```
-
-## Time series cross-validation {-}
-
-**Traditional evaluation**
-
-```{r traintest4, ref.label="traintest1", fig.height=1, echo=FALSE}
-```
-
-**Time series cross-validation**
-\vspace*{-0.25cm}
-
-```{r tscvggplot4, echo=FALSE, fig.height=2.15}
-tscv_plot(.init = 8, .step = 1, h = 4) +
-  annotate("text", x = 21, y = 0, label = "h = 4",
-    color = "#D55E00", family = 'Fira Sans')
-```
-
-\only<2>{\begin{textblock}{8}(.5,6.4)\begin{block}{}\fontsize{12}{13}\sf
-\begin{itemize}\tightlist
-\item Forecast accuracy averaged over test sets.
-\item Also known as "evaluation on a rolling forecasting origin"
-\end{itemize}\end{block}\end{textblock}}
 
 \vspace*{10cm}
 
 
-## Your turn
-\fontsize{13}{14}\sf
+# Residuals
 
-```{r}
-#| child: activities.md
-```
+## Fitted values
+
+ - $\hat{y}_{t|t-1}$ is the forecast of $y_t$ based on observations $y_1,\dots,y_{t-1}$.
+ - We call these "fitted values".
+ - Sometimes drop the subscript: $\hat{y}_t \equiv \hat{y}_{t|t-1}$.
+ - Often not true forecasts since parameters are estimated on all data.
+
+### For example:
+
+ - $\hat{y}_{t} = \bar{y}$ for average method.
+ - $\hat{y}_{t} = y_{t-1} + (y_{T}-y_1)/(T-1)$ for drift method.
+
+## Forecasting residuals
+
+\begin{block}{}
+\textbf{Residuals in forecasting:} difference between observed value and its fitted value: $e_t = y_t-\hat{y}_{t|t-1}$.
+\end{block}
+\pause\fontsize{13}{15}\sf
+
+\alert{Assumptions}
+
+  1. $\{e_t\}$ uncorrelated. If they aren't, then information left in  residuals that should be used in computing forecasts.
+  2. $\{e_t\}$ have mean zero. If they don't, then forecasts are biased.
+
+\pause
+
+\alert{Useful properties} (for distributions & prediction intervals)
+
+  3. $\{e_t\}$ have constant variance.
+  4. $\{e_t\}$ are normally distributed.
+
+
+## ACF of residuals
+
+  * We assume that the residuals are white noise (uncorrelated, mean zero, constant variance). If they aren't, then there is information left in  the residuals that should be used in computing forecasts.
+
+  * So a standard residual diagnostic is to check the ACF of the residuals of a forecasting method.
+
+  * We *expect* these to look like white noise.
+
+## Ljung-Box tests
+
+\begin{block}{}
+$r_k = $ autocorrelation of residual at lag $k$
+\end{block}\vspace*{-0.3cm}
+
+Test *whole set* of $r_{k}$  values simultaneously.
+
+\begin{block}{}
+\centerline{$\displaystyle
+ Q^* = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$}
+where $\ell$  is max lag being considered and $T$ is number of observations.
+\end{block}
+
+  * My preferences: $\ell=10$ for non-seasonal data, $h=2m$ for seasonal data (where $m$ is seasonal period).
+  * If data are WN, $Q^*$ has $\chi^2$ distribution with  $\ell$ degrees of freedom.
+
+# Forecast distributions
+
+## Forecast distributions
+
+ * A forecast $\hat{y}_{T+h|T}$ is (usually) the mean of the conditional distribution $y_{T+h} \mid y_1, \dots, y_{T}$.
+ * Most time series models produce normally distributed forecasts.
+ * The forecast distribution describes the probability of observing any future value.
+
+## Forecast distributions
+
+Assuming residuals are normal, uncorrelated, sd = $\hat\sigma$:
+
+\begin{block}{}
+\begin{tabular}{ll}
+\bf Mean: & $y_{T+h|T} \sim N(\bar{y}, (1 + 1/T)\hat{\sigma}^2)$\\[0.2cm]
+\bf Naïve: & $y_{T+h|T} \sim N(y_T, h\hat{\sigma}^2)$\\[0.2cm]
+\bf Seasonal naïve: & $y_{T+h|T} \sim N(y_{T+h-m(k+1)}, (k+1)\hat{\sigma}^2)$\\[0.2cm]
+\bf Drift: & $y_{T+h|T} \sim N(y_T + \frac{h}{T-1}(y_T - y_1),h\frac{T+h}{T}\hat{\sigma}^2)$
+\end{tabular}
+\end{block}
+
+where $k$ is the integer part of $(h-1)/m$.
+
+Note that when $h=1$ and $T$ is large, these all give the same approximate forecast variance: $\hat{\sigma}^2$.
+
+## Prediction intervals
+
+ * A prediction interval gives a region within which we expect $y_{T+h}$ to lie with a specified probability.
+ * Assuming forecast errors are normally distributed, then a 95% PI is
+ \begin{alertblock}{}
+\centerline{$
+  \hat{y}_{T+h|T} \pm 1.96 \hat\sigma_h
+$}
+\end{alertblock}
+where $\hat\sigma_h$ is the st dev of the $h$-step distribution.
+
+ * When $h=1$, $\hat\sigma_h$ can be estimated from the residuals.
+
+## Prediction intervals
+
+ * Point forecasts are often useless without a measure of uncertainty (such as prediction intervals).
+ * Prediction intervals require a stochastic model (with random errors, etc).
+ * For most models, prediction intervals get wider as the forecast horizon increases.
+ * Use `level` argument to control coverage.
+ * Check residual assumptions before believing them.
+ * Prediction intervals are usually too narrow due to unaccounted uncertainty.

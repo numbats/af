@@ -1,95 +1,178 @@
 library(fpp3)
 
-# Algerian Exports
+## ---- Holiday tourism by state --------------
 
-algeria_economy <- global_economy |>
-  filter(Country == "Algeria")
-algeria_economy |>
-  autoplot(Exports)
-fit <- algeria_economy |>
+holidays <- tourism |>
+  as_tibble() |>
+  filter(Purpose == "Holiday") |>
+  summarise(Trips = sum(Trips), .by = c("State", "Quarter")) |>
+  as_tsibble(index = Quarter, key = State)
+
+## Fit models
+fit <- holidays |>
   model(
-    ANN = ETS(Exports ~ error("A") + trend("N") + season("N")),
-    MNN = ETS(Exports ~ error("M") + trend("N") + season("N")),
-    auto = ETS(Exports)
+    Seasonal_naive = SNAIVE(Trips),
+    Naive = NAIVE(Trips),
+    Drift = RW(Trips ~ drift()),
+    Mean = MEAN(Trips)
   )
+
+## Check residuals
 fit |>
-  select(MNN) |>
-  report()
-
-tidy(fit)
-glance(fit)
-accuracy(fit)
-
-components(fit) |> autoplot()
-
-components(fit) |>
-  left_join(fitted(fit), by = c("Country", ".model", "Year"))
-
-fit |>
-  select(ANN) |>
+  filter(State == "Victoria") |>
+  select(Seasonal_naive) |>
   gg_tsresiduals()
 
-fit |>
-  augment() |>
-  features(.innov, ljung_box, lag = 10)
+augment(fit) |>
+  filter(State == "Victoria", .model == "Seasonal_naive") |>
+  features(.innov, ljung_box, lag = 8)
 
-fc <- fit |>
-  forecast(h=5)
+## Which model fits best?
 
-fc |>
-  filter(.model == "MNN") |>
-  autoplot(algeria_economy) +
-  ylab("Exports (% of GDP)") + xlab("Year")
+accuracy(fit) |>
+  summarise(
+    RMSSE = sqrt(mean(RMSSE^2)),
+    MAPE = mean(MAPE),
+    .by = .model
+  ) |>
+  arrange(RMSSE)
 
-# Repeat with test set
+## Produce forecasts
 
-fit <- algeria_economy |>
-  filter(Year <= 2012) |>
-  model(
-    ANN = ETS(Exports ~ error("A") + trend("N") + season("N")),
-    MNN = ETS(Exports ~ error("M") + trend("N") + season("N")),
-    auto = ETS(Exports)
+holidays_fc <- fit |>
+  forecast(h = "4 years")
+
+holidays_fc |>
+  autoplot(holidays, level = NULL)
+
+holidays_fc |>
+  filter(.model == "Seasonal_naive") |>
+  autoplot(holidays, show_gap = FALSE)
+
+holidays_fc |>
+  hilo(level = 95) |>
+  mutate(
+    lower = `95%`$lower,
+    upper = `95%`$upper
   )
 
-fc <- fit |>
-  forecast(h=5)
+# Now try a decomposition forecasting model
 
-fc |>
-  autoplot(algeria_economy, level=NULL) +
-  ylab("Exports (% of GDP)") + xlab("Year")
-
-fc |> accuracy(algeria_economy)
-
-# Repeat with tscv
-
-alg_exports_stretch <- algeria_economy |>
-  stretch_tsibble(.init = 10, .step = 1)
-
-cv_fit <- alg_exports_stretch |>
+stl_fit <- holidays |>
   model(
-    ANN = ETS(Exports ~ error("A") + trend("N") + season("N")),
-    MNN = ETS(Exports ~ error("M") + trend("N") + season("N")),
-    autoNN = ETS(Exports ~ trend("N") + season("N")),
-    naive = NAIVE(Exports),
-    drift = RW(Exports ~ drift())
+    stlf = decomposition_model(
+      STL(Trips),
+      NAIVE(season_adjust)
+    ))
+stl_fit |>
+  forecast(h = "4 years") |>
+  autoplot(holidays)
+
+# Use a test set of last 2 years to check forecast accuracy
+
+training <- holidays |>
+  filter(Quarter <= max(Quarter) - 8)
+
+training_fit <- training |>
+  model(
+    Seasonal_naive = SNAIVE(Trips),
+    Naive = NAIVE(Trips),
+    Drift = RW(Trips ~ drift()),
+    Mean = MEAN(Trips),
+    stlf = decomposition_model(
+      STL(Trips),
+      NAIVE(season_adjust)
+    )
+  )
+
+test_fc <- training_fit |>
+  forecast(h = "4 years")
+
+test_fc |>
+  autoplot(holidays, level = NULL)
+
+test_fc |>
+  accuracy(holidays) |>
+  summarise(
+    RMSSE = sqrt(mean(RMSSE^2)),
+    MAPE = mean(MAPE),
+    .by = .model
+  ) |>
+  arrange(RMSSE)
+
+# Now use time series cross-validation to check forecast accuracy
+
+holiday_stretch <- holidays |>
+  stretch_tsibble(.init = 12, .step = 1) |>
+  filter(.id != max(.id))
+
+cv_fit <- holiday_stretch |>
+  model(
+    Seasonal_naive = SNAIVE(Trips),
+    Naive = NAIVE(Trips),
+    Drift = RW(Trips ~ drift()),
+    Mean = MEAN(Trips),
+    stlf = decomposition_model(
+      STL(Trips),
+      NAIVE(season_adjust)
+    )
   )
 
 cv_fc <- cv_fit |>
   forecast(h = 12) |>
-  group_by(.id, .model) |>
+  group_by(.id, State, .model) |>
   mutate(h = row_number()) |>
   ungroup() |>
-  as_fable(response = "Exports", distribution = Exports)
+  as_fable(response = "Trips", distribution = Trips)
 
 cv_fc |>
-  accuracy(algeria_economy, by = c("h", ".model")) |>
-  group_by(.model, h) |>
-  summarise(RMSSE = sqrt(mean(RMSSE^2))) |>
+  accuracy(holidays, by = c("h", ".model", "State")) |>
+  summarise(
+    RMSSE = sqrt(mean(RMSSE^2)),
+    .by = c(.model, h)
+  ) |>
   ggplot(aes(x=h, y=RMSSE, group=.model, col=.model)) +
   geom_line()
 
-cv_fc |>
-  accuracy(algeria_economy, by = c("h", ".model")) |>
-  group_by(.model) |>
-  summarise(RMSSE = sqrt(mean(RMSSE^2))) |>
-  arrange(RMSSE)
+
+## hh_budget exercise
+
+# 1. Create training set by withholding last four years
+train <- hh_budget |>
+  filter(Year <= max(Year) - 4)
+#2. Fit benchmarks
+fit <- train |>
+  model(
+    naive = NAIVE(Wealth),
+    drift = RW(Wealth ~ drift()),
+    mean = MEAN(Wealth)
+  )
+fc <- fit |> forecast(h = 4)
+
+# 3. Compute accuracy
+fc |>
+  accuracy(hh_budget) |>
+  arrange(Country, RMSE)
+fc |>
+  accuracy(hh_budget) |>
+  summarise(RMSE = sqrt(mean(RMSE^2)), .by=.model) |>
+  arrange(RMSE)
+
+# 4. Do the residuals resemble white noise?
+
+fit |>
+  filter(Country == "Australia") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "Canada") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "Japan") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "USA") |>
+  select(drift) |>
+  gg_tsresiduals()

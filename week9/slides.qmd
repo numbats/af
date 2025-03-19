@@ -1,6 +1,6 @@
 ---
 title: ETC3550/ETC5550 Applied forecasting
-author: "Week 9: ARIMA models"
+author: "Week 8: ARIMA models"
 format:
   presentation-beamer:
     knitr:
@@ -13,186 +13,207 @@ format:
     keep_tex: yes
 ---
 
+
 ```{r setup, include=FALSE}
 source(here::here("setup.R"))
+library(patchwork)
+library(purrr)
 ```
 
-## Seasonal ARIMA models
 
-\begin{center}
-\begin{tabular}{rcc}
-\toprule
-ARIMA & $\underbrace{(p, d, q)}$ & $\underbrace{(P, D, Q)_{m}}$ \\
-\midrule
-& $\uparrow$ & $\uparrow$ \\
-& Non-seasonal part & Seasonal part of \\
-& of the model & of the model \\
-\bottomrule
-\end{tabular}
+# Random walks
 
-where $m =$ number of observations per year.
-\end{center}
+## Random walk model
 
+If differenced series is white noise with zero mean:
 
+\begin{block}{}
+\centerline{$y_t-y_{t-1}=\varepsilon_t$ \hspace{0.4cm} or \hspace{0.4cm} $y_t=y_{t-1}+\varepsilon_t$}
+\end{block}\vspace*{-0.3cm}
+where $\varepsilon_t \sim NID(0,\sigma^2)$.
 
-## Seasonal ARIMA models
-
-E.g., ARIMA$(1, 1, 1)(1, 1, 1)_{4}$ model (without constant)\pause
-$$(1 - \phi_{1}B)(1 - \Phi_{1}B^{4}) (1 - B) (1 - B^{4})y_{t} ~= ~
-(1 + \theta_{1}B) (1 + \Theta_{1}B^{4})\varepsilon_{t}.
-$$\pause\vspace*{-1cm}
-
-\setlength{\unitlength}{1mm}
-\begin{footnotesize}
-\begin{picture}(100,25)(-5,0)
-\thinlines
-{\put(15,22){\vector(0,1){6}}}
-{\put(32,10){\vector(0,1){18}}}
-{\put(48,22){\vector(0,1){6}}}
-{\put(66,10){\vector(0,1){18}}}
-{\put(97,22){\vector(0,1){6}}}
-{\put(115,10){\vector(0,1){18}}}
-{\put(0,17){$\left(\begin{array}{@{}c@{}} \text{Non-seasonal} \\ \text{AR(1)}
-                    \end{array}\right)$}}
-{\put(22,5){$\left(\begin{array}{@{}c@{}} \text{Seasonal} \\ \text{AR(1)}
-                    \end{array}\right)$}}
-{\put(35,17){$\left(\begin{array}{@{}c@{}} \text{Non-seasonal} \\ \text{difference}
-                    \end{array}\right)$}}
-{\put(55,5){$\left(\begin{array}{@{}c@{}} \text{Seasonal} \\ \text{difference}
-                    \end{array}\right)$}}
-{\put(85,17){$\left(\begin{array}{@{}c@{}} \text{Non-seasonal} \\ \text{MA(1)}
-                    \end{array}\right)$}}
-{\put(105,5){$\left(\begin{array}{@{}c@{}} \text{Seasonal} \\ \text{MA(1)}
-                    \end{array}\right)$}}
-\end{picture}
-\end{footnotesize}
+* Model behind the \alert{naïve method}.
+* Forecast are equal to the last observation (future movements up or down are equally likely).
 
 \vspace*{10cm}
 
-## Seasonal ARIMA models
+## Random walk model
 
-E.g., ARIMA$(1, 1, 1)(1, 1, 1)_{4}$ model (without constant)
-$$(1 - \phi_{1}B)(1 - \Phi_{1}B^{4}) (1 - B) (1 - B^{4})y_{t} ~= ~
-(1 + \theta_{1}B) (1 + \Theta_{1}B^{4})\varepsilon_{t}.
-$$\vspace*{-1cm}
-
-All the factors can be multiplied out and the general model
-written as follows:\vspace*{-0.7cm}
+\begin{block}{}
+\centerline{$y_t=y_{t-1}+\varepsilon_t$ \qquad
+where $\varepsilon_t \sim NID(0,\sigma^2)$.}
+\end{block}\pause
+\vspace*{-1.3cm}
 \begin{align*}
-y_{t} &= (1 + \phi_{1})y_{t - 1} - \phi_1y_{t-2} + (1 + \Phi_{1})y_{t - 4}\\
-&\text{}
- - (1 + \phi_{1} + \Phi_{1} + \phi_{1}\Phi_{1})y_{t - 5}
- + (\phi_{1} + \phi_{1} \Phi_{1}) y_{t - 6} \\
-& \text{} - \Phi_{1} y_{t - 8} + (\Phi_{1} + \phi_{1} \Phi_{1}) y_{t - 9}
-  - \phi_{1} \Phi_{1} y_{t - 10}\\
-  &\text{}
-  + \varepsilon_{t} + \theta_{1}\varepsilon_{t - 1} + \Theta_{1}\varepsilon_{t - 4} + \theta_{1}\Theta_{1}\varepsilon_{t - 5}.
+y_{T+h} &= y_{T+h-1} + \varepsilon_{T+h} \\
+  &= y_{T+h-2} + \varepsilon_{T+h-1} + \varepsilon_{T+h} \\
+  &= \dots \\
+  &= y_T + \varepsilon_{T+1} + \dots + \varepsilon_{T+h}
 \end{align*}
+\pause\vspace*{-1cm}
+\begin{align*}
+\text{So}\qquad &\text{E}(y_{T+h}|y_1,\dots,y_T)  = y_T \\
+\text{and}\qquad &\text{Var}(y_{T+h}|y_1,\dots,y_T) = h\sigma^2
+\end{align*}\vspace*{10cm}
+
+## Random walk with drift model
+
+If differenced series is white noise with non-zero mean:
+
+\begin{block}{}
+\centerline{$y_t-y_{t-1}=c+\varepsilon_t$ \hspace{0.4cm} or \hspace{0.4cm} $y_t=c+y_{t-1}+\varepsilon_t$}
+\end{block}\vspace*{-0.3cm}
+where $\varepsilon_t \sim NID(0,\sigma^2)$.
+
+* $c$ is the \alert{average change} between consecutive observations.
+* Model behind the \alert{drift method}.
+
 \vspace*{10cm}
 
-## Seasonal ARIMA models
-The seasonal part of an AR or MA model will be seen in the seasonal lags of
-the PACF and ACF.
+# Backshift operator notation
 
-\alert{ARIMA(0,0,0)(0,0,1)$_{12}$ will show:}\vspace*{-0.2cm}
+## Backshift operator notation
 
-  * a spike at lag 12 in the ACF but no other significant spikes.
-  * The PACF will show exponential decay in the seasonal lags; that is, at lags 12, 24, 36, \dots.
+* $B$ shifts the data back one period. $B y_{t} = y_{t - 1}$
+* $B^2$ shifts the data back two periods: $B(By_{t}) = B^{2}y_{t} = y_{t-2}$
+* A difference can be written as $(1 - B) y_{t}$
+* A $d$th-order difference can be written as $(1 - B)^{d} y_{t}$
+* A seasonal difference followed by a first difference can be written as
+$(1-B)(1-B^m)y_t$
 
-\alert{ARIMA(0,0,0)(1,0,0)$_{12}$ will show:}\vspace*{-0.2cm}
+# Autoregressive (AR) models
 
-  * exponential decay in the seasonal lags of the ACF
-  * a single significant spike at lag 12 in the PACF.
+## AR(1) model
 
+\begin{block}{}
+  \centerline{$y_{t} = c + \phi_1 y_{t - 1} + \varepsilon_{t}$}
+  \centerline{$(1-\phi_1B)y_{t} = c + \varepsilon_{t}$}
+\end{block}
 
-## Point forecasts
+* When $\phi_1=0$, $y_t$ is **equivalent to WN** (with mean $c$)
+* When $\phi_1=1$ and $c=0$, $y_t$ is **equivalent to a RW**
+* When $\phi_1=1$ and $c\ne0$, $y_t$ is **equivalent to a RW with drift**
+* When $\phi_1<0$, $y_t$ tends to **oscillate between positive and negative values**.
 
-1. Rearrange ARIMA equation so $y_t$ is on LHS.
-2. Rewrite equation by replacing $t$ by $T+h$.
-3. On RHS, replace future observations by their forecasts, future errors by zero, and past errors by corresponding residuals.
+## Autoregressive models
 
-Start with $h=1$. Repeat for $h=2,3,\dots$.
+A multiple regression with \textbf{lagged values} of $y_t$ as predictors.
 
-## Prediction intervals
-\fontsize{14}{15}\sf
+\vspace*{-1.2cm}
+\begin{align*}
+y_t &= c + \phi_{1}y_{t - 1} + \phi_{2}y_{t - 2} + \cdots + \phi_{p}y_{t - p} + \varepsilon_{t} \\
+&= c + (\phi_1 B + \phi_2 B^2 + \cdots + \phi_p B^p)y_t + \varepsilon_t
+\end{align*}\pause\vspace*{-1.2cm}
+\begin{align*}
+(1 - \phi_1 B - \phi_2 B^2 - \cdots - \phi_p B^p)y_t &= c + \varepsilon_t \\
+\phi(B) y_t &= c+\varepsilon_t
+\end{align*}
 
-\begin{block}{95\% prediction interval}
-$$\hat{y}_{T+h|T} \pm 1.96\sqrt{v_{T+h|T}}$$
-where $v_{T+h|T}$ is estimated forecast variance.
+* $\varepsilon_t$ is white noise.
+* $\phi(B) = (1 - \phi_1 B - \phi_2 B^2 - \cdots - \phi_p B^p)$
+
+## Stationarity conditions
+
+We normally restrict autoregressive models to stationary data, and then some constraints on the parameters are needed.
+
+\begin{block}{General condition for stationarity}
+  Complex roots of $\phi(z) = 1-\phi_1 z - \phi_2 z^2 - \dots - \phi_pz^p$ lie outside the unit circle on the complex plane.
 \end{block}\pause\vspace*{-0.3cm}
 
-* $v_{T+1|T}=\hat{\sigma}^2$ for all ARIMA models regardless of parameters and orders.\pause
-* Multi-step prediction intervals for ARIMA(0,0,$q$):
-\centerline{$\displaystyle y_t = \varepsilon_t + \sum_{i=1}^q \theta_i \varepsilon_{t-i}.$}
-\centerline{$\displaystyle
-v_{T|T+h} = \hat{\sigma}^2 \left[ 1 + \sum_{i=1}^{h-1} \theta_i^2\right], \qquad\text{for~} h=2,3,\dots.$}
+* For $p=1$: $-1<\phi_1<1$.
+* For $p=2$: $-1<\phi_2<1\qquad \phi_2+\phi_1 < 1 \qquad \phi_2 -\phi_1 < 1$.
+* More complicated conditions hold for $p\ge3$.
+* fable takes care of this.
 
-## Prediction intervals
+# Moving Average (MA) models
 
-* Prediction intervals **increase in size with forecast horizon**.
-* Prediction intervals can be difficult to calculate by hand
-* Calculations assume residuals are **uncorrelated** and **normally distributed**.
-* Prediction intervals tend to be too narrow.
-    * the uncertainty in the parameter estimates has not been accounted for.
-    * the ARIMA model assumes historical patterns will not change during the forecast period.
-    * the ARIMA model assumes uncorrelated future \rlap{errors}
+## Moving Average (MA) models
+A multiple regression with \textbf{past \emph{errors}} as predictors.
 
 
-## ARIMA vs ETS
-\fontsize{14}{16}\sf
+\vspace*{-1.2cm}
+\begin{align*}
+  y_{t} &= c + \varepsilon_t + \theta_{1}\varepsilon_{t - 1} + \theta_{2}\varepsilon_{t - 2} + \cdots + \theta_{q}\varepsilon_{t - q}\\
+&= c + (1 + \theta_1 B + \theta_2 B^2 + \cdots + \theta_q B^q)\varepsilon_t \\
+&= c + \theta(B)\varepsilon_t
+\end{align*}\pause\vspace*{-1.2cm}
 
-  * Myth that ARIMA models are more general than exponential smoothing.
-  * Linear exponential smoothing models all special cases of ARIMA models.
-  * Non-linear exponential smoothing models have no equivalent ARIMA counterparts.
-  * Many ARIMA models have no exponential smoothing counterparts.
-  * ETS models all non-stationary. Models with seasonality or non-damped trend (or both) have two unit roots; all other models have one unit \rlap{root.}
+* $\varepsilon_t$ is white noise.
+* $\theta(B) = (1 + \theta_1 B + \theta_2 B^2 + \cdots + \theta_q B^q)$
 
-\vspace*{10cm}
+## Invertibility
 
-## ARIMA vs ETS
+\begin{block}{General condition for invertibility}
+  Complex roots of $\theta(z) = 1+\theta_1 z + \theta_2 z^2 + \dots + \theta_qz^q$ lie outside the unit circle on the complex plane.
+\end{block}\pause
 
-```{r venn, echo=FALSE}
-#| fig-height: 3
-#| fig-width: 4.8
-library(latex2exp)
-cols <- c(ets = "#D55E00", arima = "#0072b2")
-tibble(
-  x = c(-1, 1),
-  y = c(-0.5, -0.5),
-  labels = c("ets", "arima"),
-) |>
-  ggplot(aes(colour = labels, fill = labels)) +
-  ggforce::geom_circle(aes(x0 = x, y0 = y, r = 1.6), alpha = 0.3, linewidth = 1) +
-  scale_colour_manual(values = cols) +
-  scale_fill_manual(values = cols) +
-  coord_fixed() +
-  guides(fill = "none") +
-  annotate("text", label = "ETS models", x = -1.5, y = 1.35, col = cols["ets"], fontface = "bold", size = 6, family = "Fira Sans") +
-  annotate("text", label = "Combination\n of components", x = -1.3, y = 0.5, col = cols["ets"], size = 2.8, fontface = "bold", family = "Fira Sans") +
-  annotate("text", label = "9 ETS models with\n multiplicative errors", x = -1.6, y = -0.5, col = cols["ets"], size = 2.8, family = "Fira Sans") +
-  annotate("text", label = "3 ETS models with\n additive errors and\n multiplicative\n seasonality", x = -1.3, y = -1.4, col = cols["ets"], size = 2.8, family = "Fira Sans") +
-  annotate("text", label = "ARIMA models", x = 1.5, y = 1.35, col = cols["arima"], fontface = "bold", size = 6, family = "Fira Sans") +
-  annotate("text", label = "Modelling\n autocorrelations", x = 1.3, y = 0.5, col = cols["arima"], size = 2.8, fontface = "bold", family = "Fira Sans") +
-  annotate("text", label = TeX("Potentially $\\infty$ models"), x = 1.6, y = -0.6, col = cols["arima"], size = 2.8, family = "Fira Sans") +
-  annotate("text", label = "All stationary models\n Many large models", x = 1.25, y = -1.5, col = cols["arima"], size = 2.8, family = "Fira Sans") +
-  annotate("text", label = "6 fully additive\n ETS models", x = 0, y = -0.6, col = "#6b6859", size = 2.8, family = "Fira Sans") +
-  guides(colour = "none", fill = "none") +
-  theme_void()
-```
+* For $q=1$: $-1<\theta_1<1$.
+* For $q=2$: $-1<\theta_2<1\qquad \theta_2+\theta_1 >-1 \qquad \theta_1 -\theta_2 < 1$.
+* More complicated conditions hold for $q\ge3$.
+* fable takes care of this.
 
-## Equivalences
+# ARIMA models
+## ARIMA models
+
+\fontsize{14}{14.5}\sf\vspace*{0.2cm}
+\begin{block}{ARIMA($p, d, q$) model:\qquad $\phi(B)(1-B)^dy_{t} = c + \theta(B)\varepsilon_{t}$}
+\begin{tabular}{rl}
+AR:& $p =$ order of the autoregressive part\\
+I: & $d =$ degree of first differencing involved\\
+MA:& $q =$ order of the moving average part.
+\end{tabular}
+\end{block}\pause\vspace*{-0.2cm}
+
+* Conditions on AR coefficients ensure stationarity.
+* Conditions on MA coefficients ensure invertibility.
+* White noise model: ARIMA(0,0,0)
+* Random walk: ARIMA(0,1,0) with no constant
+* Random walk with drift: ARIMA(0,1,0) with \rlap{const.}
+* AR($p$): ARIMA($p$,0,0)
+* MA($q$): ARIMA(0,0,$q$)
+
+
+## R model
+\vspace*{0.2cm}
+
+\begin{block}{Intercept form}
+  \centerline{$(1-\phi_1B - \cdots - \phi_p B^p) y_t' = c + (1 + \theta_1 B + \cdots + \theta_q B^q)\varepsilon_t$}
+\end{block}
+
+\begin{block}{Mean form}
+  \centerline{$(1-\phi_1B - \cdots - \phi_p B^p)(y_t' - \mu) = (1 + \theta_1 B + \cdots + \theta_q B^q)\varepsilon_t$}
+\end{block}
+
+ * $y_t' = (1-B)^d y_t$
+ * $\mu$ is the mean of $y_t'$.
+ * $c = \mu(1-\phi_1 - \cdots - \phi_p )$.
+ * fable uses intercept form
+
+## Understanding ARIMA models
 \fontsize{14}{15}\sf
 
-|**ETS model**       | **ARIMA model**              | **Parameters**                        |
-| :------------      | :--------------------------  | :-----------------------------------  |
-| ETS(A,N,N)         | ARIMA(0,1,1)                 | $\theta_1 = \alpha-1$                 |
-| ETS(A,A,N)         | ARIMA(0,2,2)                 | $\theta_1 = \alpha+\beta-2$           |
-|                    |                              | $\theta_2 = 1-\alpha$                 |
-| ETS(A,A\damped,N)  | ARIMA(1,1,2)                 | $\phi_1=\phi$                         |
-|                    |                              | $\theta_1 = \alpha+\phi\beta-1-\phi$  |
-|                    |                              | $\theta_2 = (1-\alpha)\phi$           |
-| ETS(A,N,A)         | ARIMA(0,0,$m$)(0,1,0)$_m$    |                                       |
-| ETS(A,A,A)         | ARIMA(0,1,$m+1$)(0,1,0)$_m$  |                                       |
-| ETS(A,A\damped,A)  | ARIMA(1,0,$m+1$)(0,1,0)$_m$  |                                       |
+* If $c=0$ and $d=0$, the long-term forecasts will go to zero.
+* If $c=0$ and $d=1$, the long-term forecasts will go to a non-zero constant.
+* If $c=0$ and $d=2$, the long-term forecasts will follow a straight line.
+* If $c\ne0$ and $d=0$, the long-term forecasts will go to the mean of the data.
+* If $c\ne0$ and $d=1$, the long-term forecasts will follow a straight line.
+* If $c\ne0$ and $d=2$, the long-term forecasts will follow a quadratic trend.
 
-: {tbl-colwidths="22,43,35"}
+## Understanding ARIMA models
+\fontsize{14}{15}\sf
+
+### Forecast variance and $d$
+  * The higher the value of $d$, the more rapidly the prediction intervals increase in size.
+  * For $d=0$, the long-term forecast standard deviation will go to the standard deviation of the historical data.
+
+### Cyclic behaviour
+  * For cyclic forecasts, $p\ge2$ and some restrictions on coefficients are required.
+  * If $p=2$, we need $\phi_1^2+4\phi_2<0$. Then average cycle of length
+
+\centerline{$(2\pi)/\left[\text{arc cos}(-\phi_1(1-\phi_2)/(4\phi_2))\right].$}
+
+## Exercise
+
+```{r}
+#| child: activities.qmd
+```

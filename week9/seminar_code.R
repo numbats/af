@@ -1,110 +1,91 @@
 library(fpp3)
 
-## US leisure employment
+## EGYPTIAN EXPORTS
 
-leisure <- us_employment |>
-  filter(
-    Title == "Leisure and Hospitality",
-    year(Month) > 2000
-  ) |>
-  mutate(Employed = Employed / 1000) |>
-  select(Month, Employed)
-leisure |>
-  autoplot(Employed) +
-  labs(
-    title = "US employment: leisure and hospitality",
-    y = "Number of people (millions)"
-  )
+global_economy |>
+  filter(Code == "EGY") |>
+  autoplot(Exports) +
+  labs(y = "% of GDP", title = "Egyptian Exports")
 
-leisure |>
-  gg_tsdisplay(difference(Employed, 12),
-               plot_type = "partial", lag = 36
-  ) +
-  labs(title = "Seasonally differenced", y = "")
+fit <- global_economy |>
+  filter(Code == "EGY") |>
+  model(ARIMA(Exports))
+report(fit)
 
-leisure |>
-  gg_tsdisplay(difference(Employed, 12) |> difference(),
-               plot_type = "partial", lag = 36
-  ) +
-  labs(title = "Double differenced", y = "")
+gg_tsresiduals(fit)
 
-fit <- leisure |>
+fit |>
+  forecast(h = 50) |>
+  autoplot(global_economy) +
+  labs(y = "% of GDP", title = "Egyptian Exports")
+
+global_economy |>
+  filter(Code == "EGY") |>
+  ACF(Exports) |>
+  autoplot()
+global_economy |>
+  filter(Code == "EGY") |>
+  PACF(Exports) |>
+  autoplot()
+
+global_economy |>
+  filter(Code == "EGY") |>
+  gg_tsdisplay(Exports, plot_type = "partial")
+
+fit1 <- global_economy |>
+  filter(Code == "EGY") |>
+  model(ARIMA(Exports ~ pdq(4, 0, 0)))
+
+report(fit1)
+
+
+## pelt::Lynx
+
+pelt |>
+  autoplot(Lynx)
+
+# Use a sqrt transformation to keep forecasts positive
+
+pelt |>
+  autoplot(sqrt(Lynx))
+pelt |>
+  gg_tsdisplay(sqrt(Lynx), plot_type = "partial")
+
+fit <- pelt |>
   model(
-    arima012011 = ARIMA(Employed ~ pdq(0, 1, 2) + PDQ(0, 1, 1)),
-    arima210011 = ARIMA(Employed ~ pdq(2, 1, 0) + PDQ(0, 1, 1)),
-    auto = ARIMA(Employed),
-    best = ARIMA(Employed, stepwise = FALSE, approx = FALSE)
+    auto = ARIMA(sqrt(Lynx)),
+    ar2 = ARIMA(sqrt(Lynx) ~ pdq(2,0,0)),
+    ar3 = ARIMA(sqrt(Lynx) ~ pdq(3,0,0)),
+    tryhard = ARIMA(sqrt(Lynx), stepwise = FALSE,
+                    approximation = FALSE,
+                    order_constraint = p + q <= 10)
   )
 fit
-fit |> pivot_longer(everything(),
-                    names_to = "Model name",
-                    values_to = "Orders"
-)
-
 glance(fit) |>
-  arrange(AICc) |>
-  select(.model:BIC)
+  arrange(AICc)
+fit |>
+  select(auto) |>
+  gg_tsresiduals()
 
 fit |>
-  select(best) |>
-  gg_tsresiduals(lag = 36)
-
-report(fit |> select(best))
-augment(fit) |>
-  filter(.model == "best") |>
-  features(.innov, ljung_box, lag = 24, dof = 4)
-
-forecast(fit, h = 36) |>
-  filter(.model == "best") |>
-  autoplot(leisure) +
-  labs(
-    title = "US employment: leisure and hospitality",
-    y = "Number of people (millions)"
-  )
-
-# QUARTERLY CEMENT ETS vs ARIMA
-
-cement <- aus_production |>
-  select(Cement) |>
-  filter_index("1988 Q1" ~ .)
-cement |> autoplot(Cement)
-train <- cement |> filter_index(. ~ "2007 Q4")
-fit <- train |>
-  model(
-    arima = ARIMA(Cement),
-    ets = ETS(Cement)
-  )
+  forecast(h = 80) |>
+  autoplot(pelt, level = NULL) +
+  labs(y = "Number of Lynx", title = "Lynx Forecast")
 
 fit |>
-  select(ets) |>
-  report()
-gg_tsresiduals(fit |> select(ets), lag_max = 16)
+  select(auto) |>
+  forecast(h = 20) |>
+  autoplot(pelt) +
+  labs(y = "Number of Lynx", title = "Lynx Forecast")
 
-fit |>
-  select(ets) |>
-  augment() |>
-  features(.innov, ljung_box, lag = 16)
 
-fit |>
-  select(arima) |>
-  report()
-gg_tsresiduals(fit |> select(arima), lag_max = 16)
-
-fit |>
-  select(arima) |>
-  augment() |>
-  features(.innov, ljung_box, lag = 16, dof = 6)
-
-fit |>
-  forecast(h = "2 years 6 months") |>
-  accuracy(cement)
-
-fc <- cement |>
-  model(arima = ARIMA(Cement)) |>
-  forecast(h = "3 years")
-fc |>
-  autoplot(cement) +
-  labs(
-    title = "Cement production in Australia",
-    y = "Tonnes ('000)"
-  )
+# Extract phi coefficients from best model
+phi <- fit |>
+  select(tryhard) |>
+  tidy() |>
+  pull(estimate) |>
+  head(2)
+# Is it cyclic?
+phi[1]^2 + 4*phi[2]
+# Average length of cycle
+2*pi / (acos(-phi[1] * (1 - phi[2])/(4*phi[2])))

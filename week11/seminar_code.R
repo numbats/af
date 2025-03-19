@@ -1,231 +1,187 @@
 library(fpp3)
 
-## Daily data with annual and weekly seasonality
+# Weekly data with Fourier terms
 
-vic_elec_daily <- vic_elec |>
-  index_by(Date = date(Time)) |>
-  summarise(
-    Demand = sum(Demand) / 1e3,
-    Temperature = max(Temperature),
-    Holiday = any(Holiday)
-  ) |>
-  mutate(Day_Type = case_when(
-    Holiday ~ "Holiday",
-    wday(Date) %in% 2:6 ~ "Weekday",
-    TRUE ~ "Weekend"
-  ))
+us_gasoline  |>
+  autoplot(Barrels) +
+  labs(y = "Weekly US finished motor gasoline product supplied (million barrels)")
 
-vic_elec_daily |>
-  ggplot(aes(x = Temperature, y = Demand, colour = Day_Type)) +
-  geom_point() +
-  labs(x = "Maximum temperature", y = "Electricity demand (GW)")
-
-vic_elec_daily |>
-  pivot_longer(c(Demand, Temperature),
-    names_to = "var",
-    values_to = "value"
-  ) |>
-  ggplot(aes(x = Date, y = value)) +
-  geom_line() +
-  facet_grid(vars(var), scales = "free_y")
-
-elec_fit <- vic_elec_daily |>
+fit <- us_gasoline |>
   model(
-    ets = ETS(Demand),
-    arima = ARIMA(log(Demand)),
-    dhr = ARIMA(log(Demand) ~ Temperature + I(Temperature^2) +
-        (Day_Type == "Weekday") + fourier(period = "year", K = 4))
+    K01 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 1)),
+    K02 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 2)),
+    K03 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 3)),
+    K04 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 4)),
+    K05 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 5)),
+    K06 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 6)),
+    K07 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 7)),
+    K08 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 8)),
+    K09 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 9)),
+    K10 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 10)),
+    K11 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 11)),
+    K12 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 12)),
+    K13 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 13)),
+    K14 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 14)),
+    K15 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 15)),
+    K16 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 16)),
+    K20 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 20)),
+    K26 = TSLM(log(Barrels) ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 26))
   )
-elec_fit |>
-  pivot_longer(ets:dhr, names_to="model", values_to="model_fit")
+glance(fit) |>
+  select(.model, r_squared, adj_r_squared, df, AICc, CV) |>
+  arrange(CV)
 
-accuracy(elec_fit)
+augment(fit) |>
+  filter(.model %in% c("K06", "K01", "K26")) |>
+  ggplot(aes(x = Week, y = Barrels)) +
+  geom_line(colour = "gray") +
+  geom_line(aes(y = .fitted, col = .model), linewidth = 1) +
+  facet_grid(.model ~ .)
 
-# ETS
-elec_fit |>
-  select(ets) |>
-  report()
-elec_fit |>
-  select(ets) |>
-  gg_tsresiduals()
-
-elec_fit |>
-  select(ets) |>
-  augment() |>
-  filter(Date <= "2014-03-31") |>
-  ggplot(aes(x = Date, y = Demand)) +
-  geom_line() +
-  geom_line(aes(y = .fitted), col = "red")
-
-# ARIMA
-elec_fit |>
-  select(arima) |>
-  report()
-elec_fit |>
-  select(arima) |>
-  gg_tsresiduals()
-
-elec_fit |>
-  select(arima) |>
-  augment() |>
-  filter(Date <= "2014-03-31") |>
-  ggplot(aes(x = Date, y = Demand)) +
-  geom_line() +
-  geom_line(aes(y = .fitted), col = "red")
-
-# DHR
-elec_fit |>
-  select(dhr) |>
-  report()
-elec_fit |>
-  select(dhr) |>
-  gg_tsresiduals()
-
-elec_fit |>
-  select(dhr) |>
-  augment() |>
-  filter(Date <= "2014-03-31") |>
-  ggplot(aes(x = Date, y = Demand)) +
-  geom_line() +
-  geom_line(aes(y = .fitted), col = "red")
-
-# Forecast 14 days ahead
-vic_elec_future <- new_data(vic_elec_daily, 14) |>
-  mutate(
-    Temperature = c(rep(32, 7), rep(25, 7)),
-    Holiday = c(TRUE, rep(FALSE, 13)),
-    Day_Type = case_when(
-      Holiday ~ "Holiday",
-      wday(Date) %in% 2:6 ~ "Weekday",
-      TRUE ~ "Weekend"
-    )
-  )
-elec_fit |>
-  forecast(new_data = vic_elec_future) |>
-  autoplot(vic_elec_daily |> tail(14), level = 80) +
-  labs(y = "Electricity demand (GW)")
-
-# Forecast a year ahead using last year's temperatures
-vic_elec_future <- new_data(vic_elec_daily, 365) |>
-  mutate(
-    Temperature = tail(vic_elec_daily$Temperature, 365),
-    Holiday = Date %in% as.Date(c(
-      "2015-01-01", "2015-01-26", "2015-03-09",
-      "2015-04-03", "2015-04-06", "2015-04-25",
-      "2015-06-08", "2015-10-02", "2015-11-03",
-      "2015-12-25"
-    )),
-    Day_Type = case_when(
-      Holiday ~ "Holiday",
-      wday(Date) %in% 2:6 ~ "Weekday",
-      TRUE ~ "Weekend"
-    )
-  )
-forecast(elec_fit, new_data = vic_elec_future) |>
-  filter(.model == "dhr") |>
-  autoplot(vic_elec_daily |> tail(365), level = 80) +
-  labs(y = "Electricity demand (GW)")
-
-
-## US GASOLINE ---------------------------------------------------
-
-us_gasoline |> autoplot(Barrels)
-
-gasfit <- us_gasoline |>
-  model(
-    fourier1 = ARIMA(Barrels ~ fourier(K = 1) + PDQ(0, 0, 0)),
-    fourier2 = ARIMA(Barrels ~ fourier(K = 2) + PDQ(0, 0, 0)),
-    fourier3 = ARIMA(Barrels ~ fourier(K = 3) + PDQ(0, 0, 0)),
-    fourier4 = ARIMA(Barrels ~ fourier(K = 4) + PDQ(0, 0, 0)),
-    fourier5 = ARIMA(Barrels ~ fourier(K = 5) + PDQ(0, 0, 0)),
-    fourier6 = ARIMA(Barrels ~ fourier(K = 6) + PDQ(0, 0, 0)),
-    fourier7 = ARIMA(Barrels ~ fourier(K = 7) + PDQ(0, 0, 0)),
-    fourier8 = ARIMA(Barrels ~ fourier(K = 8) + PDQ(0, 0, 0)),
-    fourier9 = ARIMA(Barrels ~ fourier(K = 9) + PDQ(0, 0, 0)),
-    fourier10 = ARIMA(Barrels ~ fourier(K = 10) + PDQ(0, 0, 0)),
-    fourier11 = ARIMA(Barrels ~ fourier(K = 11) + PDQ(0, 0, 0)),
-    fourier12 = ARIMA(Barrels ~ fourier(K = 12) + PDQ(0, 0, 0)),
-    fourier13 = ARIMA(Barrels ~ fourier(K = 13) + PDQ(0, 0, 0)),
-    fourier14 = ARIMA(Barrels ~ fourier(K = 14) + PDQ(0, 0, 0)),
-    best_lm = TSLM(Barrels ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 6)),
-    best_lm2 = ARIMA(Barrels ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) +
-                       fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0))
-  )
-
-glance(gasfit) |> arrange(AICc)
-
-gasfit |>
-  select(fourier6) |>
-  report()
-gasfit |>
-  select(fourier6) |>
-  gg_tsresiduals()
-
-gasfit |>
-  select(fourier6) |>
-  forecast(h = "3 years") |>
+fit |>
+  select(K06) |>
+  forecast(h = "2 years") |>
   autoplot(us_gasoline)
 
-## 5-minute CALL CENTRE DATA ------------------------------------------------
+fit |>
+  select(K06) |>
+  gg_tsresiduals()
 
-calls <- readr::read_tsv("http://robjhyndman.com/data/callcenter.txt") |>
-  rename(time = `...1`) |>
-  pivot_longer(-time, names_to = "date", values_to = "volume") |>
-  mutate(
-    date = as.Date(date, format = "%d/%m/%Y"),
-    datetime = as_datetime(date) + time
-  ) |>
-  as_tsibble(index = datetime)
-
-calls |>
-  fill_gaps() |>
-  autoplot(volume)
-
-calls |>
-  fill_gaps() |>
-  gg_season(volume, period = "day", alpha = 0.4) +
-  guides(colour = "none")
-
-calls_mdl <- calls |>
-  mutate(idx = row_number()) |>
-  update_tsibble(index = idx)
-calls_fit <- calls_mdl |>
-  model(ARIMA(volume ~ fourier(169, K = 10) + pdq(d = 0) + PDQ(0, 0, 0)))
-report(calls_fit)
-
-gg_tsresiduals(calls_fit, lag = 338)
-
-calls_fit |>
-  forecast(h = 1690) |>
-  autoplot(calls_mdl |> filter(idx > 20000))
-
-## US Leisure
+# US employment
 
 leisure <- us_employment |>
-  filter(Title == "Leisure and Hospitality", year(Month) > 2001) |>
+  filter(
+    Title == "Leisure and Hospitality",
+    year(Month) > 2001
+  ) |>
   mutate(Employed = Employed / 1000) |>
   select(Month, Employed)
 
-autoplot(leisure, Employed) +
-  labs(y = "Employed (millions)")
+autoplot(leisure)
+
 fit <- leisure |>
   model(
-    lm = TSLM(Employed ~
-           trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
-           fourier(K = 6)),
-    dhr = ARIMA(Employed  ~
-           trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
-           fourier(K = 6)),
-    dhr2 = ARIMA(Employed  ~
-                   trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
-                   fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0)),
+    K01 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 1)),
+    K02 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 2)),
+    K03 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 3)),
+    K04 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 4)),
+    K05 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 5)),
+    K06 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 6)),
   )
-glance(fit)
+glance(fit) |>
+  select(.model, r_squared, adj_r_squared, df, AICc, CV) |>
+  arrange(CV)
+
+augment(fit) |>
+  filter(.model == "K06") |>
+  ggplot(aes(x = Month, y = Employed)) +
+  geom_line() +
+  geom_line(aes(y = .fitted, col = .model), linewidth = 1)
 
 fit |>
-  select(dhr) |>
+  select(K06) |>
+  forecast(h = "2 years") |>
+  autoplot(leisure)
+
+fit |>
+  select(K06) |>
   gg_tsresiduals()
 
-fc <- fit |>
-  forecast(h=24)
-autoplot(fc, leisure |> tail(12))
+fc <- fit |> forecast(h=24)
+
+fc |>
+  filter(.model == "K06") |>
+  autoplot(leisure)
+
+# US consumption quarterly changes
+
+us_change |>
+  pivot_longer(-Quarter, names_to = "Measure", values_to = "Change") |>
+  ggplot(aes(x = Quarter, y = Change)) +
+  geom_line() +
+  facet_grid(Measure ~ ., scales = "free_y")
+
+us_change |>
+  GGally::ggpairs(columns = 2:6)
+
+fit_all <- us_change |>
+  model(
+    TSLM(Consumption ~ Income + Production + Unemployment + Savings),
+    TSLM(Consumption ~ Production + Unemployment + Savings),
+    TSLM(Consumption ~ Income + Unemployment + Savings),
+    TSLM(Consumption ~ Income + Production + Savings),
+    TSLM(Consumption ~ Income + Production + Unemployment),
+    TSLM(Consumption ~ Income + Production),
+    TSLM(Consumption ~ Income + Unemployment),
+    TSLM(Consumption ~ Income + Savings),
+    TSLM(Consumption ~ Production + Unemployment),
+    TSLM(Consumption ~ Production + Savings),
+    TSLM(Consumption ~ Unemployment + Savings),
+    TSLM(Consumption ~ Income),
+    TSLM(Consumption ~ Production),
+    TSLM(Consumption ~ Unemployment),
+    TSLM(Consumption ~ Savings),
+    TSLM(Consumption ~ 1),
+  )
+
+glance(fit_all) |>
+  select(.model, adj_r_squared, AICc, BIC, CV) |>
+  arrange(CV)
+
+fit_consBest <- us_change |>
+  model(
+    lm = TSLM(Consumption ~ Income + Production + Unemployment + Savings),
+  )
+
+report(fit_consBest)
+
+augment(fit_consBest) |>
+  ggplot(aes(x = Quarter)) +
+  geom_line(aes(y = Consumption, colour = "Data")) +
+  geom_line(aes(y = .fitted, colour = "Fitted")) +
+  labs(
+    y = NULL,
+    title = "Percent change in US consumption expenditure"
+  ) +
+  scale_colour_manual(values = c(Data = "black", Fitted = "#D55E00")) +
+  guides(colour = guide_legend(title = NULL))
+
+augment(fit_consBest) |>
+  ggplot(aes(y = .fitted, x = Consumption)) +
+  geom_point() +
+  labs(
+    y = "Fitted (predicted values)",
+    x = "Data (actual values)",
+    title = "Percentage change in US consumption expenditure"
+  ) +
+  geom_abline(intercept = 0, slope = 1)
+
+fit_consBest |> gg_tsresiduals()
+
+augment(fit_consBest) |>
+  left_join(us_change) |>
+  ggplot(aes(x=.fitted, y=.resid)) +
+  geom_point()
+
+augment(fit_consBest) |>
+  left_join(us_change) |>
+  ggplot(aes(x=Income, y=.resid)) +
+  geom_point()
+
+
+future_scenarios <- scenarios(
+  Increase = new_data(us_change, 4) |>
+    mutate(Income = 2, Savings = 0.5, Unemployment = 0, Production = 0),
+  Decrease = new_data(us_change, 4) |>
+    mutate(Income = -1, Savings = -0.5, Unemployment = 0, Production = 0),
+  names_to = "Scenario"
+)
+
+fc <- forecast(fit_consBest, new_data = future_scenarios)
+
+us_change |> autoplot(Consumption) +
+  labs(y = "% change in US consumption") +
+  autolayer(fc) +
+  labs(title = "US consumption", y = "% change")
+
+
