@@ -76,9 +76,9 @@ The four stocks are on different scales, so they are not directly comparable. A 
 
 ```{r}
 gafa_stock |>
-  ggplot(aes(x = Date, y = Close, group = Symbol)) +
-  geom_line(aes(col = Symbol)) +
-  facet_grid(Symbol ~ ., scales = 'free')
+  ggplot(aes(x=Date, y=Close, group=Symbol)) +
+  geom_line(aes(col=Symbol)) +
+  facet_grid(Symbol ~ ., scales='free')
 ```
 
 The downturn in the second half of 2018 is now very clear, with Facebook taking a big drop (about 20%) in the middle of the year.
@@ -109,8 +109,7 @@ vic_elec |>
 Appears to have a daily pattern, where less electricity is used overnight. Also appears to have a working day effect (less demand on weekends and holidays).
 
 ```{r}
-vic_elec |>
-  autoplot(Demand / 1e3) +
+vic_elec |> autoplot(Demand/1e3) +
   labs(
     x = "Date",
     y = "Demand (GW)",
@@ -138,10 +137,8 @@ gafa_stock |>
 > Download the file `tute1.csv` from [the book website](http://OTexts.com/fpp3/extrafiles/tute1.csv), open it in Excel (or some other spreadsheet application), and review its contents. You should find four columns of information. Columns B through D each contain a quarterly series, labelled Sales, AdBudget and GDP. Sales contains the quarterly sales for a small company over the period 1981-2005. AdBudget is the advertising budget and GDP is the gross domestic product. All series have been adjusted for inflation.
 
 ```{r}
-download.file(
-  "http://OTexts.com/fpp3/extrafiles/tute1.csv",
-  tute1 <- tempfile()
-)
+download.file("http://OTexts.com/fpp3/extrafiles/tute1.csv",
+              tute1 <- tempfile())
 tute1 <- readr::read_csv(tute1)
 View(tute1)
 mytimeseries <- tute1 |>
@@ -149,16 +146,16 @@ mytimeseries <- tute1 |>
   as_tsibble(index = Quarter)
 
 mytimeseries |>
-  pivot_longer(-Quarter, names_to = "Key", values_to = "Value") |>
+  pivot_longer(-Quarter, names_to="Key", values_to="Value") |>
   ggplot(aes(x = Quarter, y = Value, colour = Key)) +
-  geom_line() +
-  facet_grid(vars(Key), scales = "free_y")
+    geom_line() +
+    facet_grid(vars(Key), scales = "free_y")
 
 # Without faceting:
 mytimeseries |>
-  pivot_longer(-Quarter, names_to = "Key", values_to = "Value") |>
+  pivot_longer(-Quarter, names_to="Key", values_to="Value") |>
   ggplot(aes(x = Quarter, y = Value, colour = Key)) +
-  geom_line()
+    geom_line()
 ```
 
 # fpp3 2.10, Ex 4
@@ -170,28 +167,15 @@ mytimeseries |>
 >    c. Plot the annual natural gas consumption by state for the New England area (comprising the states of Maine, Vermont, New Hampshire, Massachusetts, Connecticut and Rhode Island).
 
 ```{r}
-#| eval: false
-install.packages("USgas")
-```
-
-```{r}
+install.packages("USgas", repos = "https://cran.ms.unimelb.edu.au/")
 library(USgas)
 us_tsibble <- us_total |>
-  as_tsibble(index = year, key = state)
+  as_tsibble(index=year, key=state)
 # For each state
 us_tsibble |>
-  filter(
-    state %in%
-      c(
-        "Maine",
-        "Vermont",
-        "New Hampshire",
-        "Massachusetts",
-        "Connecticut",
-        "Rhode Island"
-      )
-  ) |>
-  autoplot(y / 1e3) +
+  filter(state %in% c("Maine", "Vermont", "New Hampshire", "Massachusetts",
+                      "Connecticut", "Rhode Island")) |>
+  autoplot(y/1e3) +
   labs(y = "billion cubic feet")
 ```
 
@@ -203,11 +187,8 @@ us_tsibble |>
 > d. Create a new tsibble which combines the Purposes and Regions, and just has total trips by State.
 
 ```{r}
-download.file(
-  "http://OTexts.com/fpp3/extrafiles/tourism.xlsx",
-  tourism_file <- tempfile(),
-  mode = "wb"
-)
+download.file("http://OTexts.com/fpp3/extrafiles/tourism.xlsx",
+              tourism_file <- tempfile(), mode = "wb")
 my_tourism <- readxl::read_excel(tourism_file) |>
   mutate(Quarter = yearquarter(Quarter)) |>
   as_tsibble(
@@ -219,7 +200,7 @@ tourism
 
 my_tourism |>
   as_tibble() |>
-  summarise(Trips = mean(Trips), .by = c(Region, Purpose)) |>
+  summarise(Trips = mean(Trips), .by=c(Region, Purpose)) |>
   filter(Trips == max(Trips))
 
 state_tourism <- my_tourism |>
@@ -228,3 +209,335 @@ state_tourism <- my_tourism |>
   ungroup()
 state_tourism
 ```
+
+# fpp3 2.10, Ex 6
+
+> The `aus_arrivals` data set comprises quarterly international arrivals (in thousands) to Australia from Japan, New Zealand, UK and the US. Use `autoplot()`, `gg_season()` and `gg_subseries()` to compare the differences between the arrivals from these four countries. Can you identify any unusual observations?
+
+```{r}
+aus_arrivals |> autoplot(Arrivals)
+```
+
+Generally the number of arrivals to Australia is increasing over the entire series, with the exception of Japanese visitors which begin to decline after 1995. The series appear to have a seasonal pattern which varies proportionately to the number of arrivals. Interestingly, the number of visitors from NZ peaks sharply in 1988. The seasonal pattern from Japan appears to change substantially.
+
+```{r}
+#! fig-height: 10
+aus_arrivals |> gg_season(Arrivals, labels = "both")
+```
+
+The seasonal pattern of arrivals appears to vary between each country. In particular, arrivals from the UK appears to be lowest in Q2 and Q3, and increase substantially for Q4 and Q1. Whereas for NZ visitors, the lowest period of arrivals is in Q1, and highest in Q3. Similar variations can be seen for Japan and US.
+
+```{r}
+aus_arrivals |> gg_subseries(Arrivals)
+```
+
+The subseries plot reveals more interesting features. It is evident that whilst the UK arrivals is increasing, most of this increase is seasonal. More arrivals are coming during Q1 and Q4, whilst the increase in Q2 and Q3 is less extreme. The growth in arrivals from NZ and US appears fairly similar across all quarters. There exists an unusual spike in arrivals from the US in 1992 Q3.
+
+Unusual observations:
+
+  - 2000 Q3: Spikes from the US (Sydney Olympics arrivals)
+  - 2001 Q3-Q4 are unusual for US (9/11 effect)
+  - 1991 Q3 is unusual for the US (Gulf war effect?)
+
+# fpp3 2.10, Ex 7
+
+> Monthly Australian retail data is provided in aus_retail. Select one of the time series as follows (but choose your own seed value):
+>
+>    ```r
+>    set.seed(12345678)
+>    myseries <- aus_retail |>
+>      filter(`Series ID` == sample(aus_retail$`Series ID`,1))
+>    ```
+>
+> Explore your chosen retail time series using the following functions:
+>
+>    ```r
+>    autoplot(), gg_season(), gg_subseries(), gg_lag(), ACF() |> autoplot()
+>    ```
+
+```{r}
+#| label: ex6
+
+set.seed(12345678)
+myseries <- aus_retail |>
+  filter(`Series ID` == sample(aus_retail$`Series ID`,1))
+myseries |>
+  autoplot(Turnover) +
+  labs(y = "Turnover (million $AUD)", x = "Time (Years)",
+       title = myseries$Industry[1],
+       subtitle = myseries$State[1])
+```
+
+The data features a non-linear upward trend and a strong seasonal pattern. The variability in the data appears proportional to the amount of turnover (level of the series) over the time period.
+
+```{r}
+#| dependson: ex6
+
+myseries |>
+  gg_season(Turnover, labels = "both") +
+  labs(y = "Turnover (million $AUD)",
+       title = myseries$Industry[1],
+       subtitle = myseries$State[1])
+```
+
+Strong seasonality is evident in the season plot. Large increases in clothing retailing can be observed in December (probably a Christmas effect). There is also a peak in July that appears to be getting stronger over time. 2016 had an unusual pattern in the first half of the year.
+
+```{r}
+#| dependson: 'ex6'
+myseries |>
+  gg_subseries(Turnover) +
+  labs(y = "Turnover (million $AUD)", x="")
+```
+
+There is a strong trend in all months, with the largest trend in December and a larger increase in July and August than most other months.
+
+```{r}
+#| dependson: ex6
+
+myseries |>
+  gg_lag(Turnover, lags=1:24, geom='point') + facet_wrap(~ .lag, ncol=6)
+myseries |>
+  ACF(Turnover, lag_max = 50) |>
+  autoplot()
+```
+
+# fpp3 2.10, Ex 8
+
+> Use the following graphics functions: `autoplot()`, `gg_season()`, `gg_subseries()`, `gg_lag()`, `ACF()` and explore features from the following time series: "Total Private" `Employed` from `us_employment`, `Bricks` from `aus_production`, `Hare` from `pelt`, "H02" `Cost` from `PBS`, and `us_gasoline`.
+>
+>    + Can you spot any seasonality, cyclicity and trend?
+>    + What do you learn about the series?
+>    + What can you say about the seasonal patterns?
+>    + Can you identify any unusual years?
+
+## Total Private Employment in the US
+
+```{r}
+us_employment |>
+  filter(Title == "Total Private") |>
+  autoplot(Employed)
+```
+
+There is a strong trend and seasonality. Some cyclic behaviour is seen, with a big drop due to the global financial crisis.
+
+```{r}
+us_employment |>
+  filter(Title == "Total Private") |>
+  gg_season(Employed)
+```
+
+```{r}
+us_employment |>
+  filter(Title == "Total Private") |>
+  gg_subseries(Employed)
+```
+
+```{r}
+us_employment |>
+  filter(Title == "Total Private") |>
+  gg_lag(Employed)
+```
+
+```{r}
+us_employment |>
+  filter(Title == "Total Private") |>
+  ACF(Employed) |>
+  autoplot()
+```
+
+In all of these plots, the trend is so dominant that it is hard to see anything else. We need to remove the trend so we can explore the other features of the data.
+
+## Brick production in Australia
+
+```{r}
+aus_production |>
+  autoplot(Bricks)
+```
+
+A positive trend in the first 20 years, and a negative trend in the next 25 years. Strong quarterly seasonality, with some cyclicity -- note the recessions in the 1970s and 1980s.
+
+```{r}
+aus_production |>
+  gg_season(Bricks)
+```
+
+Brick production tends to be lowest in the first quarter and peak in either quarter 2 or quarter 3.
+
+```{r}
+aus_production |>
+  gg_subseries(Bricks)
+```
+
+The decrease in the last 25 years has been weakest in Q1.
+
+```{r}
+aus_production |>
+  gg_lag(Bricks, geom='point')
+aus_production |>
+  ACF(Bricks) |> autoplot()
+```
+
+The seasonality shows up as peaks at lags 4, 8, 12, 16, 20, .... The trend is seen with the slow decline on the positive side.
+
+## Snow hare trappings in Canada
+
+```{r}
+pelt |>
+  autoplot(Hare)
+```
+
+There is some cyclic behaviour with substantial variation in the length of the period.
+
+```{r}
+pelt |>
+  gg_lag(Hare, geom='point')
+pelt |>
+  ACF(Hare) |> autoplot()
+```
+
+The cyclic period seems to have an average of about 10 (due to the local maximum in ACF at lag 10).
+
+## H02 sales in Australia
+
+There are four series corresponding to H02 sales, so we will add them together.
+
+```{r}
+h02 <- PBS |>
+  filter(ATC2 == "H02") |>
+  group_by(ATC2) |>
+  summarise(Cost = sum(Cost)) |>
+  ungroup()
+```
+
+```{r}
+h02 |>
+  autoplot(Cost)
+```
+
+A positive trend with strong monthly seasonality, dropping suddenly every February.
+
+```{r}
+h02 |>
+  gg_season(Cost)
+```
+
+```{r}
+h02 |>
+  gg_subseries(Cost)
+```
+
+The trends have been greater in the higher peaking months -- this leads to increasing seasonal variation.
+
+```{r}
+h02 |>
+  gg_lag(Cost, geom='point', lags=1:16)
+h02 |>
+  ACF(Cost) |> autoplot()
+```
+
+The large January sales show up as a separate cluster of points in the lag plots. The strong seasonality is clear in the ACF plot.
+
+## US gasoline sales
+
+```{r}
+us_gasoline |>
+  autoplot(Barrels)
+```
+
+A positive trend until 2008, and then the global financial crisis led to a drop in sales until 2012. The shape of the seasonality seems to have changed over time.
+
+```{r}
+us_gasoline |>
+  gg_season(Barrels)
+```
+
+There is a lot of noise making it hard to see the overall seasonal pattern. However, it seems to drop towards the end of quarter 4.
+
+```{r}
+us_gasoline |>
+  gg_subseries(Barrels)
+```
+
+The blue lines are helpful in seeing the average seasonal pattern.
+
+```{r}
+us_gasoline |>
+  gg_lag(Barrels, geom='point', lags=1:16)
+us_gasoline |>
+  ACF(Barrels, lag_max = 150) |> autoplot()
+```
+
+The seasonality is seen if we increase the lags to at least 2 years (approx 104 weeks)
+
+# fpp3 2.10, Ex 9
+
+> The following time plots and ACF plots correspond to four different time series. Your task is to match each time plot in the first row with one of the ACF plots in the second row.
+
+![](https://otexts.com/fpp3/fpp_files/figure-html/acfguess-1.png)
+
+1-B, 2-A, 3-D, 4-C
+
+# fpp3 2.10, Ex 10
+
+> The `aus_livestock` data contains the monthly total number of pigs slaughtered in Victoria, Australia, from Jul 1972 to Dec 2018. Use `filter()` to extract pig slaughters in Victoria between 1990 and 1995. Use `autoplot` and `ACF` for this data. How do they differ from white noise? If a longer period of data is used, what difference does it make to the ACF?
+
+```{r}
+vic_pigs <- aus_livestock |>
+  filter(Animal == "Pigs", State == "Victoria", between(year(Month), 1990, 1995))
+vic_pigs
+```
+
+```{r}
+vic_pigs |>
+  autoplot(Count)
+```
+
+Although the values appear to vary erratically between months, a general upward trend is evident between 1990 and 1995. In contrast, a white noise plot does not exhibit any trend.
+
+```{r}
+vic_pigs |> ACF(Count) |> autoplot()
+```
+
+The first 14 lags are significant, as the ACF slowly decays. This suggests that the data contains a trend. A white noise ACF plot would not usually contain any significant lags. The large spike at lag 12 suggests there is some seasonality in the data.
+
+```{r}
+aus_livestock |>
+  filter(Animal == "Pigs", State == "Victoria") |>
+  ACF(Count) |>
+  autoplot()
+```
+
+The longer series has much larger autocorrelations, plus clear evidence of seasonality at the seasonal lags of $12, 24, \dots$.
+
+# fpp3 2.10, Ex 11
+
+> a. Use the following code to compute the daily changes in Google closing stock prices.
+>
+>      ```r
+>      dgoog <- gafa_stock |>
+>        filter(Symbol == "GOOG", year(Date) >= 2018) |>
+>        mutate(trading_day = row_number()) |>
+>        update_tsibble(index = trading_day, regular = TRUE) |>
+>        mutate(diff = difference(Close))
+>      ```
+>
+> b. Why was it necessary to re-index the tsibble?
+> c. Plot these differences and their ACF.
+> d. Do the changes in the stock prices look like white noise?
+
+```{r}
+dgoog <- gafa_stock |>
+  filter(Symbol == "GOOG", year(Date) >= 2018) |>
+  mutate(trading_day = row_number()) |>
+  update_tsibble(index = trading_day, regular = TRUE) |>
+  mutate(diff = difference(Close))
+```
+
+The tsibble needed re-indexing as trading happens irregularly. The new index is based only on trading days.
+
+```{r}
+dgoog |> autoplot(diff)
+dgoog |> ACF(diff, lag_max=100) |> autoplot()
+```
+
+There are some small significant autocorrelations out to lag 24, but nothing after that. Given the probability of a false positive is 5%, these look similar to white noise.

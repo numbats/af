@@ -20,7 +20,7 @@ Read [Chapter 2 of the textbook](https://otexts.com/fpp3/graphics.html) and watc
 
 ## Exercises (on your own or in tutorial)
 
-* Complete Exercises 1-5 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).
+* Complete Exercises 1-11 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).
 * [Solutions to Exercises](ex2-sol.qmd)
 * [Check your understanding quiz](https://learning.monash.edu/mod/quiz/view.php?id=3444035)
 
