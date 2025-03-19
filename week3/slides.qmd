@@ -56,7 +56,7 @@ Random walks are a type of time series where the value at time $t$ is equal to t
 \centerline{$y_t = y_{t-1} + \varepsilon_t, \qquad \text{where $\varepsilon_t \mathop{\sim}\limits^{\mathrm{iid}} N(0, \sigma^2)$}$}
 \end{block}
 Equivalently, we can take the cumulative sum of a white noise process.
-$$y_t = y_{0} + \sum_{t=1}^{T} \varepsilon_t, \qquad \text{where $\varepsilon_t \mathop{\sim}\limits^{\mathrm{iid}} N(0, \sigma^2)$}$$
+$$y_T = y_{0} + \sum_{t=1}^{T} \varepsilon_t, \qquad \text{where $\varepsilon_t \mathop{\sim}\limits^{\mathrm{iid}} N(0, \sigma^2)$}$$
 
 ```{r}
 #| label: random-walk
