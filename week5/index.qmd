@@ -9,13 +9,13 @@ source(here::here("course_info.R"))
 
 ## What you will learn this week
 
-* Forecasting with transformations
-* Forecasting with decompositions
+* Fitted values, residuals
+* Distributional forecasts
 * Forecast evaluation
 
 ## Pre-class activities
 
-Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html), Sections 5.6 -- 5.10, and watch all embedded videos
+Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html), Sections 5.4 -- 5.5, 5.8 -- 5.10, and watch all embedded videos
 
 ## Exercises (on your own or in tutorial)
 
