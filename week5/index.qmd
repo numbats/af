@@ -1,5 +1,5 @@
 ---
-title: "Week 5: Exponential smoothing"
+title: "Week 5: Accuracy evaluation"
 ---
 
 ```{r}
@@ -9,16 +9,17 @@ source(here::here("course_info.R"))
 
 ## What you will learn this week
 
-* Simple exponential smoothing
-* Corresponding ETS models
+* Fitted values, residuals
+* Distributional forecasts
+* Forecast evaluation
 
 ## Pre-class activities
 
-Read [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos
+Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html), Sections 5.3 -- 5.5, and 5.8 -- 5.10, and watch all embedded videos
 
 ## Exercises (on your own or in tutorial)
 
-Complete Exercises 1-6, 8, 11-12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
+Complete Exercises 8-10, 12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
 
 <!-- [**Solutions to Exercises**](ex5-sol.qmd) -->
 

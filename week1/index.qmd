@@ -1,5 +1,5 @@
 ---
-title: "Week 1: What is forecasting?"
+title: "Week 1: Introduction to forecasting & R"
 ---
 
 ```{r}
