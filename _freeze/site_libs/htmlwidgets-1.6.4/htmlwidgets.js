@@ -658,7 +658,6 @@
     invokePostRenderHandlers();
   }
 
-
   function has_jQuery3() {
     if (!window.jQuery) {
       return false;
@@ -711,7 +710,6 @@
       }
     });
   }
-
 
   window.HTMLWidgets.getAttachmentUrl = function(depname, key) {
     // If no key, default to the first item

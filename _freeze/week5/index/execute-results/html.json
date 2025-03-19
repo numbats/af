@@ -1,9 +1,11 @@
 {
-  "hash": "eb1219f97aec0bcaf72929719b81967a",
+  "hash": "4952acff1de1ccc4a3be29b97ae6955f",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Week 5: Exponential smoothing\"\n---\n\n::: {.cell}\n\n:::\n\n## What you will learn this week\n\n* Simple exponential smoothing\n* Corresponding ETS models\n\n## Pre-class activities\n\nRead [Sections 8.1-8.4 of the textbook](https://otexts.com/fpp3/expsmooth.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-6, 8, 11-12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex5-sol.qmd) -->\n\n\n\n",
-    "supporting": [],
+    "markdown": "---\ntitle: \"Week 5: Accuracy evaluation\"\n---\n\n::: {.cell}\n\n:::\n\n## What you will learn this week\n\n* Fitted values, residuals\n* Distributional forecasts\n* Forecast evaluation\n\n## Pre-class activities\n\nRead [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html), Sections 5.3 -- 5.5, and 5.8 -- 5.10, and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 8-10, 12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex5-sol.qmd) -->\n\n\n\n## Assignments\n\n* [Assignment 2](../assignments/A2.qmd) is due on Thursday 17 April.\n\n\n## Weekly quiz\n\n* [Week 5 quiz](https://learning.monash.edu/mod/quiz/view.php?id=3868370) is due on Sunday 06 April.\n",
+    "supporting": [
+      "index_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

@@ -1,9 +1,11 @@
 {
-  "hash": "0d8ee6ab15dae7c080d45b6f39a6f586",
+  "hash": "4ecf141c67183b5fa5c3e4793af5d4c7",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Week 9: ARIMA models\"\n---\n\n::: {.cell}\n\n:::\n\n## What you will learn this week\n\n* Seasonal ARIMA models\n* Computing forecasts for ARIMA models\n* ARIMA vs ETS models\n\n## Pre-class activities\n\nRead [Sections 9.8-9.10 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex9-sol.qmd) -->\n\n\n\n",
-    "supporting": [],
+    "markdown": "---\ntitle: \"Week 9: ARIMA models\"\n---\n\n::: {.cell}\n\n:::\n\n## What you will learn this week\n\n* AR, MA, ARMA and ARIMA models\n* Selecting model orders manually and automatically\n\n## Pre-class activities\n\nRead [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex9-sol.qmd) -->\n\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

@@ -178,7 +178,6 @@ var FilterHandle = exports.FilterHandle = function () {
    *   undefined) to clear the group.
    */
 
-
   _createClass(FilterHandle, [{
     key: "setGroup",
     value: function setGroup(group) {
@@ -287,7 +286,6 @@ var FilterHandle = exports.FilterHandle = function () {
 
   }, {
     key: "on",
-
 
     /**
      * Subscribe to events on this `FilterHandle`.
@@ -1079,7 +1077,6 @@ var SelectionHandle = exports.SelectionHandle = function () {
    *   undefined) to clear the group.
    */
 
-
   _createClass(SelectionHandle, [{
     key: "setGroup",
     value: function setGroup(group) {
@@ -1120,7 +1117,6 @@ var SelectionHandle = exports.SelectionHandle = function () {
 
   }, {
     key: "_mergeExtraInfo",
-
 
     /**
      * Combines the given `extraInfo` (if any) with the handle's default
