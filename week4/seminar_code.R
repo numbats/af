@@ -23,34 +23,17 @@ holidays <- tourism |>
   summarise(Trips = sum(Trips), .by = c("State", "Quarter")) |>
   as_tsibble(index = Quarter, key = State)
 
+holidays |> autoplot(Trips)
+
 ## Fit models
 fit <- holidays |>
   model(
     Seasonal_naive = SNAIVE(Trips),
     Naive = NAIVE(Trips),
     Drift = RW(Trips ~ drift()),
-    Mean = MEAN(Trips)
+    Mean = MEAN(Trips),
+    tslm = TSLM(Trips ~ trend() + season())
   )
-
-## Check residuals
-fit |>
-  filter(State == "Victoria") |>
-  select(Seasonal_naive) |>
-  gg_tsresiduals()
-
-augment(fit) |>
-  filter(State == "Victoria", .model == "Seasonal_naive") |>
-  features(.innov, ljung_box, lag = 8)
-
-## Which model fits best?
-
-accuracy(fit) |>
-  summarise(
-    RMSSE = sqrt(mean(RMSSE^2)),
-    MAPE = mean(MAPE),
-    .by = .model
-  ) |>
-  arrange(RMSSE)
 
 ## Produce forecasts
 
@@ -70,3 +53,42 @@ holidays_fc |>
     lower = `95%`$lower,
     upper = `95%`$upper
   )
+
+# Forecasting with a decomposition
+
+my_dcmp_spec <- decomposition_model(
+  STL(Trips),
+  NAIVE(season_adjust), # Model for seasonally adjusted series
+  SNAIVE(season_year)   # Model for seasonal component
+)
+
+fit <- holidays |>
+  model(stl_naive = my_dcmp_spec)
+
+
+# Forecasting with a transformation
+
+fc <- holidays |>
+  model(TSLM(sqrt(Trips) ~ trend() + season())
+  ) |> 
+  forecast(h="5 years")
+
+fc |> 
+  filter(State == "Western Australia") |>
+  autoplot(holidays)
+
+# Forecasting with a transformation and a decomposition
+
+my_dcmp_spec <- decomposition_model(
+  STL(sqrt(Trips)),
+  NAIVE(season_adjust), # Model for seasonally adjusted series
+  SNAIVE(season_year)   # Model for seasonal component
+)
+
+fc <- holidays |>
+  model(stl_naive = my_dcmp_spec) |> 
+  forecast(h="5 years")
+
+fc |> 
+  filter(State == "Victoria") |>
+  autoplot(holidays)

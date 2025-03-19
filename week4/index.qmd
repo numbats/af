@@ -9,17 +9,23 @@ source(here::here("course_info.R"))
 
 ## What you will learn this week
 
+* Forecasting workflow
 * Four benchmark forecasting methods that we will use for comparison
-* Fitted values, residuals
-* Distributional forecasts
+* Linear trends, dummy seasonality
+* Forecasting with transformations
+* Forecasting with decompositions
 
 ## Pre-class activities
 
-Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html), Sections 5.1 -- 5.5, and watch all embedded videos
+Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html), Sections 5.1 -- 5.3, 5.6 -- 5.7, and watch all embedded videos
+
+Read [Chapter 7.4 of the textbook](https://otexts.com/fpp3/useful-predictors.html), and watch the embedded video
 
 ## Exercises (on your own or in tutorial)
 
 Complete Exercises 1-5, 11 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
+
+Complete Exercises 2 and 6 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html)
 
 <!-- [**Solutions to Exercises**](ex4-sol.qmd) -->
 

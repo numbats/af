@@ -10,7 +10,7 @@ format:
     fig-width: 7.5
     fig-height: 3.5
     include-in-header: ../header.tex
-    keep_tex: yes
+    keep_tex: true
     toc: true
 ---
 
@@ -23,15 +23,17 @@ options(width = 100)
 
 # Four benchmark methods
 
-## Four benchmark methods
-\fontsize{13}{14}\sf
+## Mean method
 
-### `MEAN(y)`: Average method
+`MEAN(y)` 
 
   * Forecast of all future values is equal to mean of historical data $\{y_1,\dots,y_T\}$.
   * Forecasts: $\hat{y}_{T+h|T} = \bar{y} = (y_1+\dots+y_T)/T$
+  * Implicit model: $y_t = c + \varepsilon_t$ where $\varepsilon_t \sim WN$.
 
-```{r mean-method-explained, echo=FALSE, message=FALSE, warning=FALSE, fig.height = 2.7}
+## Mean method
+
+```{r mean-method-explained, echo=FALSE, message=FALSE, warning=FALSE}
 bricks <- aus_production |>
   filter(!is.na(Bricks)) |>
   mutate(average = mean(Bricks))
@@ -51,16 +53,18 @@ bricks |>
 
 \vspace*{10cm}
 
-## Four benchmark methods
-\fontsize{13}{14}\sf
+## Naïve method
 
-### `NAIVE(y)`: Naïve method
+`NAIVE(y)`
 
   * Forecasts equal to last observed value.
   * Forecasts: $\hat{y}_{T+h|T} =y_T$.
+  * Implicit model is a random walk: $y_t = y_{t-1} + \varepsilon_t$
   * Consequence of efficient market hypothesis.
 
-```{r naive-method-explained, echo = FALSE, warning = FALSE, fig.height = 2.75}
+## Naïve method
+
+```{r naive-method-explained, echo = FALSE, warning = FALSE}
 bricks |>
   filter(!is.na(Bricks)) |>
   model(NAIVE(Bricks)) |>
@@ -72,43 +76,47 @@ bricks |>
 
 \vspace*{10cm}
 
-## Four benchmark methods
-\fontsize{13}{14}\sf
+## Seasonal Naïve method
 
-### `SNAIVE(y ~ lag(m))`: Seasonal naïve method
+`SNAIVE(y ~ lag(m))`
 
   * Forecasts equal to last value from same season.
   * Forecasts: $\hat{y}_{T+h|T} =y_{T+h-m(k+1)}$, where $m=$ seasonal period and $k$ is the integer part of $(h-1)/m$.
+  * Implicit model: $y_t = y_{t-m} + \varepsilon_t$
 
-```{r snaive-method-explained, echo = FALSE, warning = FALSE, fig.height = 2.75}
+## Seasonal Naïve method
+
+```{r snaive-method-explained, echo = FALSE, warning = FALSE}
 bricks |>
   model(SNAIVE(Bricks ~ lag("year"))) |>
   forecast(h = "5 years") |>
   autoplot(filter(bricks, year(Quarter) > 1990), level = NULL) +
-  geom_point(data = slice(bricks, (n() - 3):n()), aes(y = Bricks), colour = "#0072B2") +
+  geom_point(
+    data = slice(bricks, (n() - 3):n()),
+    aes(y = Bricks),
+    colour = "#0072B2"
+  ) +
   labs(title = "Clay brick production in Australia")
 ```
 
-\vspace*{10cm}
+## Drift method
 
-## Four benchmark methods
-\fontsize{13}{14}\sf
+`RW(y ~ drift())`
 
-### `RW(y ~ drift())`: Drift method
+ * Forecasts equal to last value plus average change:
 
- * Forecasts equal to last value plus average change.
- * Forecasts:\vspace*{-.7cm}
-
- \begin{align*}
- \hat{y}_{T+h|T} & =  y_{T} + \frac{h}{T-1}\sum_{t=2}^T (y_t-y_{t-1})\\
-                 & = y_T + \frac{h}{T-1}(y_T -y_1).
- \end{align*}\vspace*{-0.2cm}
+  \vspace*{-1cm}
+  \begin{align*}
+    \hat{y}_{T+h|T} & =  y_{T} + \frac{h}{T-1}\sum_{t=2}^T (y_t-y_{t-1})\\
+                    & = y_T + \frac{h}{T-1}(y_T -y_1).
+  \end{align*}
+ 
+  \vspace*{-0.6cm}
 
    * Equivalent to extrapolating a line drawn between first and last observations.
+   * Implicit model: Random walk with drift: $y_t = c + y_{t-1} + \varepsilon_t$
 
-## Four benchmark methods
-
-### Drift method
+## Drift method
 
 ```{r drift-method-explained, echo = FALSE, warning = FALSE}
 aus_production |>
@@ -118,7 +126,9 @@ aus_production |>
   autoplot(aus_production, level = NULL) +
   geom_line(
     data = slice(aus_production, range(cumsum(!is.na(Bricks)))),
-    aes(y = Bricks), linetype = "dashed", colour = "#0072B2"
+    aes(y = Bricks),
+    linetype = "dashed",
+    colour = "#0072B2"
   ) +
   labs(title = "Clay brick production in Australia")
 ```
@@ -126,108 +136,152 @@ aus_production |>
 \vspace*{10cm}
 
 
-# Residuals
+# Time trends and dummy seasonality
 
-## Fitted values
-
- - $\hat{y}_{t|t-1}$ is the forecast of $y_t$ based on observations $y_1,\dots,y_{t-1}$.
- - We call these "fitted values".
- - Sometimes drop the subscript: $\hat{y}_t \equiv \hat{y}_{t|t-1}$.
- - Often not true forecasts since parameters are estimated on all data.
-
-### For example:
-
- - $\hat{y}_{t} = \bar{y}$ for average method.
- - $\hat{y}_{t} = y_{t-1} + (y_{T}-y_1)/(T-1)$ for drift method.
-
-## Forecasting residuals
+## Linear time trends
 
 \begin{block}{}
-\textbf{Residuals in forecasting:} difference between observed value and its fitted value: $e_t = y_t-\hat{y}_{t|t-1}$.
+\centerline{$y_t = \beta_0 + \beta_1 x_{1,t} + \varepsilon_t$}
 \end{block}
-\pause\fontsize{13}{15}\sf
 
-\alert{Assumptions}
+`TSLM(y ~ trend())`
 
-  1. $\{e_t\}$ uncorrelated. If they aren't, then information left in  residuals that should be used in computing forecasts.
-  2. $\{e_t\}$ have mean zero. If they don't, then forecasts are biased.
+  * $x_{1,t} = t$, \qquad $t = 1,\dots,T$
+
+  * Forecasts: $\hat{y}_{T+h|T} = \beta_0 + \beta_1(T+h)$
+
+## Piecewise linear time trends
+
+\begin{block}{}
+\centerline{$y_t = \beta_0 + \beta_1 x_{1,t} + \dots + \beta_k x_{k,t} + \varepsilon_t$}
+\end{block}
+
+`TSLM(y ~ trend(knots = c(tau1, tau2, ..., taup)))`
+
+  * Bends at $\tau_1,\dots,\tau_p$
+
+  * $x_{1,t} = t$
+
+  * $x_{i,t} = (t-\tau_i)_+ = \left\{ 
+    \begin{array}{ll}
+      0 & t <\tau_i\\
+      (t-\tau_i) & t \ge \tau_i
+    \end{array}\right.$
+
+  * Forecasts: $\beta_0 + \beta_1 (T+h) + \beta_{2}(T+h-\tau_1)_+ + \dots + \beta_{p+1} (T+h-\tau_p)_+$
+
+## Quadratic time trends
+
+\begin{block}{}
+\centerline{$y_t = \beta_0 + \beta_1 x_{1,t} + \beta_2 x_{2,t} + \varepsilon_t$}
+\end{block}
+
+  * $x_{1,t} = t$
+
+  * $x_{2,t} = t^2$
+
+  * Forecasts: $\beta_0 + \beta_1 (T+h) + \beta_2 (T+h)^2$
+
+**NOT RECOMMENDED!**
+
+## Daily dummy variables
+
+\begin{textblock}{7}(8,1.4)
+\begin{block}{}\small\centering
+\begin{tabular}{lrrrr}
+\toprule
+Day & d1 & d2 & d3 & d4 \\
+\midrule
+Monday     & 1  & 0  & 0  & 0 \\
+Tuesday    & 0  & 1  & 0  & 0 \\
+Wednesday  & 0  & 0  & 1  & 0 \\
+Thursday   & 0  & 0  & 0  & 1 \\
+Friday     & 0  & 0  & 0  & 0 \\
+Monday     & 1  & 0  & 0  & 0 \\
+Tuesday    & 0  & 1  & 0  & 0 \\
+Wednesday  & 0  & 0  & 1  & 0 \\
+Thursday   & 0  & 0  & 0  & 1 \\
+Friday     & 0  & 0  & 0  & 0 \\
+\bottomrule
+\end{tabular}
+\end{block}
+\end{textblock}
+
+\begin{textblock}{6}(0.4,1.5)
+\texttt{TSLM(y\ \textasciitilde{}\ season())} 
+\fontsize{13}{15}\sf
+\begin{itemize}\tightlist
+\item Using one dummy for each category gives too many dummy variables!
+\item The coefficients of the dummies are relative to the omitted category
+\item \texttt{season()} automatically generates the dummy variables for you.
+\end{itemize}
+\end{textblock}
+
+# Forecasting with transformations
+
+## Forecasting with transformations
+
+  * Back-transformed point forecasts are medians.
+  * To get the mean, we need a bias adjustment.
 
 \pause
 
-\alert{Useful properties} (for distributions & prediction intervals)
+Let $X$ have mean $\mu$ and variance $\sigma^2$.
 
-  3. $\{e_t\}$ have constant variance.
-  4. $\{e_t\}$ are normally distributed.
+Let $f(x)$ be back-transformation function, and $Y=f(X)$.
 
+Taylor series expansion about $\mu$:
+$$Y = f(X) \approx f(\mu) + (X-\mu)f'(\mu) + \frac{1}{2}(X-\mu)^2f''(\mu).$$\pause\vspace*{-0.4cm}
 
-## ACF of residuals
-
-  * We assume that the residuals are white noise (uncorrelated, mean zero, constant variance). If they aren't, then there is information left in  the residuals that should be used in computing forecasts.
-
-  * So a standard residual diagnostic is to check the ACF of the residuals of a forecasting method.
-
-  * We *expect* these to look like white noise.
-
-## Ljung-Box tests
-
-\begin{block}{}
-$r_k = $ autocorrelation of residual at lag $k$
-\end{block}\vspace*{-0.3cm}
-
-Test *whole set* of $r_{k}$  values simultaneously.
-
-\begin{block}{}
-\centerline{$\displaystyle
- Q^* = T(T+2) \sum_{k=1}^\ell (T-k)^{-1}r_k^2$}
-where $\ell$  is max lag being considered and $T$ is number of observations.
-\end{block}
-
-  * My preferences: $\ell=10$ for non-seasonal data, $h=2m$ for seasonal data (where $m$ is seasonal period).
-  * If data are WN, $Q^*$ has $\chi^2$ distribution with  $\ell$ degrees of freedom.
-
-# Forecast distributions
-
-## Forecast distributions
-
- * A forecast $\hat{y}_{T+h|T}$ is (usually) the mean of the conditional distribution $y_{T+h} \mid y_1, \dots, y_{T}$.
- * Most time series models produce normally distributed forecasts.
- * The forecast distribution describes the probability of observing any future value.
-
-## Forecast distributions
-
-Assuming residuals are normal, uncorrelated, sd = $\hat\sigma$:
-
-\begin{block}{}
-\begin{tabular}{ll}
-\bf Mean: & $y_{T+h|T} \sim N(\bar{y}, (1 + 1/T)\hat{\sigma}^2)$\\[0.2cm]
-\bf Naïve: & $y_{T+h|T} \sim N(y_T, h\hat{\sigma}^2)$\\[0.2cm]
-\bf Seasonal naïve: & $y_{T+h|T} \sim N(y_{T+h-m(k+1)}, (k+1)\hat{\sigma}^2)$\\[0.2cm]
-\bf Drift: & $y_{T+h|T} \sim N(y_T + \frac{h}{T-1}(y_T - y_1),h\frac{T+h}{T}\hat{\sigma}^2)$
-\end{tabular}
-\end{block}
-
-where $k$ is the integer part of $(h-1)/m$.
-
-Note that when $h=1$ and $T$ is large, these all give the same approximate forecast variance: $\hat{\sigma}^2$.
-
-## Prediction intervals
-
- * A prediction interval gives a region within which we expect $y_{T+h}$ to lie with a specified probability.
- * Assuming forecast errors are normally distributed, then a 95% PI is
- \begin{alertblock}{}
-\centerline{$
-  \hat{y}_{T+h|T} \pm 1.96 \hat\sigma_h
-$}
+\begin{alertblock}{}
+\centerline{$\E[Y] = \E[f(X)] \approx f(\mu) + \frac12 \sigma^2 f''(\mu)$}
 \end{alertblock}
-where $\hat\sigma_h$ is the st dev of the $h$-step distribution.
 
- * When $h=1$, $\hat\sigma_h$ can be estimated from the residuals.
+## Bias adjustment
+\fontsize{13}{14}\sf\vspace*{-0.2cm}
 
-## Prediction intervals
+**Box-Cox back-transformation:**
+\begin{align*}
+y_t &= \left\{\begin{array}{ll}
+        \exp(w_t)      & \quad \lambda = 0; \\
+        (\lambda W_t+1)^{1/\lambda}  & \quad \lambda \ne 0.
+\end{array}\right. \\
+f(x) &= \begin{cases}
+                        e^x & \quad\lambda=0;\\
+ (\lambda x + 1)^{1/\lambda} & \quad\lambda\ne0.
+ \end{cases}\\
+f''(x) &= \begin{cases}
+                        e^x & \quad\lambda=0;\\
+ (1-\lambda)(\lambda x + 1)^{1/\lambda-2} & \quad\lambda\ne0.
+ \end{cases}
+\end{align*}\pause\vspace*{-0.3cm}
+\begin{alertblock}{}
+\centerline{$\E[Y] \approx \begin{cases}
+                        e^\mu\left[1+\frac{\sigma^2}{2}\right] & \quad\lambda=0;\\
+ (\lambda \mu + 1)^{1/\lambda}\left[1+\frac{\sigma^2(1-\lambda)}{2(\lambda\mu+1)^2}\right] & \quad\lambda\ne0.
+ \end{cases}$}
+\end{alertblock}
 
- * Point forecasts are often useless without a measure of uncertainty (such as prediction intervals).
- * Prediction intervals require a stochastic model (with random errors, etc).
- * For most models, prediction intervals get wider as the forecast horizon increases.
- * Use `level` argument to control coverage.
- * Check residual assumptions before believing them.
- * Prediction intervals are usually too narrow due to unaccounted uncertainty.
+# Forecasting with decompositions
+
+## Forecasting with decompositions
+
+\begin{block}{}
+$$y_t = \hat{S}_t + \hat{A}_t$$
+\vspace*{-0.5cm}\begin{itemize}\tightlist
+  \item $\hat{A}_t$ is seasonally adjusted component
+  \item $\hat{S}_t$ is seasonal component.
+\end{itemize}
+\end{block}
+
+  *  Forecast $\hat{S}_t$ using a Seasonal Naïve method.
+  *  Forecast $\hat{A}_t$ using a non-seasonal time series method.
+  *  Combine forecasts of $\hat{S}_t$ and $\hat{A}_t$ to get forecasts of original data.
+
+## Decomposition models
+
+`decomposition_model()` creates a decomposition model
+
+ * You must provide a method for forecasting the `season_adjust` series.
+ * A seasonal naïve method is used by default for the `seasonal` components.
+ * The variances from both the seasonally adjusted and seasonal forecasts are combined.
