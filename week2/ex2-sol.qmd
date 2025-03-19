@@ -257,6 +257,7 @@ Unusual observations:
 
 ```{r}
 #| label: ex6
+#| cache: true
 
 set.seed(12345678)
 myseries <- aus_retail |>
