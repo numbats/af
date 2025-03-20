@@ -22,6 +22,8 @@ Read [Chapter 3 of the textbook](https://otexts.com/fpp3/decomposition.html) and
 Complete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).
 
 <!-- [**Solutions to Exercises**](ex3-sol.qmd) -->
+* [Recorded tutorial code](tutorial_code.R)
+
 
 ```{r}
 #| output: asis
