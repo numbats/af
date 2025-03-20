@@ -1,0 +1,40 @@
+---
+title: "Activities: Week 4"
+---
+
+## Facebook stock price
+
+Use the Facebook stock price (data set `gafa_stock`) to do the following:
+
+* Produce a time plot of the series.
+* Produce forecasts using the drift method and plot them.
+* Show that the forecasts are identical to extending the line drawn between the first and last observations.
+* Try using some of the other benchmark functions to forecast the same data set. Which do you think is best? Why?
+
+## Australian brick production
+
+We will use the Bricks data from `aus_production` (Australian quarterly clay brick production 1956–-2005).
+
+* Use an STL decomposition to calculate the trend-cycle and seasonal indices. (Experiment with the seasonal window.)
+* Compute and plot the seasonally adjusted data.
+* Use a naïve method to produce forecasts of the seasonally adjusted data.
+* Use `decomposition_model()` to reseasonalise the results, giving forecasts for the original data.
+* Repeat with a robust STL decomposition. Does it make much difference?
+
+## Afghanistan population
+
+The annual population of Afghanistan is available in the `global_economy` data set.
+
+* Plot the data and comment on its features. Can you observe the effect of the Soviet-Afghan war?
+* Fit a linear trend model and compare this to a piecewise linear trend model with knots at 1980 and 1989.
+* Generate forecasts from these two models for the five years after the end of the data. Which looks better? Why?
+
+## Olympic running times
+
+Data set `olympic_running` contains the winning times (in seconds) in each Olympic Games sprint, middle-distance and long-distance track events from 1896 to 2016.
+
+* Plot the winning time against the year for each event. Describe the main features of the plot.
+* Fit a regression line to the data for each event. Obviously the winning times have been decreasing, but at what average rate per year?
+* Predict the winning time for each race in the 2028 Olympics. Do they look reasonable?
+* Adjust your model to make the trends piecewise linear. Do the forecasts look more reasonable?
+
