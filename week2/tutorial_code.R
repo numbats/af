@@ -1,7 +1,5 @@
 library(fpp3)
 
-# 22 students
-
 aus_production
 ?aus_production
 
