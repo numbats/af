@@ -1,6 +1,6 @@
 ---
 title: ETC3550/ETC5550 Applied forecasting
-author: "Week 8: ARIMA models"
+author: "Week 9: ARIMA models"
 format:
   presentation-beamer:
     knitr:

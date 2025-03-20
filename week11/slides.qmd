@@ -1,6 +1,6 @@
 ---
 title: "ETC3550/ETC5550 Applied&nbsp;forecasting"
-author: "Week 10: Regression models"
+author: "Week 11: Regression models"
 format:
   presentation-beamer:
     knitr:

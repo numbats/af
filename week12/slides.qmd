@@ -1,6 +1,6 @@
 ---
 title: ETC3550/ETC5550 Applied forecasting
-author: "Week 11: Dynamic regression models"
+author: "Week 12: Dynamic regression models"
 format:
   presentation-beamer:
     knitr:

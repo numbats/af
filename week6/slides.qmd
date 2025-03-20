@@ -1,6 +1,6 @@
 ---
 title: ETC3550/ETC5550 Applied forecasting
-author: "Week 5: Simple Exponential smoothing"
+author: "Week 6: Simple Exponential smoothing"
 format:
   presentation-beamer:
     knitr:
