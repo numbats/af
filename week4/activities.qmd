@@ -2,15 +2,6 @@
 title: "Activities: Week 4"
 ---
 
-## Facebook stock price
-
-Use the Facebook stock price (data set `gafa_stock`) to do the following:
-
-* Produce a time plot of the series.
-* Produce forecasts using the drift method and plot them.
-* Show that the forecasts are identical to extending the line drawn between the first and last observations.
-* Try using some of the other benchmark functions to forecast the same data set. Which do you think is best? Why?
-
 ## Australian brick production
 
 We will use the Bricks data from `aus_production` (Australian quarterly clay brick production 1956–-2005).
