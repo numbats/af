@@ -9,7 +9,7 @@ build:
 	quarto render
 
 deploy:
-	git push
+	quarto publish gh-pages
 
 clean:
 	rm -rf _site
