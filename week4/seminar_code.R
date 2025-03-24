@@ -4,8 +4,32 @@ library(fpp3)
 
 apple <- gafa_stock |> filter(Symbol == "AAPL")
 
-apple |> 
+apple |>
   autoplot(Close)
+
+# Use trading day as index
+apple <- apple |>
+  mutate(trading_day = row_number()) |>
+  update_tsibble(index = trading_day, regular = TRUE)
+
+fit <- apple |>
+  model(
+    #Seasonal_naive = SNAIVE(Close),
+    Naive = NAIVE(Close),
+    Drift = RW(Close ~ drift()),
+    Mean = MEAN(Close)
+  )
+
+fc <- fit |>
+  forecast(h = 20)
+
+fc |> autoplot(apple |> tail(50), level = NULL)
+
+
+# Use date as index
+apple <- apple |>
+  update_tsibble(index = Date, regular = TRUE) |>
+  fill_gaps()
 
 fit <- apple |>
   model(
@@ -14,6 +38,11 @@ fit <- apple |>
     Drift = RW(Close ~ drift()),
     Mean = MEAN(Close)
   )
+
+fc <- fit |>
+  forecast(h = 20)
+
+fc |> autoplot(apple |> tail(50), level = NULL)
 
 ## ---- Holiday tourism by state --------------
 
@@ -35,6 +64,8 @@ fit <- holidays |>
     tslm = TSLM(Trips ~ trend() + season())
   )
 
+fit |> select(Mean) |> filter(State == "Victoria") |> report()
+
 ## Produce forecasts
 
 holidays_fc <- fit |>
@@ -44,7 +75,7 @@ holidays_fc |>
   autoplot(holidays, level = NULL)
 
 holidays_fc |>
-  filter(.model == "Seasonal_naive") |>
+  filter(.model == "Seasonal_naive", State == "Victoria") |>
   autoplot(holidays, show_gap = FALSE)
 
 holidays_fc |>
@@ -54,41 +85,3 @@ holidays_fc |>
     upper = `95%`$upper
   )
 
-# Forecasting with a decomposition
-
-my_dcmp_spec <- decomposition_model(
-  STL(Trips),
-  NAIVE(season_adjust), # Model for seasonally adjusted series
-  SNAIVE(season_year)   # Model for seasonal component
-)
-
-fit <- holidays |>
-  model(stl_naive = my_dcmp_spec)
-
-
-# Forecasting with a transformation
-
-fc <- holidays |>
-  model(TSLM(sqrt(Trips) ~ trend() + season())
-  ) |> 
-  forecast(h="5 years")
-
-fc |> 
-  filter(State == "Western Australia") |>
-  autoplot(holidays)
-
-# Forecasting with a transformation and a decomposition
-
-my_dcmp_spec <- decomposition_model(
-  STL(sqrt(Trips)),
-  NAIVE(season_adjust), # Model for seasonally adjusted series
-  SNAIVE(season_year)   # Model for seasonal component
-)
-
-fc <- holidays |>
-  model(stl_naive = my_dcmp_spec) |> 
-  forecast(h="5 years")
-
-fc |> 
-  filter(State == "Victoria") |>
-  autoplot(holidays)
