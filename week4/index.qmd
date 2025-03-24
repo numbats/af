@@ -32,6 +32,12 @@ Complete Exercises 2 and 6 from [Section 7.10 of the book](https://otexts.com/fp
 ```{r}
 #| output: asis
 show_slides(week)
+```
+
+[Code used in lecture](lecture4.R)
+
+```{r}
+#| output: asis
 show_activity(week, show_solutions = FALSE)
 show_assignments(week)
 ```
