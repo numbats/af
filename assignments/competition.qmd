@@ -26,17 +26,14 @@ source(here::here("course_info.R"))
 submit(schedule, "Forecasting Competition")
 ```
 
-<!--
-___
-
 ## Leaderboard
 
 ```{r}
-#| eval: false
-readRDS(here::here("assignments/leaderboard.rds")) |>
+#| eval: true
+#source(here::here("assignments/competition.R"))
+readRDS(here::here("assignments/competition_leaderboard.rds")) |>
   DT::datatable()
 ```
---->
 
 ## Forecasts
 

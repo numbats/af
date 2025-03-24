@@ -22,8 +22,8 @@ plotcompetition <- function(data, F, L, U, Actual = NULL, xlab = NULL) {
   }
   xlim <- data %>%
     summarise(
-      lower = quantile(c({{F}},{{L}}), 0.01, na.rm=TRUE),
-      upper = quantile(c({{F}},{{U}}), 0.99, na.rm=TRUE)
+      lower = quantile(c({{F}},{{L}}), 0.02, na.rm=TRUE),
+      upper = quantile(c({{F}},{{U}}), 0.98, na.rm=TRUE)
     ) %>%
     as.numeric()
   p <- p + coord_cartesian(xlim=xlim)

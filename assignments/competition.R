@@ -8,7 +8,7 @@ competition <- readRDS(here::here("assignments/competition_responses.rds"))
 
 # Actual values
 q1 <- q2 <- q3 <- q4 <- q5 <- NULL
-#q1 <- 149.68 # https://finance.yahoo.com/quote/GOOG/history
+q1 <- 169.93 # https://finance.yahoo.com/quote/GOOG/history
 #q2 <- 17.6 #http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml
 #q3 <- 0
 #q4 <- 14.300000 #https://www.abs.gov.au/ausstats/abs@.nsf/mf/6202.0
@@ -59,8 +59,7 @@ dev.off()
 
 savepng(here::here("assignments/Q4"), height = 80, width = 15)
 competition |> plotcompetition(F = Q4F, L = Q4L, U = Q4U, Actual = q4, xlab = "Millions") +
-  ggtitle("Seasonally adjusted total employment in April 2025") +
-  coord_cartesian(xlim=c(12, 15))
+  ggtitle("Seasonally adjusted total employment in April 2025") 
 dev.off()
 
 savepng(here::here("assignments/Q5"), height = 80, width = 15)
