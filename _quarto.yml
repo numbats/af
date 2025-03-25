@@ -3,6 +3,7 @@ project:
   output-dir: _site
   resources:
     - "CNAME"
+    - assignments/Assignment_template.qmd
   render:
   - "*.qmd"
   - "!/slides"
