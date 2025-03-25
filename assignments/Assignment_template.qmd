@@ -18,6 +18,5 @@ get_my_data <- function(student_id) {
     if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)
   }
 }
-# Replace 12345678 with your student ID
-retail <- get_my_data(12345678)
+retail <- get_my_data(<YOUR STUDENT ID HERE>)
 ```
