@@ -501,7 +501,7 @@
     "href": "assignments/Assignment_template.html",
     "title": "Title of your assignment",
     "section": "",
-    "text": "library(fpp3)\nget_my_data &lt;- function(student_id) {\n  set.seed(student_id)\n  all_data &lt;- readr::read_rds(\"https://bit.ly/monashretaildata\")\n  while(TRUE) {\n    retail &lt;- filter(all_data, `Series ID` == sample(`Series ID`, 1))\n    if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)\n  }\n}\nretail &lt;- get_my_data(rmarkdown::metadata$student_id)"
+    "text": "library(fpp3)\nget_my_data &lt;- function(student_id) {\n  set.seed(student_id)\n  all_data &lt;- readr::read_rds(\"https://bit.ly/monashretaildata\")\n  while(TRUE) {\n    retail &lt;- filter(all_data, `Series ID` == sample(`Series ID`, 1))\n    if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)\n  }\n}\n# Replace 12345678 with your student ID\nretail &lt;- get_my_data(12345678)"
   },
   {
     "objectID": "assignments/competition.html",
@@ -522,7 +522,7 @@
     "href": "assignments/competition.html#forecasts",
     "title": "Forecasting competition",
     "section": "Forecasts",
-    "text": "Forecasts\n\n\n\nQ1\n\n\nGoogle closing stock price on 24 March 2025\n\n\n\n\n\nQ2\n\n\nMaximum temperature at Melbourne airport on 14 April 2025\n\n\n\n\n\nQ3\n\n\nDifference in points in AFL Anzac Day clash\n\n\n\n\n\nQ4\n\n\nSeasonally adjusted total employment for April 2025\n\n\n\n\n\nQ5\n\n\nGoogle closing stock price on 26 May 2025"
+    "text": "Forecasts\n\n\n\n\n\n\nQ1\n\n\nGoogle closing stock price on 24 March 2025\n\n\n\n\n\nQ2\n\n\nMaximum temperature at Melbourne airport on 14 April 2025\n\n\n\n\n\nQ3\n\n\nDifference in points in AFL Anzac Day clash\n\n\n\n\n\nQ4\n\n\nSeasonally adjusted total employment for April 2025\n\n\n\n\n\nQ5\n\n\nGoogle closing stock price on 26 May 2025"
   },
   {
     "objectID": "index.html",
@@ -795,14 +795,14 @@
     "href": "week4/activities.html",
     "title": "Activities: Week 4",
     "section": "",
-    "text": "We will use the Bricks data from aus_production (Australian quarterly clay brick production 1956–-2005).\n\nUse an STL decomposition to calculate the trend-cycle and seasonal indices. (Experiment with the seasonal window.)\nCompute and plot the seasonally adjusted data.\nUse a naïve method to produce forecasts of the seasonally adjusted data.\nUse decomposition_model() to reseasonalise the results, giving forecasts for the original data.\nRepeat with a robust STL decomposition. Does it make much difference?"
+    "text": "Participate in this workshop live at: https://partici.fi/96249422"
   },
   {
     "objectID": "week4/activities.html#australian-brick-production",
     "href": "week4/activities.html#australian-brick-production",
     "title": "Activities: Week 4",
-    "section": "",
-    "text": "We will use the Bricks data from aus_production (Australian quarterly clay brick production 1956–-2005).\n\nUse an STL decomposition to calculate the trend-cycle and seasonal indices. (Experiment with the seasonal window.)\nCompute and plot the seasonally adjusted data.\nUse a naïve method to produce forecasts of the seasonally adjusted data.\nUse decomposition_model() to reseasonalise the results, giving forecasts for the original data.\nRepeat with a robust STL decomposition. Does it make much difference?"
+    "section": "Australian brick production",
+    "text": "Australian brick production\nWe will use the Bricks data from aus_production (Australian quarterly clay brick production 1956–-2005).\n\nUse an STL decomposition to calculate the trend-cycle and seasonal indices. (Experiment with the seasonal window.)\nCompute and plot the seasonally adjusted data.\nUse a naïve method to produce forecasts of the seasonally adjusted data.\nUse decomposition_model() to reseasonalise the results, giving forecasts for the original data.\nRepeat with a robust STL decomposition. Does it make much difference?"
   },
   {
     "objectID": "week4/activities.html#afghanistan-population",
