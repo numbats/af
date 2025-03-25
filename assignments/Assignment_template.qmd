@@ -1,7 +1,6 @@
 ---
 title: "Title of your assignment"
 author: Your Name
-student_id: 123456789 # Your student ID
 format: html
 execute:
   echo: true
@@ -19,5 +18,5 @@ get_my_data <- function(student_id) {
     if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)
   }
 }
-retail <- get_my_data(rmarkdown::metadata$student_id)
+retail <- get_my_data(<YOUR STUDENT ID HERE>)
 ```
