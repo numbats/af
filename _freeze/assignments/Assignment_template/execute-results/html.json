@@ -1,9 +1,11 @@
 {
-  "hash": "1b28a4143404f19211aba265ff5b2b03",
+  "hash": "4127611e9e9f04a6534fef59d95f23b7",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Title of your assignment\"\nauthor: Your Name\nstudent_id: 123456789 # Your student ID\nformat: html\nexecute:\n  echo: true\n---\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(fpp3)\nget_my_data <- function(student_id) {\n  set.seed(student_id)\n  all_data <- readr::read_rds(\"https://bit.ly/monashretaildata\")\n  while(TRUE) {\n    retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1))\n    if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)\n  }\n}\nretail <- get_my_data(rmarkdown::metadata$student_id)\n```\n:::\n",
-    "supporting": [],
+    "markdown": "---\ntitle: \"Title of your assignment\"\nauthor: Your Name\nformat: html\nexecute:\n  echo: true\n---\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(fpp3)\nget_my_data <- function(student_id) {\n  set.seed(student_id)\n  all_data <- readr::read_rds(\"https://bit.ly/monashretaildata\")\n  while(TRUE) {\n    retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1))\n    if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)\n  }\n}\n# Replace 12345678 with your student ID\nretail <- get_my_data(12345678)\n```\n:::\n",
+    "supporting": [
+      "Assignment_template_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
