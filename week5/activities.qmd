@@ -1,0 +1,25 @@
+---
+title: "Activities: Week 5"
+---
+
+## True or false?
+
+1. Good forecast methods should have normally distributed residuals.
+2. A model with small residuals will give good forecasts.
+3. The best measure of forecast accuracy is MAPE.
+4. If your model doesn’t forecast well, you should make it more complicated.
+5. Always choose the model with the best forecast accuracy as measured on the test set.
+
+## Household budget forecasting
+
+1. Create a training set for household wealth (`hh_budget`) by withholding the last four years as a test set.
+2. Fit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.
+3. Compute the accuracy of your forecasts. Which method does best?
+4. Do the residuals from the best method resemble white noise?
+
+## Exam part A
+
+2024 exam: A2, A3, A6
+
+
+
