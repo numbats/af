@@ -195,9 +195,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#true-or-false" id="toc-true-or-false" class="nav-link active" data-scroll-target="#true-or-false">True or false?</a></li>
-  <li><a href="#household-budget-forecasting" id="toc-household-budget-forecasting" class="nav-link" data-scroll-target="#household-budget-forecasting">Household budget forecasting</a></li>
-  <li><a href="#exam-part-a" id="toc-exam-part-a" class="nav-link" data-scroll-target="#exam-part-a">Exam part A</a></li>
+  <li><a href="#household-budget-forecasting" id="toc-household-budget-forecasting" class="nav-link active" data-scroll-target="#household-budget-forecasting">Household budget forecasting</a></li>
+  <li><a href="#true-or-false" id="toc-true-or-false" class="nav-link" data-scroll-target="#true-or-false">True or false?</a></li>
+  <li><a href="#exam-part-a" id="toc-exam-part-a" class="nav-link" data-scroll-target="#exam-part-a">2024 Exam part A</a></li>
   </ul>
 </nav>
     </div>
@@ -223,6 +223,52 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="household-budget-forecasting" class="level2">
+<h2 class="anchored" data-anchor-id="household-budget-forecasting">Household budget forecasting</h2>
+<ol type="1">
+<li>Create a training set for household wealth (<code>hh_budget</code>) by withholding the last four years as a test set.</li>
+<li>Fit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.</li>
+<li>Compute the accuracy of your forecasts. Which method does best?</li>
+<li>Do the residuals from the best method resemble white noise?</li>
+</ol>
+<!-- This is a fairly straightforward exercise, giving students some practice in the steps to follow when comparing forecasting methods. The drift method is better for every country and on average. In all cases the residuals from the drift model resemble white noise.
+
+train <- hh_budget |>
+  filter(Year <= max(Year) - 4)
+fit <- train |>
+  model(
+    naive = NAIVE(Wealth),
+    drift = RW(Wealth ~ drift()),
+    mean = MEAN(Wealth)
+  )
+fc <- fit |> forecast(h = 4)
+fc |>
+  accuracy(hh_budget) |>
+  arrange(Country, MASE)
+fc |>
+  accuracy(hh_budget) |>
+  group_by(.model) |>
+  summarise(MASE = mean(MASE)) |>
+  ungroup() |>
+  arrange(MASE)
+fit |>
+  filter(Country == "Australia") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "Canada") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "Japan") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "USA") |>
+  select(drift) |>
+  gg_tsresiduals()
+``` -->
+</section>
 <section id="true-or-false" class="level2">
 <h2 class="anchored" data-anchor-id="true-or-false">True or false?</h2>
 <ol type="1">
@@ -232,19 +278,66 @@ ul.task-list li input[type="checkbox"] {
 <li>If your model doesn’t forecast well, you should make it more complicated.</li>
 <li>Always choose the model with the best forecast accuracy as measured on the test set.</li>
 </ol>
-</section>
-<section id="household-budget-forecasting" class="level2">
-<h2 class="anchored" data-anchor-id="household-budget-forecasting">Household budget forecasting</h2>
-<ol type="1">
-<li>Create a training set for household wealth (<code>hh_budget</code>) by withholding the last four years as a test set.</li>
-<li>Fit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.</li>
-<li>Compute the accuracy of your forecasts. Which method does best?</li>
-<li>Do the residuals from the best method resemble white noise?</li>
-</ol>
+<!-- > Are the following statements true or false? Explain your answer.
+>
+>   a. Good forecast methods should have normally distributed residuals.
+
+- False.
+- Although many good forecasting methods produce normally distributed residuals this is not required to produce good forecasts.
+- When the residuals are not normally distributed, the calculation of prediction intervals becomes more difficult.
+
+>   b. A model with small residuals will give good forecasts.
+
+- False.
+- It is possible to produce a model with small residuals by making a highly complicated (overfitted) model that fits the data extremely well.
+- This highly complicated model will often perform very poorly when forecasting new data.
+
+>   c. The best measure of forecast accuracy is MAPE.
+
+- False.
+- There is no single best measure of accuracy - often you would want to see a collection of accuracy measures as they can reveal different things about your residuals. MAPE in particular has some substantial disadvantages - extreme values can result when $y_t$ is close to zero, and it assumes that the unit being measured has a meaningful zero.
+
+>   d. If your model doesn’t forecast well, you should make it more complicated.
+
+- False.
+- There are many reasons why a model may not forecast well, and making the model more complicated can make the forecasts worse.
+- The model specified should capture structures that are evident in the data. Although adding terms that are unrelated to the structures found in the data will improve the model's residuals, the forecasting performance of the model will not improve.
+- Adding missing features relevant to the data (such as including a seasonal pattern that exists in the data) should improve forecast performance.
+
+>   e. Always choose the model with the best forecast accuracy as measured on the test set.
+
+- False.
+- For a start, the test set may be too small to draw any conclusions. Also, there are many measures of forecast accuracy, and they may suggest different models. The appropriate model is the one which is best suited to the forecasting task. For instance, you may be interested in choosing a model which forecasts well for predictions exactly one year ahead. In this case, using cross-validated accuracy could be a more useful approach to evaluating accuracy. -->
 </section>
 <section id="exam-part-a" class="level2">
-<h2 class="anchored" data-anchor-id="exam-part-a">Exam part A</h2>
-<p>2024 exam: A2, A3, A6</p>
+<h2 class="anchored" data-anchor-id="exam-part-a">2024 Exam part A</h2>
+<p>Discuss topics A2, A3, and A6</p>
+<!-- 
+2.  *The Ljung-Box test is useful for selecting a good forecasting model.*
+
+    - The Ljung-Box test is used to test whether the residuals from a model are white noise.
+    - It should not be used to select a forecasting model.
+    - If the residuals are not white noise, then the model is not capturing all the information in the data, and can potentially be improved.
+    - A model that has been over-fitted may pass a Ljung-Box test, but be a poor forecasting model.
+    - It may not be possible to find a model that passes the Ljung-Box test, especially with a long time series. But the forecasts from a model that fails the Ljung-Box test may still be good.
+
+3.  *The MAPE is better than the RMSE for measuring forecast accuracy because it is easier to explain.*
+
+    - The MAPE is a percentage, so it is easier to interpret than the RMSE.
+    - However, the MAPE may not make sense for the data, especially if the data contains zeros, small values, or negative values, or if the zero point is arbitrary.
+    - The RMSE is scale-dependent so can't be used to compare forecasts across different data sets, whereas the MAPE is scale-independent.
+    - The RMSE is optimized by the mean, so finding a model that minimizes the RMSE will give the best point forecasts.
+    - The MAPE is not optimal for any meaningful characteristic of the forecasts.
+
+8.  *STL is not useful for forecasting because it only provides a decomposition of the data.*
+
+    - STL is a decomposition method that separates a time series into trend, seasonal, and remainder components.
+    - STL, on its own, is not a forecasting method.
+    - However, STL is useful for forecasting because the decomposition can help us understand the data better.
+    - STL can be coupled with a forecasting method applied to the seasonally adjusted data.
+    - In this case, the seasonal component is usually forecast using the seasonal naive method, and then the seasonal component forecasts and seasonally adjusted forecasts can be added to obtain forecasts of the original data.
+
+ -->
 
 
 </section>
