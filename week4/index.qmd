@@ -24,8 +24,7 @@ source(here::here("course_info.R"))
 
 * Complete Exercises 1-5, 11 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
 * Complete Exercises 2 and 6 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html)
-
-<!-- * [Solutions to Exercises](ex4-sol.qmd) -->
+* [Solutions to Exercises](ex4-sol.qmd)
 
 ```{r}
 #| output: asis

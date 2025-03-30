@@ -1,0 +1,520 @@
+---
+title: "Exercise Week 4: Solutions"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
+```
+
+
+```{r, message = FALSE}
+library(fpp3)
+```
+
+# fpp3 5.10, Ex 1
+
+> Produce forecasts for the following series using whichever of `NAIVE(y)`, `SNAIVE(y)` or `RW(y ~ drift())` is more appropriate in each case:
+>
+>   * Australian Population (`global_economy`)
+>   * Bricks (`aus_production`)
+>   * NSW Lambs (`aus_livestock`)
+>   * Household wealth (`hh_budget`)
+>   * Australian takeaway food turnover (`aus_retail`)
+
+## Australian population
+
+```{r}
+global_economy |>
+  filter(Country == "Australia") |>
+  autoplot(Population)
+```
+
+Data has trend and no seasonality. Random walk with drift model is appropriate.
+
+```{r}
+global_economy |>
+  filter(Country == "Australia") |>
+  model(RW(Population ~ drift())) |>
+  forecast(h = "10 years") |>
+  autoplot(global_economy)
+```
+
+## Australian clay brick production
+
+```{r}
+aus_production |>
+  filter(!is.na(Bricks)) |>
+  autoplot(Bricks) +
+  labs(title = "Clay brick production")
+```
+
+This data appears to have more seasonality than trend, so of the models available, seasonal naive is most appropriate.
+
+```{r}
+aus_production |>
+  filter(!is.na(Bricks)) |>
+  model(SNAIVE(Bricks)) |>
+  forecast(h = "5 years") |>
+  autoplot(aus_production)
+```
+
+## NSW Lambs
+
+```{r}
+nsw_lambs <- aus_livestock |>
+  filter(State == "New South Wales", Animal == "Lambs")
+nsw_lambs |>
+  autoplot(Count)
+```
+
+This data appears to have more seasonality than trend, so of the models available, seasonal naive is most appropriate.
+
+```{r}
+nsw_lambs |>
+  model(SNAIVE(Count)) |>
+  forecast(h = "5 years") |>
+  autoplot(nsw_lambs)
+```
+
+## Household wealth
+
+```{r}
+hh_budget |>
+  autoplot(Wealth)
+```
+
+Annual data with trend upwards, so we can use a random walk with drift.
+
+```{r}
+hh_budget |>
+  model(RW(Wealth ~ drift())) |>
+  forecast(h = "5 years") |>
+  autoplot(hh_budget)
+```
+
+## Australian takeaway food turnover
+
+```{r}
+takeaway <- aus_retail |>
+  filter(Industry == "Takeaway food services") |>
+  summarise(Turnover = sum(Turnover))
+takeaway |> autoplot(Turnover)
+```
+
+This data has strong seasonality and strong trend, so we will use a seasonal naive model with drift.
+
+```{r}
+takeaway |>
+  model(SNAIVE(Turnover ~ drift())) |>
+  forecast(h = "5 years") |>
+  autoplot(takeaway)
+```
+
+This is actually not one of the four benchmark methods discussed in the book, but is sometimes a useful benchmark when there is strong seasonality and strong trend.
+
+The corresponding equation is
+$$
+  \hat{y}_{T+h|T} = y_{T+h-m(k+1)} + \frac{h}{T-m}\sum_{t=m+1}^T(y_t - y_{t-m}),
+$$
+where $m=12$ and $k$ is the integer part of $(h-1)/m$ (i.e., the number of complete years in the forecast period prior to time $T+h$).
+
+# fpp3 5.10, Ex 2
+
+> Use the Facebook stock price (data set `gafa_stock`) to do the following:
+
+>   a. Produce a time plot of the series.
+
+```{r}
+fb_stock <- gafa_stock |>
+  filter(Symbol == "FB")
+fb_stock |>
+  autoplot(Close)
+```
+An upward trend is evident until mid-2018, after which the closing stock price drops.
+
+>   b. Produce forecasts using the drift method and plot them.
+
+The data must be made regular before it can be modelled. We will use trading days as our regular index.
+
+```{r}
+fb_stock <- fb_stock |>
+  mutate(trading_day = row_number()) |>
+  update_tsibble(index = trading_day, regular = TRUE)
+```
+
+Time to model a random walk with drift.
+
+```{r}
+fb_stock |>
+  model(RW(Close ~ drift())) |>
+  forecast(h = 100) |>
+  autoplot(fb_stock)
+```
+
+>   c. Show that the forecasts are identical to extending the line drawn between the first and last observations.
+
+Prove drift methods are extrapolations from the first and last observation. First, we will demonstrate it graphically.
+
+```{r}
+fb_stock |>
+  model(RW(Close ~ drift())) |>
+  forecast(h = 100) |>
+  autoplot(fb_stock) +
+  geom_line(
+    aes(y = Close),
+    linetype = "dashed", colour = "blue",
+    data = fb_stock |> filter(trading_day %in% range(trading_day))
+  )
+```
+
+To prove it algebraically, note that
+\begin{align*}
+ \hat{y}_{T+h|T} = y_T + h\left(\frac{y_T-y_1}{T-1}\right)
+\end{align*}
+which is a straight line with slope $(y_T-y_1)/(T-1)$ that goes through the point $(T,y_T)$.
+
+Therefore, it must also go through the point $(1,c)$ where
+$$
+  (y_T-c)/(T-1) = (y_T - y_1) / (T-1),
+$$
+so $c=y_1$.
+
+>   d. Try using some of the other benchmark functions to forecast the same data set. Which do you think is best? Why?
+
+Use other appropriate benchmark methods. The most appropriate benchmark method is the naive model. The mean forecast is terrible for this type of data, and the data is non-seasonal.
+
+```{r}
+fb_stock |>
+  model(NAIVE(Close)) |>
+  forecast(h = 100) |>
+  autoplot(fb_stock)
+```
+
+The naive method is most appropriate, and will also be best if the efficient market hypothesis holds true.
+
+# fpp3 5.10, Ex 3
+
+> Apply a seasonal naïve method to the quarterly Australian beer production data from 1992. Check if the residuals look like white noise, and plot the forecasts. The following code will help.
+
+```{r}
+# Extract data of interest
+recent_production <- aus_production |>
+  filter(year(Quarter) >= 1992)
+# Define and estimate a model
+fit <- recent_production |> model(SNAIVE(Beer))
+# Look at the residuals
+fit |> gg_tsresiduals()
+```
+
+* The residuals are not centred around 0 (typically being slightly below it), this is due to the model failing to capture the negative trend in the data.
+* Peaks and troughs in residuals spaced roughly 4 observations apart are apparent leading to a negative spike at lag 4 in the ACF. So they do not resemble white noise. Lags 1 and 3 are also significant, however they are very close to the threshold and are of little concern.
+* The distribution of the residuals does not appear very normal, however it is probably close enough for the accuracy of our intervals (it being not centred on 0 is more concerning).
+
+```{r}
+# Look at some forecasts
+fit |>
+  forecast() |>
+  autoplot(recent_production)
+```
+
+The forecasts look reasonable, although the intervals may be a bit wide. This is likely due to the slight trend not captured by the model (which subsequently violates the assumptions imposed on the residuals).
+
+# fpp3 5.10, Ex 4
+
+> Repeat the exercise for the Australian Exports series from `global_economy` and the Bricks series from `aus_production`. Use whichever of `NAIVE()` or `SNAIVE()` is more appropriate in each case.
+
+## Australian exports
+
+The data does not contain seasonality, so the naive model is more appropriate.
+
+```{r}
+# Extract data of interest
+aus_exports <- filter(global_economy, Country == "Australia")
+# Define and estimate a model
+fit <- aus_exports |> model(NAIVE(Exports))
+# Check residuals
+fit |> gg_tsresiduals()
+```
+
+- The ACF plot reveals that the first lag exceeds the significance threshold.
+- This data may still be white noise, as it is the only lag that exceeds the blue dashed lines (5\% of the lines are expected to exceed it). However as it is the first lag, it is probable that there exists some real auto-correlation in the residuals that can be modelled.
+- The distribution appears normal.
+- The residual plot appears mostly random, however more observations appear to be above zero. This again, is due to the model not capturing the trend.
+
+```{r}
+# Look at some forecasts
+fit |>
+  forecast() |>
+  autoplot(aus_exports)
+```
+
+- The forecasts appear reasonable as the series appears to have flattened in recent years.
+- The intervals are also reasonable --- despite the assumptions behind them having been violated.
+
+## Australian brick production
+
+The data is seasonal, so the seasonal naive model is more appropriate.
+
+```{r}
+# Remove the missing values at the end of the series
+tidy_bricks <- aus_production |>
+  filter(!is.na(Bricks))
+# Define and estimate a model
+fit <- tidy_bricks |>
+  model(SNAIVE(Bricks))
+# Look at the residuals
+fit |> gg_tsresiduals()
+```
+
+- The residual plot does not appear random. Periods of low production and high production are evident, leading to autocorrelation in the residuals.
+
+- The residuals from this model are not white noise. The ACF plot shows a strong sinusoidal pattern of decay, indicating that the residuals are auto-correlated.
+- The histogram is also not normally distributed, as it has a long left tail.
+
+```{r}
+# Look at some forecasts
+fit |>
+  forecast() |>
+  autoplot(tidy_bricks)
+```
+
+- The point forecasts appear reasonable as the series appears to have flattened in recent years.
+- The intervals appear much larger than necessary.
+
+# fpp3 5.10, Ex 5
+
+> Produce forecasts for the 7 Victorian series in `aus_livestock` using `SNAIVE()`. Plot the resulting forecasts including the historical data. Is this a reasonable benchmark for these series?
+
+```{r}
+#| fig-height: 12
+
+aus_livestock |>
+  filter(State == "Victoria") |>
+  model(SNAIVE(Count)) |>
+  forecast(h = "5 years") |>
+  autoplot(aus_livestock)
+```
+
+- Most point forecasts look reasonable from the seasonal naive method.
+- Some series are more seasonal than others, and for the series with very weak seasonality it may be better to consider using a naive or drift method.
+- The prediction intervals in some cases go below zero, so perhaps a log transformation would have been better for these series.
+
+# fpp3 5.10, Ex 11
+
+> We will use the bricks data from `aus_production` (Australian quarterly clay brick production 1956--2005) for this exercise.
+>
+>   a. Use an STL decomposition to calculate the trend-cycle and seasonal indices. (Experiment with having fixed or changing seasonality.)
+
+```{r}
+tidy_bricks <- aus_production |>
+  filter(!is.na(Bricks))
+tidy_bricks |>
+  model(STL(Bricks)) |>
+  components() |>
+  autoplot()
+```
+
+Data is multiplicative, and so a transformation should be used.
+
+```{r}
+dcmp <- tidy_bricks |>
+  model(STL(log(Bricks))) |>
+  components()
+dcmp |>
+  autoplot()
+```
+
+Seasonality varies slightly.
+
+```{r}
+dcmp <- tidy_bricks |>
+  model(stl = STL(log(Bricks) ~ season(window = "periodic"))) |>
+  components()
+dcmp |> autoplot()
+```
+
+The seasonality looks fairly stable, so I've used a periodic season (window). The decomposition still performs well when the seasonal component is fixed. The remainder term does not appear to contain a substantial amount of seasonality.
+
+>   b. Compute and plot the seasonally adjusted data.
+
+```{r}
+dcmp |>
+  as_tsibble() |>
+  autoplot(season_adjust)
+```
+
+>   c. Use a naïve method to produce forecasts of the seasonally adjusted data.
+
+```{r}
+fit <- dcmp |>
+  select(-.model) |>
+  model(naive = NAIVE(season_adjust)) |>
+  forecast(h = "5 years")
+dcmp |>
+  as_tsibble() |>
+  autoplot(season_adjust) + autolayer(fit)
+```
+
+>   d. Use `decomposition_model()` to reseasonalise the results, giving forecasts for the original data.
+
+```{r}
+fit <- tidy_bricks |>
+  model(stl_mdl = decomposition_model(STL(log(Bricks)), NAIVE(season_adjust)))
+fit |>
+  forecast(h = "5 years") |>
+  autoplot(tidy_bricks)
+```
+
+>   e. Do the residuals look uncorrelated?
+
+```{r}
+fit |> gg_tsresiduals()
+```
+
+The residuals do not appear uncorrelated as there are several lags of the ACF which exceed the significance threshold.
+
+>   f. Repeat with a robust STL decomposition. Does it make much difference?
+
+```{r}
+fit_robust <- tidy_bricks |>
+  model(stl_mdl = decomposition_model(STL(log(Bricks)), NAIVE(season_adjust)))
+
+fit_robust |> gg_tsresiduals()
+```
+
+The residuals appear slightly less auto-correlated, however there is still significant auto-correlation at lag 8.
+
+>   g. Compare forecasts from `decomposition_model()` with those from `SNAIVE()`, using a test set comprising the last 2 years of data. Which is better?
+
+```{r}
+tidy_bricks_train <- tidy_bricks |>
+  slice(1:(n() - 8))
+fit <- tidy_bricks_train |>
+  model(
+    stl_mdl = decomposition_model(STL(log(Bricks)), NAIVE(season_adjust)),
+    snaive = SNAIVE(Bricks)
+  )
+
+fc <- fit |>
+  forecast(h = "2 years")
+fc |>
+  autoplot(tidy_bricks, level = NULL)
+```
+
+The decomposition forecasts appear to more closely follow the actual future data.
+
+```{r}
+fc |>
+  accuracy(tidy_bricks)
+```
+
+The STL decomposition forecasts are more accurate than the seasonal naive forecasts across all accuracy measures.
+
+
+# fpp3 7.10, Ex 2
+
+> Data set `olympic_running` contains the winning times (in seconds) in each Olympic Games sprint, middle-distance and long-distance track events from 1896 to 2016.
+>
+>   a. Plot the winning time against the year. Describe the main features of the plot.
+
+```{r}
+olympic_running |>
+  ggplot(aes(x = Year, y = Time, colour = Sex)) +
+  geom_line() +
+  geom_point(size = 1) +
+  facet_wrap(~Length, scales = "free_y", nrow = 2) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Dark2") +
+  theme(legend.position = "bottom", legend.title = element_blank()) +
+  labs(y = "Running time (seconds)")
+```
+
+The running times are generally decreasing as time progresses (although the rate of this decline is slowing down in recent olympics). There are some missing values in the data corresponding to the World Wars (in which the Olympic Games were not held).
+
+>   b. Fit a regression line to the data. Obviously the winning times have been decreasing, but at what *average* rate per year?
+
+```{r}
+fit <- olympic_running |>
+  model(TSLM(Time ~ trend()))
+tidy(fit)
+```
+
+```{r}
+#| echo: false
+#| output: asis
+
+tidy(fit) |>
+  filter(term == "trend()") |>
+  glue::glue_data("The {Sex}'s {Length} running time has been {ifelse(estimate<0, 'decreasing', 'increasing')} by an average of {abs(round(estimate/4, 3))} seconds each year.<br>")
+```
+
+>   c. Plot the residuals against the year. What does this indicate about the suitability of the fitted line?
+
+```{r}
+augment(fit) |>
+  ggplot(aes(x = Year, y = .innov, colour = Sex)) +
+  geom_line() +
+  geom_point(size = 1) +
+  facet_wrap(~Length, scales = "free_y", nrow = 2) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Dark2") +
+  theme(legend.position = "bottom", legend.title = element_blank())
+```
+
+It doesn't seem that the linear trend is appropriate for this data.
+
+>   d. Predict the winning time for each race in the 2020 Olympics. Give a prediction interval for your forecasts. What assumptions have you made in these calculations?
+
+```{r}
+fit |>
+  forecast(h = 1) |>
+  mutate(PI = hilo(Time, 95)) |>
+  select(-.model)
+```
+
+Using a linear trend we assume that winning times will decrease in a linear fashion which is unrealistic for running times. As we saw from the residual plots above there are mainly large positive residuals for the last few years, indicating that the decreases in the winning times are not linear. We also assume that the residuals are normally distributed.
+
+# fpp3 7.10, Ex 6
+
+> The annual population of Afghanistan is available in the `global_economy` data set.
+
+>    a. Plot the data and comment on its features. Can you observe the effect of the Soviet-Afghan war?
+
+```{r}
+global_economy |>
+  filter(Country == "Afghanistan") |>
+  autoplot(Population / 1e6) +
+  labs(y = "Population (millions)") +
+  geom_ribbon(aes(xmin = 1979.98, xmax = 1989.13), fill = "pink", alpha = 0.4) +
+  annotate("text", x = 1984.5, y = 10, label = "Soviet-Afghan war", col = "red", size = 3)
+```
+
+The population increases slowly from 1960 to 1980, then decreases during the Soviet-Afghan war (24 Dec 1979 -- 15 Feb 1989), and has increased relatively rapidly since then. The last 30 years has shown an almost linear increase in population.
+
+>    b. Fit a linear trend model and compare this to a piecewise linear trend model with knots at 1980 and 1989.
+
+```{r}
+fit <- global_economy |>
+  filter(Country == "Afghanistan") |>
+  model(
+    linear = TSLM(Population ~ trend()),
+    piecewise = TSLM(Population ~ trend(knots = c(1980, 1989)))
+  )
+augment(fit) |>
+  autoplot(.fitted) +
+  geom_line(aes(y = Population), colour = "black")
+```
+
+The fitted values show that the piecewise linear model has tracked the data very closely, while the linear model is inaccurate.
+
+>    c. Generate forecasts from these two models for the five years after the end of the data, and comment on the results.
+
+```{r}
+fc <- fit |> forecast(h = "5 years")
+autoplot(fc) +
+  autolayer(filter(global_economy |> filter(Country == "Afghanistan")), Population)
+```
+
+The linear model is clearly incorrect with prediction intervals too wide, and the point forecasts too low.
+
+The piecewise linear model looks good, but the prediction intervals are probably too narrow. This model assumes that the trend since the last knot will continue unchanged, which is unrealistic.
