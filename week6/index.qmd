@@ -11,6 +11,8 @@ source(here::here("course_info.R"))
 
 * Simple exponential smoothing
 * Exponential smoothing methods with trend 
+* Exponential smoothing methods with seasonality
+* ETS model notation
 
 ## Pre-class activities
 
