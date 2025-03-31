@@ -19,7 +19,7 @@ fit <- holidays |>
       STL(Trips),
       NAIVE(season_adjust)
     ))
-  
+
 ## Check residuals
 fit |>
   filter(State == "Victoria") |>
@@ -48,7 +48,7 @@ holidays_fc |>
   autoplot(holidays, level = NULL)
 
 holidays_fc |>
-  filter(.model == "seasonal_naive") |>
+  filter(.model == "stlf", State == "Victoria") |>
   autoplot(holidays)
 
 # Use a test set of last 2 years to check forecast accuracy
@@ -72,6 +72,7 @@ test_fc <- training_fit |>
   forecast(h = "2 years")
 
 test_fc |>
+  filter(.model == "stlf", State == "Victoria") |>
   autoplot(holidays, level = NULL)
 
 test_fc |>
