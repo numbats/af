@@ -20,6 +20,16 @@ execute:
 ```{r setup, include=FALSE}
 source(here::here("setup.R"))
 ```
+
+# Workshop tomorrow
+
+## Workshop tomorrow
+
+The workshop is online tomorrow.
+
+Zoom link on Ed Discussion Forum
+
+
 # Residuals
 
 ## Fitted values
@@ -339,4 +349,10 @@ tscv_plot(.init = 8, .step = 1, h = 4) +
 \end{itemize}\end{block}\end{textblock}}
 
 \vspace*{10cm}
+
+## Workshop tomorrow
+
+The workshop is online tomorrow.
+
+Zoom link on Ed Discussion Forum
 

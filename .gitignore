@@ -8,3 +8,5 @@
 /site_libs/
 *_cache
 /docs/
+*_files/
+*_cache/
