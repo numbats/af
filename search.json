@@ -67,14 +67,14 @@
     "href": "week6/index.html",
     "title": "Week 6: Exponential smoothing",
     "section": "",
-    "text": "Simple exponential smoothing\nExponential smoothing methods with trend\nExponential smoothing methods with seasonality\nETS model notation"
+    "text": "Simple exponential smoothing\nExponential smoothing methods with trend"
   },
   {
     "objectID": "week6/index.html#what-you-will-learn-this-week",
     "href": "week6/index.html#what-you-will-learn-this-week",
     "title": "Week 6: Exponential smoothing",
     "section": "",
-    "text": "Simple exponential smoothing\nExponential smoothing methods with trend\nExponential smoothing methods with seasonality\nETS model notation"
+    "text": "Simple exponential smoothing\nExponential smoothing methods with trend"
   },
   {
     "objectID": "week6/index.html#pre-class-activities",
@@ -89,27 +89,6 @@
     "title": "Week 6: Exponential smoothing",
     "section": "Exercises (on your own or in tutorial)",
     "text": "Exercises (on your own or in tutorial)\nComplete Exercises 1-6, 16, 17 from Section 8.8 of the book."
-  },
-  {
-    "objectID": "week6/index.html#monday-lecture",
-    "href": "week6/index.html#monday-lecture",
-    "title": "Week 6: Exponential smoothing",
-    "section": "Monday lecture",
-    "text": "Monday lecture\n\n\nDownload slides"
-  },
-  {
-    "objectID": "week6/index.html#assignments",
-    "href": "week6/index.html#assignments",
-    "title": "Week 6: Exponential smoothing",
-    "section": "Assignments",
-    "text": "Assignments\n\nAssignment 2 is due on Thursday 17 April."
-  },
-  {
-    "objectID": "week6/index.html#weekly-quiz",
-    "href": "week6/index.html#weekly-quiz",
-    "title": "Week 6: Exponential smoothing",
-    "section": "Weekly quiz",
-    "text": "Weekly quiz\n\nWeek 6 quiz is due on Sunday 13 April."
   },
   {
     "objectID": "week5/index.html",
@@ -144,14 +123,14 @@
     "href": "week5/index.html#monday-lecture",
     "title": "Week 5: Accuracy evaluation",
     "section": "Monday lecture",
-    "text": "Monday lecture\n\n\nDownload slides"
+    "text": "Monday lecture\n\n\nDownload slides\nCode used in lecture"
   },
   {
     "objectID": "week5/index.html#tuesday-workshop",
     "href": "week5/index.html#tuesday-workshop",
     "title": "Week 5: Accuracy evaluation",
     "section": "Tuesday workshop",
-    "text": "Tuesday workshop\nActivities for Tuesday workshop"
+    "text": "Tuesday workshop\nActivities for Tuesday workshop\nCode used in workshop"
   },
   {
     "objectID": "week5/index.html#assignments",
@@ -550,7 +529,7 @@
     "href": "assignments/competition.html#forecasts",
     "title": "Forecasting competition",
     "section": "Forecasts",
-    "text": "Forecasts\n\n\n\n\n\n\nQ1\n\n\nGoogle closing stock price on 24 March 2025\n\n\n\n\n\nQ2\n\n\nMaximum temperature at Melbourne airport on 14 April 2025\n\n\n\n\n\nQ3\n\n\nDifference in points in AFL Anzac Day clash\n\n\n\n\n\nQ4\n\n\nSeasonally adjusted total employment for April 2025\n\n\n\n\n\nQ5\n\n\nGoogle closing stock price on 26 May 2025"
+    "text": "Forecasts\n\n\n\nQ1\n\n\nGoogle closing stock price on 24 March 2025\n\n\n\n\n\nQ2\n\n\nMaximum temperature at Melbourne airport on 14 April 2025\n\n\n\n\n\nQ3\n\n\nDifference in points in AFL Anzac Day clash\n\n\n\n\n\nQ4\n\n\nSeasonally adjusted total employment for April 2025\n\n\n\n\n\nQ5\n\n\nGoogle closing stock price on 26 May 2025"
   },
   {
     "objectID": "index.html",
@@ -907,14 +886,14 @@
     "href": "week5/activities.html",
     "title": "Activities: Week 5",
     "section": "",
-    "text": "Participate in these workshop questions here: https://partici.fi/61758592"
+    "text": "Create a training set for household wealth (hh_budget) by withholding the last four years as a test set.\nFit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.\nCompute the accuracy of your forecasts. Which method does best?\nDo the residuals from the best method resemble white noise?"
   },
   {
     "objectID": "week5/activities.html#household-budget-forecasting",
     "href": "week5/activities.html#household-budget-forecasting",
     "title": "Activities: Week 5",
-    "section": "Household budget forecasting",
-    "text": "Household budget forecasting\n\nCreate a training set for household wealth (hh_budget) by withholding the last four years as a test set.\nFit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.\nCompute the accuracy of your forecasts. Which method does best?\nDo the residuals from the best method resemble white noise?"
+    "section": "",
+    "text": "Create a training set for household wealth (hh_budget) by withholding the last four years as a test set.\nFit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.\nCompute the accuracy of your forecasts. Which method does best?\nDo the residuals from the best method resemble white noise?"
   },
   {
     "objectID": "week5/activities.html#true-or-false",
