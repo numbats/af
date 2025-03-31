@@ -86,7 +86,7 @@ Test *whole set* of $r_{k}$  values simultaneously.
 where $\ell$  is max lag being considered and $T$ is number of observations.
 \end{block}
 
-  * My preferences: $\ell=10$ for non-seasonal data, $h=2m$ for seasonal data (where $m$ is seasonal period).
+  * My preferences: $\ell=10$ for non-seasonal data, $\ell=2m$ for seasonal data (where $m$ is seasonal period).
   * If data are WN, $Q^*$ has $\chi^2$ distribution with  $\ell$ degrees of freedom.
 
 # Forecast distributions
