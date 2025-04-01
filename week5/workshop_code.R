@@ -1,5 +1,9 @@
+library(fpp3)
 
 ## hh_budget exercise
+
+hh_budget |>
+  autoplot(Wealth)
 
 # 1. Create training set by withholding last four years
 train <- hh_budget |>
@@ -7,22 +11,44 @@ train <- hh_budget |>
 #2. Fit benchmarks
 fit <- train |>
   model(
-    naive = NAIVE(Wealth),
-    drift = RW(Wealth ~ drift()),
-    mean = MEAN(Wealth)
+    # MEAN method
+    MEAN(Wealth),
+
+    # RW w/ drift method
+    RW(Wealth ~ drift()),
+
+    # NAIVE method
+    NAIVE(Wealth)
   )
-fc <- fit |> forecast(h = 4)
+fc <- fit |>
+  forecast(h = "4 years")
+
+fc |>
+  autoplot(hh_budget)
+
 
 # 3. Compute accuracy
 fc |>
   accuracy(hh_budget) |>
   arrange(Country, RMSE)
+
 fc |>
   accuracy(hh_budget) |>
-  summarise(RMSE = sqrt(mean(RMSE^2)), .by=.model) |>
-  arrange(RMSE)
+  filter(Country == "Australia")
+
+fc |>
+  accuracy(hh_budget) |>
+  group_by(.model) |>
+  summarise(mean(MASE))
+
+augment(fit) |>
+  filter(.model == "RW(Wealth ~ drift())") |>
+  autoplot(.fitted) +
+  geom_line(aes(y = Wealth)) +
+  facet_wrap(vars(Country), scales = "free_y")
 
 # 4. Do the residuals resemble white noise?
+# e_t iid~ N(0, sigma^2)?
 
 fit |>
   filter(Country == "Australia") |>

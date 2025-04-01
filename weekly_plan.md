@@ -70,14 +70,14 @@
 
 ## Tutorial
 
-5.11 Q8
+5.11 Q8, 10
 
 * Residual diagnostics (20 mins)
 * Accuracy evaluation: train, test, cross-validation (30 min)
 
 ## Workshop
 
-Ex 5.11: Q6, 7, 9, 10,
+Ex 5.11: Q6, 7, 9
 
 * Exam Q A3 from 2024, and similar.
 
