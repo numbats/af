@@ -1,14 +1,14 @@
 library(fpp3)
 
-# Victorian tobacco expenditure
+# Australian fertility
 
-vic_tobacco <- aus_tobacco |>
-  filter(State == "VIC")
-vic_tobacco |>
-  autoplot(Expenditure)
-fit <- vic_tobacco |>
+aus_ave_fert <- aus_fertility |> filter(Region == "Australia", Age <= 30) |> summarise(Rate = mean(Rate))
+
+aus_ave_fert |> autoplot(Rate)
+
+fit <- aus_ave_fert |>
   model(
-    ANN = ETS(Expenditure ~ error("A") + trend("N") + season("N")),
+    ANN = ETS(Rate ~ error("A") + trend("N") + season("N")),
   )
 fit |>
   select(ANN) |>
@@ -33,40 +33,50 @@ fc <- fit |>
 
 fc |>
   filter(.model == "ANN") |>
-  autoplot(vic_tobacco) 
+  autoplot(aus_ave_fert) 
 
 # Repeat with test set
 
-fit <- vic_tobacco |>
-  filter(year(Quarter) <= 2020) |>
+fit <- aus_ave_fert |>
+  filter(Year <= 2018) |>
   model(
-    ANN = ETS(Expenditure ~ error("A") + trend("N") + season("N")),
-    AAN = ETS(Expenditure ~ error("A") + trend("A") + season("N")),
-    AAA = ETS(Expenditure ~ error("A") + trend("A") + season("A")),
-    naive = NAIVE(Expenditure),
-    drift = RW(Expenditure ~ drift())
+    ANN = ETS(Rate ~ error("A") + trend("N") + season("N")),
+    AAN = ETS(Rate ~ error("A") + trend("A") + season("N")),
+    MNN = ETS(Rate ~ error("A") + trend("N") + season("N")),
+    MAN = ETS(Rate ~ error("A") + trend("A") + season("N")),
+    AAdN = ETS(Rate ~ error("A") + trend("Ad") + season("N")),
+    MAdN = ETS(Rate ~ error("A") + trend("Ad") + season("N")),
+    naive = NAIVE(Rate),
+    drift = RW(Rate ~ drift())
   )
 
+tidy(fit)
+glance(fit)
+
+
 fc <- fit |>
-  forecast(h="3 years")
+  forecast(h="4 years")
 
 fc |>
-  autoplot(vic_tobacco, level=NULL) 
+  autoplot(aus_ave_fert, level=NULL) 
 
-fc |> accuracy(vic_tobacco) |> arrange(RMSE)
+fc |> accuracy(aus_ave_fert) |> arrange(RMSE)
 
 # Repeat with tscv
 
-vic_cig_stretch <- vic_tobacco |>
+vic_cig_stretch <- aus_ave_fert |>
   stretch_tsibble(.init = 10, .step = 1)
 
 cv_fit <- vic_cig_stretch |>
   model(
-    ANN = ETS(Expenditure ~ error("A") + trend("N") + season("N")),
-    AAN = ETS(Expenditure ~ error("A") + trend("A") + season("N")),
-    AAA = ETS(Expenditure ~ error("A") + trend("A") + season("A")),
-    naive = NAIVE(Expenditure),
-    drift = RW(Expenditure ~ drift())
+    ANN = ETS(Rate ~ error("A") + trend("N") + season("N")),
+    AAN = ETS(Rate ~ error("A") + trend("A") + season("N")),
+    MNN = ETS(Rate ~ error("A") + trend("N") + season("N")),
+    MAN = ETS(Rate ~ error("A") + trend("A") + season("N")),
+    AAdN = ETS(Rate ~ error("A") + trend("Ad") + season("N")),
+    MAdN = ETS(Rate ~ error("A") + trend("Ad") + season("N")),
+    naive = NAIVE(Rate),
+    drift = RW(Rate ~ drift())
   )
 
 cv_fc <- cv_fit |>
@@ -74,17 +84,17 @@ cv_fc <- cv_fit |>
   group_by(.id, .model) |>
   mutate(h = row_number()) |>
   ungroup() |>
-  as_fable(response = "Expenditure", distribution = Expenditure)
+  as_fable(response = "Rate", distribution = Rate)
 
 cv_fc |>
-  accuracy(vic_tobacco, by = c("h", ".model")) |>
+  accuracy(aus_ave_fert, by = c("h", ".model")) |>
   group_by(.model, h) |>
   summarise(RMSSE = sqrt(mean(RMSSE^2))) |>
   ggplot(aes(x=h, y=RMSSE, group=.model, col=.model)) +
   geom_line()
 
 cv_fc |>
-  accuracy(vic_tobacco, by = c("h", ".model")) |>
+  accuracy(aus_ave_fert, by = c("h", ".model")) |>
   group_by(.model) |>
   summarise(RMSSE = sqrt(mean(RMSSE^2))) |>
   arrange(RMSSE)
