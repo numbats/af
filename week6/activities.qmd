@@ -14,25 +14,32 @@ chinese_gdp <- global_economy |>
 chinese_gdp |> autoplot(GDP_pc)
 fit <- chinese_gdp |>
     model(ets = ETS(GDP_pc ~ error("A") + trend("A", alpha = 0.3, beta = 0.3) ))
-fit |>
-    forecast(h=10) |>
-    autoplot(chinese_gdp)
+report(fit)
+fc <- fit |> forecast(h=10)
+fc |> autoplot(chinese_gdp)
 ```
 
 Experiment with the various options in the `ETS()` function to see how much the forecasts change with the parameters $\alpha$ and $\beta$, with a damped trend, and with a Box-Cox transformation. Try to develop an intuition of what each is doing to the forecasts.
 
 What happens when:
 
-* $\alpha=0$ 
-* $\alpha=1$ 
-* $\beta=0$ 
-* $\beta > $\alpha$
-* Damping is added
-* A strong transformation such as a logarithm (Box-Cox with $\lambda=0$ is used)
+* $\alpha=0$? 
+* $\alpha=1$? 
+* $\beta=0$? 
+* $\beta > $\alpha$?
+* The trend is set to "N" (None)
+* The trend is set to "Ad" (Additive damped)
+* The error is set to "M" (Multiplicative)
+* A strong transformation such as a logarithm (Box-Cox with $\lambda=0$ is used)?
+* $\alpha$ and $\beta$ are omitted?
+* The `trend()` term is omitted?
+* Everything from `~` on is omitted?
 
 ## Prediction interval calculation
 
-For the no trend model, with $\alpha = 0.5$, find the 95% prediction intervals for the next five years.
+For the no trend model, with $\alpha = 0.5$, find the 95% prediction intervals for the next five years. Use the `hilo()` function to calculate them from the `fc` object.
 
 Show that these are equal to $\ell_T \pm 1.96 \hat\sigma \sqrt{1+ (h-1)/4}$ where $\hat\sigma^2$ is the estimated residual variance.
 
+* The `components()` function can give you the value of $\ell_T$.
+* The `glance()` function can give you the value of $\sigma^2$.
