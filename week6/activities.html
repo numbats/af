@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Exam preparation – ETC3550/ETC5550 Applied forecasting</title>
+<title>Activities: Week 6 – ETC3550/ETC5550 Applied forecasting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -70,6 +105,49 @@ ul.task-list li input[type="checkbox"] {
 <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -168,7 +246,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Textbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../exams/index.html" aria-current="page"> <i class="bi bi-pencil-fill" role="img">
+    <a class="nav-link" href="../exams/index.html"> <i class="bi bi-pencil-fill" role="img">
 </i> 
 <span class="menu-text">Exam</span></a>
   </li>  
@@ -195,8 +273,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#past-exams" id="toc-past-exams" class="nav-link active" data-scroll-target="#past-exams">Past exams</a></li>
-  <li><a href="#exam-conditions" id="toc-exam-conditions" class="nav-link" data-scroll-target="#exam-conditions">Exam conditions</a></li>
+  <li><a href="#chinese-gdp-per-capita-forecasts" id="toc-chinese-gdp-per-capita-forecasts" class="nav-link active" data-scroll-target="#chinese-gdp-per-capita-forecasts">Chinese GDP per capita forecasts</a></li>
+  <li><a href="#prediction-interval-calculation" id="toc-prediction-interval-calculation" class="nav-link" data-scroll-target="#prediction-interval-calculation">Prediction interval calculation</a></li>
   </ul>
 </nav>
     </div>
@@ -205,7 +283,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exam preparation</h1>
+<h1 class="title">Activities: Week 6</h1>
 </div>
 
 
@@ -222,38 +300,48 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="past-exams" class="level1">
-<h1>Past exams</h1>
-<ul>
-<li><a href="../exams/exam_2021.pdf">2021</a></li>
-<li><a href="../exams/exam_2022.pdf">2022</a></li>
-<li><a href="../exams/exam_2023.pdf">2023</a></li>
-<li><a href="../exams/exam_2024.pdf">2024</a></li>
-</ul>
-<p>This year’s exam will follow the same format.</p>
-</section>
-<section id="exam-conditions" class="level1">
-<h1>Exam conditions</h1>
-<p>The final assessment will be an <a href="https://www.monash.edu/students/admin/assessments/exams/on-campus">on-campus eExam</a>. It will be closed book with the following permitted items:</p>
-<ul>
-<li><p>Up to 5 blank pages for use as working sheets.</p></li>
-<li><p>1 A4 double-sided page containing notes. A physical page only is allowed. It may be typed or hand-written.</p></li>
-<li><p>4 pre-printed answer sheets (available in the exam room) for handwritten responses (e.g., equations or diagrams).</p></li>
-<li><p>A physical calculator of any type or one of the following virtual calculators:</p>
-<ul>
-<li>Inbuilt Mac/Windows calculator</li>
-<li>Website https://www.educalc.net/2336211.page</li>
-<li>10bii Financial Calculator for Mac by K2 Cashflow, https://apps.apple.com/au/app/10bii-financial-calculator/id473144920</li>
-</ul></li>
-</ul>
-<p>AI tools are not to be used in the exam.</p>
-<p>The exam will include one page of ETS formulas. Here they are, so you know exactly what you will see on the exam. No other formulas will be provided, but you can write whatever you like on your single A4 page of notes.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://otexts.com/fpp3/figs/statespacemodels-1.png" class="img-fluid figure-img"></p>
-<figcaption>ETS formulas</figcaption>
-</figure>
+<section id="chinese-gdp-per-capita-forecasts" class="level2">
+<h2 class="anchored" data-anchor-id="chinese-gdp-per-capita-forecasts">Chinese GDP per capita forecasts</h2>
+<p>We will forecast the Chinese GDP from the <code>global_economy</code> data set using an ETS model. The following code provides a starting point.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fpp3)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>chinese_gdp <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"China"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">GDP_pc =</span> GDP<span class="sc">/</span>Population)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>chinese_gdp <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(GDP_pc)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> chinese_gdp <span class="sc">|&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">model</span>(<span class="at">ets =</span> <span class="fu">ETS</span>(GDP_pc <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">beta =</span> <span class="fl">0.3</span>) ))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h=</span><span class="dv">10</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(chinese_gdp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Experiment with the various options in the <code>ETS()</code> function to see how much the forecasts change with the parameters <span class="math inline">\alpha</span> and <span class="math inline">\beta</span>, with a damped trend, and with a Box-Cox transformation. Try to develop an intuition of what each is doing to the forecasts.</p>
+<p>What happens when:</p>
+<ul>
+<li><span class="math inline">\alpha=0</span>?</li>
+<li><span class="math inline">\alpha=1</span>?</li>
+<li><span class="math inline">\beta=0</span>?</li>
+<li><span class="math inline">\beta &gt; \alpha</span>?</li>
+<li>The trend is set to <code>"N"</code> (None)</li>
+<li>The trend is set to <code>"Ad"</code> (Additive damped)</li>
+<li>The error is set to <code>"M"</code> (Multiplicative)</li>
+<li>A strong transformation such as a logarithm (Box-Cox with <span class="math inline">\lambda=0</span> is used)?</li>
+<li><span class="math inline">\alpha</span> and <span class="math inline">\beta</span> are omitted?</li>
+<li>The <code>trend()</code> term is omitted?</li>
+<li>Everything from <code>~</code> on is omitted?</li>
+<li>What combination of options gives you the narrowest prediction intervals? Why?</li>
+<li>What combination of options gives you the widest prediction intervals? Why?</li>
+<li>What combination of options do you think gives you the best forecasts?</li>
+</ul>
+</section>
+<section id="prediction-interval-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-interval-calculation">Prediction interval calculation</h2>
+<p>For the no trend model, with <span class="math inline">\alpha = 0.5</span>, find the 95% prediction intervals for the next five years. Use the <code>hilo()</code> function to calculate them from the <code>fc</code> object.</p>
+<p>Show that these are equal to <span class="math inline">\ell_T \pm 1.96 \hat\sigma \sqrt{1+ (h-1)/4}</span> where <span class="math inline">\hat\sigma^2</span> is the estimated residual variance.</p>
+<ul>
+<li>The <code>components()</code> function can give you the value of <span class="math inline">\ell_T</span>.</li>
+<li>The <code>glance()</code> function can give you the value of <span class="math inline">\sigma^2</span>.</li>
+</ul>
 
 
 </section>
