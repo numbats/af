@@ -6,6 +6,7 @@ start_semester <- "2025-03-03"
 
 # Week of mid-semester break
 mid_semester_break <- "2025-04-21"
+msb_week <- as.numeric(as.Date(mid_semester_break) - as.Date(start_semester))/7
 
 # Schedule
 schedule <- tibble(
@@ -113,6 +114,7 @@ show_assignments <- function(week) {
   # Show all assignments when in last 3 weeks of semester
   if (today > as.Date("2025-05-04") | (monday - today) <= 7 * 2 | week < 3) {
     ass <- schedule |>
+      mutate(Week = replace_na(Week, msb_week)) |>
       filter(
         Week >= week,
         Week < week + 3,
