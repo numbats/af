@@ -63,6 +63,20 @@
     "text": "Exercises (on your own or in tutorial)\nComplete Exercises 7, 10-15 from Section 8.8 of the book."
   },
   {
+    "objectID": "week7/index.html#assignments",
+    "href": "week7/index.html#assignments",
+    "title": "Week 7: ETS models",
+    "section": "Assignments",
+    "text": "Assignments\n\nAssignment 2 is due on Friday 25 April."
+  },
+  {
+    "objectID": "week7/index.html#weekly-quiz",
+    "href": "week7/index.html#weekly-quiz",
+    "title": "Week 7: ETS models",
+    "section": "Weekly quiz",
+    "text": "Weekly quiz\n\nWeek 7 quiz is due on Sunday 20 April."
+  },
+  {
     "objectID": "week6/index.html",
     "href": "week6/index.html",
     "title": "Week 6: Exponential smoothing",
@@ -109,7 +123,7 @@
     "href": "week6/index.html#assignments",
     "title": "Week 6: Exponential smoothing",
     "section": "Assignments",
-    "text": "Assignments\n\nAssignment 2 is due on Thursday 17 April."
+    "text": "Assignments\n\nAssignment 2 is due on Friday 25 April."
   },
   {
     "objectID": "week6/index.html#weekly-quiz",
@@ -480,7 +494,7 @@
     "href": "index.html#weekly-schedule",
     "title": "ETC3550/5550 Applied forecasting",
     "section": "Weekly schedule",
-    "text": "Weekly schedule\n\nPre-recorded videos: approximately 1 hour per week [Slides]\nTutorials: 1 hour per week\nOnline lecture: 12noon Mondays\nWorkshop: 1pm Tuesdays, Lecture Theatre S3, 16 Rainforest Walk.\nRecordings\n\n\n\n\nWeek\nTopic\nChapter\nAssignments\nQuizzes\n\n\n\n\n03 Mar\nIntroduction to forecasting and R\n1. Getting started\nForecasting Competition\n\n\n\n10 Mar\nTime series graphics\n2. Time series graphics\n\nWeek 2\n\n\n17 Mar\nTime series decomposition\n3. Time series decomposition\n\nWeek 3\n\n\n24 Mar\nSimple forecasting methods\n5. The forecaster’s toolbox\nAssignment 1\nWeek 4\n\n\n31 Mar\nAccuracy evaluation\n5. The forecaster’s toolbox\n\nWeek 5\n\n\n07 Apr\nExponential smoothing\n8. Exponential smoothing\n\nWeek 6\n\n\n14 Apr\nExponential smoothing\n8. Exponential smoothing\nAssignment 2\nWeek 7\n\n\n21 Apr\nMid-semester break\n\n\n\n\n\n28 Apr\nARIMA models\n9. ARIMA models\n\nWeek 8\n\n\n05 May\nARIMA models\n9. ARIMA models\n\nWeek 9\n\n\n12 May\nARIMA models\n9. ARIMA models\nAssignment 3\nWeek 10\n\n\n19 May\nMultiple regression and forecasting\n7. Time series regression models\n\nWeek 11\n\n\n26 May\nDynamic regression\n10. Dynamic regression models\nRetail Project"
+    "text": "Weekly schedule\n\nPre-recorded videos: approximately 1 hour per week [Slides]\nTutorials: 1 hour per week\nOnline lecture: 12noon Mondays\nWorkshop: 1pm Tuesdays, Lecture Theatre S3, 16 Rainforest Walk.\nRecordings\n\n\n\n\nWeek\nTopic\nChapter\nAssignments\nQuizzes\n\n\n\n\n03 Mar\nIntroduction to forecasting and R\n1. Getting started\nForecasting Competition\n\n\n\n10 Mar\nTime series graphics\n2. Time series graphics\n\nWeek 2\n\n\n17 Mar\nTime series decomposition\n3. Time series decomposition\n\nWeek 3\n\n\n24 Mar\nSimple forecasting methods\n5. The forecaster’s toolbox\nAssignment 1\nWeek 4\n\n\n31 Mar\nAccuracy evaluation\n5. The forecaster’s toolbox\n\nWeek 5\n\n\n07 Apr\nExponential smoothing\n8. Exponential smoothing\n\nWeek 6\n\n\n14 Apr\nExponential smoothing\n8. Exponential smoothing\n\nWeek 7\n\n\n21 Apr\nMid-semester break\n\nAssignment 2\n\n\n\n28 Apr\nARIMA models\n9. ARIMA models\n\nWeek 8\n\n\n05 May\nARIMA models\n9. ARIMA models\n\nWeek 9\n\n\n12 May\nARIMA models\n9. ARIMA models\nAssignment 3\nWeek 10\n\n\n19 May\nMultiple regression and forecasting\n7. Time series regression models\n\nWeek 11\n\n\n26 May\nDynamic regression\n10. Dynamic regression models\nRetail Project"
   },
   {
     "objectID": "index.html#assessments",
@@ -536,7 +550,7 @@
     "href": "assignments/A2.html",
     "title": "Assignment 2",
     "section": "",
-    "text": "This assignment will use the same data that you will use in the retail project later in the semester. Each student will use a different time series, selected using their student ID number as follows.\nlibrary(fpp3)\nget_my_data &lt;- function(student_id) {\n  set.seed(student_id)\n  all_data &lt;- readr::read_rds(\"https://bit.ly/monashretaildata\")\n  while(TRUE) {\n    retail &lt;- filter(all_data, `Series ID` == sample(`Series ID`, 1))\n    if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)\n  }\n}\n# Replace the argument with your student ID\nretail &lt;- get_my_data(12345678)\n\nUsing a test set of 2019–2022, fit an ETS model chosen automatically, and three benchmark methods to the training data. Which gives the best forecasts on the test set, based on RMSE?\nCheck the residuals from the best model using an ACF plot and a Ljung-Box test. Do the residuals appear to be white noise?\nNow use time-series cross-validation with a minimum sample size of 15 years, a step size of 1 year, and a forecast horizon of 5 years. Calculate the RMSE of the results. Does it change the conclusion you reach based on the test set?\nWhich of these two methods of evaluating accuracy is more reliable? Why?\n\nSubmit a Quarto (qmd) file which carries out the above analysis. You need to submit one file which implements all steps above. You may use this file as a starting point.\nTo receive full marks, the qmd file must compile without errors.\n\n\nDue: 17 April 2025  Submit"
+    "text": "This assignment will use the same data that you will use in the retail project later in the semester. Each student will use a different time series, selected using their student ID number as follows.\nlibrary(fpp3)\nget_my_data &lt;- function(student_id) {\n  set.seed(student_id)\n  all_data &lt;- readr::read_rds(\"https://bit.ly/monashretaildata\")\n  while(TRUE) {\n    retail &lt;- filter(all_data, `Series ID` == sample(`Series ID`, 1))\n    if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)\n  }\n}\n# Replace the argument with your student ID\nretail &lt;- get_my_data(12345678)\n\nUsing a test set of 2019–2022, fit an ETS model chosen automatically, and three benchmark methods to the training data. Which gives the best forecasts on the test set, based on RMSE?\nCheck the residuals from the best model using an ACF plot and a Ljung-Box test. Do the residuals appear to be white noise?\nNow use time-series cross-validation with a minimum sample size of 15 years, a step size of 1 year, and a forecast horizon of 5 years. Calculate the RMSE of the results. Does it change the conclusion you reach based on the test set?\nWhich of these two methods of evaluating accuracy is more reliable? Why?\n\nSubmit a Quarto (qmd) file which carries out the above analysis. You need to submit one file which implements all steps above. You may use this file as a starting point.\nTo receive full marks, the qmd file must compile without errors.\n\n\nDue: 25 April 2025  Submit"
   },
   {
     "objectID": "assignments/Project.html",
@@ -928,7 +942,7 @@
     "href": "week5/index.html#assignments",
     "title": "Week 5: Accuracy evaluation",
     "section": "Assignments",
-    "text": "Assignments\n\nAssignment 2 is due on Thursday 17 April."
+    "text": "Assignments\n\nAssignment 2 is due on Friday 25 April."
   },
   {
     "objectID": "week5/index.html#weekly-quiz",
