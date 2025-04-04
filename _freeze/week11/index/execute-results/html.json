@@ -2,7 +2,7 @@
   "hash": "dd2e87e907b013a3bc0c63e0d0812b97",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Week 11: Forecasting using regression\"\n---\n\n::: {.cell}\n\n:::\n\n## What you will learn this week\n\n* Useful predictors for time series forecasting using regression\n* Selecting predictors\n* Ex ante and ex post forecasting\n\n\n## Pre-class activities\n\nRead [Chapter 7 of the textbook](https://otexts.com/fpp3/regression.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex11-sol.qmd) -->\n\n\n\n",
+    "markdown": "---\ntitle: \"Week 11: Forecasting using regression\"\n---\n\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Useful predictors for time series forecasting using regression\n* Selecting predictors\n* Ex ante and ex post forecasting\n\n\n## Pre-class activities\n\nRead [Chapter 7 of the textbook](https://otexts.com/fpp3/regression.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\nComplete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).\n\n<!-- [**Solutions to Exercises**](ex11-sol.qmd) -->\n\n\n\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
