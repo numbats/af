@@ -1,5 +1,7 @@
 ---
 title: "Activities: Week 6"
+execute: 
+  echo: true
 ---
 
 ## Chinese GDP per capita forecasts
@@ -7,10 +9,12 @@ title: "Activities: Week 6"
 We will forecast the Chinese GDP from the `global_economy` data set using an ETS model. The following code provides a starting point. 
 
 ```{r}
+#| label: chinese_gdp
+#| eval: false
 library(fpp3)
 chinese_gdp <- global_economy |> 
     filter(Country == "China") |>
-    select(GDP_pc = GDP/Population)
+    mutate(GDP_pc = GDP/Population)
 chinese_gdp |> autoplot(GDP_pc)
 fit <- chinese_gdp |>
     model(ets = ETS(GDP_pc ~ error("A") + trend("A", alpha = 0.3, beta = 0.3) ))
@@ -26,14 +30,17 @@ What happens when:
 * $\alpha=0$? 
 * $\alpha=1$? 
 * $\beta=0$? 
-* $\beta > $\alpha$?
-* The trend is set to "N" (None)
-* The trend is set to "Ad" (Additive damped)
-* The error is set to "M" (Multiplicative)
+* $\beta > \alpha$?
+* The trend is set to `"N"` (None)
+* The trend is set to `"Ad"` (Additive damped)
+* The error is set to `"M"` (Multiplicative)
 * A strong transformation such as a logarithm (Box-Cox with $\lambda=0$ is used)?
 * $\alpha$ and $\beta$ are omitted?
 * The `trend()` term is omitted?
 * Everything from `~` on is omitted?
+* What combination of options gives you the narrowest prediction intervals? Why?
+* What combination of options gives you the widest prediction intervals? Why?
+* What combination of options do you think gives you the best forecasts?
 
 ## Prediction interval calculation
 
