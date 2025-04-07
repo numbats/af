@@ -79,6 +79,24 @@ Note that  $\varepsilon_{t} = y_{t} - \ell_{t-1}$. So\vspace*{-0.2cm}
  \end{align*}
 
 
+
+## ETS(A,N,N): SES with additive errors
+\fontsize{13}{15}\sf
+
+Note that  $\ell_{t} = \ell_{t-1} + \alpha \varepsilon_{t}$. So\vspace*{-0.2cm}
+  \begin{align*}
+     y_{T+h} & = \ell_{T+h-1} + \varepsilon_{T+h} \\
+             & = \ell_{T+h-2} + \alpha \varepsilon_{T+h-1} +  \varepsilon_{T+h} \\
+             & = \ell_{T+h-3} + \alpha \varepsilon_{T+h-2}  + \alpha \varepsilon_{T+h-1} +  \varepsilon_{T+h} \\
+             & \dots \\
+             & = \ell_{T} + \alpha \sum_{j=1}^{h-1} \varepsilon_{T+h-j} +  \varepsilon_{T+h}.
+  \end{align*}
+$$             
+    \text{Therefore\quad}\text{E}(y_{T+h} | y_1,\dots,y_T)  = \ell_T
+$$
+
+\vspace*{10cm}
+
 ## ETS(A,N,N): SES with additive errors
 \fontsize{13}{15}\sf
 
@@ -96,6 +114,7 @@ $$
       =  \sigma^2\left[ 1 + \alpha^2 (h-1)\right ].
 $$
 
+\vspace*{10cm}
 
 ## ETS(A,A,N): Holt's method with additive errors
 
