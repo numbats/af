@@ -1,0 +1,222 @@
+---
+title: "Exercise Week 5: Solutions"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE, warning = FALSE)
+```
+
+```{r, message = FALSE}
+library(fpp3)
+```
+
+# fpp3 5.10, Ex 8
+
+> Consider the number of pigs slaughtered in New South Wales (data set `aus_livestock`).
+>
+>   a. Produce some plots of the data in order to become familiar with it.
+
+```{r}
+nsw_pigs <- aus_livestock |>
+  filter(State == "New South Wales", Animal == "Pigs")
+nsw_pigs |>
+  autoplot(Count)
+```
+
+Data generally follows a downward trend, however there are some periods where the amount of pigs slaughtered changes rapidly.
+
+```{r}
+nsw_pigs |> gg_season(Count, labels = "right")
+nsw_pigs |> gg_subseries(Count)
+```
+
+Some seasonality is apparent, with notable increases in December and decreases during January, February and April.
+
+>   b. Create a training set of 486 observations, withholding a test set of 72 observations (6 years).
+
+```{r}
+nsw_pigs_train <- nsw_pigs |> slice(1:486)
+```
+
+>   c. Try using various benchmark methods to forecast the training set and compare the results on the test set. Which method did best?
+
+```{r}
+fit <- nsw_pigs_train |>
+  model(
+    mean = MEAN(Count),
+    naive = NAIVE(Count),
+    snaive = SNAIVE(Count),
+    drift = RW(Count ~ drift())
+  )
+fit |>
+  forecast(h = "6 years") |>
+  accuracy(nsw_pigs)
+```
+
+The drift method performed best for all measures of accuracy (although it had a larger first order auto-correlation)
+
+>   d. Check the residuals of your preferred method. Do they resemble white noise?
+
+```{r}
+fit |>
+  select(drift) |>
+  gg_tsresiduals()
+```
+
+The residuals do not appear to be white noise as the ACF plot contains many significant lags. It is also clear that the seasonal component is not captured by the drift method, as there exists a strong positive auto-correlation at lag 12 (1 year). The histogram appears to have a slightly long left tail.
+
+# fpp3 5.10, Ex 9
+
+>    a. Create a training set for household wealth (`hh_budget`) by withholding the last four years as a test set.
+
+```{r}
+#| label: ex91
+train <- hh_budget |>
+  filter(Year <= max(Year) - 4)
+```
+
+>    b. Fit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.
+
+```{r}
+#| label: ex92
+fit <- train |>
+  model(
+    naive = NAIVE(Wealth),
+    drift = RW(Wealth ~ drift()),
+    mean = MEAN(Wealth)
+  )
+fc <- fit |> forecast(h = 4)
+```
+
+>    c. Compute the accuracy of your forecasts. Which method does best?
+
+```{r}
+#| label: ex93
+fc |>
+  accuracy(hh_budget) |>
+  arrange(Country, MASE)
+fc |>
+  accuracy(hh_budget) |>
+  group_by(.model) |>
+  summarise(MASE = mean(MASE)) |>
+  ungroup() |>
+  arrange(MASE)
+```
+
+The drift method is better for every country, and on average.
+
+>    d. Do the residuals from the best method resemble white noise?
+
+```{r}
+#| label: ex94
+fit |>
+  filter(Country == "Australia") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "Canada") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "Japan") |>
+  select(drift) |>
+  gg_tsresiduals()
+fit |>
+  filter(Country == "USA") |>
+  select(drift) |>
+  gg_tsresiduals()
+```
+
+In all cases, the residuals look like white noise.
+
+# fpp3 5.10, Ex 10
+
+>    a. Create a training set for Australian takeaway food turnover (`aus_retail`) by withholding the last four years as a test set.
+
+```{r}
+#| label: ex101
+takeaway <- aus_retail |>
+  filter(Industry == "Takeaway food services") |>
+  summarise(Turnover = sum(Turnover))
+train <- takeaway |>
+  filter(Month <= max(Month) - 4 * 12)
+```
+
+>    b. Fit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.
+
+```{r}
+#| label: ex102
+fit <- train |>
+  model(
+    naive = NAIVE(Turnover),
+    drift = RW(Turnover ~ drift()),
+    mean = MEAN(Turnover),
+    snaive = SNAIVE(Turnover)
+  )
+fc <- fit |> forecast(h = "4 years")
+```
+
+>    c. Compute the accuracy of your forecasts. Which method does best?
+
+```{r}
+#| label: ex103
+fc |>
+  accuracy(takeaway) |>
+  arrange(MASE)
+```
+
+The naive method is best here.
+
+>    d. Do the residuals from the best method resemble white noise?
+
+```{r}
+#| label: ex104
+fit |>
+  select(naive) |>
+  gg_tsresiduals()
+```
+
+This is far from white noise. There is strong seasonality and increasing variance that has not been accounted for by the naive model.
+
+# fpp3 5.10, Ex 12
+
+> `tourism` contains quarterly visitor nights (in thousands) from 1998 to 2017 for 76 regions of Australia.
+>
+>   a. Extract data from the Gold Coast region using `filter()` and aggregate total overnight trips (sum over `Purpose`) using `summarise()`. Call this new dataset `gc_tourism`.
+
+```{r}
+gc_tourism <- tourism |>
+  filter(Region == "Gold Coast") |>
+  summarise(Trips = sum(Trips))
+gc_tourism
+```
+
+>   b. Using `slice()` or `filter()`, create three training sets for this data excluding the last 1, 2 and 3 years. For example, `gc_train_1 <- gc_tourism |> slice(1:(n()-4))`.
+
+```{r}
+gc_train_1 <- gc_tourism |> slice(1:(n() - 4))
+gc_train_2 <- gc_tourism |> slice(1:(n() - 8))
+gc_train_3 <- gc_tourism |> slice(1:(n() - 12))
+```
+
+>   c. Compute one year of forecasts for each training set using the seasonal naïve (`SNAIVE()`) method. Call these `gc_fc_1`, `gc_fc_2` and `gc_fc_3`, respectively.
+
+```{r}
+gc_fc <- bind_cols(
+  gc_train_1 |> model(gc_fc_1 = SNAIVE(Trips)),
+  gc_train_2 |> model(gc_fc_2 = SNAIVE(Trips)),
+  gc_train_3 |> model(gc_fc_3 = SNAIVE(Trips))
+) |> forecast(h = "1 year")
+```
+
+```{r}
+gc_fc |> autoplot(gc_tourism)
+```
+
+>   d. Use `accuracy()` to compare the test set forecast accuracy using MAPE. Comment on these.
+
+```{r}
+gc_fc |> accuracy(gc_tourism)
+```
+
+The second set of forecasts are most accurate (as can be seen in the previous plot), however this is likely due to chance.

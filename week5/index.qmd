@@ -21,7 +21,7 @@ Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html), Sections
 
 Complete Exercises 8-10, 12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
 
-<!-- [**Solutions to Exercises**](ex5-sol.qmd) -->
+[**Solutions to Exercises**](ex5-sol.qmd)
 
 
 ```{r}
