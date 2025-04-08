@@ -4,7 +4,7 @@ library(fpp3)
 
 chinese_gdp <- global_economy |>
   filter(Country == "China") |>
-  mutate(GDP_pc = GDP/Population)
+  mutate(GDP_pc = GDP / Population)
 
 chinese_gdp |> autoplot(GDP_pc)
 
@@ -35,7 +35,7 @@ fit |>
   select(AAN) |>
   report()
 
-fc <- fit |> forecast(h=10)
+fc <- fit |> forecast(h = 10)
 
 fc |>
   #filter(.model == "AAN") |>
@@ -44,10 +44,6 @@ fc |>
 fc |>
   filter(.model %in% c("BC", "MAN")) |>
   autoplot(chinese_gdp)
-
-
-
-
 
 
 # Prediction intervals
@@ -62,6 +58,5 @@ fit |>
 ellT <- components(fit) |> tail(1) |> pull(level)
 sigma2 <- glance(fit) |> pull(sigma2)
 
-ellT - qnorm(0.975) * sqrt(sigma2) * sqrt(1 + (0:4)/4)
-ellT + qnorm(0.975) * sqrt(sigma2) * sqrt(1 + (0:4)/4)
-
+ellT - qnorm(0.975) * sqrt(sigma2) * sqrt(1 + (0:4) / 4)
+ellT + qnorm(0.975) * sqrt(sigma2) * sqrt(1 + (0:4) / 4)

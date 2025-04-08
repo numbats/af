@@ -35,5 +35,11 @@ show_slides(week)
 ```{r}
 #| output: asis
 show_activity(week, show_solutions = FALSE)
+```
+
+[Code used in workshop](workshop_code.R)
+
+```{r}
+#| output: asis
 show_assignments(week)
 ```
