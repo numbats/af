@@ -303,15 +303,17 @@ window.Quarto = {
 <p>We will forecast the Chinese GDP from the <code>global_economy</code> data set using an ETS model. The following code provides a starting point.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fpp3)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>chinese_gdp <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span> </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"China"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">GDP_pc =</span> GDP<span class="sc">/</span>Population)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>chinese_gdp <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"China"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GDP_pc =</span> GDP <span class="sc">/</span> Population)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>chinese_gdp <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(GDP_pc)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> chinese_gdp <span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">model</span>(<span class="at">ets =</span> <span class="fu">ETS</span>(GDP_pc <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">beta =</span> <span class="fl">0.3</span>) ))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h=</span><span class="dv">10</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(chinese_gdp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">ets =</span> <span class="fu">ETS</span>(GDP_pc <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">beta =</span> <span class="fl">0.3</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">10</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(chinese_gdp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Experiment with the various options in the <code>ETS()</code> function to see how much the forecasts change with the parameters <span class="math inline">\alpha</span> and <span class="math inline">\beta</span>, with a damped trend, and with a Box-Cox transformation. Try to develop an intuition of what each is doing to the forecasts.</p>
 <p>What happens when:</p>
