@@ -10,14 +10,35 @@ chinese_gdp |> autoplot(GDP_pc)
 
 fit <- chinese_gdp |>
   model(
-    ets = ETS(GDP_pc ~ error("A") + trend("A", alpha = 0.3, beta = 0.3))
+    #AAN0 = ETS(GDP_pc ~ error("A") + trend("A", alpha = 0.3, beta = 0.3)),
+    #ANNalpha0 = ETS(GDP_pc ~ error("A") + trend("N", alpha = 0.0002)),
+    #ANNalpha1 = ETS(GDP_pc ~ error("A") + trend("N", alpha = 0.9998)),
+    #AANalpha0 = ETS(GDP_pc ~ error("A") + trend("A", alpha = 0.0002)),
+    #AANalpha1 = ETS(GDP_pc ~ error("A") + trend("A", alpha = 0.9998)),
+    #beta0 =  ETS(GDP_pc ~ error("A") + trend("A", beta = 0)),
+    #beta_gt_alpha =  ETS(GDP_pc ~ error("A") +
+    #                       trend("A", alpha = 0.3, beta = 0.31)),
+    AAN = ETS(GDP_pc ~ error("A") + trend("A")),
+    AAdN = ETS(GDP_pc ~ error("A") + trend("Ad")),
+    ANN = ETS(GDP_pc ~ error("A") + trend("N")),
   )
 
-report(fit)
+fit
+
+fit |>
+  select(AAN) |>
+  report()
 
 fc <- fit |> forecast(h=10)
 
-fc |> autoplot(chinese_gdp)
+fc |>
+  filter(.model == "AAN") |>
+  autoplot(chinese_gdp)
+
+
+
+
+
 
 
 # Prediction intervals
