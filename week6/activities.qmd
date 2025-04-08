@@ -12,14 +12,16 @@ We will forecast the Chinese GDP from the `global_economy` data set using an ETS
 #| label: chinese_gdp
 #| eval: false
 library(fpp3)
-chinese_gdp <- global_economy |> 
-    filter(Country == "China") |>
-    mutate(GDP_pc = GDP/Population)
+chinese_gdp <- global_economy |>
+  filter(Country == "China") |>
+  mutate(GDP_pc = GDP / Population)
 chinese_gdp |> autoplot(GDP_pc)
 fit <- chinese_gdp |>
-    model(ets = ETS(GDP_pc ~ error("A") + trend("A", alpha = 0.3, beta = 0.3) ))
+  model(
+    ets = ETS(GDP_pc ~ error("A") + trend("A", alpha = 0.3, beta = 0.3))
+  )
 report(fit)
-fc <- fit |> forecast(h=10)
+fc <- fit |> forecast(h = 10)
 fc |> autoplot(chinese_gdp)
 ```
 
