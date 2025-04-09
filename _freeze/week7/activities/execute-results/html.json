@@ -1,0 +1,15 @@
+{
+  "hash": "8e9dbdc3843ee1b5f1d93d37c81c2a1b",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Activities: Week 7\"\nexecute: \n  echo: true\n---\n\nThis week we will forecast total domestic overnight trips across Australia from the `tourism` dataset.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(fpp3)\naus_trips <- tourism |>\n  summarise(Trips = sum(Trips))\n```\n:::\n\n\n  1. Plot the data and describe the main features of the series.\n  2. Use `ETS()` to choose a seasonal model for the data. What do the parameters tell you about the series?\n  3. Forecast the next two years using your ETS model.\n  4. Decompose the series using STL and obtain the seasonally adjusted data.\n  5. Forecast the next two years of the series using an ETS(A,A,N) model applied to the seasonally adjusted data (specified using `decomposition_model()`.)\n  6. Which of the two models gives the best forecasts? Which gives the best fit to the training data?\n  7. Now set up a test set of 3 years and fit both models to the training set, along with at least one appropriate benchmark.\n  8. Compute the forecast accuracy of the three models. Which is best?\n  9. Check the residuals of your preferred model using `gg_tsresiduals()` and Ljung-Box test.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

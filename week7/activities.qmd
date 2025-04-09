@@ -1,0 +1,24 @@
+---
+title: "Activities: Week 7"
+execute: 
+  echo: true
+---
+
+This week we will forecast total domestic overnight trips across Australia from the `tourism` dataset.
+
+```{r}
+#| label: compute_total
+library(fpp3)
+aus_trips <- tourism |>
+  summarise(Trips = sum(Trips))
+```
+
+  1. Plot the data and describe the main features of the series.
+  2. Use `ETS()` to choose a seasonal model for the data. What do the parameters tell you about the series?
+  3. Forecast the next two years using your ETS model.
+  4. Decompose the series using STL and obtain the seasonally adjusted data.
+  5. Forecast the next two years of the series using an ETS(A,A,N) model applied to the seasonally adjusted data (specified using `decomposition_model()`.)
+  6. Which of the two models gives the best forecasts? Which gives the best fit to the training data?
+  7. Now set up a test set of 3 years and fit both models to the training set, along with at least one appropriate benchmark.
+  8. Compute the forecast accuracy of the three models. Which is best?
+  9. Check the residuals of your preferred model using `gg_tsresiduals()` and Ljung-Box test.
