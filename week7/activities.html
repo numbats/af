@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 7: ETS models (part 2) – ETC3550/ETC5550 Applied forecasting</title>
+<title>Activities: Week 7 – ETC3550/ETC5550 Applied forecasting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -189,27 +223,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#what-you-will-learn-this-week" id="toc-what-you-will-learn-this-week" class="nav-link active" data-scroll-target="#what-you-will-learn-this-week">What you will learn this week</a></li>
-  <li><a href="#pre-class-activities" id="toc-pre-class-activities" class="nav-link" data-scroll-target="#pre-class-activities">Pre-class activities</a></li>
-  <li><a href="#exercises-on-your-own-or-in-tutorial" id="toc-exercises-on-your-own-or-in-tutorial" class="nav-link" data-scroll-target="#exercises-on-your-own-or-in-tutorial">Exercises (on your own or in tutorial)</a></li>
-  <li><a href="#monday-lecture" id="toc-monday-lecture" class="nav-link" data-scroll-target="#monday-lecture">Monday lecture</a></li>
-  <li><a href="#tuesday-workshop" id="toc-tuesday-workshop" class="nav-link" data-scroll-target="#tuesday-workshop">Tuesday workshop</a></li>
-  <li><a href="#assignments" id="toc-assignments" class="nav-link" data-scroll-target="#assignments">Assignments</a></li>
-  <li><a href="#weekly-quiz" id="toc-weekly-quiz" class="nav-link" data-scroll-target="#weekly-quiz">Weekly quiz</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Week 7: ETS models (part 2)</h1>
+<h1 class="title">Activities: Week 7</h1>
 </div>
 
 
@@ -226,46 +248,25 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="what-you-will-learn-this-week" class="level2">
-<h2 class="anchored" data-anchor-id="what-you-will-learn-this-week">What you will learn this week</h2>
-<ul>
-<li>Exponential smoothing with seasonality</li>
-<li>Automatic model selection using the AICc</li>
-</ul>
-</section>
-<section id="pre-class-activities" class="level2">
-<h2 class="anchored" data-anchor-id="pre-class-activities">Pre-class activities</h2>
-<p>Read <a href="https://otexts.com/fpp3/expsmooth.html">Sections 8.3-8.4 and 8.6-8.7 of the textbook</a> and watch all embedded videos</p>
-</section>
-<section id="exercises-on-your-own-or-in-tutorial" class="level2">
-<h2 class="anchored" data-anchor-id="exercises-on-your-own-or-in-tutorial">Exercises (on your own or in tutorial)</h2>
-<p>Complete Exercises 7, 10-15 from <a href="https://otexts.com/fpp3/expsmooth-exercises.html">Section 8.8 of the book</a>.</p>
-<!-- [**Solutions to Exercises**](ex7-sol.qmd) -->
-</section>
-<section id="monday-lecture" class="level2">
-<h2 class="anchored" data-anchor-id="monday-lecture">Monday lecture</h2>
-<iframe src="https://docs.google.com/gview?url=https://af.numbat.space/week7/slides.pdf&amp;embedded=true" width="100%" height="465">
-</iframe>
-<p><a href="https://af.numbat.space/week7/slides.pdf" class="badge badge-small badge-red">Download slides</a></p>
-</section>
-<section id="tuesday-workshop" class="level2">
-<h2 class="anchored" data-anchor-id="tuesday-workshop">Tuesday workshop</h2>
-<p><a href="../week7/activities.html">Activities for Tuesday workshop</a></p>
-</section>
-<section id="assignments" class="level2">
-<h2 class="anchored" data-anchor-id="assignments">Assignments</h2>
-<ul>
-<li><a href="../assignments/A2.html">Assignment 2</a> is due on Friday 25 April.</li>
-</ul>
-</section>
-<section id="weekly-quiz" class="level2">
-<h2 class="anchored" data-anchor-id="weekly-quiz">Weekly quiz</h2>
-<ul>
-<li><a href="https://learning.monash.edu/mod/quiz/view.php?id=3868372">Week 7 quiz</a> is due on Sunday 20 April.</li>
-</ul>
+<p>This week we will forecast total domestic overnight trips across Australia from the <code>tourism</code> dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fpp3)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Trips =</span> <span class="fu">sum</span>(Trips))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Plot the data and describe the main features of the series.</li>
+<li>Use <code>ETS()</code> to choose a seasonal model for the data. What do the parameters tell you about the series?</li>
+<li>Forecast the next two years using your ETS model.</li>
+<li>Decompose the series using STL and obtain the seasonally adjusted data.</li>
+<li>Forecast the next two years of the series using an ETS(A,A,N) model applied to the seasonally adjusted data (specified using <code>decomposition_model()</code>.)</li>
+<li>Which of the two models gives the best forecasts? Which gives the best fit to the training data?</li>
+<li>Now set up a test set of 3 years and fit both models to the training set, along with at least one appropriate benchmark.</li>
+<li>Compute the forecast accuracy of the three models. Which is best?</li>
+<li>Check the residuals of your preferred model using <code>gg_tsresiduals()</code> and Ljung-Box test.</li>
+</ol>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
