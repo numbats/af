@@ -1,5 +1,5 @@
 ---
-title: "Week 7: ETS models"
+title: "Week 7: ETS models (part 2)"
 ---
 
 ```{r}

@@ -1,117 +1,5 @@
 library(fpp3)
 
-# Chinese GDP
-
-china <- global_economy |>
-  filter(Country == "China")  |>
-  transmute(GDP = GDP/1e9)
-
-china |> autoplot(GDP)
-china |> autoplot(log(GDP))
-
-china |> model(ETS(GDP)) |> report()
-china |> model(ETS(GDP)) |> forecast(h=20) |> autoplot(china, level = NULL)
-
-fit <- china |>
-  model(
-    ets = ETS(GDP),
-    ets_damped = ETS(GDP ~ trend("Ad")),
-    ets_bc = ETS(box_cox(GDP, 0.2)),
-    ets_log = ETS(log(GDP))
-  )
-
-## Check models
-fit
-glance(fit)
-tidy(fit)
-augment(fit)
-fit  |>
-  select(ets)  |>
-  gg_tsresiduals()
-augment(fit) |> features(.innov, ljung_box, lag = 10)
-
-## Forecasts
-fit |>
-  forecast(h = "20 years") |>
-  autoplot(china, level = NULL) +
-  scale_y_log10()
-
-
-## Add time series cross validation
-
-china_stretch <- china |> stretch_tsibble(.init = 20, .step = 1)
-
-fit <- china_stretch |>
-  model(
-    ets = ETS(GDP),
-    ets_damped = ETS(GDP ~ trend("Ad")),
-    ets_bc = ETS(box_cox(GDP, 0.2)),
-    ets_log = ETS(log(GDP))
-  )
-fit
-fc <- fit |> forecast(h = 10)
-accuracy(fc, china)  |>
-  arrange(RMSE)
-
-# Australian gas production
-
-aus_production |>
-  autoplot(Gas)
-
-fit <- aus_production |>
-  model(
-    auto = ETS(Gas),
-    hw = ETS(Gas ~ error("M") + trend("A") + season("M")),
-    hwdamped = ETS(Gas ~ error("M") + trend("Ad") + season("M")),
-  )
-fit
-fit |> glance()
-
-fit |>
-  select(hw) |>
-  gg_tsresiduals()
-
-fit |> tidy()
-
-fit |>
-  augment() |>
-  filter(.model == "hw") |>
-  features(.innov, ljung_box, lag = 24)
-
-fit |>
-  forecast(h = 36) |>
-  filter(.model == "hw") |>
-  autoplot(aus_production)
-
-# Try fitting model to data since 1990
-
-fit <- aus_production |>
-  filter(year(Quarter) >= 1990) |>
-  model(
-    auto = ETS(Gas),
-    hw = ETS(Gas ~ error("M") + trend("A") + season("M")),
-    hwdamped = ETS(Gas ~ error("M") + trend("Ad") + season("M")),
-  )
-fit
-fit |> glance()
-
-fit |>
-  select(auto) |>
-  gg_tsresiduals()
-
-fit |>
-  augment() |>
-  filter(.model == "auto") |>
-  features(.innov, ljung_box, lag = 24)
-
-fit |>
-  forecast(h = 36) |>
-  filter(.model == "auto") |>
-  autoplot(aus_production)
-
-
-library(fpp3)
-
 # Victorian tobacco expenditure
 
 vic_tobacco <- aus_tobacco |>
@@ -120,10 +8,11 @@ vic_tobacco |>
   autoplot(Expenditure)
 fit <- vic_tobacco |>
   model(
-    ANN = ETS(Expenditure ~ error("A") + trend("N") + season("N")),
+    AAN = ETS(Expenditure ~ error("A") + trend("A") + season("N")),
+    MAM = ETS(Expenditure ~ error("M") + trend("A") + season("M"))
   )
 fit |>
-  select(ANN) |>
+  select(AAN) |>
   report()
 
 tidy(fit)
@@ -133,7 +22,7 @@ accuracy(fit)
 components(fit) |> autoplot()
 
 fit |>
-  select(ANN) |>
+  select(MAM) |>
   gg_tsresiduals()
 
 fit |>
@@ -141,10 +30,9 @@ fit |>
   features(.innov, ljung_box, lag = 10)
 
 fc <- fit |>
-  forecast(h=5)
+  forecast(h="5 years")
 
 fc |>
-  filter(.model == "ANN") |>
   autoplot(vic_tobacco) 
 
 # Repeat with test set
@@ -152,15 +40,16 @@ fc |>
 fit <- vic_tobacco |>
   filter(year(Quarter) <= 2020) |>
   model(
-    ANN = ETS(Expenditure ~ error("A") + trend("N") + season("N")),
     AAN = ETS(Expenditure ~ error("A") + trend("A") + season("N")),
-    AAA = ETS(Expenditure ~ error("A") + trend("A") + season("A")),
-    naive = NAIVE(Expenditure),
-    drift = RW(Expenditure ~ drift())
+    MAM = ETS(Expenditure ~ error("M") + trend("A") + season("M")),
+    ets = ETS(Expenditure),
+    snaive_drift = SNAIVE(log(Expenditure) ~ drift())
   )
 
+fit
+
 fc <- fit |>
-  forecast(h="3 years")
+  forecast(h="5 years")
 
 fc |>
   autoplot(vic_tobacco, level=NULL) 
@@ -170,15 +59,14 @@ fc |> accuracy(vic_tobacco) |> arrange(RMSE)
 # Repeat with tscv
 
 vic_cig_stretch <- vic_tobacco |>
-  stretch_tsibble(.init = 10, .step = 1)
+  stretch_tsibble(.init = 12, .step = 1)
 
 cv_fit <- vic_cig_stretch |>
   model(
-    ANN = ETS(Expenditure ~ error("A") + trend("N") + season("N")),
     AAN = ETS(Expenditure ~ error("A") + trend("A") + season("N")),
-    AAA = ETS(Expenditure ~ error("A") + trend("A") + season("A")),
-    naive = NAIVE(Expenditure),
-    drift = RW(Expenditure ~ drift())
+    MAM = ETS(Expenditure ~ error("M") + trend("A") + season("M")),
+    ets = ETS(Expenditure),
+    snaive_drift = SNAIVE(log(Expenditure) ~ drift())
   )
 
 cv_fc <- cv_fit |>
@@ -200,3 +88,44 @@ cv_fc |>
   group_by(.model) |>
   summarise(RMSSE = sqrt(mean(RMSSE^2))) |>
   arrange(RMSSE)
+
+
+## Automatic modelling of PBS data
+
+fit_PBS <- PBS |>
+  model(ets = ETS(Scripts))
+
+# Which models are chosen?
+fit_PBS |> 
+  mutate(model_name = as.character(ets)) |>
+  count(model_name) |>
+  arrange(desc(n))
+
+# Best and  Worst fitting model
+acc_PBS <- accuracy(fit_PBS)
+
+perfect_fits <- acc_PBS |> 
+  filter(RMSE == 0) |>
+  left_join(PBS) |>
+  as_tsibble(index = Month, key = c(Concession, Type, ATC1, ATC2)) 
+perfect_fits |> autoplot(Scripts)
+
+best_fit <- acc_PBS |> 
+  filter(RMSSE == min(RMSSE, na.rm = TRUE)) |>
+  left_join(PBS) |>
+  as_tsibble(index = Month, key = c(Concession, Type, ATC1, ATC2)) 
+best_fit |> autoplot(Scripts)
+fit <- best_fit |> model(ETS(Scripts)) 
+report(fit)
+best_fit |> autoplot(Scripts) + autolayer(fitted(fit), col = "red")
+fit |> forecast(h = 36) |> autoplot(PBS, level = NULL)
+
+worst_fit <- acc_PBS |> 
+  filter(RMSSE == max(RMSSE, na.rm = TRUE)) |>
+  left_join(PBS) |>
+  as_tsibble(index = Month, key = c(Concession, Type, ATC1, ATC2)) 
+worst_fit |> autoplot(Scripts)
+fit <- worst_fit |> model(ETS(Scripts)) 
+report(fit)
+worst_fit |> autoplot(Scripts) + autolayer(fitted(fit), col = "red")
+fit |> forecast(h = 36) |> autoplot(PBS, level = NULL)

@@ -1,5 +1,5 @@
 ---
-title: "Week 6: Exponential smoothing"
+title: "Week 6: ETS models (part 1)"
 ---
 
 ```{r}
