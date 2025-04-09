@@ -37,98 +37,105 @@
   {
     "objectID": "week7/index.html",
     "href": "week7/index.html",
-    "title": "Week 7: ETS models",
+    "title": "Week 7: ETS models (part 2)",
     "section": "",
     "text": "Exponential smoothing with seasonality\nAutomatic model selection using the AICc"
   },
   {
     "objectID": "week7/index.html#what-you-will-learn-this-week",
     "href": "week7/index.html#what-you-will-learn-this-week",
-    "title": "Week 7: ETS models",
+    "title": "Week 7: ETS models (part 2)",
     "section": "",
     "text": "Exponential smoothing with seasonality\nAutomatic model selection using the AICc"
   },
   {
     "objectID": "week7/index.html#pre-class-activities",
     "href": "week7/index.html#pre-class-activities",
-    "title": "Week 7: ETS models",
+    "title": "Week 7: ETS models (part 2)",
     "section": "Pre-class activities",
     "text": "Pre-class activities\nRead Sections 8.3-8.4 and 8.6-8.7 of the textbook and watch all embedded videos"
   },
   {
     "objectID": "week7/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week7/index.html#exercises-on-your-own-or-in-tutorial",
-    "title": "Week 7: ETS models",
+    "title": "Week 7: ETS models (part 2)",
     "section": "Exercises (on your own or in tutorial)",
     "text": "Exercises (on your own or in tutorial)\nComplete Exercises 7, 10-15 from Section 8.8 of the book."
   },
   {
+    "objectID": "week7/index.html#monday-lecture",
+    "href": "week7/index.html#monday-lecture",
+    "title": "Week 7: ETS models (part 2)",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
     "objectID": "week7/index.html#assignments",
     "href": "week7/index.html#assignments",
-    "title": "Week 7: ETS models",
+    "title": "Week 7: ETS models (part 2)",
     "section": "Assignments",
     "text": "Assignments\n\nAssignment 2 is due on Friday 25 April."
   },
   {
     "objectID": "week7/index.html#weekly-quiz",
     "href": "week7/index.html#weekly-quiz",
-    "title": "Week 7: ETS models",
+    "title": "Week 7: ETS models (part 2)",
     "section": "Weekly quiz",
     "text": "Weekly quiz\n\nWeek 7 quiz is due on Sunday 20 April."
   },
   {
     "objectID": "week6/index.html",
     "href": "week6/index.html",
-    "title": "Week 6: Exponential smoothing",
+    "title": "Week 6: ETS models (part 1)",
     "section": "",
     "text": "Simple exponential smoothing\nExponential smoothing methods with trend\nExponential smoothing methods with seasonality\nETS model notation"
   },
   {
     "objectID": "week6/index.html#what-you-will-learn-this-week",
     "href": "week6/index.html#what-you-will-learn-this-week",
-    "title": "Week 6: Exponential smoothing",
+    "title": "Week 6: ETS models (part 1)",
     "section": "",
     "text": "Simple exponential smoothing\nExponential smoothing methods with trend\nExponential smoothing methods with seasonality\nETS model notation"
   },
   {
     "objectID": "week6/index.html#pre-class-activities",
     "href": "week6/index.html#pre-class-activities",
-    "title": "Week 6: Exponential smoothing",
+    "title": "Week 6: ETS models (part 1)",
     "section": "Pre-class activities",
     "text": "Pre-class activities\nRead Sections 8.1-8.2 and 8.5 of the textbook and watch all embedded videos"
   },
   {
     "objectID": "week6/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week6/index.html#exercises-on-your-own-or-in-tutorial",
-    "title": "Week 6: Exponential smoothing",
+    "title": "Week 6: ETS models (part 1)",
     "section": "Exercises (on your own or in tutorial)",
     "text": "Exercises (on your own or in tutorial)\nComplete Exercises 1-6, 16, 17 from Section 8.8 of the book."
   },
   {
     "objectID": "week6/index.html#monday-lecture",
     "href": "week6/index.html#monday-lecture",
-    "title": "Week 6: Exponential smoothing",
+    "title": "Week 6: ETS models (part 1)",
     "section": "Monday lecture",
     "text": "Monday lecture\n\n\nDownload slides\nCode used in lecture"
   },
   {
     "objectID": "week6/index.html#tuesday-workshop",
     "href": "week6/index.html#tuesday-workshop",
-    "title": "Week 6: Exponential smoothing",
+    "title": "Week 6: ETS models (part 1)",
     "section": "Tuesday workshop",
     "text": "Tuesday workshop\nActivities for Tuesday workshop\nCode used in workshop"
   },
   {
     "objectID": "week6/index.html#assignments",
     "href": "week6/index.html#assignments",
-    "title": "Week 6: Exponential smoothing",
+    "title": "Week 6: ETS models (part 1)",
     "section": "Assignments",
     "text": "Assignments\n\nAssignment 2 is due on Friday 25 April."
   },
   {
     "objectID": "week6/index.html#weekly-quiz",
     "href": "week6/index.html#weekly-quiz",
-    "title": "Week 6: Exponential smoothing",
+    "title": "Week 6: ETS models (part 1)",
     "section": "Weekly quiz",
     "text": "Weekly quiz\n\nWeek 6 quiz is due on Sunday 13 April."
   },
