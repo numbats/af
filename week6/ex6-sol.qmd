@@ -1,14 +1,13 @@
 ---
 title: "Exercise Week 6: Solutions"
+execute:
+  echo: true
+  cache: true
+  warning: false
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache=TRUE, warning = FALSE)
-```
 
 ```{r, message = FALSE}
 library(fpp3)
-library(broom)
 ```
 
 # fpp3 8.8, Ex1
@@ -17,7 +16,9 @@ library(broom)
 
 >   a. Use the `ETS()` function in R to estimate the equivalent model for simple exponential smoothing. Find the optimal values of $\alpha$ and $\ell_0$, and generate forecasts for the next four months.
 
-```{r ex1a}
+```{r}
+#| label: ex1a
+
 fit <- aus_livestock |>
   filter(Animal == "Pigs", State == "Victoria") |>
   model(ses = ETS(Count ~ error("A") + trend("N") + season("N")))
@@ -26,7 +27,10 @@ report(fit)
 
 Optimal values are $\alpha = `r format(broom::tidy(fit)[["estimate"]][1])`$  and $\ell_0 = `r format(broom::tidy(fit)[["estimate"]][2])`$
 
-```{r ex1b, dependson="ex1a"}
+```{r}
+#| label: ex1b
+#| dependson: ex1a
+
 fc <- fit |> forecast(h = "4 months")
 fc
 fc |>
@@ -35,7 +39,10 @@ fc |>
 
 >   b. Compute a 95% prediction interval for the first forecast using $\hat{y} \pm 1.96s$ where $s$ is the standard deviation of the residuals. Compare your interval with the interval produced by R.
 
-```{r ex1c, dependson="ex1b"}
+```{r}
+#| label: ex1c
+#| dependson: ex1b
+
 s <- augment(fit) |>
   pull(.resid) |>
   sd()
@@ -45,7 +52,10 @@ yhat <- fc |>
 yhat + c(-1, 1) * 1.96 * s
 ```
 
-```{r ex1d, dependson="ex1b"}
+```{r}
+#| label: ex1d
+#| dependson: ex1b
+
 fc |>
   head(1) |>
   mutate(interval = hilo(Count, 95)) |>
@@ -57,6 +67,9 @@ The intervals are close but not identical. This is because R estimates the varia
 Try the following.
 
 ```{r ex1e, dependson="ex1a"}
+#| label: ex1e
+#| dependson: ex1a
+
 res <- augment(fit) |> pull(.resid)
 s <- sqrt(sum(res^2) / (length(res) - NROW(tidy(fit))))
 yhat + c(-1, 1) * qnorm(0.975) * s
@@ -129,6 +142,153 @@ my_ses <- function(y) {
 }
 my_ses(vic_pigs_vec)
 ```
+
+# fpp3 8.8, Ex5
+
+>  Data set `global_economy` contains the annual Exports from many countries. Select one country to analyse.
+>
+>    a. Plot the Exports series and discuss the main features of the data.
+
+```{r}
+global_economy |>
+  filter(Country == "Argentina") |>
+  autoplot(Exports)
+```
+
+There is a huge jump in Exports in 2002, due to the deregulation of the Argentinian peso. Since then, Exports (as a percentage of GDP) has gradually returned to 1990 levels.
+
+>    b. Use an ETS(A,N,N) model to forecast the series, and plot the forecasts.
+
+```{r}
+etsANN <- global_economy |>
+  filter(Country == "Argentina") |>
+  model(ETS(Exports ~ error("A") + trend("N") + season("N")))
+etsANN |>
+  forecast(h = 10) |>
+  autoplot(global_economy)
+```
+
+>    c. Compute the RMSE values for the training data.
+
+```{r}
+accuracy(etsANN) |> select(RMSE)
+```
+
+>    d. Compare the results to those from an ETS(A,A,N) model. (Remember that the trended model is using one more parameter than the simpler model.) Discuss the merits of the two forecasting methods for this data set.
+
+```{r}
+fit <- global_economy |>
+  filter(Country == "Argentina") |>
+  model(
+    ses = ETS(Exports ~ error("A") + trend("N") + season("N")),
+    holt = ETS(Exports ~ error("A") + trend("A") + season("N"))
+  )
+accuracy(fit)
+```
+
+There is very little difference in training RMSE between these models. So the extra parameter is not doing much.
+
+>    e. Compare the forecasts from both methods. Which do you think is best?
+
+```{r}
+fit |>
+  forecast(h = 10) |>
+  autoplot(global_economy)
+```
+
+- The forecasts are similar. In this case, the *simpler* model is preferred.
+
+>    f. Calculate a 95% prediction interval for the first forecast for each series, using the RMSE values and assuming normal errors. Compare your intervals with those produced using R.
+
+1.  standard error. (from RMSE)
+2.  mean (from forecast)
+
+```{r}
+s <- accuracy(fit) |> pull(RMSE)
+yhat <- forecast(fit, h = 1) |> pull(.mean)
+# SES
+yhat[1] + c(-1, 1) * qnorm(0.975) * s[1]
+# Holt
+yhat[2] + c(-1, 1) * qnorm(0.975) * s[2]
+fit |>
+  forecast(h = 1) |>
+  mutate(PI = hilo(Exports, level = 95))
+```
+
+-   Using RMSE yields narrower prediction interval while using the values from
+    `hilo()` function gives wider prediction interval.
+
+-   Using RMSE has failed to take account of the degrees of freedom for each
+    model. Compare the following
+
+```{r}
+sse <- augment(fit) |>
+  as_tibble() |>
+  group_by(.model) |>
+  summarise(s = sum(.resid^2)) |>
+  pull(s)
+
+n <- global_economy |>
+  filter(Country == "Argentina") |>
+    nrow()
+
+# sse method= alpha, level=> 2
+# holt linear = alpha, level, trend, b => 4
+
+s <- sqrt(sse / (n - c(2, 4)))
+
+# SES
+yhat[1] + c(-1, 1) * qnorm(0.975) * s[1]
+# Holt
+yhat[2] + c(-1, 1) * qnorm(0.975) * s[2]
+```
+
+# fpp3 8.8, Ex6
+
+> Forecast the Chinese GDP from the `global_economy` data set using an ETS model. Experiment with the various options in the `ETS()` function to see how much the forecasts change with damped trend, or with a Box-Cox transformation. Try to develop an intuition of what each is doing to the forecasts.
+
+> [Hint: use `h=20` when forecasting, so you can clearly see the differences between the various options when plotting the forecasts.]
+
+```{r}
+china <- global_economy |>
+  filter(Country == "China")
+china |> autoplot(GDP)
+```
+
+-   It clearly needs a relatively strong transformation due to the increasing
+    variance.
+
+```{r}
+china |> autoplot(box_cox(GDP, 0.2))
+china |> features(GDP, guerrero)
+```
+
+-   Making $\lambda=0.2$ looks ok.
+
+-   The Guerrero method suggests an even stronger transformation. Let's also try
+    a log.
+
+```{r}
+fit <- china |>
+  model(
+    ets = ETS(GDP),
+    ets_damped = ETS(GDP ~ trend("Ad")),
+    ets_bc = ETS(box_cox(GDP, 0.2)),
+    ets_log = ETS(log(GDP))
+  )
+
+fit
+
+augment(fit)
+
+fit |>
+  forecast(h = "20 years") |>
+  autoplot(china, level = NULL)
+```
+
+-   The transformations have a big effect, with small lambda values creating big
+    increases in the forecasts.
+-   The damping has relatively a small effect.
 
 # fpp3 8.8, Ex16
 

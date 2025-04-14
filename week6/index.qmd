@@ -10,7 +10,7 @@ source(here::here("course_info.R"))
 ## What you will learn this week
 
 * Simple exponential smoothing
-* Exponential smoothing methods with trend 
+* Exponential smoothing methods with trend
 * Exponential smoothing methods with seasonality
 * ETS model notation
 
@@ -21,8 +21,9 @@ Read [Sections 8.1-8.2 and 8.5 of the textbook](https://otexts.com/fpp3/expsmoot
 ## Exercises (on your own or in tutorial)
 
 * Complete Exercises 1-6, 16, 17 from [Section 8.8 of the book](https://otexts.com/fpp3/expsmooth-exercises.html).
-<!-- [**Solutions to Exercises**](ex6-sol.qmd) -->
-* Recorded tutorial code](tutorial_code.R)
+
+* [Solutions to Exercises](ex6-sol.qmd)
+* [Recorded tutorial code](tutorial_code.R)
 
 
 ```{r}
