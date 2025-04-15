@@ -59,7 +59,8 @@ dev.off()
 
 savepng(here::here("assignments/Q4"), height = 80, width = 15)
 competition |> plotcompetition(F = Q4F, L = Q4L, U = Q4U, Actual = q4, xlab = "Millions") +
-  ggtitle("Seasonally adjusted total employment in April 2025")
+  ggtitle("Seasonally adjusted total employment in April 2025") +
+  coord_cartesian(xlim = c(12, 18))
 dev.off()
 
 savepng(here::here("assignments/Q5"), height = 80, width = 15)
