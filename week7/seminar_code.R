@@ -8,11 +8,12 @@ vic_tobacco |>
   autoplot(Expenditure)
 fit <- vic_tobacco |>
   model(
-    AAN = ETS(Expenditure ~ error("A") + trend("A") + season("N")),
-    MAM = ETS(Expenditure ~ error("M") + trend("A") + season("M"))
+    #AAN = ETS(Expenditure ~ error("A") + trend("A") + season("N")),
+    #MAM = ETS(Expenditure ~ error("M") + trend("A") + season("M")),
+    ets = ETS(Expenditure)
   )
 fit |>
-  select(AAN) |>
+  select(MAM) |>
   report()
 
 tidy(fit)
@@ -27,13 +28,13 @@ fit |>
 
 fit |>
   augment() |>
-  features(.innov, ljung_box, lag = 10)
+  features(.innov, ljung_box, lag = 8)
 
 fc <- fit |>
   forecast(h="5 years")
 
 fc |>
-  autoplot(vic_tobacco) 
+  autoplot(vic_tobacco)
 
 # Repeat with test set
 
@@ -52,7 +53,7 @@ fc <- fit |>
   forecast(h="5 years")
 
 fc |>
-  autoplot(vic_tobacco, level=NULL) 
+  autoplot(vic_tobacco, level=NULL)
 
 fc |> accuracy(vic_tobacco) |> arrange(RMSE)
 
@@ -96,7 +97,7 @@ fit_PBS <- PBS |>
   model(ets = ETS(Scripts))
 
 # Which models are chosen?
-fit_PBS |> 
+fit_PBS |>
   mutate(model_name = as.character(ets)) |>
   count(model_name) |>
   arrange(desc(n))
@@ -104,28 +105,28 @@ fit_PBS |>
 # Best and  Worst fitting model
 acc_PBS <- accuracy(fit_PBS)
 
-perfect_fits <- acc_PBS |> 
+perfect_fits <- acc_PBS |>
   filter(RMSE == 0) |>
   left_join(PBS) |>
-  as_tsibble(index = Month, key = c(Concession, Type, ATC1, ATC2)) 
+  as_tsibble(index = Month, key = c(Concession, Type, ATC1, ATC2))
 perfect_fits |> autoplot(Scripts)
 
-best_fit <- acc_PBS |> 
+best_fit <- acc_PBS |>
   filter(RMSSE == min(RMSSE, na.rm = TRUE)) |>
   left_join(PBS) |>
-  as_tsibble(index = Month, key = c(Concession, Type, ATC1, ATC2)) 
+  as_tsibble(index = Month, key = c(Concession, Type, ATC1, ATC2))
 best_fit |> autoplot(Scripts)
-fit <- best_fit |> model(ETS(Scripts)) 
+fit <- best_fit |> model(ETS(Scripts))
 report(fit)
 best_fit |> autoplot(Scripts) + autolayer(fitted(fit), col = "red")
 fit |> forecast(h = 36) |> autoplot(PBS, level = NULL)
 
-worst_fit <- acc_PBS |> 
+worst_fit <- acc_PBS |>
   filter(RMSSE == max(RMSSE, na.rm = TRUE)) |>
   left_join(PBS) |>
-  as_tsibble(index = Month, key = c(Concession, Type, ATC1, ATC2)) 
+  as_tsibble(index = Month, key = c(Concession, Type, ATC1, ATC2))
 worst_fit |> autoplot(Scripts)
-fit <- worst_fit |> model(ETS(Scripts)) 
+fit <- worst_fit |> model(ETS(Scripts))
 report(fit)
 worst_fit |> autoplot(Scripts) + autolayer(fitted(fit), col = "red")
 fit |> forecast(h = 36) |> autoplot(PBS, level = NULL)
