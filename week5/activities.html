@@ -232,43 +232,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Do the residuals from the best method resemble white noise?</li>
 </ol>
 <!-- This is a fairly straightforward exercise, giving students some practice in the steps to follow when comparing forecasting methods. The drift method is better for every country and on average. In all cases the residuals from the drift model resemble white noise.
-
-
-train <- hh_budget |>
-  filter(Year <= max(Year) - 4)
-fit <- train |>
-  model(
-    naive = NAIVE(Wealth),
-    drift = RW(Wealth ~ drift()),
-    mean = MEAN(Wealth)
-  )
-fc <- fit |> forecast(h = 4)
-fc |>
-  accuracy(hh_budget) |>
-  arrange(Country, MASE)
-fc |>
-  accuracy(hh_budget) |>
-  group_by(.model) |>
-  summarise(MASE = mean(MASE)) |>
-  ungroup() |>
-  arrange(MASE)
-fit |>
-  filter(Country == "Australia") |>
-  select(drift) |>
-  gg_tsresiduals()
-fit |>
-  filter(Country == "Canada") |>
-  select(drift) |>
-  gg_tsresiduals()
-fit |>
-  filter(Country == "Japan") |>
-  select(drift) |>
-  gg_tsresiduals()
-fit |>
-  filter(Country == "USA") |>
-  select(drift) |>
-  gg_tsresiduals()
-``` -->
+-->
 </section>
 <section id="true-or-false" class="level2">
 <h2 class="anchored" data-anchor-id="true-or-false">True or false?</h2>
@@ -313,7 +277,7 @@ fit |>
 <section id="exam-part-a" class="level2">
 <h2 class="anchored" data-anchor-id="exam-part-a">2024 Exam part A</h2>
 <p>Discuss topics A2, A3, and A6</p>
-<!-- 
+<!--
 2.  *The Ljung-Box test is useful for selecting a good forecasting model.*
 
     - The Ljung-Box test is used to test whether the residuals from a model are white noise.
