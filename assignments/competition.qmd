@@ -30,7 +30,7 @@ submit(schedule, "Forecasting Competition")
 
 ```{r}
 #| eval: true
-#source(here::here("assignments/competition.R"))
+# source(here::here("assignments/competition.R"))
 readRDS(here::here("assignments/competition_leaderboard.rds")) |>
   DT::datatable()
 ```
