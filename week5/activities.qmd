@@ -12,8 +12,11 @@ Participate in these workshop questions here: <https://partici.fi/61758592>
 4. Do the residuals from the best method resemble white noise?
 
 <!-- This is a fairly straightforward exercise, giving students some practice in the steps to follow when comparing forecasting methods. The drift method is better for every country and on average. In all cases the residuals from the drift model resemble white noise.
+-->
 
 ```{r}
+#| echo: false
+#| eval: false
 train <- hh_budget |>
   filter(Year <= max(Year) - 4)
 fit <- train |>
@@ -48,7 +51,7 @@ fit |>
   filter(Country == "USA") |>
   select(drift) |>
   gg_tsresiduals()
-``` -->
+```
 
 ## True or false?
 
@@ -95,7 +98,7 @@ fit |>
 
 Discuss topics A2, A3, and A6
 
-<!-- 
+<!--
 2.  *The Ljung-Box test is useful for selecting a good forecasting model.*
 
     - The Ljung-Box test is used to test whether the residuals from a model are white noise.
