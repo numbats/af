@@ -3,159 +3,12 @@ title: "Exercise Week 7: Solutions"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, cache=TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, cache = TRUE)
 ```
 
 ```{r, message = FALSE}
 library(fpp3)
 ```
-
-# fpp3 8.8, Ex5
-
->  Data set `global_economy` contains the annual Exports from many countries. Select one country to analyse.
->
->    a. Plot the Exports series and discuss the main features of the data.
-
-```{r}
-global_economy |>
-  filter(Country == "Argentina") |>
-  autoplot(Exports)
-```
-
-There is a huge jump in Exports in 2002, due to the deregulation of the Argentinian peso. Since then, Exports (as a percentage of GDP) has gradually returned to 1990 levels.
-
->    b. Use an ETS(A,N,N) model to forecast the series, and plot the forecasts.
-
-```{r}
-etsANN <- global_economy |>
-  filter(Country == "Argentina") |>
-  model(ETS(Exports ~ error("A") + trend("N") + season("N")))
-etsANN |>
-  forecast(h = 10) |>
-  autoplot(global_economy)
-```
-
->    c. Compute the RMSE values for the training data.
-
-```{r}
-accuracy(etsANN) |> select(RMSE)
-```
-
->    d. Compare the results to those from an ETS(A,A,N) model. (Remember that the trended model is using one more parameter than the simpler model.) Discuss the merits of the two forecasting methods for this data set.
-
-```{r}
-fit <- global_economy |>
-  filter(Country == "Argentina") |>
-  model(
-    ses = ETS(Exports ~ error("A") + trend("N") + season("N")),
-    holt = ETS(Exports ~ error("A") + trend("A") + season("N"))
-  )
-accuracy(fit)
-```
-
-There is very little difference in training RMSE between these models. So the extra parameter is not doing much.
-
->    e. Compare the forecasts from both methods. Which do you think is best?
-
-```{r}
-fit |>
-  forecast(h = 10) |>
-  autoplot(global_economy)
-```
-
-The forecasts are similar. In this case, the simpler model is preferred.
-
->    f. Calculate a 95% prediction interval for the first forecast for each series, using the RMSE values and assuming normal errors. Compare your intervals with those produced using R.
-
-1.  standard error. (from RMSE)
-2.  mean (from forecast)
-
-```{r}
-s <- accuracy(fit) |> pull(RMSE)
-yhat <- forecast(fit, h = 1) |> pull(.mean)
-# SES
-yhat[1] + c(-1, 1) * qnorm(0.975) * s[1]
-# Holt
-yhat[2] + c(-1, 1) * qnorm(0.975) * s[2]
-fit |>
-  forecast(h = 1) |>
-  mutate(PI = hilo(Exports, level = 95))
-```
-
--   Using RMSE yields narrower prediction interval while using the values from
-    `hilo()` function gives wider prediction interval.
-
--   Using RMSE has failed to take account of the degrees of freedom for each
-    model. Compare the following
-
-```{r}
-sse <- augment(fit) |>
-  as_tibble() |>
-  group_by(.model) |>
-  summarise(s = sum(.resid^2)) |>
-  pull(s)
-
-n <- global_economy |>
-  filter(Country == "Argentina") |>
-    nrow()
-
-# sse method= alpha, level=> 2
-# holt linear = alpha, level, trend, b => 4
-
-s <- sqrt(sse / (n - c(2, 4)))
-
-# SES
-yhat[1] + c(-1, 1) * qnorm(0.975) * s[1]
-# Holt
-yhat[2] + c(-1, 1) * qnorm(0.975) * s[2]
-```
-
-# fpp3 8.8, Ex6
-
-> Forecast the Chinese GDP from the `global_economy` data set using an ETS model. Experiment with the various options in the `ETS()` function to see how much the forecasts change with damped trend, or with a Box-Cox transformation. Try to develop an intuition of what each is doing to the forecasts.
-
-> [Hint: use `h=20` when forecasting, so you can clearly see the differences between the various options when plotting the forecasts.]
-
-```{r}
-china <- global_economy |>
-  filter(Country == "China")
-china |> autoplot(GDP)
-```
-
--   It clearly needs a relatively strong transformation due to the increasing
-    variance.
-
-```{r}
-china |> autoplot(box_cox(GDP, 0.2))
-china |> features(GDP, guerrero)
-```
-
--   Making $\lambda=0.2$ looks ok.
-
--   The Guerrero method suggests an even stronger transformation. Let's also try
-    a log.
-
-```{r}
-fit <- china |>
-  model(
-    ets = ETS(GDP),
-    ets_damped = ETS(GDP ~ trend("Ad")),
-    ets_bc = ETS(box_cox(GDP, 0.2)),
-    ets_log = ETS(log(GDP))
-  )
-
-fit
-
-augment(fit)
-
-fit |>
-  forecast(h = "20 years") |>
-  autoplot(china, level = NULL)
-```
-
--   The transformations have a big effect, with small lambda values creating big
-    increases in the forecasts.
--   The damping has relatively a small effect.
 
 # fpp3 8.8, Ex7
 
@@ -204,98 +57,6 @@ fit |>
 ```
 
 While the point forecasts look ok, the intervals are excessively wide.
-
-# fpp3 8.8, Ex8
-
-> Recall your retail time series data (from Exercise 6 in Section 2.10).
->
->    a. Why is multiplicative seasonality necessary for this series?
-
-```{r 89a}
-set.seed(12345678)
-myseries <- aus_retail |>
-  filter(`Series ID` == sample(aus_retail$`Series ID`, 1))
-myseries |> autoplot(Turnover)
-```
-
-The variation in the seasonal pattern increases as the level of the series rises. (This may not be true for every series, but is true for almost all of them.)
-
->    b. Apply Holt-Winters’ multiplicative method to the data. Experiment with making the trend damped.
-
-```{r 89b}
-fit <- myseries |>
-  model(
-    hw = ETS(Turnover ~ error("M") + trend("A") + season("M")),
-    hwdamped = ETS(Turnover ~ error("M") + trend("Ad") + season("M"))
-  )
-fc <- fit |> forecast(h = 36)
-fc |> autoplot(myseries)
-```
-
->    c. Compare the RMSE of the one-step forecasts from the two methods. Which do you prefer?
-
-```{r 89c, dependson="89b"}
-accuracy(fit)
-```
-
-The non-damped method is doing slightly better (on RMSE), but the damped method is doing better on most other scores. I'd be inclined to use the damped method here as the trend at the end of the series seems to be flattening.
-
->    d. Check that the residuals from the best method look like white noise.
-
-```{r 89d}
-fit |>
-  select("hwdamped") |>
-  gg_tsresiduals()
-```
-
-There are significant spikes at lags 8 and 18 in the ACF, but they are relatively small and probably of no consequence.
-
-```{r 89d2}
-augment(fit) |>
-  filter(.model == "hwdamped") |>
-  features(.innov, ljung_box, lag = 36)
-```
-
-It seems that there is enough autocorrelation in the residuals for this to be significant. But in practice it will make little difference to the forecasts or prediction intervals.
-
->    e. Now find the test set RMSE, while training the model to the end of 2010. Can you beat the seasonal naïve approach from Exercise 7 in Section 5.10?
-
-```{r 89e}
-myseries |>
-  filter(year(Month) < 2011) |>
-  model(
-    snaive = SNAIVE(Turnover),
-    hw = ETS(Turnover ~ error("M") + trend("A") + season("M")),
-    hwdamped = ETS(Turnover ~ error("M") + trend("Ad") + season("M"))
-  ) |>
-  forecast(h = "7 years") |>
-  accuracy(myseries)
-```
-
-The SNAIVE model is doing much better than the HW model for this data set.
-
-# fpp3 8.8, Ex9
-
-> For the same retail data, try an STL decomposition applied to the Box-Cox transformed series, followed by ETS on the seasonally adjusted data. How does that compare with your best previous forecasts on the test set?
-
-```{r 810}
-stl <- decomposition_model(
-  STL(log(Turnover)),
-  ETS(season_adjust ~ season("N"))
-)
-fc <- myseries |>
-  filter(year(Month) < 2011) |>
-  model(
-    stl_ets = stl,
-    snaive = SNAIVE(Turnover),
-    hwdamped = ETS(Turnover ~ error("M") + trend("Ad") + season("M"))
-  ) |>
-  forecast(h = "7 years")
-fc |> autoplot(filter(myseries, year(Month) > 2004), level = NULL)
-fc |> accuracy(myseries)
-```
-
-The data since 2011 has been less trended than what was seen before that. So the models with the lowest trend have done better. The STL+ETS approach has the highest trends and therefore the worst accuracy.
 
 # fpp3 8.8, Ex10
 
@@ -354,14 +115,13 @@ aus_trips |>
 
 ```{r}
 fit <- aus_trips |>
-        model(ets = ETS(Trips))
+  model(ets = ETS(Trips))
 
 fit |> report()
 
 fit |> tidy()
 
-fit |> forecast(h = "2 years") |>
-  autoplot(aus_trips)
+fit |> forecast(h = "2 years") |> autoplot(aus_trips)
 ```
 
 >   f. Compare the RMSE of the ETS model with the RMSE of the models you obtained using STL decompositions. Which gives the better in-sample fits?
@@ -375,12 +135,12 @@ fit <- aus_trips |>
   )
 
 fit |>
-    select(ets) |>
-    tidy()
+  select(ets) |>
+  tidy()
 
 fit |>
-    select(ets) |>
-    report()
+  select(ets) |>
+  report()
 
 accuracy(fit)
 ```
@@ -592,7 +352,8 @@ fc <- subsidies |>
   model(
     ETS(Cost),
     SNAIVE(Cost),
-    STLM = decomposition_model(STL(log(Cost)), ETS(season_adjust))) |>
+    STLM = decomposition_model(STL(log(Cost)), ETS(season_adjust))
+  ) |>
   forecast(h = "3 years")
 fc |> autoplot(subsidies, level = NULL)
 fc |>
