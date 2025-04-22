@@ -10,6 +10,8 @@ fb |>
 fb |>
   gg_tsdisplay(difference(Close))
 
+
+
 # aus_production Bricks
 
 aus_production |>
@@ -52,4 +54,3 @@ aus_production  |>
       difference(lag = 4),
     unitroot_ndiffs
   )
-

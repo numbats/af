@@ -43,6 +43,14 @@ If $\{y_t\}$ is a stationary time series, then for all $s$, the distribution of 
 Transformations help to **stabilize the variance**.\newline
 For ARIMA modelling, we also need to **stabilize the mean**.
 
+## Non-stationarity in the mean
+\alert{Identifying non-stationary series}
+
+* time plot.
+* The ACF of stationary data drops to zero relatively quickly
+* The ACF of non-stationary data decreases slowly.
+* For non-stationary data, the value of $r_1$ is often large and positive.
+
 # Differencing
 
 ### Differencing
@@ -50,12 +58,7 @@ For ARIMA modelling, we also need to **stabilize the mean**.
 * Differencing helps to **stabilize the mean**.
 * First differencing: *change* between consecutive observations: $y'_t = y_t - y_{t-1}$.
 * Seasonal differencing: *change* between years: $y'_t = y_t - y_{t-m}$.
-
-## Your turn
-
-1. Does differencing make the Closing stock price series stationary for Amazon and Apple stocks?
-2. What sorts of transformations and differencing are needed to make the `Gas` series from `aus_accommodation` stationary?
-
+* Sometimes two differences need to be applied (but never more).
 
 ## Automatic differencing
 \fontsize{13}{16}\sf
@@ -64,13 +67,13 @@ Statistical tests to determine the required order of differencing.
   1. Augmented Dickey Fuller test: null hypothesis is that the data are \alert{non-stationary} and non-seasonal.
   2. Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test: null hypothesis is that the data are \alert{stationary} and non-seasonal.
 
-\only<2>{\begin{textblock}{4}(10.2,3.1)
+\only<2>{\begin{textblock}{4}(10.2,2.7)
 \begin{alertblock}{}
 H$_0$: non-stationary
 \end{alertblock}
 \end{textblock}}
 
-\only<2>{\begin{textblock}{3}(12.4,4.45)
+\only<2>{\begin{textblock}{3}(12.4,4.05)
 \begin{alertblock}{}
 H$_0$: stationary
 \end{alertblock}
@@ -84,6 +87,29 @@ Seasonal strength $F_s = \max\big(0, 1-\frac{\text{Var}(R_t)}{\text{Var}(S_t+R_t
 
 If $F_s > 0.64$, do one seasonal difference.
 
-## Your turn
+## R commands
 
-3. Do the unit root tests for the `Gas` series from `aus_accommodation`. Do they give the same numbers of difference as you chose?
+* Lag 1 difference:\hfill `difference(y)`
+* Seasonal difference:\hfill `difference(y, lag = 4)`
+* KPSS test:\hfill `unitroot_kpss(y)`
+* Seasonal strength:\hfill `feat_stl(y, .period = 4)`
+* Automatic first differencing:\hfill `unitroot_ndiffs(y)`
+* Automatic seasonal differencing:\newline\mbox{}\hfill `unitroot_nsdiffs(y, .period = 4)`
+
+## Relationship to random walks
+
+A random walk is the process:
+$$y_t = y_{t-1} + \varepsilon_t$$
+where $\varepsilon_t$ is a white noise variable.
+
+So if data did come from such a process, differencing would give white noise:
+$$y_t - y_{t-1} = \varepsilon_t$$
+
+## Relationship to random walks
+
+A seasonal random walk is the process
+$$y_t = y_{t-m} + \varepsilon_t$$
+where $\varepsilon_t$ is a white noise variable.
+
+So if data did come from such a process, seasonal differencing would give white noise:
+$$y_t - y_{t-m} = \varepsilon_t$$
