@@ -1,0 +1,131 @@
+---
+title: "Activities: Week 8"
+execute:
+  echo: true
+  output: false
+  eval: false
+---
+
+
+## AUD exchange rates
+
+The data set contains Australian dollar exchange rates from the start of 2023 to 22 April 2025.
+
+```{r}
+#| label: load-aud-xr
+library(fpp3)
+aud_xr <- readRDS(url("https://bit.ly/aud_xr"))
+```
+
+1. How has the tsibble been indexed? Why wouldn't `Date` be used for the index?
+
+2. See what currencies are included:
+
+   ```{r}
+   #| label: currencies
+   aud_xr |>
+     distinct(Currency, Description)
+   ```
+
+3. Choose a currency and plot its exchange rate using `gg_tsdisplay` like this. Does it look stationary?
+
+   ```{r}
+   aud_xr |>
+     filter(Currency == ???) |>
+     autoplot(Rate)
+   ```
+
+4. Now plot the first difference of the exchange rate. Does it look stationary?
+
+   ```{r}
+   aud_xr |>
+     filter(Currency == ???) |>
+     autoplot(difference(Rate))
+   ```
+
+5. Repeat for another couple of exchange rates. Does differencing always result in a stationary series? Why?
+
+6. If we used the `unitroot_ndiffs()` function, would it give the same answer?
+
+   ```{r}
+   aud_xr |>
+     features(Rate, unitroot_ndiffs)
+   ```
+
+## Tasmanian accommodation takings
+
+Let's extract the Tasmanian data from `aus_accommodation`. Check the help to see what this data set contains.
+
+```{r}
+tas_takings <- aus_accommodation |>
+  filter(State == "Tasmania") |>
+  select(Takings)
+```
+
+We will try to find transformations that make this series stationary.
+
+1. First, try to stabilise the variance using a Box-Cox transformation.
+
+   ```{r}
+   tas_takings |>
+     autoplot(
+       box_cox(Takings, lambda = ???)
+     )
+   ```
+
+2. Then, try to stabilise the mean using seasonal differencing.
+
+   ```{r}
+   tas_takings |>
+     autoplot(
+       box_cox(Takings, lambda = ???) |>
+       difference(lag = ???)
+     )
+   ```
+
+3. If that doesn't work, try a first difference as well.
+
+   ```{r}
+   tas_takings |>
+     autoplot(
+       box_cox(Takings, lambda = ???) |>
+       difference(lag = ???) |>
+       difference(lag = ???)
+     )
+   ```
+
+   The final transformed series should appear stationary.
+
+4. Check it's ACF.
+
+   ```{r}
+   tas_takings |>
+     ACF(
+       box_cox(Takings, lambda = ???) |>
+       difference(lag = ???) |>
+       difference(lag = ???)
+     ) |>
+     autoplot()
+   ```
+
+   What do you conclude?
+
+5. Now use the `unitroot_ndiffs` and `unitroot_nsdiffs` functions to check what differences they would suggest:
+
+   ```{r}
+   tas_takings |>
+     features(
+       box_cox(Takings, lambda = ???),
+       unitroot_nsdiffs
+     )
+   ```
+
+   ```{r}
+   tas_takings |>
+     features(
+       box_cox(Takings, lambda = ???) |> difference(lag = ???),
+       unitroot_nsdiffs
+     )
+   ```
+
+   Does it suggest the same number of differencing as you did? Why/why not?
