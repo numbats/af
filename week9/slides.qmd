@@ -21,66 +21,6 @@ library(purrr)
 ```
 
 
-# Random walks
-
-## Random walk model
-
-If differenced series is white noise with zero mean:
-
-\begin{block}{}
-\centerline{$y_t-y_{t-1}=\varepsilon_t$ \hspace{0.4cm} or \hspace{0.4cm} $y_t=y_{t-1}+\varepsilon_t$}
-\end{block}\vspace*{-0.3cm}
-where $\varepsilon_t \sim NID(0,\sigma^2)$.
-
-* Model behind the \alert{naïve method}.
-* Forecast are equal to the last observation (future movements up or down are equally likely).
-
-\vspace*{10cm}
-
-## Random walk model
-
-\begin{block}{}
-\centerline{$y_t=y_{t-1}+\varepsilon_t$ \qquad
-where $\varepsilon_t \sim NID(0,\sigma^2)$.}
-\end{block}\pause
-\vspace*{-1.3cm}
-\begin{align*}
-y_{T+h} &= y_{T+h-1} + \varepsilon_{T+h} \\
-  &= y_{T+h-2} + \varepsilon_{T+h-1} + \varepsilon_{T+h} \\
-  &= \dots \\
-  &= y_T + \varepsilon_{T+1} + \dots + \varepsilon_{T+h}
-\end{align*}
-\pause\vspace*{-1cm}
-\begin{align*}
-\text{So}\qquad &\text{E}(y_{T+h}|y_1,\dots,y_T)  = y_T \\
-\text{and}\qquad &\text{Var}(y_{T+h}|y_1,\dots,y_T) = h\sigma^2
-\end{align*}\vspace*{10cm}
-
-## Random walk with drift model
-
-If differenced series is white noise with non-zero mean:
-
-\begin{block}{}
-\centerline{$y_t-y_{t-1}=c+\varepsilon_t$ \hspace{0.4cm} or \hspace{0.4cm} $y_t=c+y_{t-1}+\varepsilon_t$}
-\end{block}\vspace*{-0.3cm}
-where $\varepsilon_t \sim NID(0,\sigma^2)$.
-
-* $c$ is the \alert{average change} between consecutive observations.
-* Model behind the \alert{drift method}.
-
-\vspace*{10cm}
-
-# Backshift operator notation
-
-## Backshift operator notation
-
-* $B$ shifts the data back one period. $B y_{t} = y_{t - 1}$
-* $B^2$ shifts the data back two periods: $B(By_{t}) = B^{2}y_{t} = y_{t-2}$
-* A difference can be written as $(1 - B) y_{t}$
-* A $d$th-order difference can be written as $(1 - B)^{d} y_{t}$
-* A seasonal difference followed by a first difference can be written as
-$(1-B)(1-B^m)y_t$
-
 # Autoregressive (AR) models
 
 ## AR(1) model
