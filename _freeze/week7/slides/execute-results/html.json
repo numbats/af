@@ -11,7 +11,7 @@
     ],
     "includes": {},
     "engineDependencies": {},
-    "preserve": null,
-    "postProcess": false
+    "preserve": {},
+    "postProcess": true
   }
 }
