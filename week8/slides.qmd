@@ -121,9 +121,9 @@ $$y_t = c + y_{t-1} + \varepsilon_t$$
 where $\varepsilon_t$ is a white noise variable.
 
 So if data did come from such a process, differencing would give white noise with non-zero mean
-$$y_t - y_{t-1} = c + \varepsilon_t$$
+$$y_t - y_{t-1} = c + \varepsilon_t$$\vspace*{-1cm}
 
-* $c$ is the \alert{average change} between consecutive observations.
+* $c$ is the \alert{average change} between consecutive \rlap{observations.}
 
 
 ## Backshift operator notation
