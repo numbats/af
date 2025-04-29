@@ -28,11 +28,14 @@ Complete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/a
 show_slides(week)
 ```
 
+[Code used in lecture](seminar_code.R)
+
 ```{r}
 #| output: asis
 show_activity(week, show_solutions = FALSE)
 ```
 
+[Code used in workshop](workshop_code.R)
 
 ```{r}
 #| output: asis
