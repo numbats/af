@@ -8,12 +8,12 @@ aud_xr |>
   distinct(Currency, Description)
 
 aud_xr |>
-  filter(Currency == ???) |>
-  autoplot(Rate)
-
+  filter(Currency == "IDR") |>
+  gg_tsdisplay(Rate)
 aud_xr |>
-  filter(Currency == ???) |>
-  autoplot(difference(Rate))
+  filter(Currency == "IDR") |>
+  mutate(diff = difference(Rate)) |>
+  gg_tsdisplay(diff)
 
 aud_xr |>
   features(Rate, unitroot_ndiffs)
@@ -26,42 +26,61 @@ tas_takings <- aus_accommodation |>
   select(Takings)
 
 tas_takings |>
-  autoplot(
-    box_cox(Takings, lambda = ???)
-  )
-
-  tas_takings |>
-  autoplot(
-    box_cox(Takings, lambda = ???) |>
-    difference(lag = ???)
-  )
-
+  autoplot(Takings)
 
 tas_takings |>
   autoplot(
-    box_cox(Takings, lambda = ???) |>
-    difference(lag = ???) |>
-    difference(lag = ???)
+    box_cox(Takings, lambda = 0)
   )
 
+tas_takings |>
+  autoplot(
+    box_cox(Takings, lambda = 0) |>
+      difference(lag = 4)
+  )
+
+tas_takings |>
+  autoplot(
+    box_cox(Takings, lambda = 0) |>
+      difference(lag = 4) |>
+      difference(lag = 1)
+  )
 
 tas_takings |>
   ACF(
-    box_cox(Takings, lambda = ???) |>
-    difference(lag = ???) |>
-    difference(lag = ???)
+    box_cox(Takings, lambda = 0) |>
+      difference(lag = 4) |>
+      difference(lag = 1)
   ) |>
   autoplot()
 
 tas_takings |>
   features(
-    box_cox(Takings, lambda = ???),
+    box_cox(Takings, lambda = 0),
     unitroot_nsdiffs
   )
 
 
 tas_takings |>
   features(
-    box_cox(Takings, lambda = ???) |> difference(lag = ???),
+    box_cox(Takings, lambda = 0) |> difference(lag = 4),
+    unitroot_ndiffs
+  )
+
+aus_accommodation |>
+  features(
+    log(Takings),
     unitroot_nsdiffs
+  )
+aus_accommodation |>
+  filter(State == "Australian Capital Territory") |>
+  features(
+    log(Takings),
+    unitroot_ndiffs
+  )
+aus_accommodation |>
+  filter(State != "Australian Capital Terrotory") |>
+  features(
+    log(Takings) |> difference(lag = 4),
+    unitroot_ndiffs
   )
