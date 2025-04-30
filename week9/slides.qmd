@@ -92,6 +92,49 @@ A multiple regression with \textbf{past \emph{errors}} as predictors.
 * More complicated conditions hold for $q\ge3$.
 * fable takes care of this.
 
+
+## Partial autocorrelations
+
+\fontsize{13}{14}\sf
+
+\alert{Partial autocorrelations} measure relationship\newline between $y_{t}$ and $y_{t - k}$, when the effects of other time lags --- $1, 2, 3, \dots, k - 1$ --- are removed.\pause
+\begin{block}{}
+\begin{align*}
+\alpha_k &= \text{$k$th partial autocorrelation coefficient}\\
+         &= \text{equal to the estimate of $\phi_k$ in regression:}\\
+         & \hspace*{0.8cm} y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \dots + \phi_k y_{t-k} +\varepsilon_t.
+\end{align*}
+\end{block}\pause
+
+* Varying number of terms on RHS gives $\alpha_k$ for different values of $k$.
+* $\alpha_1=\rho_1$
+* same critical values of $\pm 1.96/\sqrt{T}$ as for ACF.
+* Last significant $\alpha_k$ indicates the order of an AR model.
+
+## ACF and PACF interpretation
+
+**AR($p$)**
+
+  * ACF dies out in an exponential or damped sine-wave manner
+  * PACF has all zero spikes beyond the $p$th spike
+
+So we have an AR($p$) model when
+
+  * the ACF is exponentially decaying or sinusoidal
+  * there is a significant spike at lag $p$ in PACF, but none beyond $p$
+
+## ACF and PACF interpretation
+
+**MA($q$)**
+
+ * PACF dies out in an exponential or damped sine-wave manner
+ * ACF has all zero spikes beyond the $q$th spike
+
+So we have an MA($q$) model when
+
+  * the PACF is exponentially decaying or sinusoidal
+  * there is a significant spike at lag $q$ in ACF, but none beyond $q$
+
 # ARIMA models
 ## ARIMA models
 
@@ -140,7 +183,7 @@ MA:& $q =$ order of the moving average part.
 * If $c\ne0$ and $d=2$, the long-term forecasts will follow a quadratic trend.
 
 ## Understanding ARIMA models
-\fontsize{14}{15}\sf
+\fontsize{14}{15}\sf\vspace*{-0.2cm}
 
 ### Forecast variance and $d$
   * The higher the value of $d$, the more rapidly the prediction intervals increase in size.
@@ -148,12 +191,5 @@ MA:& $q =$ order of the moving average part.
 
 ### Cyclic behaviour
   * For cyclic forecasts, $p\ge2$ and some restrictions on coefficients are required.
-  * If $p=2$, we need $\phi_1^2+4\phi_2<0$. Then average cycle of length
-
-\centerline{$(2\pi)/\left[\text{arc cos}(-\phi_1(1-\phi_2)/(4\phi_2))\right].$}
-
-## Exercise
-
-```{r}
-#| child: activities.qmd
-```
+  * If $p=2$, we need $\phi_1^2+4\phi_2<0$. Then average cycle of length\vspace*{-0.3cm}
+    $$(2\pi)/\left[\text{arc cos}(-\phi_1(1-\phi_2)/(4\phi_2))\right]$$
