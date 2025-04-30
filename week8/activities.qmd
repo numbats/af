@@ -96,7 +96,7 @@ We will try to find transformations that make this series stationary.
 
    The final transformed series should appear stationary.
 
-4. Check it's ACF.
+4. Check its ACF.
 
    ```{r}
    tas_takings |>
