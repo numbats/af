@@ -2,9 +2,37 @@
   {
     "objectID": "week9/activities.html",
     "href": "week9/activities.html",
-    "title": "ETC3550/ETC5550 Applied forecasting",
+    "title": "Activities: Week 9",
     "section": "",
-    "text": "Find an ARIMA model for the pelt::Lynx data"
+    "text": "In an ARIMA model, c is the intercept and d is the degree of differencing.\nFor the Australian imports series from global_economy, try fitting ARIMA models with the following combinations of c and d:\n\n\n\nc\nd\nEffect on mean\nEffect on variance\n\n\n\n\n0\n0\n\n\n\n\n\\ne0\n0\n\n\n\n\n0\n1\n\n\n\n\n\\ne0\n1\n\n\n\n\n0\n2\n\n\n\n\n\\ne0\n2\n\n\n\n\n\ne.g., ARIMA(Imports ~ 1 + pdq(d = 0)) specifies c\\ne 0 and d=0\nand ARIMA(Imports ~ 0 + pdq(d = 2)) specifies c = 0 and d=2\nIn each case, forecast 50 years ahead. Here is some starting code with c\\ne0 and d=0:\nglobal_economy |&gt;\n  filter(Country == \"Australia\") |&gt;\n  model(ARIMA(Imports ~ 1 + pdq(d = 0))) |&gt;\n  forecast(h = 50) |&gt;\n  autoplot(global_economy)\nFill in the table above with what you see in the forecast plot. What can you conclude about the effect of c and d on the long-term forecast mean and variance?"
+  },
+  {
+    "objectID": "week9/activities.html#the-effect-of-c-and-d-on-arima-forecasts",
+    "href": "week9/activities.html#the-effect-of-c-and-d-on-arima-forecasts",
+    "title": "Activities: Week 9",
+    "section": "",
+    "text": "In an ARIMA model, c is the intercept and d is the degree of differencing.\nFor the Australian imports series from global_economy, try fitting ARIMA models with the following combinations of c and d:\n\n\n\nc\nd\nEffect on mean\nEffect on variance\n\n\n\n\n0\n0\n\n\n\n\n\\ne0\n0\n\n\n\n\n0\n1\n\n\n\n\n\\ne0\n1\n\n\n\n\n0\n2\n\n\n\n\n\\ne0\n2\n\n\n\n\n\ne.g., ARIMA(Imports ~ 1 + pdq(d = 0)) specifies c\\ne 0 and d=0\nand ARIMA(Imports ~ 0 + pdq(d = 2)) specifies c = 0 and d=2\nIn each case, forecast 50 years ahead. Here is some starting code with c\\ne0 and d=0:\nglobal_economy |&gt;\n  filter(Country == \"Australia\") |&gt;\n  model(ARIMA(Imports ~ 1 + pdq(d = 0))) |&gt;\n  forecast(h = 50) |&gt;\n  autoplot(global_economy)\nFill in the table above with what you see in the forecast plot. What can you conclude about the effect of c and d on the long-term forecast mean and variance?"
+  },
+  {
+    "objectID": "week9/activities.html#simulate-data-from-an-ar1-model",
+    "href": "week9/activities.html#simulate-data-from-an-ar1-model",
+    "title": "Activities: Week 9",
+    "section": "Simulate data from an AR(1) model",
+    "text": "Simulate data from an AR(1) model\nUse the following R code to generate data from an AR(1) model with \\phi_{1} = 0.6 and \\sigma^2=1. The process starts with y_1=0.\ny &lt;- numeric(100)\ne &lt;- rnorm(100)\nfor(i in 2:100)\n  y[i] &lt;- 0.6*y[i-1] + e[i]\nsim &lt;- tsibble(idx = seq_len(100), y = y, index = idx)\nProduce a time plot for the series. How does the plot change as you change \\phi_1?"
+  },
+  {
+    "objectID": "week9/activities.html#simulate-data-from-an-ma1-model",
+    "href": "week9/activities.html#simulate-data-from-an-ma1-model",
+    "title": "Activities: Week 9",
+    "section": "Simulate data from an MA(1) model",
+    "text": "Simulate data from an MA(1) model\nWrite your own code to generate data from an MA(1) model with \\theta_{1} = 0.6 and \\sigma^2=1.\nProduce a time plot for the series. How does the plot change as you change \\theta_1?"
+  },
+  {
+    "objectID": "week9/activities.html#simulate-data-from-an-ar2-model",
+    "href": "week9/activities.html#simulate-data-from-an-ar2-model",
+    "title": "Activities: Week 9",
+    "section": "Simulate data from an AR(2) model",
+    "text": "Simulate data from an AR(2) model\nGenerate data from an AR(2) model with \\phi_{1} = 1.35, \\phi_{2} = -0.75 and \\sigma^2=1.\nWhat happens if you change \\phi_2 to -0.45? Why?\nWhat happens if you change \\phi_1 to -0.25? Why?"
   },
   {
     "objectID": "week8/index.html",
@@ -1061,7 +1089,7 @@
     "href": "week8/activities.html#tasmanian-accommodation-takings",
     "title": "Activities: Week 8",
     "section": "Tasmanian accommodation takings",
-    "text": "Tasmanian accommodation takings\nLet’s extract the Tasmanian data from aus_accommodation. Check the help to see what this data set contains.\n\ntas_takings &lt;- aus_accommodation |&gt;\n  filter(State == \"Tasmania\") |&gt;\n  select(Takings)\n\nWe will try to find transformations that make this series stationary.\n\nFirst, try to stabilise the variance using a Box-Cox transformation.\n\ntas_takings |&gt;\n  autoplot(\n    box_cox(Takings, lambda = ???)\n  )\n\nThen, try to stabilise the mean using seasonal differencing.\n\ntas_takings |&gt;\n  autoplot(\n    box_cox(Takings, lambda = ???) |&gt;\n    difference(lag = ???)\n  )\n\nIf that doesn’t work, try a first difference as well.\n\ntas_takings |&gt;\n  autoplot(\n    box_cox(Takings, lambda = ???) |&gt;\n    difference(lag = ???) |&gt;\n    difference(lag = ???)\n  )\n\nThe final transformed series should appear stationary.\nCheck it’s ACF.\n\ntas_takings |&gt;\n  ACF(\n    box_cox(Takings, lambda = ???) |&gt;\n    difference(lag = ???) |&gt;\n    difference(lag = ???)\n  ) |&gt;\n  autoplot()\n\nWhat do you conclude?\nNow use the unitroot_ndiffs and unitroot_nsdiffs functions to check what differences they would suggest:\n\ntas_takings |&gt;\n  features(\n    box_cox(Takings, lambda = ???),\n    unitroot_nsdiffs\n  )\n\n\ntas_takings |&gt;\n  features(\n    box_cox(Takings, lambda = ???) |&gt; difference(lag = ???),\n    unitroot_nsdiffs\n  )\n\nDoes it suggest the same number of differencing as you did? Why/why not?"
+    "text": "Tasmanian accommodation takings\nLet’s extract the Tasmanian data from aus_accommodation. Check the help to see what this data set contains.\n\ntas_takings &lt;- aus_accommodation |&gt;\n  filter(State == \"Tasmania\") |&gt;\n  select(Takings)\n\nWe will try to find transformations that make this series stationary.\n\nFirst, try to stabilise the variance using a Box-Cox transformation.\n\ntas_takings |&gt;\n  autoplot(\n    box_cox(Takings, lambda = ???)\n  )\n\nThen, try to stabilise the mean using seasonal differencing.\n\ntas_takings |&gt;\n  autoplot(\n    box_cox(Takings, lambda = ???) |&gt;\n    difference(lag = ???)\n  )\n\nIf that doesn’t work, try a first difference as well.\n\ntas_takings |&gt;\n  autoplot(\n    box_cox(Takings, lambda = ???) |&gt;\n    difference(lag = ???) |&gt;\n    difference(lag = ???)\n  )\n\nThe final transformed series should appear stationary.\nCheck its ACF.\n\ntas_takings |&gt;\n  ACF(\n    box_cox(Takings, lambda = ???) |&gt;\n    difference(lag = ???) |&gt;\n    difference(lag = ???)\n  ) |&gt;\n  autoplot()\n\nWhat do you conclude?\nNow use the unitroot_ndiffs and unitroot_nsdiffs functions to check what differences they would suggest:\n\ntas_takings |&gt;\n  features(\n    box_cox(Takings, lambda = ???),\n    unitroot_nsdiffs\n  )\n\n\ntas_takings |&gt;\n  features(\n    box_cox(Takings, lambda = ???) |&gt; difference(lag = ???),\n    unitroot_nsdiffs\n  )\n\nDoes it suggest the same number of differencing as you did? Why/why not?"
   },
   {
     "objectID": "week9/index.html",

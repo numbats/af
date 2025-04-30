@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>activities – ETC3550/ETC5550 Applied forecasting</title>
+<title>Activities: Week 9 – ETC3550/ETC5550 Applied forecasting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -70,6 +105,49 @@ ul.task-list li input[type="checkbox"] {
 <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -190,20 +268,125 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-effect-of-c-and-d-on-arima-forecasts" id="toc-the-effect-of-c-and-d-on-arima-forecasts" class="nav-link active" data-scroll-target="#the-effect-of-c-and-d-on-arima-forecasts">The effect of c and d on ARIMA forecasts</a></li>
+  <li><a href="#simulate-data-from-an-ar1-model" id="toc-simulate-data-from-an-ar1-model" class="nav-link" data-scroll-target="#simulate-data-from-an-ar1-model">Simulate data from an AR(1) model</a></li>
+  <li><a href="#simulate-data-from-an-ma1-model" id="toc-simulate-data-from-an-ma1-model" class="nav-link" data-scroll-target="#simulate-data-from-an-ma1-model">Simulate data from an MA(1) model</a></li>
+  <li><a href="#simulate-data-from-an-ar2-model" id="toc-simulate-data-from-an-ar2-model" class="nav-link" data-scroll-target="#simulate-data-from-an-ar2-model">Simulate data from an AR(2) model</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Activities: Week 9</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<ul>
-<li>Find an ARIMA model for the <code>pelt::Lynx</code> data</li>
-</ul>
+    
+  
+    
+  </div>
+  
 
 
+</header>
+
+
+<section id="the-effect-of-c-and-d-on-arima-forecasts" class="level2">
+<h2 class="anchored" data-anchor-id="the-effect-of-c-and-d-on-arima-forecasts">The effect of c and d on ARIMA forecasts</h2>
+<p>In an ARIMA model, <span class="math inline">c</span> is the intercept and <span class="math inline">d</span> is the degree of differencing.</p>
+<p>For the Australian imports series from <code>global_economy</code>, try fitting ARIMA models with the following combinations of <span class="math inline">c</span> and <span class="math inline">d</span>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">c</th>
+<th style="text-align: center;">d</th>
+<th style="text-align: center;">Effect on mean</th>
+<th style="text-align: center;">Effect on variance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">0</span></td>
+<td style="text-align: center;"><span class="math inline">0</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\ne0</span></td>
+<td style="text-align: center;"><span class="math inline">0</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">0</span></td>
+<td style="text-align: center;"><span class="math inline">1</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\ne0</span></td>
+<td style="text-align: center;"><span class="math inline">1</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">0</span></td>
+<td style="text-align: center;"><span class="math inline">2</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\ne0</span></td>
+<td style="text-align: center;"><span class="math inline">2</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>e.g., <code>ARIMA(Imports ~ 1 + pdq(d = 0))</code> specifies <span class="math inline">c\ne 0</span> and <span class="math inline">d=0</span></p>
+<p>and <code>ARIMA(Imports ~ 0 + pdq(d = 2))</code> specifies <span class="math inline">c = 0</span> and <span class="math inline">d=2</span></p>
+<p>In each case, forecast 50 years ahead. Here is some starting code with <span class="math inline">c\ne0</span> and <span class="math inline">d=0</span>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>global_economy <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Australia"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ARIMA</span>(Imports <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">pdq</span>(<span class="at">d =</span> <span class="dv">0</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">50</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(global_economy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Fill in the table above with what you see in the forecast plot. What can you conclude about the effect of <span class="math inline">c</span> and <span class="math inline">d</span> on the long-term forecast mean and variance?</p>
+</section>
+<section id="simulate-data-from-an-ar1-model" class="level2">
+<h2 class="anchored" data-anchor-id="simulate-data-from-an-ar1-model">Simulate data from an AR(1) model</h2>
+<p>Use the following R code to generate data from an AR(1) model with <span class="math inline">\phi_{1} = 0.6</span> and <span class="math inline">\sigma^2=1</span>. The process starts with <span class="math inline">y_1=0</span>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">100</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> <span class="fl">0.6</span><span class="sc">*</span>y[i<span class="dv">-1</span>] <span class="sc">+</span> e[i]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>sim <span class="ot">&lt;-</span> <span class="fu">tsibble</span>(<span class="at">idx =</span> <span class="fu">seq_len</span>(<span class="dv">100</span>), <span class="at">y =</span> y, <span class="at">index =</span> idx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Produce a time plot for the series. How does the plot change as you change <span class="math inline">\phi_1</span>?</p>
+</section>
+<section id="simulate-data-from-an-ma1-model" class="level2">
+<h2 class="anchored" data-anchor-id="simulate-data-from-an-ma1-model">Simulate data from an MA(1) model</h2>
+<p>Write your own code to generate data from an MA(1) model with <span class="math inline">\theta_{1} = 0.6</span> and <span class="math inline">\sigma^2=1</span>.</p>
+<p>Produce a time plot for the series. How does the plot change as you change <span class="math inline">\theta_1</span>?</p>
+</section>
+<section id="simulate-data-from-an-ar2-model" class="level2">
+<h2 class="anchored" data-anchor-id="simulate-data-from-an-ar2-model">Simulate data from an AR(2) model</h2>
+<p>Generate data from an AR(2) model with <span class="math inline">\phi_{1} = 1.35</span>, <span class="math inline">\phi_{2} = -0.75</span> and <span class="math inline">\sigma^2=1</span>.</p>
+<p>What happens if you change <span class="math inline">\phi_2</span> to <span class="math inline">-0.45</span>? Why?</p>
+<p>What happens if you change <span class="math inline">\phi_1</span> to <span class="math inline">-0.25</span>? Why?</p>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
