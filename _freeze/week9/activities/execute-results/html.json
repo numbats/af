@@ -1,0 +1,15 @@
+{
+  "hash": "326730fbd0db29f8f274db559180e1b1",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Activities: Week 9\"\nexecute:\n  echo: true\n---\n\n## The effect of c and d on ARIMA forecasts\n\nIn an ARIMA model, $c$ is the intercept and $d$ is the degree of differencing.\n\nFor the Australian imports series from `global_economy`, try fitting ARIMA models with the following combinations of $c$ and $d$:\n\n\n|      c|  d  | Effect on mean | Effect on variance |\n|------:|:---:|:--------------:|:------------------:|\n|    $0$| $0$ |                |                    |\n| $\\ne0$| $0$ |                |                    |\n|    $0$| $1$ |                |                    |\n| $\\ne0$| $1$ |                |                    |\n|    $0$| $2$ |                |                    |\n| $\\ne0$| $2$ |                |                    |\n\n\ne.g., `ARIMA(Imports ~ 1 + pdq(d = 0))` specifies $c\\ne 0$ and $d=0$\n\nand `ARIMA(Imports ~ 0 + pdq(d = 2))` specifies $c = 0$ and $d=2$\n\nIn each case, forecast 50 years ahead.  Here is some starting code with $c\\ne0$ and $d=0$:\n\n```r\nglobal_economy |>\n  filter(Country == \"Australia\") |>\n  model(ARIMA(Imports ~ 1 + pdq(d = 0))) |>\n  forecast(h = 50) |>\n  autoplot(global_economy)\n```\n\nFill in the table above with what you see in the forecast plot. What can you conclude about the effect of $c$ and $d$ on the long-term forecast mean and variance?\n\n\n## Simulate data from an AR(1) model\n\nUse the following R code to generate data from an AR(1) model with $\\phi_{1} = 0.6$ and $\\sigma^2=1$. The process starts with $y_1=0$.\n\n   ```r\n   y <- numeric(100)\n   e <- rnorm(100)\n   for(i in 2:100)\n     y[i] <- 0.6*y[i-1] + e[i]\n   sim <- tsibble(idx = seq_len(100), y = y, index = idx)\n   ```\n\nProduce a time plot for the series. How does the plot change as you change $\\phi_1$?\n\n## Simulate data from an MA(1) model\n\nWrite your own code to generate data from an MA(1) model with $\\theta_{1} = 0.6$ and $\\sigma^2=1$.\n\nProduce a time plot for the series. How does the plot change as you change $\\theta_1$?\n\n## Simulate data from an AR(2) model\n\nGenerate data from an AR(2) model with $\\phi_{1} = 1.35$, $\\phi_{2} = -0.75$ and $\\sigma^2=1$.\n\nWhat happens if you change $\\phi_2$ to $-0.45$? Why?\n\nWhat happens if you change $\\phi_1$ to $-0.25$? Why?\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,1 +1,69 @@
-* Find an ARIMA model for the `pelt::Lynx` data
+---
+title: "Activities: Week 9"
+execute:
+  echo: true
+---
+
+## The effect of c and d on ARIMA forecasts
+
+In an ARIMA model, $c$ is the intercept and $d$ is the degree of differencing.
+
+For the Australian imports series from `global_economy`, try fitting ARIMA models with the following combinations of $c$ and $d$:
+
+```{r}
+#| echo: false
+#| output: asis
+library(dplyr)
+expand.grid(c = c("$0$", "$\\ne0$"), d = c("$0$", "$1$", "$2$")) |>
+  mutate(
+    `Effect on mean` = "",
+    `Effect on variance` = ""
+  ) |>
+  knitr::kable(align = "rccc")
+```
+
+
+e.g., `ARIMA(Imports ~ 1 + pdq(d = 0))` specifies $c\ne 0$ and $d=0$
+
+and `ARIMA(Imports ~ 0 + pdq(d = 2))` specifies $c = 0$ and $d=2$
+
+In each case, forecast 50 years ahead.  Here is some starting code with $c\ne0$ and $d=0$:
+
+```r
+global_economy |>
+  filter(Country == "Australia") |>
+  model(ARIMA(Imports ~ 1 + pdq(d = 0))) |>
+  forecast(h = 50) |>
+  autoplot(global_economy)
+```
+
+Fill in the table above with what you see in the forecast plot. What can you conclude about the effect of $c$ and $d$ on the long-term forecast mean and variance?
+
+
+## Simulate data from an AR(1) model
+
+Use the following R code to generate data from an AR(1) model with $\phi_{1} = 0.6$ and $\sigma^2=1$. The process starts with $y_1=0$.
+
+   ```r
+   y <- numeric(100)
+   e <- rnorm(100)
+   for(i in 2:100)
+     y[i] <- 0.6*y[i-1] + e[i]
+   sim <- tsibble(idx = seq_len(100), y = y, index = idx)
+   ```
+
+Produce a time plot for the series. How does the plot change as you change $\phi_1$?
+
+## Simulate data from an MA(1) model
+
+Write your own code to generate data from an MA(1) model with $\theta_{1} = 0.6$ and $\sigma^2=1$.
+
+Produce a time plot for the series. How does the plot change as you change $\theta_1$?
+
+## Simulate data from an AR(2) model
+
+Generate data from an AR(2) model with $\phi_{1} = 1.35$, $\phi_{2} = -0.75$ and $\sigma^2=1$.
+
+What happens if you change $\phi_2$ to $-0.45$? Why?
+
+What happens if you change $\phi_1$ to $-0.25$? Why?
