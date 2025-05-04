@@ -20,7 +20,7 @@ Read [Sections 9.1-9.2 of the textbook](https://otexts.com/fpp3/arima.html) and 
 
 Complete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
 
-<!-- [**Solutions to Exercises**](ex8-sol.qmd) -->
+[**Solutions to Exercises**](ex8-sol.qmd) 
 
 
 ```{r}
