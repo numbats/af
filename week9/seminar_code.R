@@ -1,6 +1,25 @@
 library(fpp3)
 
 
+## Simulations
+library(gratis)
+arima_model(p = 1, d = 0, q = 0, phi = -0.9, constant = 0, sigma = 1) |>
+  generate(n = 1) |>
+  gg_tsdisplay(value, plot_type = "partial")
+
+arima_model(p = 2, d = 0, q = 0, phi = c(1.3, -0.9), constant = 0, sigma = 1) |>
+  generate(n = 1) |>
+  gg_tsdisplay(value, plot_type = "partial")
+
+arima_model(p = 0, d = 0, q = 1, theta = -0.9, constant = 0, sigma = 1) |>
+  generate(n = 1) |>
+  gg_tsdisplay(value, plot_type = "partial")
+
+arima_model(d = 0, q=5, p=0, sigma = 1) |>
+  generate(n = 1) |>
+  gg_tsdisplay(value, plot_type = "partial")
+
+
 ## EGYPTIAN EXPORTS
 
 global_economy |>
@@ -10,7 +29,7 @@ global_economy |>
 
 fit <- global_economy |>
   filter(Code == "EGY") |>
-  model(ARIMA(Exports ~ pdq(4, 0, 0)))
+  model(ARIMA(Exports ~ pdq(p=4, d=0, q=0)))
 
 report(fit)
 gg_tsresiduals(fit)
@@ -23,7 +42,7 @@ fit |>
 
 fit <- global_economy |>
   filter(Code == "EGY") |>
-  model(ARIMA(Exports))
+  model(ARIMA(Exports, stepwise = FALSE, approximation = FALSE))
 
 report(fit)
 gg_tsresiduals(fit)
@@ -49,14 +68,18 @@ global_economy |>
 fit <- global_economy |>
   filter(Code == "NOR") |>
   model(
-    ma2 = ARIMA(Imports ~ pdq(0, 1, 2)),
-    ar4 = ARIMA(Imports ~ pdq(4, 1, 0))
+    ma2 = ARIMA(Imports ~ pdq(p=0, d=1, q=2)),
+    ar4 = ARIMA(Imports ~ pdq(p=4, d=1, q=0))
   )
 glance(fit)
 
-fit |> select(ma2) |> report()
+fit |>
+  select(ma2) |>
+  report()
 
-fit |> select(ma2) |> gg_tsresiduals()
+fit |>
+  select(ma2) |>
+  gg_tsresiduals()
 
 fit |>
   forecast(h = 50) |>

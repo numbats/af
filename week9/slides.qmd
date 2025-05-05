@@ -98,7 +98,7 @@ A multiple regression with \textbf{past \emph{errors}} as predictors.
 \fontsize{13}{14}\sf
 
 \alert{Partial autocorrelations} measure relationship\newline between $y_{t}$ and $y_{t - k}$, when the effects of other time lags --- $1, 2, 3, \dots, k - 1$ --- are removed.\pause
-\begin{block}{}
+\begin{block}{}\vspace*{-0.8cm}
 \begin{align*}
 \alpha_k &= \text{$k$th partial autocorrelation coefficient}\\
          &= \text{equal to the estimate of $\phi_k$ in regression:}\\
