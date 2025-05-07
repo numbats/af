@@ -1,0 +1,91 @@
+---
+title: "Activities: Week 10"
+execute:
+  echo: true
+  output: false
+  eval: false
+---
+
+## Australian tobacco expenditure
+
+In this exercise, we will compare an ETS model, an ARIMA model and an STL+ARIMA model fitted to Australian tobacco expenditure data.
+
+```{r}
+#| fig-height: 4
+library(fpp3)
+tobacco <- aus_tobacco |>
+  summarise(Expenditure = sum(Expenditure))
+tobacco |> autoplot(Expenditure)
+```
+
+
+1.  First we will find an appropriate STL decomposition for this data set.
+
+    ```{r}
+    #| fig-height: 7
+    tobacco |>
+      model(
+        stl = STL(log(Expenditure) ~ season(window = ???) + trend(window = ???))
+      ) |>
+      components() |>
+      autoplot()
+    ```
+
+2.  Now fit an ETS, ARIMA and STL+ARIMA model with the same window values. For the ARIMA and STL+ARIMA models, use a log transformation.
+
+    ```{r}
+    fit <- tobacco |>
+      model(
+        ets = ETS(Expenditure),
+        arima = ARIMA(log(Expenditure)),
+        stl_arima = decomposition_model(
+          STL(log(Expenditure) ~ season(window = ???) + trend(window = ???)),
+          ARIMA(season_adjust),
+          SNAIVE(season_year)
+        )
+      )
+    ```
+
+3.  Write down the equations for each model.
+
+    ```{r}
+    fit |> select(ets) |> report()
+    fit |> select(arima) |> report()
+    fit |> select(stl_arima) |> report()
+    ```
+
+4.  Check if the residuals from each model look like white noise
+
+    ```{r}
+    fit |> select(ets) |> gg_tsresiduals()
+    fit |> select(arima) |> gg_tsresiduals()
+    fit |> select(stl_arima) |> gg_tsresiduals()
+    ```
+
+5.  Which model fits the data best?
+
+    ```{r}
+    fit |> accuracy()
+    ```
+
+6.  Do the forecasts look similar?
+
+    ```{r}
+    fit |>
+      forecast(h = 24) |>
+      autoplot(tobacco |> filter(year(Quarter) >= 2010), level = 80, alpha = 0.5)
+    ```
+
+
+7.  Find the one-step median forecast and compute the 95% prediction interval from first principles.  Check that you get the same result as obtained with the following code.
+
+    ```{r}
+    fit |>
+      select(arima) |>
+      forecast(h = 1) |>
+      mutate(
+        .median = median(Expenditure),
+        PI = hilo(Expenditure, level = 95)
+      )
+    fit |> select(arima) |> report()
+    ```
