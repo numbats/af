@@ -27,6 +27,14 @@ Complete Exercises 11-16 from [Section 9.11 of the book](https://otexts.com/fpp3
 ```{r}
 #| output: asis
 show_slides(week)
+```
+
+```{r}
+#| output: asis
 show_activity(week, show_solutions = FALSE)
+```
+
+```{r}
+#| output: asis
 show_assignments(week)
 ```
