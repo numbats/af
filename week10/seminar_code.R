@@ -51,7 +51,9 @@ leisure_fit |>
   select(best) |>
   gg_tsresiduals(lag = 36)
 
-leisure_fit |> select(best) |> report()
+leisure_fit |>
+  select(best) |>
+  report()
 augment(leisure_fit) |>
   filter(.model == "best") |>
   features(.innov, ljung_box, lag = 24, dof = 4)
@@ -87,7 +89,7 @@ gg_tsresiduals(fit |> select(ets), lag_max = 16)
 fit |>
   select(ets) |>
   augment() |>
-  features(.innov, ljung_box, lag = 16)
+  features(.innov, ljung_box, lag = 8)
 # Residual diagnostic for ARIMA model
 fit |>
   select(arima) |>
@@ -96,7 +98,7 @@ gg_tsresiduals(fit |> select(arima), lag_max = 16)
 fit |>
   select(arima) |>
   augment() |>
-  features(.innov, ljung_box, lag = 16, dof = 6)
+  features(.innov, ljung_box, lag = 8, dof = 5)
 
 # Forecasts
 fc <- fit |>
