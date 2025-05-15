@@ -1,3 +1,11 @@
+---
+title: "Activities: Week 11"
+execute:
+  echo: true
+  output: false
+  eval: false
+---
+
 1.  Fit a regression model with a piecewise linear trend with Fourier terms for the US leisure employment data.
     
     ```r
@@ -11,3 +19,6 @@
     ```
 
 2. Does the model fit well? What are the implications for forecasting?
+3. Produce forecasts of US leisure employment using your best regression model.
+
+4. Why don't you need to forecast the predictors?
