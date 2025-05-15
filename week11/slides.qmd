@@ -33,29 +33,6 @@ predictor *after taking account of the effect of all other predictors
 in the model*.
 * $\varepsilon_t$ is a white noise error term
 
-## Trend
-
-**Linear trend**
-
-\centerline{$x_t = t,\qquad t = 1,2,\dots,$}\pause
-
-**Piecewise linear trend with bend at $\tau$**
-\vspace*{-0.6cm}
-\begin{align*}
-x_{1,t} &= t \\
-x_{2,t} &= \left\{ \begin{array}{ll}
-  0 & t <\tau\\
-  (t-\tau) & t \ge \tau
-\end{array}\right.
-\end{align*}
-\pause\vspace*{-0.8cm}
-
-**Quadratic or higher order trend**
-
-\centerline{$x_{1,t} =t,\quad x_{2,t}=t^2,\quad \dots$}
-
-\pause\vspace*{-0.1cm}
-\centerline{\textcolor{orange}{\textbf{NOT RECOMMENDED!}}}
 
 ## Uses of dummy variables
 \fontsize{13}{14}\sf
@@ -113,11 +90,6 @@ y_t = a + bt + \sum_{k=1}^K \left[\alpha_k s_k(t) + \beta_k c_k(t)\right] + \var
 * Choose $K$ by minimizing AICc or CV.
 * Called "harmonic regression"
 
-## Your turn
-
-```{r}
-#| child: activities1.md
-```
 
 ## Comparing regression models
 \fontsize{13}{14}\sf
@@ -261,19 +233,6 @@ loocv_plot() +
 \only<2>{\begin{textblock}{4}(6,6)\begin{block}{}\fontsize{13}{15}\sf
 CV = MSE on \textcolor[HTML]{D55E00}{test sets}\end{block}\end{textblock}}
 
-## Bayesian Information Criterion
-
-\begin{block}{}
-$$
-\text{BIC} = -2\log(L) + (k+2)\log(T)
-$$
-\end{block}
-where $L$ is the likelihood and $k$ is the number of predictors in the model.\pause
-
-* BIC penalizes terms more heavily than AIC
-* Also called SBIC and SC.
-* Minimizing BIC is asymptotically equivalent to leave-$v$-out cross-validation when $v = T[1-1/(log(T)-1)]$.
-
 ## Choosing regression variables
 \fontsize{14}{15}\sf
 
@@ -298,9 +257,3 @@ where $L$ is the likelihood and $k$ is the number of predictors in the model.\pa
     - useful for studying behaviour of forecasting models.
 
  * trend, seasonal and calendar variables are all known in advance, so these don't need to be forecast.
-
-## Your turn
-
-```{r}
-#| child: activities2.md
-```

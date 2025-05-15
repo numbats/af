@@ -47,52 +47,6 @@ fit |>
   select(K06) |>
   gg_tsresiduals()
 
-# US employment
-
-leisure <- us_employment |>
-  filter(
-    Title == "Leisure and Hospitality",
-    year(Month) > 2001
-  ) |>
-  mutate(Employed = Employed / 1000) |>
-  select(Month, Employed)
-
-autoplot(leisure)
-
-fit <- leisure |>
-  model(
-    K01 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 1)),
-    K02 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 2)),
-    K03 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 3)),
-    K04 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 4)),
-    K05 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 5)),
-    K06 = TSLM(Employed ~ trend(knots = yearmonth(c("2008 Jan", "2010 Jan"))) + fourier(K = 6)),
-  )
-glance(fit) |>
-  select(.model, r_squared, adj_r_squared, df, AICc, CV) |>
-  arrange(CV)
-
-augment(fit) |>
-  filter(.model == "K06") |>
-  ggplot(aes(x = Month, y = Employed)) +
-  geom_line() +
-  geom_line(aes(y = .fitted, col = .model), linewidth = 1)
-
-fit |>
-  select(K06) |>
-  forecast(h = "2 years") |>
-  autoplot(leisure)
-
-fit |>
-  select(K06) |>
-  gg_tsresiduals()
-
-fc <- fit |> forecast(h=24)
-
-fc |>
-  filter(.model == "K06") |>
-  autoplot(leisure)
-
 # US consumption quarterly changes
 
 us_change |>
@@ -128,10 +82,7 @@ glance(fit_all) |>
   select(.model, adj_r_squared, AICc, BIC, CV) |>
   arrange(CV)
 
-fit_consBest <- us_change |>
-  model(
-    lm = TSLM(Consumption ~ Income + Production + Unemployment + Savings),
-  )
+fit_consBest <- fit_all |> select(1)
 
 report(fit_consBest)
 
