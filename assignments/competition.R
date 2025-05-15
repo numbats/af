@@ -11,7 +11,7 @@ q1 <- q2 <- q3 <- q4 <- q5 <- NULL
 q1 <- 169.93 # https://finance.yahoo.com/quote/GOOG/history
 q2 <- 21.7 #http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml
 q3 <- 107 - 66
-#q4 <- 14.300000 #https://www.abs.gov.au/ausstats/abs@.nsf/mf/6202.0
+q4 <- 14.642700 #https://www.abs.gov.au/ausstats/abs@.nsf/mf/6202.0
 #q5 <- 178.00 # https://finance.yahoo.com/quote/GOOG/history
 
 # Create leaderboard
