@@ -6,19 +6,94 @@ execute:
   eval: false
 ---
 
-1.  Fit a regression model with a piecewise linear trend with Fourier terms for the US leisure employment data.
-    
-    ```r
-    leisure <- us_employment |>
-      filter(
-        Title == "Leisure and Hospitality",
-        year(Month) > 2001
-      ) |>
-      mutate(Employed = Employed / 1000) |>
-      select(Month, Employed)
-    ```
+## Daily electricity demand forecasting
 
-2. Does the model fit well? What are the implications for forecasting?
-3. Produce forecasts of US leisure employment using your best regression model.
+We will fit a regression model to daily electricity demand for Victoria. First, we will aggregate the half-hourly data to daily data with daily total demands, maximum temperatures, day of week, and working days.
 
-4. Why don't you need to forecast the predictors?
+```{r}
+library(fpp3)
+vic_daily <- vic_elec |>
+  mutate(
+    Day = factor(wday(Date, label = TRUE), ordered = FALSE),
+    Weekend = Day %in% c("Sat", "Sun"),
+    Working_Day = !Weekend & !Holiday
+  ) |>
+  index_by(Date = as_date(Time)) |>
+  summarise(
+    Demand = sum(Demand),
+    Temperature = max(Temperature),
+    Day = first(Day),
+    Working_Day = first(Working_Day)
+  )
+```
+
+1. Plot the Demand against temperature. Why is there a nonlinear relationship? What are the two clusters of observations?
+
+   ```{r}
+   vic_daily |>
+     ggplot(aes(x = Temperature, y = Demand)) +
+     geom_point()
+   ```
+
+   Try colouring the graph with `Day` and `Working_Day`. What do you learn?
+
+2. Fit a regression model for Demand with temperature, temperature squared, and working day as predictor variables.
+
+   ```{r}
+   fit <- vic_daily |>
+     model(
+       lm = TSLM(Demand ~ Temperature + I(Temperature^2) + Working_Day)
+     )
+   report(fit)
+   ```
+
+   Write down the equation for this model.
+
+3. Produce a residual plot using `gg_tsresiduals()`. Is the model adequate? How might you fix it?
+
+   ```{r}
+   #| include: false
+   #| eval: false
+   fit |> gg_tsresiduals()
+   ```
+
+```{r}
+#| include: false
+#| eval: false
+fit <- vic_daily |>
+  model(
+    lm = TSLM(Demand ~ Temperature + I(Temperature^2) + Working_Day + Day +
+      fourier(K = 4, period = "year"))
+)
+report(fit)
+```
+
+4. Update your model to capture the problems you've identified. Check that the CV statistic has improved. Write down the equation for the updated model.
+
+5. Produce a residual plot for the updated model. Is it adequate now?
+
+6. What ARIMA model might work for the residuals?
+
+   ```{r}
+   augment(fit) |> gg_tsdisplay(.innov, plot_type = "partial")
+   ```
+
+7. If you fitted an ARIMA model to the residuals of the regression model, write down the full model equations.
+
+8. Ignoring the serial correlation issues for now, produce forecasts for the next 2 weeks assuming the maximum temperature will be equal to 25 each day. You will need to set up a `new_data` tsibble with the predictors for the next two weeks.
+
+   ```{r}
+   nd <- new_data(vic_daily, 14) |>
+     mutate(
+       Day = factor(wday(Date, label = TRUE), ordered = FALSE),
+       Weekend = Day %in% c("Sat", "Sun"),
+       Holiday = Date == as.Date("2025-01-01"),
+       Working_Day = !Weekend & !Holiday,
+       Temperature = 25
+     )
+   fit |>
+     forecast(new_data = nd) |>
+     autoplot(vic_daily |> dplyr::filter(Date >= "2014-11-01"))
+   ```
+
+9. What happens if you include a heat-wave scenario in your `nd` object? What about a cool spell?
