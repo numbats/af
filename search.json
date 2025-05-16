@@ -287,6 +287,20 @@
     "text": "Exercises (on your own or in tutorial)\nComplete Exercises 1-7 from Section 7.10 of the book."
   },
   {
+    "objectID": "week11/index.html#monday-lecture",
+    "href": "week11/index.html#monday-lecture",
+    "title": "Week 11: Forecasting using regression",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week11/index.html#tuesday-workshop",
+    "href": "week11/index.html#tuesday-workshop",
+    "title": "Week 11: Forecasting using regression",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\nActivities for Tuesday workshop"
+  },
+  {
     "objectID": "week11/index.html#assignments",
     "href": "week11/index.html#assignments",
     "title": "Week 11: Forecasting using regression",
@@ -571,7 +585,14 @@
     "href": "week11/activities.html",
     "title": "Activities: Week 11",
     "section": "",
-    "text": "Fit a regression model with a piecewise linear trend with Fourier terms for the US leisure employment data.\nleisure &lt;- us_employment |&gt;\n  filter(\n    Title == \"Leisure and Hospitality\",\n    year(Month) &gt; 2001\n  ) |&gt;\n  mutate(Employed = Employed / 1000) |&gt;\n  select(Month, Employed)\nDoes the model fit well? What are the implications for forecasting?\nProduce forecasts of US leisure employment using your best regression model.\nWhy don’t you need to forecast the predictors?"
+    "text": "We will fit a regression model to daily electricity demand for Victoria. First, we will aggregate the half-hourly data to daily data with daily total demands, maximum temperatures, day of week, and working days.\n\nlibrary(fpp3)\nvic_daily &lt;- vic_elec |&gt;\n  mutate(\n    Day = factor(wday(Date, label = TRUE), ordered = FALSE),\n    Weekend = Day %in% c(\"Sat\", \"Sun\"),\n    Working_Day = !Weekend & !Holiday\n  ) |&gt;\n  index_by(Date = as_date(Time)) |&gt;\n  summarise(\n    Demand = sum(Demand),\n    Temperature = max(Temperature),\n    Day = first(Day),\n    Working_Day = first(Working_Day)\n  )\n\n\nPlot the Demand against temperature. Why is there a nonlinear relationship? What are the two clusters of observations?\n\nvic_daily |&gt;\n  ggplot(aes(x = Temperature, y = Demand)) +\n  geom_point()\n\nTry colouring the graph with Day and Working_Day. What do you learn?\nFit a regression model for Demand with temperature, temperature squared, and working day as predictor variables.\n\nfit &lt;- vic_daily |&gt;\n  model(\n    lm = TSLM(Demand ~ Temperature + I(Temperature^2) + Working_Day)\n  )\nreport(fit)\n\nWrite down the equation for this model.\nProduce a residual plot using gg_tsresiduals(). Is the model adequate? How might you fix it?\nUpdate your model to capture the problems you’ve identified. Check that the CV statistic has improved. Write down the equation for the updated model.\nProduce a residual plot for the updated model. Is it adequate now?\nWhat ARIMA model might work for the residuals?\n\naugment(fit) |&gt; gg_tsdisplay(.innov, plot_type = \"partial\")\n\nIf you fitted an ARIMA model to the residuals of the regression model, write down the full model equations.\nIgnoring the serial correlation issues for now, produce forecasts for the next 2 weeks assuming the maximum temperature will be equal to 25 each day. You will need to set up a new_data tsibble with the predictors for the next two weeks.\n\nnd &lt;- new_data(vic_daily, 14) |&gt;\n  mutate(\n    Day = factor(wday(Date, label = TRUE), ordered = FALSE),\n    Weekend = Day %in% c(\"Sat\", \"Sun\"),\n    Holiday = Date == as.Date(\"2025-01-01\"),\n    Working_Day = !Weekend & !Holiday,\n    Temperature = 25\n  )\nfit |&gt;\n  forecast(new_data = nd) |&gt;\n  autoplot(vic_daily |&gt; dplyr::filter(Date &gt;= \"2014-11-01\"))\n\nWhat happens if you include a heat-wave scenario in your nd object? What about a cool spell?"
+  },
+  {
+    "objectID": "week11/activities.html#daily-electricity-demand-forecasting",
+    "href": "week11/activities.html#daily-electricity-demand-forecasting",
+    "title": "Activities: Week 11",
+    "section": "",
+    "text": "We will fit a regression model to daily electricity demand for Victoria. First, we will aggregate the half-hourly data to daily data with daily total demands, maximum temperatures, day of week, and working days.\n\nlibrary(fpp3)\nvic_daily &lt;- vic_elec |&gt;\n  mutate(\n    Day = factor(wday(Date, label = TRUE), ordered = FALSE),\n    Weekend = Day %in% c(\"Sat\", \"Sun\"),\n    Working_Day = !Weekend & !Holiday\n  ) |&gt;\n  index_by(Date = as_date(Time)) |&gt;\n  summarise(\n    Demand = sum(Demand),\n    Temperature = max(Temperature),\n    Day = first(Day),\n    Working_Day = first(Working_Day)\n  )\n\n\nPlot the Demand against temperature. Why is there a nonlinear relationship? What are the two clusters of observations?\n\nvic_daily |&gt;\n  ggplot(aes(x = Temperature, y = Demand)) +\n  geom_point()\n\nTry colouring the graph with Day and Working_Day. What do you learn?\nFit a regression model for Demand with temperature, temperature squared, and working day as predictor variables.\n\nfit &lt;- vic_daily |&gt;\n  model(\n    lm = TSLM(Demand ~ Temperature + I(Temperature^2) + Working_Day)\n  )\nreport(fit)\n\nWrite down the equation for this model.\nProduce a residual plot using gg_tsresiduals(). Is the model adequate? How might you fix it?\nUpdate your model to capture the problems you’ve identified. Check that the CV statistic has improved. Write down the equation for the updated model.\nProduce a residual plot for the updated model. Is it adequate now?\nWhat ARIMA model might work for the residuals?\n\naugment(fit) |&gt; gg_tsdisplay(.innov, plot_type = \"partial\")\n\nIf you fitted an ARIMA model to the residuals of the regression model, write down the full model equations.\nIgnoring the serial correlation issues for now, produce forecasts for the next 2 weeks assuming the maximum temperature will be equal to 25 each day. You will need to set up a new_data tsibble with the predictors for the next two weeks.\n\nnd &lt;- new_data(vic_daily, 14) |&gt;\n  mutate(\n    Day = factor(wday(Date, label = TRUE), ordered = FALSE),\n    Weekend = Day %in% c(\"Sat\", \"Sun\"),\n    Holiday = Date == as.Date(\"2025-01-01\"),\n    Working_Day = !Weekend & !Holiday,\n    Temperature = 25\n  )\nfit |&gt;\n  forecast(new_data = nd) |&gt;\n  autoplot(vic_daily |&gt; dplyr::filter(Date &gt;= \"2014-11-01\"))\n\nWhat happens if you include a heat-wave scenario in your nd object? What about a cool spell?"
   },
   {
     "objectID": "week2/activities.html",
