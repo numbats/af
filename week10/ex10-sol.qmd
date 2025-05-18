@@ -5,6 +5,7 @@ title: "Exercise Week 10: Solutions"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, cache = TRUE)
 library(fpp3)
+options(width=90)
 ```
 
 # fpp3 9.11, Ex11
@@ -135,6 +136,7 @@ The STL-ARIMA approach has higher values and narrower prediction intervals. It i
 >   c. Check the forecasts for the "Snowy Mountains" and "Melbourne" regions. Do they look reasonable?
 
 ```{r ex13}
+#| fig-height: 7
 fit <- tourism |>
   model(arima = ARIMA(Trips))
 fc <- fit |> forecast(h="3 years")
@@ -150,7 +152,7 @@ Both sets of forecasts appear to have captured the underlying trend and seasonal
 
 # fpp3 9.11, Ex14
 
-> For your retail time series (Exercise 5 above):
+> For your retail time series (Exercise 5):
 >    a. develop an appropriate seasonal ARIMA model;
 
 ```{r ex14a}
