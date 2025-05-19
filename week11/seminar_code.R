@@ -2,7 +2,7 @@ library(fpp3)
 
 # Weekly data with Fourier terms
 
-us_gasoline  |>
+us_gasoline |>
   autoplot(Barrels) +
   labs(y = "Weekly US finished motor gasoline product supplied (million barrels)")
 
@@ -56,7 +56,7 @@ us_change |>
   facet_grid(Measure ~ ., scales = "free_y")
 
 us_change |>
-  GGally::ggpairs(columns = 2:6)
+  GGally::ggpairs(columns = c(3:6, 2))
 
 fit_all <- us_change |>
   model(
@@ -111,13 +111,18 @@ fit_consBest |> gg_tsresiduals()
 
 augment(fit_consBest) |>
   left_join(us_change) |>
-  ggplot(aes(x=.fitted, y=.resid)) +
+  ggplot(aes(x = .fitted, y = .resid)) +
   geom_point()
 
 augment(fit_consBest) |>
   left_join(us_change) |>
-  ggplot(aes(x=Income, y=.resid)) +
+  ggplot(aes(x = Income, y = .resid)) +
   geom_point()
+
+fit_consBest |> forecast(
+  new_data(us_change, 4) |>
+    mutate(Income = c(0, 1, 3, 0), Savings = 0, Unemployment = 0, Production = 0)
+)
 
 
 future_scenarios <- scenarios(
@@ -134,5 +139,3 @@ us_change |> autoplot(Consumption) +
   labs(y = "% change in US consumption") +
   autolayer(fc) +
   labs(title = "US consumption", y = "% change")
-
-

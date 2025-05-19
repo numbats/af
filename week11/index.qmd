@@ -30,6 +30,8 @@ Complete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/r
 show_slides(week)
 ```
 
+[Code used in seminar](seminar_code.R)
+
 ```{r}
 #| output: asis
 show_activity(week, show_solutions = FALSE)
