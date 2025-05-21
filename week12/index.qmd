@@ -25,15 +25,15 @@ Complete Exercises 2-6 from [Section 10.7 of the book](https://otexts.com/fpp3/d
 
 ```{r}
 #| output: asis
-#show_slides(week)
+show_slides(week)
 ```
 
 ## Post-class activities
 
 * Do any exercises not yet finished.
-* Complete past exams: [[2022](/exams/exam_2022.pdf)] [[2023](/exams/exam_2023.pdf)] [[2024](/exams/exam_2024.pdf)]
+* Complete past exams:  [[2021](/exams/exam_2022.pdf)] [[2022](/exams/exam_2022.pdf)] [[2023](/exams/exam_2023.pdf)] [[2024](/exams/exam_2024.pdf)]
 * Re-read the textbook
-* Listen again to all lectures
+* Listen again to all lectures, workshops, tutorials
 
 
 ```{r}

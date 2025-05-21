@@ -83,10 +83,3 @@ results.
   * Some predictors are known into the future (e.g., time, dummies).
   * Separate forecasting models may be needed for other predictors.
   * Forecast intervals ignore the uncertainty in forecasting the predictors.
-
-## Your turn
-\fontsize{13}{15}\sf\vspace*{-0.2cm}
-
-```{r}
-#| child: activities.md
-```

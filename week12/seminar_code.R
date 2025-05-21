@@ -1,5 +1,109 @@
 library(fpp3)
 
+## US Leisure
+
+leisure <- us_employment |>
+  filter(Title == "Leisure and Hospitality", year(Month) > 2001) |>
+  mutate(Employed = Employed / 1000) |>
+  select(Month, Employed)
+
+autoplot(leisure, Employed) +
+  labs(y = "Employed (millions)")
+fit <- leisure |>
+  model(
+    lm = TSLM(Employed ~
+           trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
+           fourier(K = 6)),
+    dhr = ARIMA(Employed  ~
+           trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
+           fourier(K = 6)),
+    dhr2 = ARIMA(Employed  ~
+                   trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
+                   fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0)),
+  )
+glance(fit)
+
+fit |>
+  select(dhr) |>
+  gg_tsresiduals()
+
+fc <- fit |>
+  forecast(h=24)
+autoplot(fc, leisure |> tail(12))
+
+
+## 5-minute CALL CENTRE DATA ------------------------------------------------
+
+calls <- readr::read_tsv("http://robjhyndman.com/data/callcenter.txt") |>
+  rename(time = `...1`) |>
+  pivot_longer(-time, names_to = "date", values_to = "volume") |>
+  mutate(
+    date = as.Date(date, format = "%d/%m/%Y"),
+    datetime = as_datetime(date) + time
+  ) |>
+  as_tsibble(index = datetime)
+
+calls |>
+  fill_gaps() |>
+  autoplot(volume)
+
+calls |>
+  fill_gaps() |>
+  gg_season(volume, period = "day", alpha = 0.4) +
+  guides(colour = "none")
+
+calls_mdl <- calls |>
+  mutate(idx = row_number()) |>
+  update_tsibble(index = idx)
+calls_fit <- calls_mdl |>
+  model(ARIMA(volume ~ fourier(169, K = 10) + pdq(d = 0) + PDQ(0, 0, 0)))
+report(calls_fit)
+
+gg_tsresiduals(calls_fit, lag = 338)
+
+calls_fit |>
+  forecast(h = 1690) |>
+  autoplot(calls_mdl |> filter(idx > 20000))
+
+## US GASOLINE ---------------------------------------------------
+
+us_gasoline |> autoplot(Barrels)
+
+gasfit <- us_gasoline |>
+  model(
+    fourier1 = ARIMA(Barrels ~ fourier(K = 1) + PDQ(0, 0, 0)),
+    fourier2 = ARIMA(Barrels ~ fourier(K = 2) + PDQ(0, 0, 0)),
+    fourier3 = ARIMA(Barrels ~ fourier(K = 3) + PDQ(0, 0, 0)),
+    fourier4 = ARIMA(Barrels ~ fourier(K = 4) + PDQ(0, 0, 0)),
+    fourier5 = ARIMA(Barrels ~ fourier(K = 5) + PDQ(0, 0, 0)),
+    fourier6 = ARIMA(Barrels ~ fourier(K = 6) + PDQ(0, 0, 0)),
+    fourier7 = ARIMA(Barrels ~ fourier(K = 7) + PDQ(0, 0, 0)),
+    fourier8 = ARIMA(Barrels ~ fourier(K = 8) + PDQ(0, 0, 0)),
+    fourier9 = ARIMA(Barrels ~ fourier(K = 9) + PDQ(0, 0, 0)),
+    fourier10 = ARIMA(Barrels ~ fourier(K = 10) + PDQ(0, 0, 0)),
+    fourier11 = ARIMA(Barrels ~ fourier(K = 11) + PDQ(0, 0, 0)),
+    fourier12 = ARIMA(Barrels ~ fourier(K = 12) + PDQ(0, 0, 0)),
+    fourier13 = ARIMA(Barrels ~ fourier(K = 13) + PDQ(0, 0, 0)),
+    fourier14 = ARIMA(Barrels ~ fourier(K = 14) + PDQ(0, 0, 0)),
+    best_lm = TSLM(Barrels ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 6)),
+    best_lm2 = ARIMA(Barrels ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) +
+                       fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0))
+  )
+
+glance(gasfit) |> arrange(AICc)
+
+gasfit |>
+  select(fourier6) |>
+  report()
+gasfit |>
+  select(fourier6) |>
+  gg_tsresiduals()
+
+gasfit |>
+  select(fourier6) |>
+  forecast(h = "3 years") |>
+  autoplot(us_gasoline)
+
 ## Daily data with annual and weekly seasonality
 
 vic_elec_daily <- vic_elec |>
@@ -125,107 +229,3 @@ forecast(elec_fit, new_data = vic_elec_future) |>
   filter(.model == "dhr") |>
   autoplot(vic_elec_daily |> tail(365), level = 80) +
   labs(y = "Electricity demand (GW)")
-
-
-## US GASOLINE ---------------------------------------------------
-
-us_gasoline |> autoplot(Barrels)
-
-gasfit <- us_gasoline |>
-  model(
-    fourier1 = ARIMA(Barrels ~ fourier(K = 1) + PDQ(0, 0, 0)),
-    fourier2 = ARIMA(Barrels ~ fourier(K = 2) + PDQ(0, 0, 0)),
-    fourier3 = ARIMA(Barrels ~ fourier(K = 3) + PDQ(0, 0, 0)),
-    fourier4 = ARIMA(Barrels ~ fourier(K = 4) + PDQ(0, 0, 0)),
-    fourier5 = ARIMA(Barrels ~ fourier(K = 5) + PDQ(0, 0, 0)),
-    fourier6 = ARIMA(Barrels ~ fourier(K = 6) + PDQ(0, 0, 0)),
-    fourier7 = ARIMA(Barrels ~ fourier(K = 7) + PDQ(0, 0, 0)),
-    fourier8 = ARIMA(Barrels ~ fourier(K = 8) + PDQ(0, 0, 0)),
-    fourier9 = ARIMA(Barrels ~ fourier(K = 9) + PDQ(0, 0, 0)),
-    fourier10 = ARIMA(Barrels ~ fourier(K = 10) + PDQ(0, 0, 0)),
-    fourier11 = ARIMA(Barrels ~ fourier(K = 11) + PDQ(0, 0, 0)),
-    fourier12 = ARIMA(Barrels ~ fourier(K = 12) + PDQ(0, 0, 0)),
-    fourier13 = ARIMA(Barrels ~ fourier(K = 13) + PDQ(0, 0, 0)),
-    fourier14 = ARIMA(Barrels ~ fourier(K = 14) + PDQ(0, 0, 0)),
-    best_lm = TSLM(Barrels ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 6)),
-    best_lm2 = ARIMA(Barrels ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) +
-                       fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0))
-  )
-
-glance(gasfit) |> arrange(AICc)
-
-gasfit |>
-  select(fourier6) |>
-  report()
-gasfit |>
-  select(fourier6) |>
-  gg_tsresiduals()
-
-gasfit |>
-  select(fourier6) |>
-  forecast(h = "3 years") |>
-  autoplot(us_gasoline)
-
-## 5-minute CALL CENTRE DATA ------------------------------------------------
-
-calls <- readr::read_tsv("http://robjhyndman.com/data/callcenter.txt") |>
-  rename(time = `...1`) |>
-  pivot_longer(-time, names_to = "date", values_to = "volume") |>
-  mutate(
-    date = as.Date(date, format = "%d/%m/%Y"),
-    datetime = as_datetime(date) + time
-  ) |>
-  as_tsibble(index = datetime)
-
-calls |>
-  fill_gaps() |>
-  autoplot(volume)
-
-calls |>
-  fill_gaps() |>
-  gg_season(volume, period = "day", alpha = 0.4) +
-  guides(colour = "none")
-
-calls_mdl <- calls |>
-  mutate(idx = row_number()) |>
-  update_tsibble(index = idx)
-calls_fit <- calls_mdl |>
-  model(ARIMA(volume ~ fourier(169, K = 10) + pdq(d = 0) + PDQ(0, 0, 0)))
-report(calls_fit)
-
-gg_tsresiduals(calls_fit, lag = 338)
-
-calls_fit |>
-  forecast(h = 1690) |>
-  autoplot(calls_mdl |> filter(idx > 20000))
-
-## US Leisure
-
-leisure <- us_employment |>
-  filter(Title == "Leisure and Hospitality", year(Month) > 2001) |>
-  mutate(Employed = Employed / 1000) |>
-  select(Month, Employed)
-
-autoplot(leisure, Employed) +
-  labs(y = "Employed (millions)")
-fit <- leisure |>
-  model(
-    lm = TSLM(Employed ~
-           trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
-           fourier(K = 6)),
-    dhr = ARIMA(Employed  ~
-           trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
-           fourier(K = 6)),
-    dhr2 = ARIMA(Employed  ~
-                   trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
-                   fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0)),
-  )
-glance(fit)
-
-fit |>
-  select(dhr) |>
-  gg_tsresiduals()
-
-fc <- fit |>
-  forecast(h=24)
-autoplot(fc, leisure |> tail(12))
