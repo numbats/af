@@ -20,9 +20,11 @@ Read [Chapter 7 of the textbook](https://otexts.com/fpp3/regression.html) and wa
 
 ## Exercises (on your own or in tutorial)
 
-Complete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).
+* Complete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).
 
 <!-- [**Solutions to Exercises**](ex11-sol.qmd) -->
+
+* [Recorded tutorial code](tutorial_code.R)
 
 
 ```{r}
