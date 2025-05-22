@@ -160,7 +160,7 @@ tsibbledata::ansett |>
 
 # Exam
 
-## Exam: 5.00pm (AEST) 6 June
+## Exam: 5.00pm (AEST) 16 June
 \fontsize{13}{14}\sf
 
 Five Sections, all to be attempted.\vspace*{-0.1cm}
@@ -176,12 +176,12 @@ C, D, E
 
 * Interpretation of R output, but no coding.
 * Closed book with ETS formula sheet
-* Allowed: a calculator, 1 A4 double-sided sheet of notes, 5 working sheets
+* Allowed: a calculator, 1 A4 double-sided sheet of notes, 5 blank working sheets
 
 ## Preparing for the exam
 
-  - Exams from 2021--2023 on website.
-  - Solutions available from 1 June.
+  - Exams from 2021--2024 on website.
+  - Solutions available from 2 June.
   - Exercises. Make sure you have done them all (especially the last two topics).
   - Identify your weak points and practice them.
   - Write your own summary of the material.
@@ -203,15 +203,17 @@ C, D, E
 
  * International Symposium on Forecasting\vspace*{-0.2cm}
 
-    *   Charlottesville, Virginia, June 25--28, 2023
+    *   Beijing, China, June 29--July 2, 2025
 
 \alert{Journals:}
 
  * International Journal of Forecasting
  * Foresight (the practitioner's journal)
 
+\vfill
+
 ###
-Links to all of the above at **forecasters.org**
+\vspace*{-0.2cm}\centering Links to all of the above at **forecasters.org**
 
 ## IIF Best Student Award
 \fontsize{14}{15}\sf\vspace*{-0.2cm}

@@ -17,12 +17,12 @@ The final assessment will be an [on-campus eExam](https://www.monash.edu/student
 
 * Up to 5 blank pages for use as working sheets.
 * 1 A4 double-sided page containing notes. A physical page only is allowed. It may be typed or hand-written.
-* 4 pre-printed answer sheets (available in the exam room) for handwritten responses (e.g., equations or diagrams).
+* 5 pre-printed answer sheets (available in the exam room) for handwritten responses (e.g., equations or diagrams).
 * A physical calculator of any type or one of the following virtual calculators:
 
     * Inbuilt Mac/Windows calculator
-    * Website https://www.educalc.net/2336211.page
-    * 10bii Financial Calculator for Mac by K2 Cashflow, https://apps.apple.com/au/app/10bii-financial-calculator/id473144920
+    * Website <https://www.educalc.net/2336211.page>
+    * 10bii Financial Calculator for Mac by K2 Cashflow, <https://apps.apple.com/au/app/10bii-financial-calculator/id473144920>
 
 AI tools are not to be used in the exam.
 
