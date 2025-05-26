@@ -2,7 +2,6 @@
 title: "Exercise Week 11: Solutions"
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, cache = TRUE)
 library(fpp3)
@@ -27,7 +26,7 @@ jan_vic_elec <- vic_elec |>
   summarise(Demand = sum(Demand), Temperature = max(Temperature))
 
 jan_vic_elec |>
-  gather("key", "value", Demand, Temperature) |>
+  pivot_longer(2:3, names_to="key", values_to="value")|>
   autoplot(.vars = value) +
   facet_grid(vars(key), scales = "free_y")
 
@@ -61,8 +60,10 @@ next_day <- scenarios(
 )
 fc <- fit |>
   forecast(new_data = next_day)
+
 autoplot(jan_vic_elec, Demand) +
-  autolayer(fc)
+  autolayer(fc[1,]) +
+  autolayer(fc[2,])
 ```
 
 The forecasts seem reasonable. However we should be aware that there is not much data to support the forecasts at these temperature extremes, especially in that no daily maximum below $20^\circ\text{C}$ is observed during January (a summer month in Victoria).
@@ -115,7 +116,10 @@ fit <- olympic_running |>
 tidy(fit)
 ```
 
-```{r, echo = FALSE, results='asis'}
+```{r}
+#| echo: false
+#| output: asis
+
 tidy(fit) |>
   filter(term == "trend()") |>
   glue::glue_data("The {Sex}'s {Length} running time has been {ifelse(estimate<0, 'decreasing', 'increasing')} by an average of {abs(round(estimate/4, 3))} seconds each year.<br>")
@@ -202,7 +206,8 @@ souvenirs |>
 
 >d. Plot the residuals against time and against the fitted values. Do these plots reveal any problems with the model?
 
-```{r, message=FALSE}
+```{r}
+#| message: false
 fit |> gg_tsresiduals()
 ```
 
@@ -219,7 +224,8 @@ The plot of residuals against fitted values looks fine - no notable patterns eme
 
 >e. Do boxplots of the residuals for each month. Does this reveal any problems with the model?
 
-```{r, message=FALSE}
+```{r}
+#| message: false
 augment(fit) |>
   mutate(month = month(Month, label = TRUE)) |>
   ggplot(aes(x = month, y = .innov)) +
@@ -234,7 +240,9 @@ The boxplots show differences in variation across the months revealing some pote
 tidy(fit) |> mutate(pceffect = (exp(estimate) - 1) * 100)
 ```
 
-```{r, include=FALSE}
+```{r}
+#| include: false
+
 expcoef <- (exp(coef(fit)$estimate) - 1) * 100
 ```
 
@@ -331,7 +339,7 @@ augment(fit) |>
   features(.innov, ljung_box, lag = 52)
 ```
 
-The Ljung-Box test is not significant.
+The Ljung-Box test is not significant. Even if the Ljung-Box test had given a significant result here, the correlations are very small, so it would not make much difference to the forecasts and prediction intervals.
 
 > d. Generate forecasts for the next year of data. Plot these along with the actual data for 2005. Comment on the forecasts.
 
@@ -435,7 +443,7 @@ $$
    \end{bmatrix}
 $$
 
-### (a)
+## (a)
 
 &nbsp;
 \begin{align*}
@@ -465,7 +473,7 @@ $$
     \end{bmatrix}
 \end{align*}
 
-### (b)
+## (b)
 &nbsp;
 \begin{align*}
 (\mathbf{X}' \mathbf{X} )^{-1}
@@ -501,7 +509,7 @@ $$
     \end{bmatrix} \\
 \end{align*}
 
-### (c)
+## (c)
 &nbsp;
 \begin{align*}
 \mathbf{X}' \mathbf{Y}
@@ -565,7 +573,7 @@ is
    \right]
 \end{align*}
 
-### (d)
+## (d)
 
 Now $\mathbf{X}^* = [1 ~~~ T+h]$. So $\text{Var}(Y^* | \mathbf{Y},\mathbf{X},\mathbf{X}^*)$
 \begin{align*}
