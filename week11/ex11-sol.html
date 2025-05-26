@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Exercise Week 11: Solutions – ETC3550/ETC5550 Applied forecasting</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-70dbdbf3e2c4ba93797768058031c380.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-b8df04af5c5849fff6b4d3b90801cf5f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ETC3550/ETC5550 Applied forecasting</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house-fill" role="img">
+</i> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-schedule" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-calendar2-fill" role="img">
+</i> 
+ <span class="menu-text">Schedule</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-schedule">    
+        <li>
+    <a class="dropdown-item" href="../week1/index.html">
+ <span class="dropdown-text">Week 1: Introduction to forecasting &amp; R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week2/index.html">
+ <span class="dropdown-text">Week 2: Time series graphics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week3/index.html">
+ <span class="dropdown-text">Week 3: Time series decomposition</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week4/index.html">
+ <span class="dropdown-text">Week 4: Simple forecasting methods</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week5/index.html">
+ <span class="dropdown-text">Week 5: Accuracy evaluation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week6/index.html">
+ <span class="dropdown-text">Week 6: ETS models (part 1)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week7/index.html">
+ <span class="dropdown-text">Week 7: ETS models (part 2)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week8/index.html">
+ <span class="dropdown-text">Week 8: ARIMA models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week9/index.html">
+ <span class="dropdown-text">Week 9: ARIMA models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week10/index.html">
+ <span class="dropdown-text">Week 10: ARIMA models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week11/index.html">
+ <span class="dropdown-text">Week 11: Forecasting using regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week12/index.html">
+ <span class="dropdown-text">Week 12: Dynamic regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://edstem.org/au/courses/21163/discussion/"> <i class="bi bi-chat-fill" role="img">
+</i> 
+<span class="menu-text">Discussion</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://learning.monash.edu/course/view.php?id=26695&amp;section=1"> <i class="bi bi-mortarboard-fill" role="img">
+</i> 
+<span class="menu-text">Moodle</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://OTexts.com/fpp3"> <i class="bi bi-book-fill" role="img">
+</i> 
+<span class="menu-text">Textbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../exams/index.html"> <i class="bi bi-pencil-fill" role="img">
+</i> 
+<span class="menu-text">Exam</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/numbats/af"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#fpp3-7.10-ex-1" id="toc-fpp3-7.10-ex-1" class="nav-link active" data-scroll-target="#fpp3-7.10-ex-1">fpp3 7.10, Ex 1</a></li>
+  <li><a href="#fpp3-7.10-ex-2" id="toc-fpp3-7.10-ex-2" class="nav-link" data-scroll-target="#fpp3-7.10-ex-2">fpp3 7.10, Ex 2</a></li>
+  <li><a href="#fpp3-7.10-ex3" id="toc-fpp3-7.10-ex3" class="nav-link" data-scroll-target="#fpp3-7.10-ex3">fpp3 7.10, Ex3</a></li>
+  <li><a href="#fpp3-7.10-ex-4" id="toc-fpp3-7.10-ex-4" class="nav-link" data-scroll-target="#fpp3-7.10-ex-4">fpp3 7.10, Ex 4</a></li>
+  <li><a href="#fpp3-7.10-ex-5" id="toc-fpp3-7.10-ex-5" class="nav-link" data-scroll-target="#fpp3-7.10-ex-5">fpp3 7.10, Ex 5</a></li>
+  <li><a href="#fpp3-7.10-ex-6" id="toc-fpp3-7.10-ex-6" class="nav-link" data-scroll-target="#fpp3-7.10-ex-6">fpp3 7.10, Ex 6</a></li>
+  <li><a href="#fpp3-7.10-ex-7" id="toc-fpp3-7.10-ex-7" class="nav-link" data-scroll-target="#fpp3-7.10-ex-7">fpp3 7.10, Ex 7</a>
+  <ul class="collapse">
+  <li><a href="#a" id="toc-a" class="nav-link" data-scroll-target="#a">(a)</a></li>
+  <li><a href="#b" id="toc-b" class="nav-link" data-scroll-target="#b">(b)</a></li>
+  <li><a href="#c" id="toc-c" class="nav-link" data-scroll-target="#c">(c)</a></li>
+  <li><a href="#d" id="toc-d" class="nav-link" data-scroll-target="#d">(d)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exercise Week 11: Solutions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="fpp3-7.10-ex-1" class="level1">
+<h1>fpp3 7.10, Ex 1</h1>
+<blockquote class="blockquote">
+<p>Half-hourly electricity demand for Victoria, Australia is contained in <code>vic_elec</code>. Extract the January 2014 electricity demand, and aggregate this data to daily with daily total demands and maximum temperatures.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>jan_vic_elec <span class="ot">&lt;-</span> vic_elec <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">yearmonth</span>(Time) <span class="sc">==</span> <span class="fu">yearmonth</span>(<span class="st">"2014 Jan"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Date =</span> <span class="fu">as_date</span>(Time)) <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Demand =</span> <span class="fu">sum</span>(Demand), <span class="at">Temperature =</span> <span class="fu">max</span>(Temperature))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="a">
+<li>Plot the data and find the regression model for Demand with temperature as an explanatory variable. Why is there a positive relationship?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>jan_vic_elec <span class="ot">&lt;-</span> vic_elec <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">yearmonth</span>(Time) <span class="sc">==</span> <span class="fu">yearmonth</span>(<span class="st">"2014 Jan"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Date =</span> <span class="fu">as_date</span>(Time)) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Demand =</span> <span class="fu">sum</span>(Demand), <span class="at">Temperature =</span> <span class="fu">max</span>(Temperature))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>jan_vic_elec <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">names_to=</span><span class="st">"key"</span>, <span class="at">values_to=</span><span class="st">"value"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">.vars =</span> value) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="fu">vars</span>(key), <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>jan_vic_elec <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Temperature, <span class="at">y =</span> Demand)) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> jan_vic_elec <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">TSLM</span>(Demand <span class="sc">~</span> Temperature))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: Demand 
+Model: TSLM 
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-49978.2 -10218.9   -121.3  18533.2  35440.6 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  59083.9    17424.8   3.391  0.00203 ** 
+Temperature   6154.3      601.3  10.235 3.89e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 24540 on 29 degrees of freedom
+Multiple R-squared: 0.7832, Adjusted R-squared: 0.7757
+F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
+</div>
+</div>
+<p>It is clear that a positive relationship exists for this data. It is largely driven by days with high temperatures, that is resulting in more electricity being demanded (presumably to keep things cool).</p>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li>Produce a residual plot. Is the model adequate? Are there any outliers or influential observations?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The residuals from this section of the data suggest that the model is lacking a trend (although looking at a larger window of the data, this is clearly not a real pattern). Some large variability suggests that there are some outliers in this data.</p>
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>Use the model to forecast the electricity demand that you would expect for the next day if the maximum temperature was <span class="math inline">15^\circ\text{C}</span> and compare it with the forecast if the with maximum temperature was <span class="math inline">35^\circ\text{C}</span>. Do you believe these forecasts?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>next_day <span class="ot">&lt;-</span> <span class="fu">scenarios</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Cold day</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">new_data</span>(jan_vic_elec, <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Temperature =</span> <span class="dv">15</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Hot day</span><span class="st">`</span> <span class="ot">=</span>  <span class="fu">new_data</span>(jan_vic_elec, <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Temperature =</span> <span class="dv">35</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> next_day)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(jan_vic_elec, Demand) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(fc[<span class="dv">1</span>,]) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(fc[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The forecasts seem reasonable. However we should be aware that there is not much data to support the forecasts at these temperature extremes, especially in that no daily maximum below <span class="math inline">20^\circ\text{C}</span> is observed during January (a summer month in Victoria).</p>
+<blockquote class="blockquote">
+<ol start="4" type="a">
+<li>Give prediction intervals for your forecasts.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hilo</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 2 x 7 [1D]
+# Key:       .scenario [2]
+  .scenario Date      
+  &lt;chr&gt;     &lt;date&gt;    
+1 Cold day  2014-02-01
+2 Hot day   2014-02-01
+# ℹ 5 more variables: Demand &lt;dist&gt;, .mean &lt;dbl&gt;, Temperature &lt;dbl&gt;,
+#   `80%` &lt;hilo&gt;, `95%` &lt;hilo&gt;</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<ol start="5" type="a">
+<li>Plot Demand vs Temperature for all of the available data in <code>vic_elec</code> aggregated to daily total demand and maximum temperature. What does this say about your model?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>vic_elec <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Date =</span> <span class="fu">as_date</span>(Time)) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Demand =</span> <span class="fu">sum</span>(Demand), <span class="at">Temperature =</span> <span class="fu">max</span>(Temperature)) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Temperature, <span class="at">y =</span> Demand)) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The “U” shaped scatterplot suggests that there is a non-linear relationship between electricity demand and daily maximum temperature. The model assumption that electricity demand is linearly predicted by temperature is incorrect.</p>
+</section>
+<section id="fpp3-7.10-ex-2" class="level1">
+<h1>fpp3 7.10, Ex 2</h1>
+<blockquote class="blockquote">
+<p>Data set <code>olympic_running</code> contains the winning times (in seconds) in each Olympic Games sprint, middle-distance and long-distance track events from 1896 to 2016.</p>
+<ol type="a">
+<li>Plot the winning time against the year. Describe the main features of the plot.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>olympic_running <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Time, <span class="at">colour =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Length, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Running time (seconds)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The running times are generally decreasing as time progresses (although the rate of this decline is slowing down in recent olympics). There are some missing values in the data corresponding to the World Wars (in which the Olympic Games were not held).</p>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li>Fit a regression line to the data. Obviously the winning times have been decreasing, but at what <em>average</em> rate per year?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> olympic_running <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">TSLM</span>(Time <span class="sc">~</span> <span class="fu">trend</span>()))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 28 × 8
+   Length Sex   .model               term  estimate std.error statistic  p.value
+    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1    100 men   TSLM(Time ~ trend()) (Int…  11.1      0.0909     123.   1.86e-37
+ 2    100 men   TSLM(Time ~ trend()) tren…  -0.0504   0.00479    -10.5  7.24e-11
+ 3    100 women TSLM(Time ~ trend()) (Int…  12.4      0.163       76.0  4.58e-25
+ 4    100 women TSLM(Time ~ trend()) tren…  -0.0567   0.00749     -7.58 3.72e- 7
+ 5    200 men   TSLM(Time ~ trend()) (Int…  22.3      0.140      159.   4.06e-39
+ 6    200 men   TSLM(Time ~ trend()) tren…  -0.0995   0.00725    -13.7  3.80e-13
+ 7    200 women TSLM(Time ~ trend()) (Int…  25.5      0.525       48.6  8.34e-19
+ 8    200 women TSLM(Time ~ trend()) tren…  -0.135    0.0227      -5.92 2.17e- 5
+ 9    400 men   TSLM(Time ~ trend()) (Int…  50.3      0.445      113.   1.53e-36
+10    400 men   TSLM(Time ~ trend()) tren…  -0.258    0.0235     -11.0  2.75e-11
+# ℹ 18 more rows</code></pre>
+</div>
+</div>
+<p>The men’s 100 running time has been decreasing by an average of 0.013 seconds each year.<br> The women’s 100 running time has been decreasing by an average of 0.014 seconds each year.<br> The men’s 200 running time has been decreasing by an average of 0.025 seconds each year.<br> The women’s 200 running time has been decreasing by an average of 0.034 seconds each year.<br> The men’s 400 running time has been decreasing by an average of 0.065 seconds each year.<br> The women’s 400 running time has been decreasing by an average of 0.04 seconds each year.<br> The men’s 800 running time has been decreasing by an average of 0.152 seconds each year.<br> The women’s 800 running time has been decreasing by an average of 0.198 seconds each year.<br> The men’s 1500 running time has been decreasing by an average of 0.315 seconds each year.<br> The women’s 1500 running time has been increasing by an average of 0.147 seconds each year.<br> The men’s 5000 running time has been decreasing by an average of 1.03 seconds each year.<br> The women’s 5000 running time has been decreasing by an average of 0.303 seconds each year.<br> The men’s 10000 running time has been decreasing by an average of 2.666 seconds each year.<br> The women’s 10000 running time has been decreasing by an average of 3.496 seconds each year.<br></p>
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>Plot the residuals against the year. What does this indicate about the suitability of the fitted line?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> .innov, <span class="at">colour =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Length, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It doesn’t seem that the linear trend is appropriate for this data.</p>
+<blockquote class="blockquote">
+<ol start="4" type="a">
+<li>Predict the winning time for each race in the 2020 Olympics. Give a prediction interval for your forecasts. What assumptions have you made in these calculations?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PI =</span> <span class="fu">hilo</span>(Time, <span class="dv">95</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A fable: 14 x 6 [4Y]
+# Key:     Length, Sex [14]
+   Length Sex    Year
+    &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+ 1    100 men    2020
+ 2    100 women  2020
+ 3    200 men    2020
+ 4    200 women  2020
+ 5    400 men    2020
+ 6    400 women  2020
+ 7    800 men    2020
+ 8    800 women  2020
+ 9   1500 men    2020
+10   1500 women  2020
+11   5000 men    2020
+12   5000 women  2020
+13  10000 men    2020
+14  10000 women  2020
+# ℹ 3 more variables: Time &lt;dist&gt;, .mean &lt;dbl&gt;, PI &lt;hilo&gt;</code></pre>
+</div>
+</div>
+<p>Using a linear trend we assume that winning times will decrease in a linear fashion which is unrealistic for running times. As we saw from the residual plots above there are mainly large positive residuals for the last few years, indicating that the decreases in the winning times are not linear. We also assume that the residuals are normally distributed.</p>
+</section>
+<section id="fpp3-7.10-ex3" class="level1">
+<h1>fpp3 7.10, Ex3</h1>
+<blockquote class="blockquote">
+<p>An elasticity coefficient is the ratio of the percentage change in the forecast variable (<span class="math inline">y</span>) to the percentage change in the predictor variable (<span class="math inline">x</span>). Mathematically, the elasticity is defined as <span class="math inline">(dy/dx)\times(x/y)</span>. Consider the log-log model, <span class="math display">
+\log y=\beta_0+\beta_1 \log x + \varepsilon.
+</span> Express <span class="math inline">y</span> as a function of <span class="math inline">x</span> and show that the coefficient <span class="math inline">\beta_1</span> is the elasticity coefficient.</p>
+</blockquote>
+<p>We will take conditional expectation of the left and the right parts of the equation: <span class="math display">\mathrm{E}(\log(y)\mid x) = \mathrm{E}(\beta_0 + \beta_1 \log(x) + \varepsilon\mid x) = \beta_0 + \beta_1\log(x).</span> By taking derivatives of the left and the right parts of the last equation we get: <span class="math inline">\frac{y'}{y} = \frac{\beta_1}{x}</span>, and then <span class="math inline">\beta_1 = \frac{y' x}{y}.</span> It is exactly what we need to prove, taking into account that <span class="math inline">y' = \frac{dy}{dx}</span>.</p>
+</section>
+<section id="fpp3-7.10-ex-4" class="level1">
+<h1>fpp3 7.10, Ex 4</h1>
+<blockquote class="blockquote">
+<p>The data set <code>souvenirs</code> concerns the monthly sales figures of a shop which opened in January 1987 and sells gifts, souvenirs, and novelties. The shop is situated on the wharf at a beach resort town in Queensland, Australia. The sales volume varies with the seasonal population of tourists. There is a large influx of visitors to the town at Christmas and for the local surfing festival, held every March since 1988. Over time, the shop has expanded its premises, range of products, and staff.</p>
+</blockquote>
+<blockquote class="blockquote">
+<ol type="a">
+<li>Produce a time plot of the data and describe the patterns in the graph. Identify any unusual or unexpected fluctuations in the time series.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Features of the data:</p>
+<ul>
+<li>Seasonal data – similar scaled pattern repeats every year</li>
+<li>A spike every March (except for year 1987) is the influence of the surfing festival</li>
+<li>The size of the pattern increases proportionally to the level of sales</li>
+</ul>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li>Explain why it is necessary to take logarithms of these data before fitting a model.</li>
+</ol>
+</blockquote>
+<p>The last feature above suggests taking logs to make the pattern (and variance) more stable</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking logarithms of the data</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Sales))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>After taking logs, the trend looks more linear and the seasonal variation is roughly constant.</p>
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>Fit a regression model to the logarithms of these sales data with a linear trend, seasonal dummies and a “surfing festival” dummy variable.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> souvenirs <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> <span class="fu">year</span>(Month) <span class="sc">!=</span> <span class="dv">1987</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">reg =</span> <span class="fu">TSLM</span>(<span class="fu">log</span>(Sales) <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> festival))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Sales, <span class="at">col =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">augment</span>(fit), <span class="fu">aes</span>(<span class="at">y =</span> .fitted), <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<ol start="4" type="a">
+<li>Plot the residuals against time and against the fitted values. Do these plots reveal any problems with the model?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The residuals are serially correlated. This is both visible from the time plot but also from the ACF. The residuals reveal nonlinearity in the trend.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .innov)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The plot of residuals against fitted values looks fine - no notable patterns emerge. We take logarithms of fitted values because we took logs in the model.</p>
+<blockquote class="blockquote">
+<ol start="5" type="a">
+<li>Do boxplots of the residuals for each month. Does this reveal any problems with the model?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">month</span>(Month, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> .innov)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The boxplots show differences in variation across the months revealing some potential heteroscedasticity.</p>
+<blockquote class="blockquote">
+<ol start="6" type="a">
+<li>What do the values of the coefficients tell you about each variable?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">pceffect =</span> (<span class="fu">exp</span>(estimate) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 14 × 7
+   .model term           estimate std.error statistic  p.value  pceffect
+   &lt;chr&gt;  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1 reg    (Intercept)      7.62    0.0742      103.   4.67e-78 203688.  
+ 2 reg    trend()          0.0220  0.000827     26.6  2.32e-38      2.23
+ 3 reg    season()year2    0.251   0.0957        2.63 1.06e- 2     28.6 
+ 4 reg    season()year3    0.266   0.193         1.38 1.73e- 1     30.5 
+ 5 reg    season()year4    0.384   0.0957        4.01 1.48e- 4     46.8 
+ 6 reg    season()year5    0.409   0.0957        4.28 5.88e- 5     50.6 
+ 7 reg    season()year6    0.449   0.0958        4.69 1.33e- 5     56.6 
+ 8 reg    season()year7    0.610   0.0958        6.37 1.71e- 8     84.1 
+ 9 reg    season()year8    0.588   0.0959        6.13 4.53e- 8     80.0 
+10 reg    season()year9    0.669   0.0959        6.98 1.36e- 9     95.3 
+11 reg    season()year10   0.747   0.0960        7.79 4.48e-11    111.  
+12 reg    season()year11   1.21    0.0960       12.6  1.29e-19    234.  
+13 reg    season()year12   1.96    0.0961       20.4  3.39e-31    612.  
+14 reg    festivalTRUE     0.502   0.196         2.55 1.29e- 2     65.1 </code></pre>
+</div>
+</div>
+<ul>
+<li><code>(Intercept)</code> is not interpretable.</li>
+<li><code>trend</code> coefficient shows that with every month sales increases on average by 2.2%.</li>
+<li><code>season2</code> coefficient shows that February sales are greater than January on average by 28.6%, after allowing for the trend.</li>
+<li>…</li>
+<li><code>season12</code> coefficient shows that December sales are greater than January on average by 611.5%, after allowing for the trend.</li>
+<li><code>festivalTRUE</code> coefficient shows that for months that include the surfing festival, sales increases on average by 65.1% compared to months without the festival, after allowing for the trend and seasonality.</li>
+</ul>
+<blockquote class="blockquote">
+<ol start="7" type="a">
+<li>What does the Ljung-Box test tell you about your model?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .model lb_stat lb_pvalue
+  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 reg       112.  2.15e-13</code></pre>
+</div>
+</div>
+<p>The serial correlation in the residuals is significant.</p>
+<blockquote class="blockquote">
+<ol start="8" type="a">
+<li>Regardless of your answers to the above questions, use your regression model to predict the monthly sales for 1994, 1995, and 1996. Produce prediction intervals for each of your forecasts.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>future_souvenirs <span class="ot">&lt;-</span> <span class="fu">new_data</span>(souvenirs, <span class="at">n =</span> <span class="dv">36</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> future_souvenirs) <span class="sc">|&gt;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(souvenirs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<ol type="i">
+<li>How could you improve these predictions by modifying the model?</li>
+</ol>
+</blockquote>
+<ul>
+<li>The model can be improved by taking into account nonlinearity of the trend.</li>
+</ul>
+</section>
+<section id="fpp3-7.10-ex-5" class="level1">
+<h1>fpp3 7.10, Ex 5</h1>
+<blockquote class="blockquote">
+<p>The <code>us_gasoline</code> series consists of weekly data for supplies of US finished motor gasoline product, from 2 February 1991 to 20 January 2017. The units are in “thousand barrels per day”. Consider only the data to the end of 2004. a. Fit a harmonic regression with trend to the data. Experiment with changing the number Fourier terms. Plot the observed gasoline and fitted values and comment on what you see.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gas <span class="ot">&lt;-</span> us_gasoline <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">year</span>(Week) <span class="sc">&lt;=</span> <span class="dv">2004</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>gas <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Barrels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> gas <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier1 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">1</span>)),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier2 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">2</span>)),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier3 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">3</span>)),</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier4 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">4</span>)),</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier5 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">5</span>)),</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier6 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">6</span>)),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier7 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">7</span>)),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier8 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">8</span>)),</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier9 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">9</span>)),</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier10 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">10</span>)),</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier11 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">11</span>)),</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier12 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">12</span>)),</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier13 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">13</span>)),</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier14 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">14</span>)),</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier15 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">15</span>))</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AICc) <span class="sc">|&gt;</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.model, AICc, CV)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 3
+   .model      AICc     CV
+   &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+ 1 fourier7  -1887. 0.0740
+ 2 fourier11 -1885. 0.0742
+ 3 fourier8  -1885. 0.0743
+ 4 fourier12 -1884. 0.0742
+ 5 fourier6  -1884. 0.0744
+ 6 fourier9  -1882. 0.0745
+ 7 fourier10 -1881. 0.0746
+ 8 fourier13 -1881. 0.0745
+ 9 fourier14 -1879. 0.0748
+10 fourier15 -1876. 0.0750
+11 fourier5  -1862. 0.0766
+12 fourier4  -1856. 0.0773
+13 fourier3  -1853. 0.0777
+14 fourier2  -1814. 0.0819
+15 fourier1  -1809. 0.0825</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Best model has order 7</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>gas <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Barrels, <span class="at">col =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">filter</span>(.model <span class="sc">==</span> <span class="st">"fourier7"</span>),</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> .fitted), <span class="at">col =</span> <span class="st">"blue"</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This seems to have captured the annual seasonality quite well.</p>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li>Select the appropriate number of Fourier terms to include by minimising the AICc or CV value.</li>
+</ol>
+</blockquote>
+<p>As above.</p>
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>Check the residuals of the final model using the <code>gg_tsresiduals()</code> function. Use a Ljung-Box test to check for residual autocorrelation.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fourier7) <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There is some small remaining autocorrelation at lag 1.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.model <span class="sc">==</span> <span class="st">"fourier7"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">52</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .model   lb_stat lb_pvalue
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 fourier7    56.9     0.299</code></pre>
+</div>
+</div>
+<p>The Ljung-Box test is not significant. Even if the Ljung-Box test had given a significant result here, the correlations are very small, so it would not make much difference to the forecasts and prediction intervals.</p>
+<blockquote class="blockquote">
+<ol start="4" type="a">
+<li>Generate forecasts for the next year of data. Plot these along with the actual data for 2005. Comment on the forecasts.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"fourier7"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"1 year"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">filter_index</span>(us_gasoline, <span class="st">"2000"</span> <span class="sc">~</span> <span class="st">"2006"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The forecasts fit pretty well for the first six months, but not so well after that.</p>
+</section>
+<section id="fpp3-7.10-ex-6" class="level1">
+<h1>fpp3 7.10, Ex 6</h1>
+<blockquote class="blockquote">
+<p>The annual population of Afghanistan is available in the <code>global_economy</code> data set.</p>
+</blockquote>
+<blockquote class="blockquote">
+<ol type="a">
+<li>Plot the data and comment on its features. Can you observe the effect of the Soviet-Afghan war?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>global_economy <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Population <span class="sc">/</span> <span class="fl">1e6</span>) <span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Population (millions)"</span>) <span class="sc">+</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="fl">1979.98</span>, <span class="at">xmax =</span> <span class="fl">1989.13</span>), <span class="at">fill =</span> <span class="st">"pink"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">1984.5</span>, <span class="at">y =</span> <span class="dv">10</span>, <span class="at">label =</span> <span class="st">"Soviet-Afghan war"</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The population increases slowly from 1960 to 1980, then decreases during the Soviet-Afghan war (24 Dec 1979 – 15 Feb 1989), and has increased relatively rapidly since then. The last 30 years has shown an almost linear increase in population.</p>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li>Fit a linear trend model and compare this to a piecewise linear trend model with knots at 1980 and 1989.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear =</span> <span class="fu">TSLM</span>(Population <span class="sc">~</span> <span class="fu">trend</span>()),</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">piecewise =</span> <span class="fu">TSLM</span>(Population <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">knots =</span> <span class="fu">c</span>(<span class="dv">1980</span>, <span class="dv">1989</span>)))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(.fitted) <span class="sc">+</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Population), <span class="at">colour =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The fitted values show that the piecewise linear model has tracked the data very closely, while the linear model is inaccurate.</p>
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>Generate forecasts from these two models for the five years after the end of the data, and comment on the results.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"5 years"</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(fc) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(<span class="fu">filter</span>(global_economy <span class="sc">|&gt;</span> <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>)), Population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex11-sol_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The linear model is clearly incorrect with prediction intervals too wide, and the point forecasts too low.</p>
+<p>The piecewise linear model looks good, but the prediction intervals are probably too narrow. This model assumes that the trend since the last knot will continue unchanged, which is unrealistic.</p>
+</section>
+<section id="fpp3-7.10-ex-7" class="level1">
+<h1>fpp3 7.10, Ex 7</h1>
+<blockquote class="blockquote">
+<p>Using matrix notation it was shown that if <span class="math inline">\mathbf{y}=\mathbf{X}\mathbf{\beta}+\mathbf{\varepsilon}</span>, where <span class="math inline">\mathbf{e}</span> has mean <span class="math inline">\mathbf{0}</span> and variance matrix <span class="math inline">\sigma^2\mathbf{I}</span>, the estimated coefficients are given by <span class="math inline">\hat{\mathbf{\beta}}=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}</span> and a forecast is given by <span class="math inline">\hat{y}=\mathbf{x}^*\hat{\mathbf{\beta}}=\mathbf{x}^*(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}</span> where <span class="math inline">\mathbf{x}^*</span> is a row vector containing the values of the regressors for the forecast (in the same format as <span class="math inline">\mathbf{X}</span>), and the forecast variance is given by <span class="math inline">var(\hat{y})=\sigma^2 \left[1+\mathbf{x}^*(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{x}^*)'\right].</span></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Consider the simple time trend model where <span class="math inline">y_t = \beta_0 + \beta_1t</span>. Using the following results, <span class="math display">
+\sum^{T}_{t=1}{t}=\frac{1}{2}T(T+1),\quad \sum^{T}_{t=1}{t^2}=\frac{1}{6}T(T+1)(2T+1)
+</span> derive the following expressions:</p>
+</blockquote>
+<blockquote class="blockquote">
+<ol type="a">
+<li><span class="math inline">\displaystyle\mathbf{X}'\mathbf{X}=\frac{1}{6}\left[
+\begin{array}{cc}
+6T      &amp; 3T(T+1) \\
+3T(T+1) &amp; T(T+1)(2T+1) \\
+\end{array}
+\right]</span></li>
+</ol>
+</blockquote>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li><span class="math inline">\displaystyle(\mathbf{X}'\mathbf{X})^{-1}=\frac{2}{T(T^2-1)}\left[
+\begin{array}{cc}
+(T+1)(2T+1)   &amp; -3(T+1) \\
+-3(T+1)       &amp; 6 \\
+\end{array}
+\right]</span></li>
+</ol>
+</blockquote>
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li><span class="math inline">\displaystyle\hat{\beta}_0=\frac{2}{T(T-1)}\left[(2T+1)\sum^T_{t=1}y_t-3\sum^T_{t=1}ty_t
+\right]</span></li>
+</ol>
+</blockquote>
+<blockquote class="blockquote">
+<p><span class="math inline">\displaystyle\hat{\beta}_1=\frac{6}{T(T^2-1)}\left[2\sum^T_{t=1}ty_t-(T+1)\sum^T_{t=1}y_t \right]</span></p>
+</blockquote>
+<blockquote class="blockquote">
+<ol start="4" type="a">
+<li><span class="math inline">\displaystyle\text{Var}(\hat{y}_{t})=\hat{\sigma}^2\left[1+\frac{2}{T(T-1)}\left(1-4T-6h+6\frac{(T+h)^2}{T+1}\right)\right]</span></li>
+</ol>
+</blockquote>
+<p>For a time trend, <span class="math display">
+  \mathbf{X} = \begin{bmatrix}
+   1 &amp; 1 \\
+   1 &amp; 2 \\
+   1 &amp; 3 \\
+   \vdots \\
+   1 &amp; T
+   \end{bmatrix}
+</span></p>
+<section id="a" class="level2">
+<h2 class="anchored" data-anchor-id="a">(a)</h2>
+<p>&nbsp; <span class="math display">\begin{align*}
+\mathbf{X}' \mathbf{X}
+&amp; = \begin{bmatrix}
+      1 &amp; 1 &amp; 1 &amp; \dots &amp; 1\\
+      1 &amp; 2 &amp; 3 &amp; \dots &amp; T
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 &amp; 1 \\
+      1 &amp; 2 \\
+      1 &amp; 3 \\
+      \vdots \\
+      1 &amp; T
+    \end{bmatrix} \\
+&amp;= \begin{bmatrix}
+     T &amp; 1 + 2 + 3 + \cdots + T \\
+     1 + 2 + 3 + \cdots + T &amp; 1^2 + 2^2 + 3^2 + \cdots + T^2
+    \end{bmatrix}\\
+&amp;= \begin{bmatrix}
+     T &amp; \frac{1}{2}T(T+1) \\
+     \frac{1}{2}T(T+1) &amp; \frac{1}{6}T(T+1)(2T+1)
+    \end{bmatrix} \\
+&amp;= \frac{1}{6}\begin{bmatrix}
+     6T &amp; 3T(T+1) \\
+     3T(T+1) &amp; T(T+1)(T+1)
+    \end{bmatrix}
+\end{align*}</span></p>
+</section>
+<section id="b" class="level2">
+<h2 class="anchored" data-anchor-id="b">(b)</h2>
+<p>&nbsp; <span class="math display">\begin{align*}
+(\mathbf{X}' \mathbf{X} )^{-1}
+&amp;= \frac{6}{(6T)[T(T+1)(2T+1)] - 9T^2(T+1)^2}
+   \begin{bmatrix}
+     T(T+1)(2T+1) &amp; -3T(T+1) \\
+     -3T(T+1) &amp; 6T
+    \end{bmatrix} \\
+&amp;= \frac{6}{6[T(T+1)(2T+1)] - 9T(T+1)^2}
+   \begin{bmatrix}
+     (T+1)(2T+1) &amp; -3(T+1) \\
+     -3(T+1) &amp; 6
+    \end{bmatrix} \\
+&amp;= \frac{2}{2T(T+1)(2T+1) - 3T(T+1)^2}
+   \begin{bmatrix}
+     (T+1)(2T+1) &amp; -3(T+1) \\
+     -3(T+1) &amp; 6
+    \end{bmatrix} \\
+&amp;= \frac{2}{T(T+1)[2(2T+1) - 3(T+1)]}
+   \begin{bmatrix}
+     (T+1)(2T+1) &amp; -3(T+1) \\
+     -3(T+1) &amp; 6
+    \end{bmatrix} \\
+&amp;= \frac{2}{T(T+1)(T-1)}
+   \begin{bmatrix}
+     (T+1)(2T+1) &amp; -3(T+1) \\
+     -3(T+1) &amp; 6
+    \end{bmatrix} \\
+&amp;= \frac{2}{T(T^2-1)}
+   \begin{bmatrix}
+     (T+1)(2T+1) &amp; -3(T+1) \\
+     -3(T+1) &amp; 6
+    \end{bmatrix} \\
+\end{align*}</span></p>
+</section>
+<section id="c" class="level2">
+<h2 class="anchored" data-anchor-id="c">(c)</h2>
+<p>&nbsp; <span class="math display">\begin{align*}
+\mathbf{X}' \mathbf{Y}
+=  \begin{bmatrix}
+      1 &amp; 1 &amp; 1 &amp; \dots &amp; 1\\
+      1 &amp; 2 &amp; 3 &amp; \dots &amp; T
+    \end{bmatrix}\mathbf{Y}
+= \begin{bmatrix}
+     \sum_{i=1}^T Y_i \\
+     \sum_{i=1}^T iY_i
+    \end{bmatrix}
+\end{align*}</span></p>
+<p>Now the first element of <span class="math display">(\mathbf{X}' \mathbf{X} )^{-1} \mathbf{X}' \mathbf{Y} </span> is <span class="math display">\begin{align*}
+\hat{a}
+&amp;= \frac{2}{T(T^2-1)}
+     \begin{bmatrix}
+       (T+1)(2T+1) &amp; -3(T+1)
+     \end{bmatrix}
+     \begin{bmatrix}
+       \sum_{i=1}^T Y_i \\
+       \sum_{i=1}^T iY_i
+     \end{bmatrix} \\
+&amp;= \frac{2}{T(T^2-1)}
+   \left[
+     (T+1)(2T+1)\sum_{i=1}^T Y_i -3(T+1) \sum_{i=1}^T iY_i
+   \right] \\
+&amp;= \frac{2(T+1)}{T(T^2-1)}
+   \left[
+     (2T+1)\sum_{i=1}^T Y_i -3 \sum_{i=1}^T iY_i
+   \right] \\
+&amp;= \frac{2}{T(T-1)}
+   \left[
+     (2T+1)\sum_{i=1}^T Y_i -3 \sum_{i=1}^T iY_i
+   \right] .
+\end{align*}</span></p>
+<p>The second element of <span class="math display">(\mathbf{X}' \mathbf{X} )^{-1} \mathbf{X}' \mathbf{Y} </span> is <span class="math display">\begin{align*}
+\hat{b}
+&amp;= \frac{2}{T(T^2-1)}
+     \begin{bmatrix}
+       -3(T+1) &amp; 6
+     \end{bmatrix}
+     \begin{bmatrix}
+       \sum_{i=1}^T Y_i \\
+       \sum_{i=1}^T iY_i
+     \end{bmatrix} \\
+&amp;= \frac{2}{T(T^2-1)}
+   \left[
+       -3(T+1) \sum_{i=1}^T Y_i + 6 \sum_{i=1}^T iY_i
+   \right] \\
+&amp;= \frac{6}{T(T^2-1)}
+   \left[
+       2 \sum_{i=1}^T iY_i -(T+1) \sum_{i=1}^T Y_i
+   \right]
+\end{align*}</span></p>
+</section>
+<section id="d" class="level2">
+<h2 class="anchored" data-anchor-id="d">(d)</h2>
+<p>Now <span class="math inline">\mathbf{X}^* = [1 ~~~ T+h]</span>. So <span class="math inline">\text{Var}(Y^* | \mathbf{Y},\mathbf{X},\mathbf{X}^*)</span> <span class="math display">\begin{align*}
+&amp;= \sigma^2\left\{
+    1 + \mathbf{X}^*(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}^*)'
+\right\}\\
+&amp;= \sigma^2\left\{
+    1 + \frac{2}{T(T^2-1)}
+    \begin{bmatrix} 1 &amp; T+h \end{bmatrix}
+    \begin{bmatrix}
+     (T+1)(2T+1) &amp; -3(T+1) \\
+     -3(T+1) &amp; 6
+    \end{bmatrix}
+    \begin{bmatrix} 1 \\ T+h \end{bmatrix}
+\right\}\\
+&amp;= \sigma^2\left\{
+    1 + \frac{2}{T(T^2-1)}
+    \begin{bmatrix}
+     (T+1)(2T+1) -3(T+1)(T+h) &amp;
+     -3(T+1) + 6(T+h)
+    \end{bmatrix}
+    \begin{bmatrix} 1 \\ T+h \end{bmatrix}
+\right\}\\
+&amp;= \sigma^2\left\{
+    1 + \frac{2}{T(T^2-1)}
+    \left[
+     (T+1)(2T+1) -3(T+1)(T+h) +
+     -3(T+1)(T+h) + 6(T+h)^2
+     \right]
+    \right\}\\
+&amp;= \sigma^2\left\{
+    1 + \frac{2}{T(T-1)}
+    \left[
+     1 -4T-6h + 6\frac{(T+h)^2}{(T+1)}
+     \right]
+    \right\}.
+\end{align*}</span></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/af\.numbat\.space");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
