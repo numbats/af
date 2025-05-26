@@ -7289,48 +7289,6 @@
       "Maintainer": "Lorenz Walthert <lorenz.walthert@icloud.com>",
       "Repository": "RSPM"
     },
-    "sugrrants": {
-      "Package": "sugrrants",
-      "Version": "0.2.9",
-      "Source": "Repository",
-      "Title": "Supporting Graphs for Analysing Time Series",
-      "Authors@R": "c(person(given = \"Earo\", family = \"Wang\", role = c(\"aut\", \"cre\"), email = \"earo.wang@gmail.com\", comment = c(ORCID = \"0000-0001-6448-5260\")), person(given = \"Di\", family = \"Cook\", role = c(\"aut\", \"ths\"), comment = c(ORCID = \"0000-0002-3813-7155\")), person(given = \"Rob\", family = \"Hyndman\", role = c(\"aut\", \"ths\"), comment = c(ORCID = \"0000-0002-2140-5352\")))",
-      "Description": "Provides 'ggplot2' graphics for analysing time series data. It aims to fit into the 'tidyverse' and grammar of graphics framework for handling temporal data.",
-      "License": "GPL (>= 3)",
-      "URL": "https://pkg.earo.me/sugrrants/",
-      "BugReports": "https://github.com/earowang/sugrrants/issues",
-      "Depends": [
-        "ggplot2 (>= 2.2.0)",
-        "R (>= 3.1.3)"
-      ],
-      "Imports": [
-        "dplyr (>= 0.8.0)",
-        "grid",
-        "gtable",
-        "lubridate (>= 1.7.1)",
-        "rlang (>= 0.2.0)"
-      ],
-      "Suggests": [
-        "covr",
-        "knitr",
-        "plotly",
-        "readr",
-        "rmarkdown",
-        "testthat",
-        "tidyr",
-        "tsibble (>= 0.8.0)",
-        "viridis"
-      ],
-      "VignetteBuilder": "knitr",
-      "Encoding": "UTF-8",
-      "Language": "en-GB",
-      "LazyData": "true",
-      "RoxygenNote": "7.2.3",
-      "NeedsCompilation": "no",
-      "Author": "Earo Wang [aut, cre] (<https://orcid.org/0000-0001-6448-5260>), Di Cook [aut, ths] (<https://orcid.org/0000-0002-3813-7155>), Rob Hyndman [aut, ths] (<https://orcid.org/0000-0002-2140-5352>)",
-      "Maintainer": "Earo Wang <earo.wang@gmail.com>",
-      "Repository": "RSPM"
-    },
     "svglite": {
       "Package": "svglite",
       "Version": "2.2.1",
