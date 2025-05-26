@@ -22,6 +22,7 @@ fit <- leisure |>
                    fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0)),
   )
 glance(fit)
+fit |> select(dhr) |> report()
 
 fit |>
   select(dhr) |>
@@ -90,7 +91,7 @@ gasfit <- us_gasoline |>
                        fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0))
   )
 
-glance(gasfit) |> arrange(AICc)
+glance(gasfit) |> arrange(AICc) |> select(.model, AICc)
 
 gasfit |>
   select(fourier6) |>

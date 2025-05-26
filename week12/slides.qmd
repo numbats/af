@@ -14,7 +14,7 @@ format:
 ---
 
 ## Regression with ARIMA errors
-
+\fontsize{14}{15}\sf
 \begin{block}{Regression models}\vspace*{-0.2cm}
 \[
   y_t = \beta_0 + \beta_1 x_{1,t} + \dots + \beta_k x_{k,t} + \varepsilon_t,
