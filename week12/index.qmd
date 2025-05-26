@@ -28,6 +28,8 @@ Complete Exercises 2-6 from [Section 10.7 of the book](https://otexts.com/fpp3/d
 show_slides(week)
 ```
 
+[Code used in lecture](seminar_code.R)
+
 ## Post-class activities
 
 * Do any exercises not yet finished.
