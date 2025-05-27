@@ -18,9 +18,9 @@ format:
 source(here::here("setup.R"))
 ```
 
-# Assignment 1
+# Forecasting competition
 
-## Assignment 1
+## Forecasting competition
 
 **Stock price forecasting** (Q1 and Q5)
 
@@ -34,7 +34,7 @@ source(here::here("setup.R"))
 * Weather is relatively stationary over similar time of year and recent years.
 * So take mean and var of max temp in April over last 10 years.
 
-## Assignment 1
+## Forecasting competition
 
 **Difference in points in AFL match** (Q3)
 
