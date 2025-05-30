@@ -3,9 +3,7 @@
   "result": {
     "engine": "knitr",
     "markdown": "---\ntitle: \"Week 9: ARIMA models\"\n---\n\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* AR, MA, ARMA and ARIMA models\n* Selecting model orders manually and automatically\n\n## Pre-class activities\n\nRead [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n## Exercises (on your own or in tutorial)\n\n* Complete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n* [Solutions to Exercises](ex9-sol.qmd)\n* [Recorded tutorial code](tutorial_code.R)\n\n## Monday lecture\n\n<iframe src='https://docs.google.com/gview?url=https://af.numbat.space/week9/slides.pdf&embedded=true' width='100%' height=465></iframe>\n<a href=https://af.numbat.space/week9/slides.pdf class='badge badge-small badge-red'>Download slides</a>\n\n[Code used in seminar](seminar_code.R)\n\n\n## Tuesday workshop\n\n[Activities for Tuesday workshop](activities.qmd)\n\n[Code used in workshop](workshop_code.R)\n\n\n## Assignments\n\n* [Assignment 3](../assignments/A3.qmd) is due on Tuesday 20 May.\n\n\n## Weekly quiz\n\n* [Week 9 quiz](https://learning.monash.edu/mod/quiz/view.php?id=3868374) is due on Sunday 11 May.\n",
-    "supporting": [
-      "index_files"
-    ],
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
