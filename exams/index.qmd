@@ -4,10 +4,10 @@ title: Exam preparation
 
 # Past exams
 
-* [2021](/exams/exam_2021.pdf)
-* [2022](/exams/exam_2022.pdf)
-* [2023](/exams/exam_2023.pdf)
-* [2024](/exams/exam_2024.pdf)
+* [2021](/exams/exam_2021.pdf) [[Solutions](/exams/exam_2021_solutions.pdf)]
+* [2022](/exams/exam_2022.pdf) [[Solutions](/exams/exam_2022_solutions.pdf)]
+* [2023](/exams/exam_2023.pdf) [[Solutions](/exams/exam_2023_solutions.pdf)]
+* [2024](/exams/exam_2024.pdf) [[Solutions](/exams/exam_2024_solutions.pdf)]
 
 This year's exam will follow the same format.
 
