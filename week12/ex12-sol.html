@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Exercise Week 12: Solutions – ETC3550/ETC5550 Applied forecasting</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-70dbdbf3e2c4ba93797768058031c380.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-8323e8fce8814d057d4dbe6ddc3a9c32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ETC3550/ETC5550 Applied forecasting</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house-fill" role="img">
+</i> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-schedule" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-calendar2-fill" role="img">
+</i> 
+ <span class="menu-text">Schedule</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-schedule">    
+        <li>
+    <a class="dropdown-item" href="../week1/index.html">
+ <span class="dropdown-text">Week 1: Introduction to forecasting &amp; R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week2/index.html">
+ <span class="dropdown-text">Week 2: Time series graphics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week3/index.html">
+ <span class="dropdown-text">Week 3: Time series decomposition</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week4/index.html">
+ <span class="dropdown-text">Week 4: Simple forecasting methods</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week5/index.html">
+ <span class="dropdown-text">Week 5: Accuracy evaluation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week6/index.html">
+ <span class="dropdown-text">Week 6: ETS models (part 1)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week7/index.html">
+ <span class="dropdown-text">Week 7: ETS models (part 2)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week8/index.html">
+ <span class="dropdown-text">Week 8: ARIMA models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week9/index.html">
+ <span class="dropdown-text">Week 9: ARIMA models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week10/index.html">
+ <span class="dropdown-text">Week 10: ARIMA models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week11/index.html">
+ <span class="dropdown-text">Week 11: Forecasting using regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../week12/index.html">
+ <span class="dropdown-text">Week 12: Dynamic regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://edstem.org/au/courses/21163/discussion/"> <i class="bi bi-chat-fill" role="img">
+</i> 
+<span class="menu-text">Discussion</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://learning.monash.edu/course/view.php?id=26695&amp;section=1"> <i class="bi bi-mortarboard-fill" role="img">
+</i> 
+<span class="menu-text">Moodle</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://OTexts.com/fpp3"> <i class="bi bi-book-fill" role="img">
+</i> 
+<span class="menu-text">Textbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../exams/index.html"> <i class="bi bi-pencil-fill" role="img">
+</i> 
+<span class="menu-text">Exam</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/numbats/af"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#fpp3-10.7-ex-2" id="toc-fpp3-10.7-ex-2" class="nav-link active" data-scroll-target="#fpp3-10.7-ex-2">fpp3 10.7, Ex 2</a></li>
+  <li><a href="#fpp3-10.7-ex-3" id="toc-fpp3-10.7-ex-3" class="nav-link" data-scroll-target="#fpp3-10.7-ex-3">fpp3 10.7, Ex 3</a></li>
+  <li><a href="#fpp3-10.7-ex-4" id="toc-fpp3-10.7-ex-4" class="nav-link" data-scroll-target="#fpp3-10.7-ex-4">fpp3 10.7, Ex 4</a></li>
+  <li><a href="#fpp3-10.7-ex-5" id="toc-fpp3-10.7-ex-5" class="nav-link" data-scroll-target="#fpp3-10.7-ex-5">fpp3 10.7, Ex 5</a></li>
+  <li><a href="#fpp3-10.7-ex-6" id="toc-fpp3-10.7-ex-6" class="nav-link" data-scroll-target="#fpp3-10.7-ex-6">fpp3 10.7, Ex 6</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exercise Week 12: Solutions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="fpp3-10.7-ex-2" class="level1">
+<h1>fpp3 10.7, Ex 2</h1>
+<blockquote class="blockquote">
+<p>Repeat Exercise 4 from Section 7.10, but this time adding in ARIMA errors to address the autocorrelations in the residuals.</p>
+</blockquote>
+<blockquote class="blockquote">
+<ol type="a">
+<li>How much difference does the ARIMA error process make to the regression coefficients?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> souvenirs <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> <span class="fu">year</span>(Month) <span class="sc">!=</span> <span class="dv">1987</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">reg =</span> <span class="fu">TSLM</span>(<span class="fu">log</span>(Sales) <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> festival),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dynreg =</span> <span class="fu">ARIMA</span>(<span class="fu">log</span>(Sales) <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> festival)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n=</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 31 × 6
+   .model term           estimate std.error statistic  p.value
+   &lt;chr&gt;  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 reg    (Intercept)      7.62    0.0742     103.    4.67e-78
+ 2 reg    trend()          0.0220  0.000827    26.6   2.32e-38
+ 3 reg    season()year2    0.251   0.0957       2.63  1.06e- 2
+ 4 reg    season()year3    0.266   0.193        1.38  1.73e- 1
+ 5 reg    season()year4    0.384   0.0957       4.01  1.48e- 4
+ 6 reg    season()year5    0.409   0.0957       4.28  5.88e- 5
+ 7 reg    season()year6    0.449   0.0958       4.69  1.33e- 5
+ 8 reg    season()year7    0.610   0.0958       6.37  1.71e- 8
+ 9 reg    season()year8    0.588   0.0959       6.13  4.53e- 8
+10 reg    season()year9    0.669   0.0959       6.98  1.36e- 9
+11 reg    season()year10   0.747   0.0960       7.79  4.48e-11
+12 reg    season()year11   1.21    0.0960      12.6   1.29e-19
+13 reg    season()year12   1.96    0.0961      20.4   3.39e-31
+14 reg    festivalTRUE     0.502   0.196        2.55  1.29e- 2
+15 dynreg ar1              0.556   0.179        3.11  2.53e- 3
+16 dynreg ma1             -0.129   0.192       -0.670 5.05e- 1
+17 dynreg ma2              0.340   0.114        2.99  3.68e- 3
+18 dynreg trend()          0.0226  0.00150     15.1   1.17e-25
+19 dynreg season()year2    0.252   0.0574       4.38  3.40e- 5
+20 dynreg season()year3    0.297   0.118        2.51  1.42e- 2
+21 dynreg season()year4    0.377   0.0729       5.17  1.56e- 6
+22 dynreg season()year5    0.400   0.0789       5.07  2.30e- 6
+23 dynreg season()year6    0.438   0.0817       5.36  7.19e- 7
+24 dynreg season()year7    0.598   0.0827       7.23  2.04e-10
+25 dynreg season()year8    0.573   0.0821       6.98  6.45e-10
+26 dynreg season()year9    0.651   0.0799       8.16  2.94e-12
+27 dynreg season()year10   0.725   0.0746       9.71  2.18e-15
+28 dynreg season()year11   1.18    0.0629      18.7   1.14e-31
+29 dynreg season()year12   1.93    0.0599      32.2   5.41e-49
+30 dynreg festivalTRUE     0.461   0.119        3.86  2.19e- 4
+31 dynreg intercept        7.60    0.0857      88.7   8.60e-85</code></pre>
+</div>
+</div>
+<p>The coefficients are all relatively close.</p>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li>How much difference does the ARIMA error process make to the forecasts?</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>future_souvenirs <span class="ot">&lt;-</span> <span class="fu">new_data</span>(souvenirs, <span class="at">n =</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> future_souvenirs)  <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(souvenirs, <span class="at">level=</span><span class="dv">95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex2b-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The forecasts are also extremely close.</p>
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>Check the residuals of the fitted model to ensure the ARIMA process has adequately addressed the autocorrelations seen in the <code>TSLM</code> model.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dynreg) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex2c-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>These look fine.</p>
+</section>
+<section id="fpp3-10.7-ex-3" class="level1">
+<h1>fpp3 10.7, Ex 3</h1>
+<blockquote class="blockquote">
+<p>Repeat the daily electricity example, but instead of using a quadratic function of temperature, use a piecewise linear function with the “knot” around 25 degrees Celsius (use predictors <code>Temperature</code> &amp; <code>Temp2</code>). How can you optimize the choice of knot?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vic_elec_daily <span class="ot">&lt;-</span> vic_elec <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(Time) <span class="sc">==</span> <span class="dv">2014</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Date =</span> <span class="fu">date</span>(Time)) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Demand =</span> <span class="fu">sum</span>(Demand) <span class="sc">/</span> <span class="fl">1e3</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temperature =</span> <span class="fu">max</span>(Temperature),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Holiday =</span> <span class="fu">any</span>(Holiday)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">I</span>(<span class="fu">pmax</span>(Temperature <span class="sc">-</span> <span class="dv">25</span>, <span class="dv">0</span>)),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Day_Type =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      Holiday <span class="sc">~</span> <span class="st">"Holiday"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">wday</span>(Date) <span class="sc">%in%</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span> <span class="sc">~</span> <span class="st">"Weekday"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Weekend"</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>First, we will leave the knot at 25 and find the best ARIMA model. This will take a while, but we only have to do it once.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>vic_elec_daily <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">fit =</span> <span class="fu">ARIMA</span>(Demand <span class="sc">~</span> Temperature <span class="sc">+</span> Temp2 <span class="sc">+</span> (Day_Type <span class="sc">==</span> <span class="st">"Weekday"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: Demand 
+Model: LM w/ ARIMA(3,1,1)(2,0,0)[7] errors 
+
+Coefficients:
+         ar1      ar2     ar3      ma1    sar1    sar2  Temperature   Temp2
+      0.7914  -0.0108  0.0110  -0.9762  0.1995  0.2936      -0.7025  4.4068
+s.e.  0.0730   0.0831  0.0568   0.0213  0.0543  0.0569       0.1744  0.3069
+      Day_Type == "Weekday"TRUE
+                        31.4648
+s.e.                     1.3758
+
+sigma^2 estimated as 61.42:  log likelihood=-1262.4
+AIC=2544.81   AICc=2545.43   BIC=2583.78</code></pre>
+</div>
+</div>
+<p>Now we will use that ARIMA(3,1,1)(2,0,0)[7] model and modify the knot until the AICc is optmized.</p>
+<p>To optimize the knot position, we need to try many knot locations and select the model with the smallest AICc value. The fit is sensitive to the knot placement, with errors occurring at some knot locations. So we need to do a grid search, allowing for null models to be returned.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>best_aicc <span class="ot">&lt;-</span> <span class="cn">Inf</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(knot <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">20</span>, <span class="dv">30</span>, <span class="at">by=</span><span class="fl">0.1</span>)) {</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  elec_model <span class="ot">&lt;-</span> vic_elec_daily <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Temp2 =</span> <span class="fu">pmax</span>(Temperature <span class="sc">-</span> knot, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">model</span>(<span class="at">fit =</span> <span class="fu">ARIMA</span>(Demand <span class="sc">~</span> Temperature <span class="sc">+</span> Temp2 <span class="sc">+</span> (Day_Type <span class="sc">==</span> <span class="st">"Weekday"</span>)))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is_null_model</span>(elec_model<span class="sc">$</span>fit[[<span class="dv">1</span>]])) {</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    aicc <span class="ot">&lt;-</span> <span class="fu">glance</span>(elec_model) <span class="sc">|&gt;</span> <span class="fu">pull</span>(AICc)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(aicc <span class="sc">&lt;</span> best_aicc) {</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      best_aicc <span class="ot">&lt;-</span> aicc</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      best_knot <span class="ot">&lt;-</span> knot</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      best_model <span class="ot">&lt;-</span> elec_model</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>best_model <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: Demand 
+Model: LM w/ ARIMA(2,1,1)(2,0,0)[7] errors 
+
+Coefficients:
+         ar1     ar2      ma1    sar1    sar2  Temperature   Temp2
+      0.7436  0.0465  -0.9699  0.1941  0.3127      -0.0089  5.3667
+s.e.  0.0677  0.0648   0.0241  0.0532  0.0564       0.1336  0.3316
+      Day_Type == "Weekday"TRUE
+                        31.0531
+s.e.                     1.3592
+
+sigma^2 estimated as 59.38:  log likelihood=-1256.8
+AIC=2531.6   AICc=2532.1   BIC=2566.67</code></pre>
+</div>
+</div>
+<p>The optimal knot (to 1 decimal place) is 28.3 degrees Celsius.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best_model) <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(vic_elec_daily) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Temperature)) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> Demand)) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted), <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex3d-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best_model) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(vic_elec_daily) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Demand)) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted)) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex3d-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>best_model <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex3d-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best_model) <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">dof =</span> <span class="dv">6</span>, <span class="at">lag =</span> <span class="dv">21</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .model lb_stat lb_pvalue
+  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 fit       31.1   0.00841</code></pre>
+</div>
+</div>
+<p>The model fails the residual tests but the significant autocorrelations are relatively small, so it should still give reasonable forecasts. The residuals look like they have some heteroskedasticity, but otherwise look ok.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>vic_next_day <span class="ot">&lt;-</span> <span class="fu">new_data</span>(vic_elec_daily, <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temperature =</span> <span class="dv">26</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">I</span>(<span class="fu">pmax</span>(Temperature <span class="sc">-</span> best_knot, <span class="dv">0</span>)),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Day_Type =</span> <span class="st">"Holiday"</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(best_model, vic_next_day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A fable: 1 x 7 [1D]
+# Key:     .model [1]
+  .model Date      
+  &lt;chr&gt;  &lt;date&gt;    
+1 fit    2015-01-01
+# ℹ 5 more variables: Demand &lt;dist&gt;, .mean &lt;dbl&gt;, Temperature &lt;dbl&gt;,
+#   Temp2 &lt;I&lt;dbl&gt;&gt;, Day_Type &lt;chr&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>vic_elec_future <span class="ot">&lt;-</span> <span class="fu">new_data</span>(vic_elec_daily, <span class="dv">14</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temperature =</span> <span class="dv">26</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">I</span>(<span class="fu">pmax</span>(Temperature <span class="sc">-</span> best_knot, <span class="dv">0</span>)),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Holiday =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="dv">13</span>)),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Day_Type =</span> <span class="fu">case_when</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>      Holiday <span class="sc">~</span> <span class="st">"Holiday"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">wday</span>(Date) <span class="sc">%in%</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span> <span class="sc">~</span> <span class="st">"Weekday"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Weekend"</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(best_model, vic_elec_future) <span class="sc">|&gt;</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(vic_elec_daily) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Electricity demand (GW)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex3e-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fpp3-10.7-ex-4" class="level1">
+<h1>fpp3 10.7, Ex 4</h1>
+<blockquote class="blockquote">
+<p>This exercise concerns <code>aus_accommodation</code>: the total quarterly takings from accommodation and the room occupancy level for hotels, motels, and guest houses in Australia, between January 1998 and June 2016. Total quarterly takings are in millions of Australian dollars. a. Compute the CPI-adjusted takings and plot the result for each state</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="ot">&lt;-</span> aus_accommodation <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjTakings =</span> Takings <span class="sc">/</span> CPI <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="sc">|&gt;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(adjTakings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex4a-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li>For each state, fit a dynamic regression model of CPI-adjusted takings with seasonal dummy variables, a piecewise linear time trend with one knot at 2008 Q1, and ARIMA errors.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_accommodation <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ARIMA</span>(adjTakings <span class="sc">~</span> <span class="fu">season</span>() <span class="sc">+</span> <span class="fu">trend</span>(<span class="at">knot =</span> <span class="fu">yearquarter</span>(<span class="st">"2008 Q1"</span>)))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A mable: 8 x 2
+# Key:     State [8]
+  State                        ARIMA(adjTakings ~ season() + trend(knot = year…¹
+  &lt;chr&gt;                                                                  &lt;model&gt;
+1 Australian Capital Territory                       &lt;LM w/ ARIMA(1,0,0) errors&gt;
+2 New South Wales                          &lt;LM w/ ARIMA(1,0,0)(0,0,1)[4] errors&gt;
+3 Northern Territory                       &lt;LM w/ ARIMA(0,0,1)(1,0,0)[4] errors&gt;
+4 Queensland                               &lt;LM w/ ARIMA(1,0,0)(0,0,1)[4] errors&gt;
+5 South Australia                          &lt;LM w/ ARIMA(1,0,0)(1,0,0)[4] errors&gt;
+6 Tasmania                                 &lt;LM w/ ARIMA(0,0,1)(1,0,0)[4] errors&gt;
+7 Victoria                                 &lt;LM w/ ARIMA(1,0,0)(0,0,1)[4] errors&gt;
+8 Western Australia                                  &lt;LM w/ ARIMA(1,0,0) errors&gt;
+# ℹ abbreviated name:
+#   ¹​`ARIMA(adjTakings ~ season() + trend(knot = yearquarter("2008 Q1")))`</code></pre>
+</div>
+</div>
+<p>The seasonal dummy variable has not adequately handled the seasonality, so there are seasonal ARIMA components.</p>
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>Check that the residuals of the model look like white noise.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex4c-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>No apparent problems. Similar plots needed for the other states.</p>
+<blockquote class="blockquote">
+<ol start="4" type="a">
+<li>Forecast the takings for each state to the end of 2017. (Hint: You will need to produce forecasts of the CPI first.)</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CPI forecasts</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cpif <span class="ot">&lt;-</span> aus_accommodation <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ARIMA</span>(CPI)) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tsibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Date, State, <span class="at">CPI =</span> .mean)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> cpif) <span class="sc">|&gt;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Takings =</span> adjTakings <span class="sc">*</span> CPI <span class="sc">/</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A fable: 48 x 7 [1Q]
+# Key:     State, .model [8]
+   State                        .model                                      Date
+   &lt;chr&gt;                        &lt;chr&gt;                                      &lt;qtr&gt;
+ 1 Australian Capital Territory "ARIMA(adjTakings ~ season() + trend(kn… 2016 Q3
+ 2 Australian Capital Territory "ARIMA(adjTakings ~ season() + trend(kn… 2016 Q4
+ 3 Australian Capital Territory "ARIMA(adjTakings ~ season() + trend(kn… 2017 Q1
+ 4 Australian Capital Territory "ARIMA(adjTakings ~ season() + trend(kn… 2017 Q2
+ 5 Australian Capital Territory "ARIMA(adjTakings ~ season() + trend(kn… 2017 Q3
+ 6 Australian Capital Territory "ARIMA(adjTakings ~ season() + trend(kn… 2017 Q4
+ 7 New South Wales              "ARIMA(adjTakings ~ season() + trend(kn… 2016 Q3
+ 8 New South Wales              "ARIMA(adjTakings ~ season() + trend(kn… 2016 Q4
+ 9 New South Wales              "ARIMA(adjTakings ~ season() + trend(kn… 2017 Q1
+10 New South Wales              "ARIMA(adjTakings ~ season() + trend(kn… 2017 Q2
+# ℹ 38 more rows
+# ℹ 4 more variables: adjTakings &lt;dist&gt;, .mean &lt;dbl&gt;, CPI &lt;dbl&gt;, Takings &lt;dist&gt;</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<ol start="5" type="a">
+<li>What sources of uncertainty have not been taken into account in the prediction intervals?</li>
+</ol>
+</blockquote>
+<ul>
+<li>The uncertainty in the CPI forecasts has been ignored.</li>
+<li>As usual, the estimation of the parameters and the choice of models have also not been accounted for.</li>
+</ul>
+</section>
+<section id="fpp3-10.7-ex-5" class="level1">
+<h1>fpp3 10.7, Ex 5</h1>
+<blockquote class="blockquote">
+<p>We fitted a harmonic regression model to part of the <code>us_gasoline</code> series in Exercise 6 in Section 7.10. We will now revisit this model, and extend it to include more data and ARMA errors.</p>
+<ol type="a">
+<li>Using <code>TSLM()</code>, fit a harmonic regression with a piecewise linear time trend to the full <code>gasoline</code> series. Select the position of the knots in the trend and the appropriate number of Fourier terms to include by minimising the AICc or CV value.</li>
+</ol>
+</blockquote>
+<p>Let’s optimize using 2 break points and an unknown number of Fourier terms. Because the number of Fourier terms is integer, we can’t just use <code>optim</code>. Instead, we will loop over a large number of possible values for the breakpoints and Fourier terms. There are more than 2000 models fitted here, but <code>TSLM</code> is relatively fast.</p>
+<p>Note that the possible values of the knots must be restricted so that knot2 is always much larger than knot1. We have set them to be at least 2 years apart here.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>us_gasoline <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Barrels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex5a-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to compute CV given K and knots.</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>get_cv <span class="ot">&lt;-</span> <span class="cf">function</span>(K, knot1, knot2) {</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  us_gasoline <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">model</span>(<span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">fourier</span>(<span class="at">K =</span> K) <span class="sc">+</span> <span class="fu">trend</span>(<span class="fu">c</span>(knot1, knot2)))) <span class="sc">|&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">glance</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(CV)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> <span class="fu">seq</span>(<span class="dv">25</span>),</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">knot1 =</span> <span class="fu">yearweek</span>(<span class="fu">as.character</span>(<span class="fu">seq</span>(<span class="dv">1991</span>, <span class="dv">2017</span>, <span class="dv">2</span>))),</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">knot2 =</span> <span class="fu">yearweek</span>(<span class="fu">as.character</span>(<span class="fu">seq</span>(<span class="dv">1991</span>, <span class="dv">2017</span>, <span class="dv">2</span>)))</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(knot2 <span class="sc">-</span> knot1 <span class="sc">&gt;</span> <span class="dv">104</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> models <span class="sc">|&gt;</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cv =</span> purrr<span class="sc">::</span><span class="fu">pmap_dbl</span>(models, get_cv)) <span class="sc">|&gt;</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(cv)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Best combination</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>(best <span class="ot">&lt;-</span> <span class="fu">head</span>(models, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+      K    knot1    knot2     cv
+  &lt;int&gt;   &lt;week&gt;   &lt;week&gt;  &lt;dbl&gt;
+1     6 2007 W01 2013 W01 0.0641</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> us_gasoline <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">fourier</span>(<span class="at">K =</span> best<span class="sc">$</span>K) <span class="sc">+</span> <span class="fu">trend</span>(<span class="fu">c</span>(best<span class="sc">$</span>knot1, best<span class="sc">$</span>knot2)))</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li>Now refit the model using <code>ARIMA()</code> to allow for correlated errors, keeping the same predictor variables as you used with <code>TSLM()</code>.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> us_gasoline <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ARIMA</span>(Barrels <span class="sc">~</span> <span class="fu">fourier</span>(<span class="at">K =</span> best<span class="sc">$</span>K) <span class="sc">+</span> <span class="fu">trend</span>(<span class="fu">c</span>(best<span class="sc">$</span>knot1, best<span class="sc">$</span>knot2)) <span class="sc">+</span> <span class="fu">PDQ</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)))</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: Barrels 
+Model: LM w/ ARIMA(1,0,1) errors 
+
+Coefficients:
+         ar1      ma1  fourier(K = best$K)C1_52  fourier(K = best$K)S1_52
+      0.9277  -0.8414                   -0.1144                   -0.2306
+s.e.  0.0256   0.0357                    0.0133                    0.0132
+      fourier(K = best$K)C2_52  fourier(K = best$K)S2_52
+                        0.0418                    0.0309
+s.e.                    0.0105                    0.0105
+      fourier(K = best$K)C3_52  fourier(K = best$K)S3_52
+                        0.0836                    0.0343
+s.e.                    0.0097                    0.0097
+      fourier(K = best$K)C4_52  fourier(K = best$K)S4_52
+                        0.0187                    0.0399
+s.e.                    0.0094                    0.0094
+      fourier(K = best$K)C5_52  fourier(K = best$K)S5_52
+                       -0.0315                    0.0011
+s.e.                    0.0092                    0.0092
+      fourier(K = best$K)C6_52  fourier(K = best$K)S6_52
+                       -0.0523                    0.0001
+s.e.                    0.0092                    0.0092
+      trend(c(best$knot1, best$knot2))trend
+                                     0.0028
+s.e.                                 0.0001
+      trend(c(best$knot1, best$knot2))trend_831
+                                        -0.0051
+s.e.                                     0.0002
+      trend(c(best$knot1, best$knot2))trend_1144  intercept
+                                          0.0055     7.1065
+s.e.                                      0.0006     0.0352
+
+sigma^2 estimated as 0.06051:  log likelihood=-13.38
+AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>Check the residuals of the final model using the <code>gg_tsdisplay()</code> function and a Ljung-Box test. Do they look sufficiently like white noise to continue? If not, try modifying your model, or removing the first few years of data.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_tsresiduals</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex5c-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">features</span>(.innov, ljung_box, <span class="at">dof =</span> <span class="dv">2</span>, <span class="at">lag =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .model                                                       lb_stat lb_pvalue
+  &lt;chr&gt;                                                          &lt;dbl&gt;     &lt;dbl&gt;
+1 "ARIMA(Barrels ~ fourier(K = best$K) + trend(c(best$knot1, …    23.6     0.369</code></pre>
+</div>
+</div>
+<p>The model looks pretty good, although there is some heteroskedasticity. So the prediction intervals may not have accurate coverage.</p>
+<blockquote class="blockquote">
+<ol start="4" type="a">
+<li>Once you have a model with white noise residuals, produce forecasts for the next year.</li>
+</ol>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"1 year"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(us_gasoline)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex12-sol_files/figure-html/ex5d-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fpp3-10.7-ex-6" class="level1">
+<h1>fpp3 10.7, Ex 6</h1>
+<blockquote class="blockquote">
+<p>Electricity consumption is often modelled as a function of temperature. Temperature is measured by daily heating degrees and cooling degrees. Heating degrees is <span class="math inline">18^\circ</span>C minus the average daily temperature when the daily average is below <span class="math inline">18^\circ</span>C; otherwise it is zero. This provides a measure of our need to heat ourselves as temperature falls. Cooling degrees measures our need to cool ourselves as the temperature rises. It is defined as the average daily temperature minus <span class="math inline">18^\circ</span>C when the daily average is above <span class="math inline">18^\circ</span>C; otherwise it is zero. Let <span class="math inline">y_t</span> denote the monthly total of kilowatt-hours of electricity used, let <span class="math inline">x_{1,t}</span> denote the monthly total of heating degrees, and let <span class="math inline">x_{2,t}</span> denote the monthly total of cooling degrees.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>An analyst fits the following model to a set of such data: <span class="math display">y^*_t = \beta_1x^*_{1,t} + \beta_2x^*_{2,t} + \eta_t,</span> where <span class="math display">(1-\Phi_{1}B^{12} - \Phi_{2}B^{24})(1-B)(1-B^{12})\eta_t = (1+\theta_1 B)\varepsilon_t</span> and <span class="math inline">y^*_t = \log(y_t)</span>, <span class="math inline">x^*_{1,t} = \sqrt{x_{1,t}}</span> and <span class="math inline">x^*_{2,t}=\sqrt{x_{2,t}}</span>.</p>
+<ol type="a">
+<li>What sort of ARIMA model is identified for <span class="math inline">\eta_t</span>?</li>
+</ol>
+</blockquote>
+<p>ARIMA(0,1,1)(2,1,0)<span class="math inline">_{12}</span></p>
+<blockquote class="blockquote">
+<ol start="2" type="a">
+<li>The estimated coefficients are</li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: center;">s.e.</th>
+<th style="text-align: right;"><span class="math inline">Z</span></th>
+<th style="text-align: center;"><span class="math inline">P</span>-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\beta_1</span></td>
+<td style="text-align: right;">0.0077</td>
+<td style="text-align: center;">0.0015</td>
+<td style="text-align: right;">4.98</td>
+<td style="text-align: center;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\beta_2</span></td>
+<td style="text-align: right;">0.0208</td>
+<td style="text-align: center;">0.0023</td>
+<td style="text-align: right;">9.23</td>
+<td style="text-align: center;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\theta_1</span></td>
+<td style="text-align: right;">0.5830</td>
+<td style="text-align: center;">0.0720</td>
+<td style="text-align: right;">8.10</td>
+<td style="text-align: center;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\Phi_{1}</span></td>
+<td style="text-align: right;">-0.5373</td>
+<td style="text-align: center;">0.0856</td>
+<td style="text-align: right;">-6.27</td>
+<td style="text-align: center;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\Phi_{2}</span></td>
+<td style="text-align: right;">-0.4667</td>
+<td style="text-align: center;">0.0862</td>
+<td style="text-align: right;">-5.41</td>
+<td style="text-align: center;">0.000</td>
+</tr>
+</tbody>
+</table>
+<p>Explain what the estimates of <span class="math inline">\beta_1</span> and <span class="math inline">\beta_2</span> tell us about electricity consumption.</p>
+</blockquote>
+<p><span class="math inline">b_1</span> is the unit increase in <span class="math inline">y_t^*</span> when <span class="math inline">x_{1,t}^*</span> increases by 1. This is a little hard to interpret, but it is clear that monthly total electricity usage goes up when monthly heating degrees goes up. Similarly, for <span class="math inline">b_2</span>, monthly total electricty usage goes up when monthly cooling degrees goes up.</p>
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>Write the equation in a form more suitable for forecasting.</li>
+</ol>
+</blockquote>
+<p>This turned out to be way more messy than I expected, but for what it’s worth, here it is in all its ugliness.</p>
+<p>First apply the differences to the regression equation. <span class="math display">
+(1-B)(1-B^{12}) y_t^* = b_1^*(1-B)(1-B^{12})x_{1,t}^* + b_2^*(1-B)(1-B^{12})x_{2,t}^* + (1-B)(1-B^{12})\eta_{t}
+</span> So <span class="math display">\begin{align*}
+(y^*_{t} - y^*_{t-1} - y^*_{t-12} +y^*_{t-13})
+=&amp; b_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
++ b_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13}) + \eta'_t
+\end{align*}</span> Multiplying by the AR polynomial gives <span class="math display">\begin{align*}
+(y^*_{t} &amp; - y^*_{t-1} - y^*_{t-12} +y^*_{t-13})
+-\Phi_{1}(y^*_{t-12} - y^*_{t-13} - y^*_{t-24} +y^*_{t-25})
+-\Phi_{2}(y^*_{t-24} - y^*_{t-25} - y^*_{t-36} +y^*_{t-37})\\
+= &amp; ~ b_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
+-\Phi_{1}b_1(x^*_{1,t-12} - x^*_{1,t-13} - x^*_{1,t-24} + x^*_{1,t-25})
+-\Phi_{2}b_1(x^*_{1,t-24} - x^*_{1,t-25} - x^*_{1,t-36} + x^*_{1,t-37}) \\
+&amp; ~ + b_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13})
+  - \Phi_{1}b_2(x^*_{2,t-12} - x^*_{2,t-13} - x^*_{2,t-24} + x^*_{2,t-25})
+  - \Phi_{2}b_2(x^*_{2,t-24} - x^*_{2,t-25} - x^*_{2,t-36} + x^*_{2,t-37}) \\
+&amp; ~ + \varepsilon_t + \theta_1 \varepsilon_{t-1}.
+\end{align*}</span> Finally, we move all but <span class="math inline">y_t^*</span> to the right hand side: <span class="math display">\begin{align*}
+y^*_{t} =  &amp; ~ y^*_{t-1} + y^*_{t-12} - y^*_{t-13}
++\Phi_{1}(y^*_{t-12} - y^*_{t-13} - y^*_{t-24} +y^*_{t-25})
++\Phi_{2}(y^*_{t-24} - y^*_{t-25} - y^*_{t-36} +y^*_{t-37})\\
+&amp; + b_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
+-\Phi_{1}b_1(x^*_{1,t-12} - x^*_{1,t-13} - x^*_{1,t-24} + x^*_{1,t-25})
+-\Phi_{2}b_1(x^*_{1,t-24} - x^*_{1,t-25} - x^*_{1,t-36} + x^*_{1,t-37}) \\
+&amp; + b_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13})
+  - \Phi_{1}b_2(x^*_{2,t-12} - x^*_{2,t-13} - x^*_{2,t-24} + x^*_{2,t-25})
+  - \Phi_{2}b_2(x^*_{2,t-24} - x^*_{2,t-25} - x^*_{2,t-36} + x^*_{2,t-37}) \\
+&amp;  + \varepsilon_t + \theta_1 \varepsilon_{t-1}.
+\end{align*}</span></p>
+<blockquote class="blockquote">
+<ol start="4" type="a">
+<li>Describe how this model could be used to forecast electricity demand for the next 12 months.</li>
+</ol>
+</blockquote>
+<p>For <span class="math inline">t=T+1</span>, we use the above equation to find a point forecast of <span class="math inline">y_{T+1}^*</span>, setting <span class="math inline">\varepsilon_{T+1}=0</span> and <span class="math inline">\hat{\varepsilon}_T</span> to the last residual. The actual <span class="math inline">y_t^*</span> values are all known, as are all the <span class="math inline">x_{1,t}^*</span> and <span class="math inline">x_{2,t}^*</span> values up to time <span class="math inline">t=T</span>. For <span class="math inline">x_{1,T+1}^*</span> and <span class="math inline">x_{2,T+1}^*</span>, we could use a forecast (for example, a seasonal naive forecast).</p>
+<p>For <span class="math inline">t=T+2,\dots,T+12</span>, we do something similar, but both <span class="math inline">\varepsilon</span> values are set to 0 and <span class="math inline">y^*_{T+k}</span> (<span class="math inline">k\ge1</span>) is replaced by the forecasts just calculated.</p>
+<blockquote class="blockquote">
+<ol start="5" type="a">
+<li>Explain why the <span class="math inline">\eta_t</span> term should be modelled with an ARIMA model rather than modelling the data using a standard regression package. In your discussion, comment on the properties of the estimates, the validity of the standard regression results, and the importance of the <span class="math inline">\eta_t</span> model in producing forecasts.</li>
+</ol>
+</blockquote>
+<ul>
+<li>The non-stationarity of <span class="math inline">\eta_t</span> means the coefficients in the regression model will be inconsistent if OLS is used.</li>
+<li>The standard errors will be incorrectly computed.</li>
+<li>Which means all the p-values will be wrong.</li>
+<li>Using an ARIMA structure for <span class="math inline">\eta_t</span> allows these problems to be corrected, plus the short-term forecasts will be more accurate.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/af\.numbat\.space");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
