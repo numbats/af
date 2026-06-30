@@ -12,11 +12,11 @@ title: "ETC3550/5550 Applied forecasting"
 library(tidyverse)
 options(knitr.kable.NA = '')
 source(here::here("course_info.R"))
-week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
+week <- as.integer(1 + ((Sys.Date() - as_date(start_semester)) / 7))
 ```
 
 ## Teaching team
-### Lecturer/Chief Examiner
+### Chief Examiner
 
 
 :::: {.columns}
@@ -28,9 +28,29 @@ week <- as.integer(1 + ((Sys.Date() - as_date(start_semester))/7))
 
 ::: {.column width="75%"}
 
-[**Rob J Hyndman**](https://robjhyndman.com)
+[**Professor Rob J Hyndman**](https://robjhyndman.com)
 
 Email: [Rob.Hyndman@monash.edu](mailto:Rob.Hyndman@monash.edu)
+
+:::
+
+::::
+
+### Lecturer
+
+
+:::: {.columns}
+
+::: {.column width="25%"}
+
+![](https://anastasiospanagiotelis.netlify.app/authors/admin/avatar_hu236ec6c53bce3a169b44337bac77b28a_6947_250x250_fill_q90_lanczos_center.jpeg){style="width: 80%;"}
+:::
+
+::: {.column width="75%"}
+
+[**Professor Anastasios Panagiotelis**](https://anastasiospanagiotelis.netlify.app/)
+
+Email: [Anastasios.Panagiotelis@monash.edu](mailto:Anastasios.Panagiotelis@monash.edu)
 
 :::
 
@@ -86,9 +106,9 @@ Xiefei (Sapphire) Li
 
 * [Pre-recorded videos](https://www.youtube.com/watch?v=uwKiT1o1TkI&list=PLyCNZ_xXGzpm7W9jLqbIyBAiSO5jDwJeE): approximately 1 hour per week [[Slides](https://github.com/robjhyndman/fpp3_slides)]
 * Tutorials: 1 hour per week
-* Online lecture: 12noon Mondays
+* Online lecture: 10am Mondays
 * Workshop: 1pm Tuesdays, [Lecture Theatre S3, 16 Rainforest Walk](https://maps.app.goo.gl/4AmDLWkY1yYZviFz8).
-* [Recordings](https://learning.monash.edu/mod/lti/view.php?id=3444022)
+* [Recordings](https://learning.monash.edu/mod/lti/view.php?id=6049159)
 
 ```{r}
 #| label: schedule2
@@ -99,10 +119,22 @@ Xiefei (Sapphire) Li
 schedule |>
   transmute(
     Show = !is.na(Week), #& (Week <= week | Week <= 1),
-    Topic = if_else(!Show, Topic, glue::glue("[{Topic}](./week{Week}/index.html)")),
-    Chapter = if_else(is.na(Week), Chapter, glue::glue("[{Chapter}]({Chapter_URL})")),
-    Assignments = if_else(is.na(Assignment), Assignment, glue::glue("[{Assignment}]({File})")),
-    Quizzes =  if_else(is.na(Quiz), Quiz, glue::glue("[{Quiz}]({QMoodle})")),
+    Topic = if_else(
+      !Show,
+      Topic,
+      glue::glue("[{Topic}](./week{Week}/index.html)")
+    ),
+    Chapter = if_else(
+      is.na(Week),
+      Chapter,
+      glue::glue("[{Chapter}]({Chapter_URL})")
+    ),
+    Assignments = if_else(
+      is.na(Assignment),
+      Assignment,
+      glue::glue("[{Assignment}]({File})")
+    ),
+    Quizzes = if_else(is.na(Quiz), Quiz, glue::glue("[{Quiz}]({QMoodle})")),
     Week = format(Date, "%d %b")
   ) |>
   select(-Show) |>
@@ -118,7 +150,7 @@ schedule |>
 * [Assignment 2](assignments/A2.qmd): 6%
 * [Assignment 3](assignments/A3.qmd): 6%
 * [Retail project](assignments/Project.qmd): 12%
-* Final exam: 60%
+* [Final exam](exams/index.qmd): 60%
 
 ## R package installation
 

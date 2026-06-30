@@ -2,11 +2,12 @@
 library(tidyverse)
 
 # Start of semester
-start_semester <- "2025-03-03"
+start_semester <- "2026-07-26"
 
 # Week of mid-semester break
-mid_semester_break <- "2025-04-21"
-msb_week <- as.numeric(as.Date(mid_semester_break) - as.Date(start_semester))/7
+mid_semester_break <- "2026-09-21"
+msb_week <- as.numeric(as.Date(mid_semester_break) - as.Date(start_semester)) /
+  7
 
 # Schedule
 schedule <- tibble(
@@ -86,7 +87,9 @@ assignments <- read_csv(here::here("assignments.csv")) |>
     Date = lastmon(Due),
     Moodle = paste0(
       "https://learning.monash.edu/mod/",
-      c("quiz", rep("assign", 4)), "/view.php?id=", Moodle
+      c("quiz", rep("assign", 4)),
+      "/view.php?id=",
+      Moodle
     ),
     File = paste0("assignments/", File)
   )
@@ -124,7 +127,12 @@ show_assignments <- function(week) {
     if (NROW(ass) > 0) {
       cat("\n\n## Assignments\n\n")
       for (i in seq(NROW(ass))) {
-        cat("* [", ass$Assignment[i], "](../", ass$File[i], ") is due on ",
+        cat(
+          "* [",
+          ass$Assignment[i],
+          "](../",
+          ass$File[i],
+          ") is due on ",
           format(ass$Due[i], "%A %d %B.\n"),
           sep = ""
         )
@@ -141,7 +149,12 @@ show_quiz <- function(week) {
   if (NROW(ass) > 0) {
     cat("\n\n## Weekly quiz\n\n")
     for (i in seq(NROW(ass))) {
-      cat("* [", ass$Quiz[i], " quiz](", ass$QMoodle[i], ") is due on ",
+      cat(
+        "* [",
+        ass$Quiz[i],
+        " quiz](",
+        ass$QMoodle[i],
+        ") is due on ",
         format(ass$QDue[i], "%A %d %B.\n"),
         sep = ""
       )
@@ -163,7 +176,11 @@ show_slides <- function(week) {
       file,
       "&embedded=true' width='100%' height=465></iframe>"
     )
-    button <- paste0("<a href=", file, " class='badge badge-small badge-red'>Download slides</a>")
+    button <- paste0(
+      "<a href=",
+      file,
+      " class='badge badge-small badge-red'>Download slides</a>"
+    )
     cat(paste0("## Monday lecture\n\n", embed, "\n", button))
   }
 }
@@ -191,8 +208,12 @@ submit <- function(schedule, assignment) {
   due <- format(ass$Due, "%e %B %Y") |> stringr::str_trim()
   url <- ass$Moodle
   button <- paste0(
-    "<br><br><hr><b>Due: ", due, "</b><br>",
-    "<a href=", url, " class = 'badge badge-large badge-blue'>",
+    "<br><br><hr><b>Due: ",
+    due,
+    "</b><br>",
+    "<a href=",
+    url,
+    " class = 'badge badge-large badge-blue'>",
     "<font size='+2'>&nbsp;&nbsp;<b>Submit</b>&nbsp;&nbsp;</font><br></a>"
   )
   cat(button)
