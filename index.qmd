@@ -80,7 +80,7 @@ Email: [Lachlan.Macquarie@monash.edu](mailto:Lachlan.Macquarie@monash.edu)
 :::: {.columns}
 
 ::: {.column .centeredcolumn width = "33%"}
-![](/img/sam_ferraro.png){style="width: 65%;"}
+![](/img/sam_ferraro.jpg){style="width: 65%;"}
 
 Sam Ferraro
 :::
