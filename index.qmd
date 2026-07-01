@@ -62,14 +62,14 @@ Email: [Anastasios.Panagiotelis@monash.edu](mailto:Anastasios.Panagiotelis@monas
 
 ::: {.column width="25%"}
 
-![](/img/mitch.png){style="width: 80%;"}
+![](https://www.monash.edu/__data/assets/image/0007/3985972/sq_Lachlan_Macquarie_2025.jpg){style="width: 80%;"}
 :::
 
 ::: {.column width="75%"}
 
-[**Mitchell O'Hara-Wild**](https://mitchelloharawild.com)
+**Lachlan Macquarie**
 
-Email: [Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
+Email: [Lachlan.Macquarie@monash.edu](mailto:Lachlan.Macquarie@monash.edu)
 
 :::
 
@@ -80,10 +80,16 @@ Email: [Mitch.OHara-Wild@monash.edu](mailto:Mitch.OHara-Wild@monash.edu)
 :::: {.columns}
 
 ::: {.column .centeredcolumn width = "33%"}
-![](/img/maliny.png){style="width: 65%;"}
+![](/img/sam_ferraro.png){style="width: 65%;"}
 
-Maliny Po
+Sam Ferraro
 
+:::
+
+::: {.column .centeredcolumn width = "33%"}
+![](/img/vincent_su.jpg){style="width: 65%;"}
+
+Vincent Su
 :::
 
 ::: {.column .centeredcolumn width = "33%"}
@@ -91,12 +97,6 @@ Maliny Po
 
 Nuwani Palihawadana
 
-:::
-
-::: {.column .centeredcolumn width = "33%"}
-![](/img/sapphire.png){style="width: 65%;"}
-
-Xiefei (Sapphire) Li
 :::
 
 
