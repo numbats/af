@@ -3,9 +3,7 @@
   "result": {
     "engine": "knitr",
     "markdown": "---\ntitle: \"Week 3: Time series decomposition\"\n---\n\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n* Transforming data to remove some sources of variation\n* Decomposing a time series into trend-cycle, seasonal and remainder components\n* Seasonal adjustment\n\n## Pre-class activities\n\nRead [Chapter 3 of the textbook](https://otexts.com/fpp3/decomposition.html) and watch all embedded videos\n\n## Monday lecture\n\n<iframe src='https://docs.google.com/gview?url=https://af.numbat.space/week3/slides.pdf&embedded=true' width='100%' height=465></iframe>\n\n<a href=https://af.numbat.space/week3/slides.pdf class='badge badge-small badge-red'>Download slides</a>\n\n<!-- * [Code used in lecture](lecture_code.R) -->\n\n## Tuesday workshop\n\n\n* [Week 3 quiz](https://learning.monash.edu/mod/quiz/view.php?id=6049179)\n\n## Exercises (on your own or in tutorial)\n\n* Complete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).\n<!-- * [Solutions to Exercises](ex3-sol.qmd) -->\n\n\n## Assignments\n\n* [Assignment 1](../assignments/A1.qmd) is due on Monday 24 August.\n",
-    "supporting": [
-      "index_files"
-    ],
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
