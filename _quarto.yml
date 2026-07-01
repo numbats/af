@@ -34,6 +34,23 @@ website:
           - week10/index.qmd
           - week11/index.qmd
           - week12/index.qmd
+      - text: Assessments
+        icon: clipboard-check-fill
+        menu:
+          - text: Forecasting competition (2%)
+            href: assignments/competition.qmd
+          - text: Weekly quizzes (8%)
+            href: assignments/weekly_quizzes.qmd
+          - text: Assignment 1 (6%)
+            href: assignments/A1.qmd
+          - text: Assignment 2 (6%)
+            href: assignments/A2.qmd
+          - text: Assignment 3 (6%)
+            href: assignments/A3.qmd
+          - text: Retail Project (12%)
+            href: assignments/Project.qmd
+          - text: Exam (60%)
+            href: exams/index.qmd
       - text: Discussion
         icon: chat-fill
         href: https://edstem.org/au/courses/37102/discussion/
@@ -43,9 +60,6 @@ website:
       - text: Textbook
         icon: book-fill
         href: https://OTexts.com/fpp3
-      - text: Exam
-        icon: pencil-fill
-        href: exams/index.qmd
     right:
       - icon: github
         href: https://github.com/numbats/af
