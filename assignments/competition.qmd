@@ -5,10 +5,10 @@ fig-cap-location: top
 
 **You must provide forecasts for the following items:**
 
-  1. Google closing stock price on 17 August 2026 [[Data](https://finance.yahoo.com/quote/GOOG/history/)]. 
-  2. The difference in runs scored between Australia and Bangladesh in the second test to be held 22-26 August, Mackay. Give result as (Australia total minus Bangladesh total). [[Data]](https://stats.espncricinfo.com/ci/engine/stats/index.html?class=1;opposition=2;opposition=25;orderby=start;team=2;team=25;template=results;type=team;view=match).
-  3. Maximum temperature at Melbourne airport on 13 September 2026 [[Data](https://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml)]. 
-  4. Google closing stock price on 5 October 2026 [[Data](https://finance.yahoo.com/quote/GOOG/history/)]. 
+  1. Google closing stock price in $US on 17 August 2026 [[Data](https://finance.yahoo.com/quote/GOOG/history/)]. 
+  2. The difference in runs scored between Australia and Bangladesh in the second cricket test to be held 22-26 August, Mackay. Give result as (Australia total minus Bangladesh total). [[Data]](https://stats.espncricinfo.com/ci/engine/stats/index.html?class=1;opposition=2;opposition=25;orderby=start;team=2;team=25;template=results;type=team;view=match).
+  3. Maximum temperature in Celsius at Melbourne airport on 13 September 2026 [[Data](https://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml)]. 
+  4. Google closing stock price in $US on 5 October 2026 [[Data](https://finance.yahoo.com/quote/GOOG/history/)]. 
   5. The seasonally adjusted estimate of total employment for September 2026. ABS CAT 6202, to be released on 15 October 2026 [[Data](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release)]. 
 
 **For each of these, give a point forecast and an 80% prediction interval, and explain in a couple of sentences how each was obtained.**
