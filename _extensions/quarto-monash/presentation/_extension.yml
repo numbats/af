@@ -1,6 +1,6 @@
 title: Presentation
 author: Cynthia Huang and Rob Hyndman
-version: 1.0.0
+version: 2.0.0
 quarto-required: ">=1.4.0"
 contributes:
   formats:
@@ -14,10 +14,10 @@ contributes:
       aspectratio: 169
       fontsize: 14pt
       section-titles: false
-      pdf-engine: xelatex
+      pdf-engine: pdflatex
       fig-width: 9
       fig-height: 4.5
-      titlegraphic: _images/background/bg-12.png
+      titlegraphic: bg-02.png
       titlecolor: black
       template-partials:
         - beamer/before-title.tex
@@ -32,6 +32,16 @@ contributes:
       theme: [default, revealjs/monash.scss]
       logo: _images/logo/monash-stacked-blue-rgb-transparent.png
       html-math-method: katex
+    typst:
+      echo: false
+      fig-width: 9
+      fig-height: 3.5
+      toc-title: Outline
+      titlegraphic: bg-02.png
+      titlecolor: black
+      template-partials:
+        - typst/typst-template.typ
+        - typst/typst-show.typ
     revealjs+letterbox:
       width: 1280
       height: 720
