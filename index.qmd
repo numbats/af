@@ -83,7 +83,12 @@ Email: [Lachlan.Macquarie@monash.edu](mailto:Lachlan.Macquarie@monash.edu)
 ![](/img/sam_ferraro.png){style="width: 65%;"}
 
 Sam Ferraro
+:::
 
+::: {.column .centeredcolumn width = "33%"}
+![](/img/nuwani.png){style="width: 65%;"}
+
+Nuwani Palihawadana
 :::
 
 ::: {.column .centeredcolumn width = "33%"}
@@ -91,14 +96,6 @@ Sam Ferraro
 
 Vincent Su
 :::
-
-::: {.column .centeredcolumn width = "33%"}
-![](/img/nuwani.png){style="width: 65%;"}
-
-Nuwani Palihawadana
-
-:::
-
 
 ::::
 
