@@ -7,9 +7,11 @@
 /_site/
 /site_libs/
 *_cache
-/docs/
 *_files/
 *_cache/
 .vscode/
 
 **/*.quarto_ipynb
+
+# Deploy folder: committed in full (overrides *_files/ etc. above)
+!/docs/**

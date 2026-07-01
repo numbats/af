@@ -1,8 +1,9 @@
 project:
   type: website
-  output-dir: _site
+  output-dir: docs
   resources:
     - "CNAME"
+    - ".nojekyll"
     - assignments/Assignment_template.qmd
   render:
   - "*.qmd"
