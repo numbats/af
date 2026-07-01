@@ -469,10 +469,10 @@ Model: LM w/ ARIMA(3,1,1)(2,0,0)[7] errors
 Coefficients:
          ar1      ar2     ar3      ma1    sar1    sar2  Temperature   Temp2
       0.7914  -0.0108  0.0110  -0.9762  0.1995  0.2936      -0.7025  4.4068
-s.e.  0.0730   0.0831  0.0568   0.0213  0.0543  0.0569       0.1744  0.3069
+s.e.  0.0730   0.0831  0.0568   0.0213  0.0542  0.0569       0.1744  0.3069
       Day_Type == "Weekday"TRUE
                         31.4648
-s.e.                     1.3758
+s.e.                     1.3757
 
 sigma^2 estimated as 61.42:  log likelihood=-1262.4
 AIC=2544.81   AICc=2545.43   BIC=2583.78</code></pre>
@@ -498,21 +498,21 @@ AIC=2544.81   AICc=2545.43   BIC=2583.78</code></pre>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>best_model <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Demand 
-Model: LM w/ ARIMA(2,1,1)(2,0,0)[7] errors 
+Model: LM w/ ARIMA(2,1,1)(2,0,1)[7] errors 
 
 Coefficients:
-         ar1     ar2      ma1    sar1    sar2  Temperature   Temp2
-      0.7436  0.0465  -0.9699  0.1941  0.3127      -0.0089  5.3667
-s.e.  0.0677  0.0648   0.0241  0.0532  0.0564       0.1336  0.3316
+         ar1     ar2      ma1    sar1    sar2     sma1  Temperature   Temp2
+      0.6734  0.0039  -0.9062  0.6442  0.2111  -0.5745       0.1034  5.5141
+s.e.  0.0027     NaN      NaN  0.0017     NaN      NaN       0.1275  0.2967
       Day_Type == "Weekday"TRUE
-                        31.0531
-s.e.                     1.3592
+                        29.7688
+s.e.                     1.4925
 
-sigma^2 estimated as 59.38:  log likelihood=-1256.8
-AIC=2531.6   AICc=2532.1   BIC=2566.67</code></pre>
+sigma^2 estimated as 57.59:  log likelihood=-1251.11
+AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </div>
 </div>
-<p>The optimal knot (to 1 decimal place) is 28.3 degrees Celsius.</p>
+<p>The optimal knot (to 1 decimal place) is 28.8 degrees Celsius.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best_model) <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(vic_elec_daily) <span class="sc">|&gt;</span></span>
@@ -552,7 +552,7 @@ AIC=2531.6   AICc=2532.1   BIC=2566.67</code></pre>
 <pre><code># A tibble: 1 × 3
   .model lb_stat lb_pvalue
   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-1 fit       31.1   0.00841</code></pre>
+1 fit       21.8     0.114</code></pre>
 </div>
 </div>
 <p>The model fails the residual tests but the significant autocorrelations are relatively small, so it should still give reasonable forecasts. The residuals look like they have some heteroskedasticity, but otherwise look ok.</p>

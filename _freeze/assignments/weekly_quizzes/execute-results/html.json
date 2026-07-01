@@ -1,0 +1,15 @@
+{
+  "hash": "739d7a652e04c6dc908725b0c294f232",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: Weekly quizzes\n---\n\n\n\n\nFor weeks 2--11, there will be a short Moodle quiz conducted during the seminar. The best 8 of the 10 quizzes will count towards your final mark. Each quiz is worth 1% of your final mark, for a total of 8% overall. \n\n\n|Date        |Topic                               |Quiz    |\n|:-----------|:-----------------------------------|:-------|\n|04&nbsp;Aug |Time series graphics                |[Week 2](https://learning.monash.edu/mod/quiz/view.php?id=6049177)|\n|11&nbsp;Aug |Time series decomposition           |[Week 3](https://learning.monash.edu/mod/quiz/view.php?id=6049179)|\n|18&nbsp;Aug |Simple forecasting methods          |[Week 4](https://learning.monash.edu/mod/quiz/view.php?id=6049181)|\n|25&nbsp;Aug |Accuracy evaluation                 |[Week 5](https://learning.monash.edu/mod/quiz/view.php?id=6049183)|\n|01&nbsp;Sep |Exponential smoothing               |[Week 6](https://learning.monash.edu/mod/quiz/view.php?id=6049185)|\n|08&nbsp;Sep |Exponential smoothing               |[Week 7](https://learning.monash.edu/mod/quiz/view.php?id=6049187)|\n|15&nbsp;Sep |ARIMA models                        |[Week 8](https://learning.monash.edu/mod/quiz/view.php?id=6049189)|\n|29&nbsp;Sep |ARIMA models                        |[Week 9](https://learning.monash.edu/mod/quiz/view.php?id=6049191)|\n|06&nbsp;Oct |ARIMA models                        |[Week 10](https://learning.monash.edu/mod/quiz/view.php?id=6049193)|\n|13&nbsp;Oct |Multiple regression and forecasting |[Week 11](https://learning.monash.edu/mod/quiz/view.php?id=6049195)|\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

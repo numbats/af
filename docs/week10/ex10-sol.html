@@ -597,16 +597,16 @@ AIC=1232.17   AICc=1232.71   BIC=1255.7</code></pre>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Turnover 
-Model: ARIMA(1,0,2)(1,1,1)[12] w/ drift 
+Model: ARIMA(2,0,1)(2,1,1)[12] 
 Transformation: log(Turnover) 
 
 Coefficients:
-         ar1      ma1     ma2    sar1     sma1  constant
-      0.9635  -0.3968  0.0538  0.1518  -0.8869    0.0016
-s.e.  0.0190   0.0574  0.0555  0.0807   0.0643    0.0003
+         ar1     ar2      ma1    sar1    sar2     sma1
+      0.8867  0.1014  -0.2998  0.1169  0.0170  -0.8573
+s.e.  0.0233  0.0244   0.2391  0.0123  0.0321   0.0529
 
-sigma^2 estimated as 0.004626:  log likelihood=432.96
-AIC=-851.91   AICc=-851.58   BIC=-825.01</code></pre>
+sigma^2 estimated as 0.004729:  log likelihood=430.17
+AIC=-846.34   AICc=-846.01   BIC=-819.44</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_tsresiduals</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -647,7 +647,7 @@ AIC=-851.91   AICc=-851.58   BIC=-825.01</code></pre>
 <pre><code># A tibble: 4 × 3
   .model    RMSE   MAE
   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
-1 arima    1.41  1.14 
+1 arima    0.798 0.677
 2 ets      0.967 0.777
 3 stlarima 0.641 0.487
 4 stlets   1.14  0.838</code></pre>
@@ -675,7 +675,7 @@ AIC=-851.91   AICc=-851.58   BIC=-825.01</code></pre>
 <pre><code># A tibble: 4 × 10
   .model   .type     ME  RMSE   MAE     MPE  MAPE  MASE RMSSE  ACF1
   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 arima    Test  -2.68   3.28  2.68 -22.9   22.9    NaN   NaN 0.700
+1 arima    Test  -1.01   1.95  1.40 -10.7   12.7    NaN   NaN 0.568
 2 ets      Test  -1.42   2.17  1.60 -13.5   14.3    NaN   NaN 0.564
 3 stlarima Test   0.379  1.81  1.12  -0.369  9.23   NaN   NaN 0.541
 4 stlets   Test  -1.89   2.59  1.95 -16.8   17.2    NaN   NaN 0.623</code></pre>
