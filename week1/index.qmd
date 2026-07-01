@@ -31,8 +31,6 @@ show_slides(week)
 show_activity(week, show_solutions = FALSE)
 ```
 
-## [Check your understanding](https://learning.monash.edu/mod/quiz/view.php?id=3444034)
-
 ```{r}
 #| output: asis
 show_assignments(week)
