@@ -25,11 +25,12 @@ R dependencies are pinned with **renv** (`renv.lock`); `.Rprofile` activates it 
 Almost every page sources this file. It is the single source of truth for the semester and drives page content dynamically:
 - Defines `start_semester`, `mid_semester_break`, and builds the 12-week `schedule` tibble (topic, textbook chapter, dates) joined with `assignments.csv` and `quizzes.csv`.
 - Provides the helper functions that pages call inside `#| output: asis` chunks: `show_slides(week)`, `show_activity(week)`, `show_assignments(week)`, `show_quiz(week)`, `submit(schedule, assignment)`.
-- These helpers are **date-aware**: they compare `Sys.Date()` against the schedule and only reveal slides/activities/assignments once they are within ~1–2 weeks of their due date. Editing dates in `course_info.R` or the CSVs changes what is visible on the live site. When testing, remember output depends on the current date.
+- `show_assignments(week)` shows assignments due within 3 weeks of the given
+  week. The others show the relevant information for the specified week.
 
 ### Per-week structure (`week1/` … `week12/`)
 Each week folder typically contains:
-- `index.qmd` — the student-facing week page. Sets `week <- N`, sources `course_info.R`, then calls the `show_*` helpers.
+- `index.qmd` — the student-facing week page. Sets `week <- N`, sources `course_info.R`, then calls the `show_*` helpers. Helper calls for content that isn't yet ready for students are **commented out** and uncommented when the entry should go live (there is no date-based reveal).
 - `slides.qmd` — beamer lecture deck (`format: presentation-beamer`), sources `setup.R` + `course_info.R`, uses `header.tex` and the local `beamerthemeMonash.sty`. Rendered separately to PDF.
 - `activities.qmd` — Tuesday seminar activities.
 - `exN-sol.qmd` — exercise solutions.

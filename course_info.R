@@ -108,38 +108,30 @@ schedule <- schedule |>
   left_join(quizzes, by = "Date")
 
 show_assignments <- function(week) {
-  today <- Sys.Date()
-  monday <- schedule |>
-    filter(Week == week) |>
-    pull(Date) |>
-    as.Date()
-  # Show assignments and quizzes up to 2 weeks ahead
-  # Show all assignments when in last 3 weeks of semester
-  if (today > as.Date("2025-05-04") | (monday - today) <= 7 * 2 | week < 3) {
-    ass <- schedule |>
-      mutate(Week = replace_na(Week, msb_week)) |>
-      filter(
-        Week >= week,
-        Week < week + 3,
-        !is.na(Assignment),
-      ) |>
-      select(Assignment:File)
-    if (NROW(ass) > 0) {
-      cat("\n\n## Assignments\n\n")
-      for (i in seq(NROW(ass))) {
-        cat(
-          "* [",
-          ass$Assignment[i],
-          "](../",
-          ass$File[i],
-          ") is due on ",
-          format(ass$Due[i], "%A %d %B.\n"),
-          sep = ""
-        )
-      }
+  # Show assignments due within 3 weeks of this week (this week or next)
+  ass <- schedule |>
+    mutate(Week = replace_na(Week, msb_week)) |>
+    filter(
+      Week >= week,
+      Week < week + 3,
+      !is.na(Assignment),
+    ) |>
+    select(Assignment:File)
+  if (NROW(ass) > 0) {
+    cat("\n\n## Assignments\n\n")
+    for (i in seq(NROW(ass))) {
+      cat(
+        "* [",
+        ass$Assignment[i],
+        "](../",
+        ass$File[i],
+        ") is due on ",
+        format(ass$Due[i], "%A %d %B.\n"),
+        sep = ""
+      )
     }
-    #show_quiz(week)
   }
+  #show_quiz(week)
 }
 
 show_quiz <- function(week) {
