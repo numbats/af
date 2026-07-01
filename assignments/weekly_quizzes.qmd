@@ -1,0 +1,34 @@
+---
+title: Weekly quizzes
+---
+
+
+```{r}
+#| label: load_packages
+#| include: false
+#| message: false
+#| warning: false
+#| echo: false
+#| cache: false
+library(tidyverse)
+options(knitr.kable.NA = '')
+source(here::here("course_info.R"))
+```
+
+For weeks 2--11, there will be a short Moodle quiz conducted during the seminar. The best 8 of the 10 quizzes will count towards your final mark. Each quiz is worth 1% of your final mark, for a total of 8% overall. 
+
+```{r}
+#| label: table
+#| message: false
+#| warning: false
+#| echo: false
+#| output: asis
+schedule |>
+  filter(!is.na(Quiz)) |>
+  transmute(
+    Date = format(Date+1, "%d&nbsp;%b"),
+    Topic = Topic,
+    Quiz = glue::glue("[{Quiz}]({QMoodle})"),
+  ) |>
+  knitr::kable(format = "markdown")
+```
