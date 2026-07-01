@@ -101,7 +101,7 @@ Vincent Su
 
 ## Weekly schedule
 
-* [Pre-recorded videos](https://www.youtube.com/watch?v=uwKiT1o1TkI&list=PLyCNZ_xXGzpm7W9jLqbIyBAiSO5jDwJeE): approximately 1 hour per week [[Slides](https://github.com/robjhyndman/fpp3_slides)]
+* [Pre-recorded videos](https://www.youtube.com/watch?v=uwKiT1o1TkI&list=PLyCNZ_xXGzpm7W9jLqbIyBAiSO5jDwJeE): approximately 1 hour per week [Slides](https://github.com/robjhyndman/fpp3_slides){.badge .badge-small .badge-red}
 * Online lecture: 10am Mondays
 * Workshop: 1pm Tuesdays, [Lecture Theatre S4, 16 Rainforest Walk](https://maps.app.goo.gl/4AmDLWkY1yYZviFz8)
 * Tutorials: 1 hour per week, Wednesdays and Thursdays
