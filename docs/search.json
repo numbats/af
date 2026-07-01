@@ -354,14 +354,14 @@
     "href": "index.html",
     "title": "ETC3550/5550 Applied forecasting",
     "section": "",
-    "text": "Professor Rob J Hyndman\nEmail: Rob.Hyndman@monash.edu\n\n\n\n\n\n\n\n\n\nProfessor Anastasios Panagiotelis\nEmail: Anastasios.Panagiotelis@monash.edu\n\n\n\n\n\n\n\n\n\nLachlan Macquarie\nEmail: Lachlan.Macquarie@monash.edu\n\n\n\n\n\n\n\n\nSam Ferraro\n\n\nVincent Su\n\n\nNuwani Palihawadana"
+    "text": "Professor Rob J Hyndman\nEmail: Rob.Hyndman@monash.edu\n\n\n\n\n\n\n\n\n\nProfessor Anastasios Panagiotelis\nEmail: Anastasios.Panagiotelis@monash.edu\n\n\n\n\n\n\n\n\n\nLachlan Macquarie\nEmail: Lachlan.Macquarie@monash.edu\n\n\n\n\n\n\n\n\nSam Ferraro\n\n\nNuwani Palihawadana\n\n\nVincent Su"
   },
   {
     "objectID": "index.html#teaching-team",
     "href": "index.html#teaching-team",
     "title": "ETC3550/5550 Applied forecasting",
     "section": "",
-    "text": "Professor Rob J Hyndman\nEmail: Rob.Hyndman@monash.edu\n\n\n\n\n\n\n\n\n\nProfessor Anastasios Panagiotelis\nEmail: Anastasios.Panagiotelis@monash.edu\n\n\n\n\n\n\n\n\n\nLachlan Macquarie\nEmail: Lachlan.Macquarie@monash.edu\n\n\n\n\n\n\n\n\nSam Ferraro\n\n\nVincent Su\n\n\nNuwani Palihawadana"
+    "text": "Professor Rob J Hyndman\nEmail: Rob.Hyndman@monash.edu\n\n\n\n\n\n\n\n\n\nProfessor Anastasios Panagiotelis\nEmail: Anastasios.Panagiotelis@monash.edu\n\n\n\n\n\n\n\n\n\nLachlan Macquarie\nEmail: Lachlan.Macquarie@monash.edu\n\n\n\n\n\n\n\n\nSam Ferraro\n\n\nNuwani Palihawadana\n\n\nVincent Su"
   },
   {
     "objectID": "index.html#weekly-schedule",
@@ -417,7 +417,7 @@
     "href": "assignments/competition.html",
     "title": "Forecasting competition",
     "section": "",
-    "text": "You must provide forecasts for the following items:\n\nGoogle closing stock price on 17 August 2026 [Data].\nThe difference in runs scored between Australia and Bangladesh in the second test to be held 22-26 August, Mackay. Give result as (Australia total minus Bangladesh total). [Data].\nMaximum temperature at Melbourne airport on 13 September 2026 [Data].\nGoogle closing stock price on 5 October 2026 [Data].\nThe seasonally adjusted estimate of total employment for September 2026. ABS CAT 6202, to be released on 15 October 2026 [Data].\n\nFor each of these, give a point forecast and an 80% prediction interval, and explain in a couple of sentences how each was obtained.\n\nThe [Data] links give you possible data to start with, but you are free to use any data you like.\nThere is no need to use any fancy models or sophisticated methods. Simple is better for this assignment. The methods you use should be understandable to any high school student.\nFull marks will be awarded if you submit the required information, and are able to meaningfully justify your results in a sentence or two in each case.\nOnce the true values in each case are available, we will come back to this exercise and see who did the best using the scoring method described in class.\nThe student with the most accurate forecasts is the winner of our forecasting competition, and will win a $50 cash prize.\nThe assignment mark is not dependent on your score.\n\n\n\nDue: 3 August 2026  Submit"
+    "text": "You must provide forecasts for the following items:\n\nGoogle closing stock price in $US on 17 August 2026 [Data].\nThe difference in runs scored between Australia and Bangladesh in the second cricket test to be held 22-26 August, Mackay. Give result as (Australia total minus Bangladesh total). [Data].\nMaximum temperature in Celsius at Melbourne airport on 13 September 2026 [Data].\nGoogle closing stock price in $US on 5 October 2026 [Data].\nThe seasonally adjusted estimate of total employment for September 2026. ABS CAT 6202, to be released on 15 October 2026 [Data].\n\nFor each of these, give a point forecast and an 80% prediction interval, and explain in a couple of sentences how each was obtained.\n\nThe [Data] links give you possible data to start with, but you are free to use any data you like.\nThere is no need to use any fancy models or sophisticated methods. Simple is better for this assignment. The methods you use should be understandable to any high school student.\nFull marks will be awarded if you submit the required information, and are able to meaningfully justify your results in a sentence or two in each case.\nOnce the true values in each case are available, we will come back to this exercise and see who did the best using the scoring method described in class.\nThe student with the most accurate forecasts is the winner of our forecasting competition, and will win a $50 cash prize.\nThe assignment mark is not dependent on your score.\n\n\n\nDue: 3 August 2026  Submit"
   },
   {
     "objectID": "exams/index.html",
