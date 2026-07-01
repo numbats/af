@@ -13,33 +13,33 @@ source(here::here("course_info.R"))
 * Selecting predictors
 * Ex ante and ex post forecasting
 
-
 ## Pre-class activities
 
 Read [Chapter 7 of the textbook](https://otexts.com/fpp3/regression.html) and watch all embedded videos
 
-## Exercises (on your own or in tutorial)
-
-* Complete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).
-
-* [**Solutions to Exercises**](ex11-sol.qmd)
-
-* [Recorded tutorial code](tutorial_code.R)
-
+## Monday lecture
 
 ```{r}
 #| output: asis
 show_slides(week)
 ```
 
-[Code used in seminar](seminar_code.R)
+<!-- * [Code used in lecture](lecture_code.R) -->
+
+## Tuesday workshop
 
 ```{r}
 #| output: asis
-show_activity(week, show_solutions = FALSE)
+#show_activity(week)
+show_quiz(week)
 ```
 
-[Code used in workshop](workshop_code.R)
+<!-- * [Code used in workshop](workshop_code.R) -->
+
+## Exercises (on your own or in tutorial)
+
+* Complete Exercises 1-7 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).
+<!-- * [Solutions to Exercises](ex11-sol.qmd) -->
 
 ```{r}
 #| output: asis

@@ -238,11 +238,25 @@
     "text": "Pre-class activities\nRead Chapter 10 of the textbook and watch all embedded videos"
   },
   {
+    "objectID": "week12/index.html#monday-lecture",
+    "href": "week12/index.html#monday-lecture",
+    "title": "Week 12: Dynamic regression",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week12/index.html#tuesday-revision-class",
+    "href": "week12/index.html#tuesday-revision-class",
+    "title": "Week 12: Dynamic regression",
+    "section": "Tuesday revision class",
+    "text": "Tuesday revision class\n\n\nDownload slides"
+  },
+  {
     "objectID": "week12/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week12/index.html#exercises-on-your-own-or-in-tutorial",
     "title": "Week 12: Dynamic regression",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\nComplete Exercises 2-6 from Section 10.7 of the book.\nSolutions to Exercises\nCode used in lecture"
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 2-6 from Section 10.7 of the book."
   },
   {
     "objectID": "week12/index.html#post-class-activities",
@@ -455,18 +469,18 @@
     "text": "Pre-class activities\n\nBefore we start classes, make sure that are familiar with R, RStudio and the tidyverse packages. If you’ve already done ETC1010, then you may not need to do anything! But if you’re new to R and the tidyverse, then you will need to get yourself up-to-speed. Work through the first five modules of the StartR tutorial at startr.numbat.space. Do as much of it as you think you need. For those students new to R, it is strongly recommended that you do all five modules. For those who have previously used R, concentrate on the parts where you feel you are weakest.\nInstall R and RStudio on your personal computer. Instructions are provided at OTexts.com/fpp3/appendix-using-r.html.\nRead Chapter 1 of the textbook and watch all embedded videos\nWatch this video"
   },
   {
-    "objectID": "week1/index.html#monday-workshop",
-    "href": "week1/index.html#monday-workshop",
+    "objectID": "week1/index.html#monday-lecture",
+    "href": "week1/index.html#monday-lecture",
     "title": "Week 1: Introduction to forecasting & R",
-    "section": "Monday workshop",
-    "text": "Monday workshop\n\n\nDownload slides"
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
   },
   {
-    "objectID": "week1/index.html#tuesday-seminar",
-    "href": "week1/index.html#tuesday-seminar",
+    "objectID": "week1/index.html#tuesday-workshop",
+    "href": "week1/index.html#tuesday-workshop",
     "title": "Week 1: Introduction to forecasting & R",
-    "section": "Tuesday seminar",
-    "text": "Tuesday seminar\nActivities for Tuesday seminar"
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop"
   },
   {
     "objectID": "week1/index.html#assignments",
@@ -492,44 +506,51 @@
   {
     "objectID": "week10/index.html",
     "href": "week10/index.html",
-    "title": "Week 10: ARIMA models",
+    "title": "Week 10: ARIMA models (part 3)",
     "section": "",
     "text": "Seasonal ARIMA models\nComputing forecasts for ARIMA models\nARIMA vs ETS models"
   },
   {
     "objectID": "week10/index.html#what-you-will-learn-this-week",
     "href": "week10/index.html#what-you-will-learn-this-week",
-    "title": "Week 10: ARIMA models",
+    "title": "Week 10: ARIMA models (part 3)",
     "section": "",
     "text": "Seasonal ARIMA models\nComputing forecasts for ARIMA models\nARIMA vs ETS models"
   },
   {
     "objectID": "week10/index.html#pre-class-activities",
     "href": "week10/index.html#pre-class-activities",
-    "title": "Week 10: ARIMA models",
+    "title": "Week 10: ARIMA models (part 3)",
     "section": "Pre-class activities",
     "text": "Pre-class activities\nRead Sections 9.9-9.10 of the textbook and watch all embedded videos"
   },
   {
+    "objectID": "week10/index.html#monday-lecture",
+    "href": "week10/index.html#monday-lecture",
+    "title": "Week 10: ARIMA models (part 3)",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week10/index.html#tuesday-workshop",
+    "href": "week10/index.html#tuesday-workshop",
+    "title": "Week 10: ARIMA models (part 3)",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\n\nWeek 10 quiz"
+  },
+  {
     "objectID": "week10/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week10/index.html#exercises-on-your-own-or-in-tutorial",
-    "title": "Week 10: ARIMA models",
+    "title": "Week 10: ARIMA models (part 3)",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 11-16 from Section 9.11 of the book.\nSolutions to Exercises\nRecorded tutorial code\n\nCode used in seminar\nCode used in workshop"
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 11-16 from Section 9.11 of the book."
   },
   {
     "objectID": "week10/index.html#assignments",
     "href": "week10/index.html#assignments",
-    "title": "Week 10: ARIMA models",
+    "title": "Week 10: ARIMA models (part 3)",
     "section": "Assignments",
     "text": "Assignments\n\nAssignment 3 is due on Monday 05 October.\nRetail Project is due on Friday 23 October."
-  },
-  {
-    "objectID": "week10/index.html#weekly-quiz",
-    "href": "week10/index.html#weekly-quiz",
-    "title": "Week 10: ARIMA models",
-    "section": "Weekly quiz",
-    "text": "Weekly quiz\n\nWeek 10 quiz is due on Tuesday 06 October."
   },
   {
     "objectID": "week11/activities.html",
@@ -567,11 +588,25 @@
     "text": "Pre-class activities\nRead Chapter 7 of the textbook and watch all embedded videos"
   },
   {
+    "objectID": "week11/index.html#monday-lecture",
+    "href": "week11/index.html#monday-lecture",
+    "title": "Week 11: Forecasting using regression",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week11/index.html#tuesday-workshop",
+    "href": "week11/index.html#tuesday-workshop",
+    "title": "Week 11: Forecasting using regression",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\n\nWeek 11 quiz"
+  },
+  {
     "objectID": "week11/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week11/index.html#exercises-on-your-own-or-in-tutorial",
     "title": "Week 11: Forecasting using regression",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-7 from Section 7.10 of the book.\nSolutions to Exercises\nRecorded tutorial code\n\nCode used in seminar\nCode used in workshop"
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-7 from Section 7.10 of the book."
   },
   {
     "objectID": "week11/index.html#assignments",
@@ -579,13 +614,6 @@
     "title": "Week 11: Forecasting using regression",
     "section": "Assignments",
     "text": "Assignments\n\nRetail Project is due on Friday 23 October."
-  },
-  {
-    "objectID": "week11/index.html#weekly-quiz",
-    "href": "week11/index.html#weekly-quiz",
-    "title": "Week 11: Forecasting using regression",
-    "section": "Weekly quiz",
-    "text": "Weekly quiz\n\nWeek 11 quiz is due on Tuesday 13 October."
   },
   {
     "objectID": "week12/ex12-sol.html",
@@ -672,11 +700,32 @@
     "text": "Pre-class activities\nRead Chapter 2 of the textbook and watch all embedded videos"
   },
   {
+    "objectID": "week2/index.html#monday-lecture",
+    "href": "week2/index.html#monday-lecture",
+    "title": "Week 2: Time series graphics",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week2/index.html#tuesday-workshop",
+    "href": "week2/index.html#tuesday-workshop",
+    "title": "Week 2: Time series graphics",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\n\nWeek 2 quiz"
+  },
+  {
     "objectID": "week2/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week2/index.html#exercises-on-your-own-or-in-tutorial",
     "title": "Week 2: Time series graphics",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-11 from Section 2.10 of the book.\nSolutions to Exercises\nRecorded tutorial code\nCode used in lecture\nCode used in workshop\n\n\n\n\n\n## Assignments\n\n* [Forecasting Competition](../assignments/competition.qmd) is due on Monday 03 August.\n\n\n## Weekly quiz\n\n* [Week 2 quiz](https://learning.monash.edu/mod/quiz/view.php?id=6049177) is due on Tuesday 04 August."
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-11 from Section 2.10 of the book."
+  },
+  {
+    "objectID": "week2/index.html#assignments",
+    "href": "week2/index.html#assignments",
+    "title": "Week 2: Time series graphics",
+    "section": "Assignments",
+    "text": "Assignments\n\nForecasting Competition is due on Monday 03 August."
   },
   {
     "objectID": "week3/activities.html",
@@ -728,11 +777,25 @@
     "text": "Pre-class activities\nRead Chapter 3 of the textbook and watch all embedded videos"
   },
   {
+    "objectID": "week3/index.html#monday-lecture",
+    "href": "week3/index.html#monday-lecture",
+    "title": "Week 3: Time series decomposition",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week3/index.html#tuesday-workshop",
+    "href": "week3/index.html#tuesday-workshop",
+    "title": "Week 3: Time series decomposition",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\n\nWeek 3 quiz"
+  },
+  {
     "objectID": "week3/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week3/index.html#exercises-on-your-own-or-in-tutorial",
     "title": "Week 3: Time series decomposition",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-5, 9-10 from Section 3.7 of the book.\nSolutions to Exercises\nRecorded tutorial code\n\nCode used in lecture"
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-5, 9-10 from Section 3.7 of the book."
   },
   {
     "objectID": "week3/index.html#assignments",
@@ -740,13 +803,6 @@
     "title": "Week 3: Time series decomposition",
     "section": "Assignments",
     "text": "Assignments\n\nAssignment 1 is due on Monday 24 August."
-  },
-  {
-    "objectID": "week3/index.html#weekly-quiz",
-    "href": "week3/index.html#weekly-quiz",
-    "title": "Week 3: Time series decomposition",
-    "section": "Weekly quiz",
-    "text": "Weekly quiz\n\nWeek 3 quiz is due on Tuesday 11 August."
   },
   {
     "objectID": "week4/activities.html",
@@ -798,11 +854,25 @@
     "text": "Pre-class activities\n\nRead Chapter 5 of the textbook, Sections 5.1 – 5.3, 5.6 – 5.7, and watch all embedded videos\nRead Chapter 7.4 of the textbook, and watch the embedded video"
   },
   {
+    "objectID": "week4/index.html#monday-lecture",
+    "href": "week4/index.html#monday-lecture",
+    "title": "Week 4: Simple forecasting methods",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week4/index.html#tuesday-workshop",
+    "href": "week4/index.html#tuesday-workshop",
+    "title": "Week 4: Simple forecasting methods",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\n\nWeek 4 quiz"
+  },
+  {
     "objectID": "week4/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week4/index.html#exercises-on-your-own-or-in-tutorial",
     "title": "Week 4: Simple forecasting methods",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-5, 11 from Section 5.11 of the book.\nComplete Exercises 2 and 6 from Section 7.10 of the book\nSolutions to Exercises\nRecorded tutorial code\n\nCode used in lecture\nCode used in workshop"
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-5, 11 from Section 5.11 of the book.\nComplete Exercises 2 and 6 from Section 7.10 of the book"
   },
   {
     "objectID": "week4/index.html#assignments",
@@ -810,13 +880,6 @@
     "title": "Week 4: Simple forecasting methods",
     "section": "Assignments",
     "text": "Assignments\n\nAssignment 1 is due on Monday 24 August."
-  },
-  {
-    "objectID": "week4/index.html#weekly-quiz",
-    "href": "week4/index.html#weekly-quiz",
-    "title": "Week 4: Simple forecasting methods",
-    "section": "Weekly quiz",
-    "text": "Weekly quiz\n\nWeek 4 quiz is due on Tuesday 18 August."
   },
   {
     "objectID": "week5/activities.html",
@@ -868,11 +931,25 @@
     "text": "Pre-class activities\nRead Chapter 5 of the textbook, Sections 5.4 – 5.5, 5.8 – 5.10, and watch all embedded videos"
   },
   {
+    "objectID": "week5/index.html#monday-lecture",
+    "href": "week5/index.html#monday-lecture",
+    "title": "Week 5: Accuracy evaluation",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week5/index.html#tuesday-workshop",
+    "href": "week5/index.html#tuesday-workshop",
+    "title": "Week 5: Accuracy evaluation",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\n\nWeek 5 quiz"
+  },
+  {
     "objectID": "week5/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week5/index.html#exercises-on-your-own-or-in-tutorial",
     "title": "Week 5: Accuracy evaluation",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 8-10, 12 from Section 5.11 of the book.\nSolutions to Exercises\nRecorded tutorial code\n\nCode used in lecture\nCode used in workshop"
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 8-10, 12 from Section 5.11 of the book."
   },
   {
     "objectID": "week5/index.html#assignments",
@@ -880,13 +957,6 @@
     "title": "Week 5: Accuracy evaluation",
     "section": "Assignments",
     "text": "Assignments\n\nAssignment 1 is due on Monday 24 August."
-  },
-  {
-    "objectID": "week5/index.html#weekly-quiz",
-    "href": "week5/index.html#weekly-quiz",
-    "title": "Week 5: Accuracy evaluation",
-    "section": "Weekly quiz",
-    "text": "Weekly quiz\n\nWeek 5 quiz is due on Tuesday 25 August."
   },
   {
     "objectID": "week6/activities.html",
@@ -931,11 +1001,25 @@
     "text": "Pre-class activities\nRead Sections 8.1-8.2 and 8.5 of the textbook and watch all embedded videos"
   },
   {
+    "objectID": "week6/index.html#monday-lecture",
+    "href": "week6/index.html#monday-lecture",
+    "title": "Week 6: ETS models (part 1)",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week6/index.html#tuesday-workshop",
+    "href": "week6/index.html#tuesday-workshop",
+    "title": "Week 6: ETS models (part 1)",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\n\nWeek 6 quiz"
+  },
+  {
     "objectID": "week6/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week6/index.html#exercises-on-your-own-or-in-tutorial",
     "title": "Week 6: ETS models (part 1)",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-6, 16, 17 from Section 8.8 of the book.\nSolutions to Exercises\nRecorded tutorial code\n\nCode used in lecture\nCode used in workshop"
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-6, 16, 17 from Section 8.8 of the book."
   },
   {
     "objectID": "week6/index.html#assignments",
@@ -943,13 +1027,6 @@
     "title": "Week 6: ETS models (part 1)",
     "section": "Assignments",
     "text": "Assignments\n\nAssignment 2 is due on Monday 14 September."
-  },
-  {
-    "objectID": "week6/index.html#weekly-quiz",
-    "href": "week6/index.html#weekly-quiz",
-    "title": "Week 6: ETS models (part 1)",
-    "section": "Weekly quiz",
-    "text": "Weekly quiz\n\nWeek 6 quiz is due on Tuesday 01 September."
   },
   {
     "objectID": "week7/activities.html",
@@ -980,11 +1057,25 @@
     "text": "Pre-class activities\nRead Sections 8.3-8.4 and 8.6-8.7 of the textbook and watch all embedded videos"
   },
   {
+    "objectID": "week7/index.html#monday-lecture",
+    "href": "week7/index.html#monday-lecture",
+    "title": "Week 7: ETS models (part 2)",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week7/index.html#tuesday-workshop",
+    "href": "week7/index.html#tuesday-workshop",
+    "title": "Week 7: ETS models (part 2)",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\n\nWeek 7 quiz"
+  },
+  {
     "objectID": "week7/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week7/index.html#exercises-on-your-own-or-in-tutorial",
     "title": "Week 7: ETS models (part 2)",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 7, 10-15 from Section 8.8 of the book.\nSolutions to Exercises\nRecorded tutorial code\nCode used in lecture\nCode used in workshop"
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 7, 10-15 from Section 8.8 of the book."
   },
   {
     "objectID": "week7/index.html#assignments",
@@ -992,13 +1083,6 @@
     "title": "Week 7: ETS models (part 2)",
     "section": "Assignments",
     "text": "Assignments\n\nAssignment 2 is due on Monday 14 September."
-  },
-  {
-    "objectID": "week7/index.html#weekly-quiz",
-    "href": "week7/index.html#weekly-quiz",
-    "title": "Week 7: ETS models (part 2)",
-    "section": "Weekly quiz",
-    "text": "Weekly quiz\n\nWeek 7 quiz is due on Tuesday 08 September."
   },
   {
     "objectID": "week8/activities.html",
@@ -1024,44 +1108,51 @@
   {
     "objectID": "week8/index.html",
     "href": "week8/index.html",
-    "title": "Week 8: ARIMA models",
+    "title": "Week 8: ARIMA models (part 1)",
     "section": "",
     "text": "Stationarity and differencing\nUnit root tests"
   },
   {
     "objectID": "week8/index.html#what-you-will-learn-this-week",
     "href": "week8/index.html#what-you-will-learn-this-week",
-    "title": "Week 8: ARIMA models",
+    "title": "Week 8: ARIMA models (part 1)",
     "section": "",
     "text": "Stationarity and differencing\nUnit root tests"
   },
   {
     "objectID": "week8/index.html#pre-class-activities",
     "href": "week8/index.html#pre-class-activities",
-    "title": "Week 8: ARIMA models",
+    "title": "Week 8: ARIMA models (part 1)",
     "section": "Pre-class activities",
     "text": "Pre-class activities\nRead Sections 9.1-9.2 of the textbook and watch all embedded videos"
   },
   {
+    "objectID": "week8/index.html#monday-lecture",
+    "href": "week8/index.html#monday-lecture",
+    "title": "Week 8: ARIMA models (part 1)",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week8/index.html#tuesday-workshop",
+    "href": "week8/index.html#tuesday-workshop",
+    "title": "Week 8: ARIMA models (part 1)",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\n\nWeek 8 quiz"
+  },
+  {
     "objectID": "week8/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week8/index.html#exercises-on-your-own-or-in-tutorial",
-    "title": "Week 8: ARIMA models",
+    "title": "Week 8: ARIMA models (part 1)",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-5 from Section 9.11 of the book.\nSolutions to Exercises\nRecorded tutorial code\n\nCode used in lecture\nCode used in workshop"
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 1-5 from Section 9.11 of the book."
   },
   {
     "objectID": "week8/index.html#assignments",
     "href": "week8/index.html#assignments",
-    "title": "Week 8: ARIMA models",
+    "title": "Week 8: ARIMA models (part 1)",
     "section": "Assignments",
     "text": "Assignments\n\nAssignment 2 is due on Monday 14 September.\nAssignment 3 is due on Monday 05 October."
-  },
-  {
-    "objectID": "week8/index.html#weekly-quiz",
-    "href": "week8/index.html#weekly-quiz",
-    "title": "Week 8: ARIMA models",
-    "section": "Weekly quiz",
-    "text": "Weekly quiz\n\nWeek 8 quiz is due on Tuesday 15 September."
   },
   {
     "objectID": "week9/activities.html",
@@ -1101,43 +1192,50 @@
   {
     "objectID": "week9/index.html",
     "href": "week9/index.html",
-    "title": "Week 9: ARIMA models",
+    "title": "Week 9: ARIMA models (part 2)",
     "section": "",
     "text": "AR, MA, ARMA and ARIMA models\nSelecting model orders manually and automatically"
   },
   {
     "objectID": "week9/index.html#what-you-will-learn-this-week",
     "href": "week9/index.html#what-you-will-learn-this-week",
-    "title": "Week 9: ARIMA models",
+    "title": "Week 9: ARIMA models (part 2)",
     "section": "",
     "text": "AR, MA, ARMA and ARIMA models\nSelecting model orders manually and automatically"
   },
   {
     "objectID": "week9/index.html#pre-class-activities",
     "href": "week9/index.html#pre-class-activities",
-    "title": "Week 9: ARIMA models",
+    "title": "Week 9: ARIMA models (part 2)",
     "section": "Pre-class activities",
     "text": "Pre-class activities\nRead Sections 9.3-9.8 of the textbook and watch all embedded videos"
   },
   {
+    "objectID": "week9/index.html#monday-lecture",
+    "href": "week9/index.html#monday-lecture",
+    "title": "Week 9: ARIMA models (part 2)",
+    "section": "Monday lecture",
+    "text": "Monday lecture\n\n\nDownload slides"
+  },
+  {
+    "objectID": "week9/index.html#tuesday-workshop",
+    "href": "week9/index.html#tuesday-workshop",
+    "title": "Week 9: ARIMA models (part 2)",
+    "section": "Tuesday workshop",
+    "text": "Tuesday workshop\n\nWeek 9 quiz"
+  },
+  {
     "objectID": "week9/index.html#exercises-on-your-own-or-in-tutorial",
     "href": "week9/index.html#exercises-on-your-own-or-in-tutorial",
-    "title": "Week 9: ARIMA models",
+    "title": "Week 9: ARIMA models (part 2)",
     "section": "Exercises (on your own or in tutorial)",
-    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 6-10 from Section 9.11 of the book.\nSolutions to Exercises\nRecorded tutorial code\n\nCode used in seminar\nCode used in workshop"
+    "text": "Exercises (on your own or in tutorial)\n\nComplete Exercises 6-10 from Section 9.11 of the book."
   },
   {
     "objectID": "week9/index.html#assignments",
     "href": "week9/index.html#assignments",
-    "title": "Week 9: ARIMA models",
+    "title": "Week 9: ARIMA models (part 2)",
     "section": "Assignments",
     "text": "Assignments\n\nAssignment 3 is due on Monday 05 October."
-  },
-  {
-    "objectID": "week9/index.html#weekly-quiz",
-    "href": "week9/index.html#weekly-quiz",
-    "title": "Week 9: ARIMA models",
-    "section": "Weekly quiz",
-    "text": "Weekly quiz\n\nWeek 9 quiz is due on Tuesday 29 September."
   }
 ]

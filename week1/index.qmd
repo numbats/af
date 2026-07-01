@@ -25,10 +25,18 @@ source(here::here("course_info.R"))
 
 <iframe width="100%" height="415" src="https://www.youtube.com/embed/HNJYRf0mvxg?si=k0wfI3Sq68TPm4Ek" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+## Monday lecture
+
 ```{r}
 #| output: asis
 show_slides(week)
-show_activity(week, show_solutions = FALSE)
+```
+
+## Tuesday workshop
+
+```{r}
+#| output: asis
+#show_activity(week)
 ```
 
 ```{r}

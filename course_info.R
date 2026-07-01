@@ -138,7 +138,7 @@ show_assignments <- function(week) {
         )
       }
     }
-    show_quiz(week)
+    #show_quiz(week)
   }
 }
 
@@ -147,58 +147,36 @@ show_quiz <- function(week) {
     filter(Week == week, !is.na(Quiz)) |>
     select(Quiz:QMoodle)
   if (NROW(ass) > 0) {
-    cat("\n\n## Weekly quiz\n\n")
-    for (i in seq(NROW(ass))) {
-      cat(
-        "* [",
-        ass$Quiz[i],
-        " quiz](",
-        ass$QMoodle[i],
-        ") is due on ",
-        format(ass$QDue[i], "%A %d %B.\n"),
-        sep = ""
-      )
-    }
+    cat(
+      "\n* [",
+      ass$Quiz,
+      " quiz](",
+      ass$QMoodle,
+      ")",
+      sep = ""
+    )
   }
 }
 
 show_slides <- function(week) {
-  today <- Sys.Date()
-  monday <- monday <- schedule |>
-    filter(Week == week) |>
-    pull(Date) |>
-    as.Date()
-  # Show slides one week ahead
-  if ((monday - today) <= 7 | week <= 1) {
-    file <- paste0("https://af.numbat.space/week", week, "/slides.pdf")
-    embed <- paste0(
-      "<iframe src='https://docs.google.com/gview?url=",
-      file,
-      "&embedded=true' width='100%' height=465></iframe>"
-    )
-    button <- paste0(
-      "<a href=",
-      file,
-      " class='badge badge-small badge-red'>Download slides</a>"
-    )
-    cat(paste0("## Monday lecture\n\n", embed, "\n", button))
-  }
+  file <- paste0("https://af.numbat.space/week", week, "/slides.pdf")
+  embed <- paste0(
+    "<iframe src='https://docs.google.com/gview?url=",
+    file,
+    "&embedded=true' width='100%' height=465></iframe>"
+  )
+  button <- paste0(
+    "<a href=",
+    file,
+    " class='badge badge-small badge-red'>Download slides</a>"
+  )
+  cat(paste0(embed, "\n\n", button, "\n\n"))
 }
 
-
-show_activity <- function(week, title = TRUE, show_solutions = TRUE) {
-  today <- Sys.Date()
-  monday <- monday <- schedule |>
-    filter(Week == week) |>
-    pull(Date) |>
-    as.Date()
-  # Show slides one week ahead
-  if ((monday - today) <= 7 | week <= 1) {
-    file <- here::here(paste0("week", week, "/activities.qmd"))
-    if (fs::file_exists(file)) {
-      cat("\n\n## Tuesday workshop\n\n")
-      cat("[Activities for Tuesday workshop](activities.qmd)\n\n")
-    }
+show_activity <- function(week, title = TRUE) {
+  file <- here::here(paste0("week", week, "/activities.qmd"))
+  if (fs::file_exists(file)) {
+    cat("\n* [Activities for Tuesday workshop](activities.qmd)\n\n")
   }
 }
 

@@ -17,23 +17,24 @@ source(here::here("course_info.R"))
 
 Read [Chapter 10 of the textbook](https://otexts.com/fpp3/dynamic.html) and watch all embedded videos
 
-## Exercises (on your own or in tutorial)
-
-Complete Exercises 2-6 from [Section 10.7 of the book](https://otexts.com/fpp3/dynamic-exercises.html).
-
-[**Solutions to Exercises**](ex12-sol.qmd)
+## Monday lecture
 
 ```{r}
 #| output: asis
 show_slides(week)
 ```
 
-[Code used in lecture](seminar_code.R)
+<!-- * [Code used in lecture](lecture_code.R) -->
 
-# Tuesday revision class
+## Tuesday revision class
 
 <iframe src='https://docs.google.com/gview?url=https://af.numbat.space/week12/revision_slides.pdf&embedded=true' width='100%' height=465></iframe>
 <a href="https://af.numbat.space/week12/revision_slides.pdf" class='badge badge-small badge-red'>Download slides</a>
+
+## Exercises (on your own or in tutorial)
+
+* Complete Exercises 2-6 from [Section 10.7 of the book](https://otexts.com/fpp3/dynamic-exercises.html).
+<!-- * [Solutions to Exercises](ex12-sol.qmd) -->
 
 ## Post-class activities
 
@@ -41,7 +42,6 @@ show_slides(week)
 * Complete [past exams](/exams).
 * Re-read [the textbook](https://otexts.com/fpp3/).
 * Listen again to all lectures, workshops, tutorials.
-
 
 ```{r}
 #| output: asis

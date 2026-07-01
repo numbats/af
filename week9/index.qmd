@@ -1,5 +1,5 @@
 ---
-title: "Week 9: ARIMA models"
+title: "Week 9: ARIMA models (part 2)"
 ---
 
 ```{r}
@@ -16,25 +16,29 @@ source(here::here("course_info.R"))
 
 Read [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos
 
-## Exercises (on your own or in tutorial)
-
-* Complete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
-* [Solutions to Exercises](ex9-sol.qmd)
-* [Recorded tutorial code](tutorial_code.R)
+## Monday lecture
 
 ```{r}
 #| output: asis
 show_slides(week)
 ```
 
-[Code used in seminar](seminar_code.R)
+<!-- * [Code used in lecture](lecture_code.R) -->
+
+## Tuesday workshop
 
 ```{r}
 #| output: asis
-show_activity(week, show_solutions = FALSE)
+#show_activity(week)
+show_quiz(week)
 ```
 
-[Code used in workshop](workshop_code.R)
+<!-- * [Code used in workshop](workshop_code.R) -->
+
+## Exercises (on your own or in tutorial)
+
+* Complete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
+<!-- * [Solutions to Exercises](ex9-sol.qmd) -->
 
 ```{r}
 #| output: asis

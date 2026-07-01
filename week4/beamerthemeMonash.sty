@@ -8,18 +8,19 @@
 
 % Fonts
 \ifPDFTeX
-  \usepackage[scaled=0.85]{sourcecodepro}
-  \usepackage[sfdefault,lf]{FiraSans}
+  \usepackage[scaled=0.9]{beramono}
+  \usepackage[sfdefault,lf,t]{FiraSans}
   \usepackage{etoolbox}
   \patchcmd{\@verbatim}
     {\verbatim@font}
-    {\verbatim@font\fontsize{10}{10}\tt}
+    {\verbatim@font\fontsize{10}{11}\tt}
     {}{}
 \else % if luatex or xetex
   \usepackage[fira]{fontsetup}
   \setmonofont[Scale=0.85]{SourceCodePro-Regular.otf}
-  \def\verbatim@font{\fontsize{10}{10}\tt}%
+  \def\verbatim@font{\fontsize{10}{11}\tt}%
 \fi
+\usepackage{mathrsfs}
 
 %% Colors
 \definecolor{DarkGrey}{RGB}{100,100,100}
@@ -126,7 +127,7 @@
 % Redefine shaded environment if it exists (for R plots)
 \ifcsname Shaded\endcsname
   \definecolor{shadecolor}{RGB}{225,225,225}
-  \renewenvironment{Shaded}{\color{black}\fontsize{10}{10}\sf\begin{snugshade}\color{black}}{\end{snugshade}}
+  \renewenvironment{Shaded}{\color{black}\fontsize{10}{11}\sf\begin{snugshade}\color{black}}{\end{snugshade}}
 \fi
 
 \setbeamertemplate{footline}{%
