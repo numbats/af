@@ -1,0 +1,9 @@
+project:
+  render:
+    - "*.qmd"
+    - "*.md"
+    - "!/slides"
+    - "!/handouts"
+    - "!Assignment_template.qmd"
+    - "!week*/slides.qmd"
+    - "!week*/revision_slides.qmd"

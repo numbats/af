@@ -1,13 +1,13 @@
-default: preview
-
-all: build
+default: build
 
 preview:
 	quarto preview
 
 build:
-	quarto render
+	quarto render --profile noslides --no-clean
 
 clean:
-	rm -rf _site
-	rm -rf _freeze
+	rm -Rf docs
+	rm -Rf _freeze
+	rm -Rf week*/slides_cache
+	rm -Rf week*/slides_files
