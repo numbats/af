@@ -19,11 +19,11 @@ If you would like to appear on the forecasting accuracy leaderboard under an ali
 library(moodlequiz)
 ```
 
-Produce a forecast of the Google (GOOG) closing stock price on 24 March 2025 in $USD (<https://finance.yahoo.com/quote/GOOG/> or <https://www.nasdaq.com/market-activity/stocks/goog/historical>).
+The 7-day moving average of transit trade volumes (in millions of metric tons) through the Strait of Hormuz on 7 August 2026. [Data](https://portwatch.imf.org/pages/cb5856222a5b4105adc6ee7e880a1730) *— click "Transit Trade Volume" tab*
 
-The forecast mean: `r cloze_numerical(140, feedback = "Yes, that is a reasonable point forecast", tolerance = 100)`
+The forecast mean: `r cloze_numerical(5, feedback = "Yes, that is a reasonable point forecast", tolerance = 5)`
 
-The 80% forecast interval: [lower=`r cloze_numerical(140, feedback = "Yes, that is a reasonable lower 80% bound", tolerance = 100)`, upper=`r cloze_numerical(140, feedback = "Yes, that is a reasonable upper 80% bound", tolerance = 100)`]80%.
+The 80% forecast interval: [lower=`r cloze_numerical(5, feedback = "Yes, that is a reasonable lower 80% bound", tolerance = 5)`, upper=`r cloze_numerical(5, feedback = "Yes, that is a reasonable upper 80% bound", tolerance = 5)`]80%.
 
 ## Q1 Explanation {type=essay}
 
@@ -31,12 +31,11 @@ Explanation of how you obtained your forecasts, no more than a couple of sentenc
 
 ## Q2 Forecasts
 
-Produce a forecast of the maximum temperature at Melbourne airport in degrees Celsius on
-14 April 2025 (<http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml/>)
+Produce a forecast of the difference in runs scored between Australia and Bangladesh in the second cricket test to be held 22-26 August 2026, Mackay. Give result as (Australia total minus Bangladesh total). [Data](https://stats.espncricinfo.com/ci/engine/stats/index.html?class=1;opposition=2;opposition=25;orderby=start;team=2;team=25;template=results;type=team;view=match)
 
-The forecast mean: `r cloze_numerical(20, feedback = "Yes, that is a reasonable point forecast", tolerance = 20)`
+The forecast mean: `r cloze_numerical(0, feedback = "Yes, that is a reasonable point forecast", tolerance = 1000)`
 
-The 80% forecast interval: [lower=`r cloze_numerical(20, feedback = "Yes, that is a reasonable lower 80% bound", tolerance = 20)`, upper=`r cloze_numerical(20, feedback = "Yes, that is a reasonable upper 80% bound", tolerance = 20)`]80%.
+The 80% forecast interval: [lower=`r cloze_numerical(0, feedback = "Yes, that is a reasonable lower 80% bound", tolerance = 1000)`, upper=`r cloze_numerical(0, feedback = "Yes, that is a reasonable upper 80% bound", tolerance = 1000)`]80%.
 
 ## Q2 Explanation {type=essay}
 
@@ -44,11 +43,11 @@ Explanation of how you obtained your forecasts, no more than a couple of sentenc
 
 ## Q3 Forecasts
 
-Produce a forecast for the difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2025 (<https://en.wikipedia.org/wiki/Anzac_Day_match>).
+Produce a forecast of the maximum temperature in Celsius at Melbourne airport on 13 September 2026. [Data](https://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml)
 
-The forecast mean: `r cloze_numerical(0, feedback = "Yes, that is a reasonable point forecast", tolerance = 100)`
+The forecast mean: `r cloze_numerical(25, feedback = "Yes, that is a reasonable point forecast", tolerance = 25)`
 
-The 80% forecast interval: [lower=`r cloze_numerical(0, feedback = "Yes, that is a reasonable lower 80% bound", tolerance = 100)`, upper=`r cloze_numerical(0, feedback = "Yes, that is a reasonable upper 80% bound", tolerance = 100)`]80%.
+The 80% forecast interval: [lower=`r cloze_numerical(25, feedback = "Yes, that is a reasonable lower 80% bound", tolerance = 25)`, upper=`r cloze_numerical(25, feedback = "Yes, that is a reasonable upper 80% bound", tolerance = 25)`]80%.
 
 ## Q3 Explanation {type=essay}
 
@@ -56,11 +55,11 @@ Explanation of how you obtained your forecasts, no more than a couple of sentenc
 
 ## Q4 Forecasts
 
-Produce a forecast for the seasonally adjusted estimate of total employment (in persons) for April 2025. ABS CAT 6202, to be released around mid May 2025 (<https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release>)
+Produce a forecast of the Google (GOOG) closing stock price in $US on 5 October 2026. [Data](https://finance.yahoo.com/quote/GOOG/history/).
 
-The forecast mean: `r cloze_numerical(14000000, feedback = "Yes, that is a reasonable point forecast", tolerance = 2000000)`
+The forecast mean: `r cloze_numerical(400, feedback = "Yes, that is a reasonable point forecast", tolerance = 400)`
 
-The 80% forecast interval: [lower=`r cloze_numerical(14000000, feedback = "Yes, that is a reasonable lower 80% bound", tolerance = 2000000)`, upper=`r cloze_numerical(14000000, feedback = "Yes, that is a reasonable upper 80% bound", tolerance = 2000000)`]80%.
+The 80% forecast interval: [lower=`r cloze_numerical(400, feedback = "Yes, that is a reasonable lower 80% bound", tolerance = 400)`, upper=`r cloze_numerical(400, feedback = "Yes, that is a reasonable upper 80% bound", tolerance = 400)`]80%.
 
 ## Q4 Explanation {type=essay}
 
@@ -68,11 +67,11 @@ Explanation of how you obtained your forecasts, no more than a couple of sentenc
 
 ## Q5 Forecasts
 
-Produce a forecast of the Google (GOOG) closing stock price on 26 May 2025 in $USD (<https://finance.yahoo.com/quote/GOOG/> or <https://www.nasdaq.com/market-activity/stocks/goog/historical>).
+Produce a forecast for the seasonally adjusted estimate of the number of employed people (in millions) for September 2026. ABS CAT 6202, to be released on 15 October 2026. [Data](https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release)
 
-The forecast mean: `r cloze_numerical(140, feedback = "Yes, that is a reasonable point forecast", tolerance = 100)`
+The forecast mean: `r cloze_numerical(15, feedback = "Yes, that is a reasonable point forecast", tolerance = 5)`
 
-The 80% forecast interval: [lower=`r cloze_numerical(140, feedback = "Yes, that is a reasonable lower 80% bound", tolerance = 100)`, upper=`r cloze_numerical(140, feedback = "Yes, that is a reasonable upper 80% bound", tolerance = 100)`]80%.
+The 80% forecast interval: [lower=`r cloze_numerical(15, feedback = "Yes, that is a reasonable lower 80% bound", tolerance = 5)`, upper=`r cloze_numerical(15, feedback = "Yes, that is a reasonable upper 80% bound", tolerance = 5)`]80%.
 
 ## Q5 Explanation {type=essay}
 

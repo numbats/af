@@ -27,9 +27,9 @@
 <questiontext format="html">
 <text><![CDATA[
 
-<p>Produce a forecast of the Google (GOOG) closing stock price on 24 March 2025 in $USD (<a href="https://finance.yahoo.com/quote/GOOG/" class="uri">https://finance.yahoo.com/quote/GOOG/</a> or <a href="https://www.nasdaq.com/market-activity/stocks/goog/historical" class="uri">https://www.nasdaq.com/market-activity/stocks/goog/historical</a>).</p>
-<p>The forecast mean: {1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable point forecast}</p>
-<p>The 80% forecast interval: [lower={1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
+<p>The 7-day moving average of transit trade volumes (in millions of metric tons) through the Strait of Hormuz on 7 August 2026. <a href="https://portwatch.imf.org/pages/cb5856222a5b4105adc6ee7e880a1730">Data</a> <em>— click “Transit Trade Volume” tab</em></p>
+<p>The forecast mean: {1:NUMERICAL:=5.000000:5.000000#Yes, that is a reasonable point forecast}</p>
+<p>The 80% forecast interval: [lower={1:NUMERICAL:=5.000000:5.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=5.000000:5.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
 ]]></text>
 </questiontext>
 
@@ -51,10 +51,9 @@
 <questiontext format="html">
 <text><![CDATA[
 
-<p>Produce a forecast of the maximum temperature at Melbourne airport in degrees Celsius on
-14 April 2025 (<a href="http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml/" class="uri">http://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml/</a>)</p>
-<p>The forecast mean: {1:NUMERICAL:=20.000000:20.000000#Yes, that is a reasonable point forecast}</p>
-<p>The 80% forecast interval: [lower={1:NUMERICAL:=20.000000:20.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=20.000000:20.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
+<p>Produce a forecast of the difference in runs scored between Australia and Bangladesh in the second cricket test to be held 22-26 August 2026, Mackay. Give result as (Australia total minus Bangladesh total). <a href="https://stats.espncricinfo.com/ci/engine/stats/index.html?class=1;opposition=2;opposition=25;orderby=start;team=2;team=25;template=results;type=team;view=match">Data</a></p>
+<p>The forecast mean: {1:NUMERICAL:=0.000000:1000.000000#Yes, that is a reasonable point forecast}</p>
+<p>The 80% forecast interval: [lower={1:NUMERICAL:=0.000000:1000.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=0.000000:1000.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
 ]]></text>
 </questiontext>
 
@@ -76,9 +75,9 @@
 <questiontext format="html">
 <text><![CDATA[
 
-<p>Produce a forecast for the difference in points (Collingwood minus Essendon) scored in the AFL match between Collingwood and Essendon for the Anzac Day clash. 25 April 2025 (<a href="https://en.wikipedia.org/wiki/Anzac_Day_match" class="uri">https://en.wikipedia.org/wiki/Anzac_Day_match</a>).</p>
-<p>The forecast mean: {1:NUMERICAL:=0.000000:100.000000#Yes, that is a reasonable point forecast}</p>
-<p>The 80% forecast interval: [lower={1:NUMERICAL:=0.000000:100.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=0.000000:100.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
+<p>Produce a forecast of the maximum temperature in Celsius at Melbourne airport on 13 September 2026. <a href="https://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml">Data</a></p>
+<p>The forecast mean: {1:NUMERICAL:=25.000000:25.000000#Yes, that is a reasonable point forecast}</p>
+<p>The 80% forecast interval: [lower={1:NUMERICAL:=25.000000:25.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=25.000000:25.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
 ]]></text>
 </questiontext>
 
@@ -100,9 +99,9 @@
 <questiontext format="html">
 <text><![CDATA[
 
-<p>Produce a forecast for the seasonally adjusted estimate of total employment (in persons) for April 2025. ABS CAT 6202, to be released around mid May 2025 (<a href="https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release" class="uri">https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release</a>)</p>
-<p>The forecast mean: {1:NUMERICAL:=14000000.000000:2000000.000000#Yes, that is a reasonable point forecast}</p>
-<p>The 80% forecast interval: [lower={1:NUMERICAL:=14000000.000000:2000000.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=14000000.000000:2000000.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
+<p>Produce a forecast of the Google (GOOG) closing stock price in $US on 5 October 2026. <a href="https://finance.yahoo.com/quote/GOOG/history/">Data</a>.</p>
+<p>The forecast mean: {1:NUMERICAL:=400.000000:400.000000#Yes, that is a reasonable point forecast}</p>
+<p>The 80% forecast interval: [lower={1:NUMERICAL:=400.000000:400.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=400.000000:400.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
 ]]></text>
 </questiontext>
 
@@ -124,9 +123,9 @@
 <questiontext format="html">
 <text><![CDATA[
 
-<p>Produce a forecast of the Google (GOOG) closing stock price on 26 May 2025 in $USD (<a href="https://finance.yahoo.com/quote/GOOG/" class="uri">https://finance.yahoo.com/quote/GOOG/</a> or <a href="https://www.nasdaq.com/market-activity/stocks/goog/historical" class="uri">https://www.nasdaq.com/market-activity/stocks/goog/historical</a>).</p>
-<p>The forecast mean: {1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable point forecast}</p>
-<p>The 80% forecast interval: [lower={1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=140.000000:100.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
+<p>Produce a forecast for the seasonally adjusted estimate of the number of employed people (in millions) for September 2026. ABS CAT 6202, to be released on 15 October 2026. <a href="https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release">Data</a></p>
+<p>The forecast mean: {1:NUMERICAL:=15.000000:5.000000#Yes, that is a reasonable point forecast}</p>
+<p>The 80% forecast interval: [lower={1:NUMERICAL:=15.000000:5.000000#Yes, that is a reasonable lower 80% bound}, upper={1:NUMERICAL:=15.000000:5.000000#Yes, that is a reasonable upper 80% bound}]80%.</p>
 ]]></text>
 </questiontext>
 
