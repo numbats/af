@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://af.numbat.space/week9/ex9-sol.html</loc>
+    <loc>https://af.numbat.space/weekly_plan.html</loc>
+    <lastmod>2026-06-07T02:05:38.884Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/week9/index.html</loc>
+    <lastmod>2026-07-01T06:43:07.368Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/week9/activities.html</loc>
     <lastmod>2026-06-07T02:05:38.884Z</lastmod>
   </url>
   <url>
@@ -9,15 +17,23 @@
     <lastmod>2026-06-07T02:05:38.883Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week7/ex7-sol.html</loc>
-    <lastmod>2026-06-07T02:05:38.882Z</lastmod>
+    <loc>https://af.numbat.space/week7/index.html</loc>
+    <lastmod>2026-07-01T06:20:06.372Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/week7/activities.html</loc>
+    <lastmod>2026-06-07T02:05:38.881Z</lastmod>
   </url>
   <url>
     <loc>https://af.numbat.space/week6/ex6-sol.html</loc>
     <lastmod>2026-06-07T02:05:38.881Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week5/ex5-sol.html</loc>
+    <loc>https://af.numbat.space/week5/index.html</loc>
+    <lastmod>2026-07-01T06:20:06.367Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/week5/activities.html</loc>
     <lastmod>2026-06-07T02:05:38.881Z</lastmod>
   </url>
   <url>
@@ -25,7 +41,11 @@
     <lastmod>2026-06-07T02:05:38.881Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week3/ex3-sol.html</loc>
+    <loc>https://af.numbat.space/week3/index.html</loc>
+    <lastmod>2026-07-01T06:22:49.168Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/week3/activities.html</loc>
     <lastmod>2026-06-07T02:05:38.879Z</lastmod>
   </url>
   <url>
@@ -37,7 +57,11 @@
     <lastmod>2026-07-01T06:20:06.381Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week11/ex11-sol.html</loc>
+    <loc>https://af.numbat.space/week11/index.html</loc>
+    <lastmod>2026-07-01T06:20:06.379Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/week11/activities.html</loc>
     <lastmod>2026-06-07T02:05:38.872Z</lastmod>
   </url>
   <url>
@@ -45,48 +69,48 @@
     <lastmod>2026-06-07T02:05:38.872Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week1/activities.html</loc>
-    <lastmod>2026-06-07T02:05:38.865Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/index.html</loc>
-    <lastmod>2026-07-01T22:24:43.956Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/assignments/weekly_quizzes.html</loc>
-    <lastmod>2026-07-01T02:24:35.236Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/assignments/Project.html</loc>
-    <lastmod>2026-07-01T01:06:13.899Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/assignments/A2.html</loc>
-    <lastmod>2026-07-01T01:05:49.421Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/assignments/A1.html</loc>
-    <lastmod>2026-07-01T01:05:56.654Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/assignments/A3.html</loc>
-    <lastmod>2026-07-01T01:06:09.347Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/assignments/competition.html</loc>
-    <lastmod>2026-07-01T07:50:41.513Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/exams/index.html</loc>
-    <lastmod>2026-07-01T01:06:34.638Z</lastmod>
+    <loc>https://af.numbat.space/week1/index.html</loc>
+    <lastmod>2026-07-01T06:06:55.567Z</lastmod>
   </url>
   <url>
     <loc>https://af.numbat.space/other-ex-sol.html</loc>
     <lastmod>2026-06-07T02:05:38.814Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week1/index.html</loc>
-    <lastmod>2026-07-01T06:06:55.567Z</lastmod>
+    <loc>https://af.numbat.space/exams/index.html</loc>
+    <lastmod>2026-07-01T01:06:34.638Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/assignments/competition.html</loc>
+    <lastmod>2026-07-02T07:59:18.840Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/assignments/A3.html</loc>
+    <lastmod>2026-07-01T01:06:09.347Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/assignments/A1.html</loc>
+    <lastmod>2026-07-01T01:05:56.654Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/assignments/A2.html</loc>
+    <lastmod>2026-07-01T01:05:49.421Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/assignments/Project.html</loc>
+    <lastmod>2026-07-01T01:06:13.899Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/assignments/weekly_quizzes.html</loc>
+    <lastmod>2026-07-07T07:59:18.747Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/index.html</loc>
+    <lastmod>2026-07-07T07:56:44.320Z</lastmod>
+  </url>
+  <url>
+    <loc>https://af.numbat.space/week1/activities.html</loc>
+    <lastmod>2026-06-07T02:05:38.865Z</lastmod>
   </url>
   <url>
     <loc>https://af.numbat.space/week10/activities.html</loc>
@@ -97,12 +121,8 @@
     <lastmod>2026-07-01T06:43:08.404Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week11/activities.html</loc>
+    <loc>https://af.numbat.space/week11/ex11-sol.html</loc>
     <lastmod>2026-06-07T02:05:38.872Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/week11/index.html</loc>
-    <lastmod>2026-07-01T06:20:06.379Z</lastmod>
   </url>
   <url>
     <loc>https://af.numbat.space/week12/ex12-sol.html</loc>
@@ -117,12 +137,8 @@
     <lastmod>2026-07-01T06:41:27.721Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week3/activities.html</loc>
+    <loc>https://af.numbat.space/week3/ex3-sol.html</loc>
     <lastmod>2026-06-07T02:05:38.879Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/week3/index.html</loc>
-    <lastmod>2026-07-01T06:22:49.168Z</lastmod>
   </url>
   <url>
     <loc>https://af.numbat.space/week4/activities.html</loc>
@@ -133,12 +149,8 @@
     <lastmod>2026-07-01T06:39:48.499Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week5/activities.html</loc>
+    <loc>https://af.numbat.space/week5/ex5-sol.html</loc>
     <lastmod>2026-06-07T02:05:38.881Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/week5/index.html</loc>
-    <lastmod>2026-07-01T06:20:06.367Z</lastmod>
   </url>
   <url>
     <loc>https://af.numbat.space/week6/activities.html</loc>
@@ -149,12 +161,8 @@
     <lastmod>2026-07-01T06:20:06.369Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week7/activities.html</loc>
-    <lastmod>2026-06-07T02:05:38.881Z</lastmod>
-  </url>
-  <url>
-    <loc>https://af.numbat.space/week7/index.html</loc>
-    <lastmod>2026-07-01T06:20:06.372Z</lastmod>
+    <loc>https://af.numbat.space/week7/ex7-sol.html</loc>
+    <lastmod>2026-06-07T02:05:38.882Z</lastmod>
   </url>
   <url>
     <loc>https://af.numbat.space/week8/activities.html</loc>
@@ -165,11 +173,11 @@
     <lastmod>2026-07-01T06:43:05.984Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week9/activities.html</loc>
+    <loc>https://af.numbat.space/week9/ex9-sol.html</loc>
     <lastmod>2026-06-07T02:05:38.884Z</lastmod>
   </url>
   <url>
-    <loc>https://af.numbat.space/week9/index.html</loc>
-    <lastmod>2026-07-01T06:43:07.368Z</lastmod>
+    <loc>https://af.numbat.space/week12/activities.html</loc>
+    <lastmod>2026-06-07T02:05:38.873Z</lastmod>
   </url>
 </urlset>
