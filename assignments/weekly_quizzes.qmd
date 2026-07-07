@@ -26,9 +26,9 @@ For weeks 2--11, there will be a short Moodle quiz conducted during the seminar.
 schedule |>
   filter(!is.na(Quiz)) |>
   transmute(
-    Date = format(Date+1, "%d&nbsp;%b"),
+    Date = paste0("<span style='white-space:nowrap;'>", format(Date+1, "%d %b"), "</span>"),
     Topic = Topic,
-    Quiz = glue::glue("[{Quiz}]({QMoodle})"),
+    Quiz = glue::glue("[<span style='white-space:nowrap;'>{Quiz}</span>]({QMoodle})"),
   ) |>
   knitr::kable(format = "markdown")
 ```

@@ -131,8 +131,12 @@ schedule |>
       Assignment,
       glue::glue("[{Assignment}]({File})")
     ),
-    Quizzes = if_else(is.na(Quiz), Quiz, glue::glue("[{Quiz}]({QMoodle})")),
-    Week = format(Date, "%d&nbsp;%b")
+    Quizzes = if_else(
+      is.na(Quiz),
+      Quiz,
+      glue::glue("[<span style='white-space:nowrap;'>{Quiz}</span>]({QMoodle})")
+    ),
+    Week = paste0("<span style='white-space:nowrap;'>", format(Date, "%d %b"), "</span>")
   ) |>
   select(-Show) |>
   select(Week, everything()) |>
