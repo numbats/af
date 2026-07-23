@@ -61,9 +61,6 @@ website:
       - text: Textbook
         icon: book-fill
         href: https://OTexts.com/fpp3
-    right:
-      - icon: github
-        href: https://github.com/numbats/af
 
 date-format: "D MMMM YYYY"
 
