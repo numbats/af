@@ -351,13 +351,15 @@ library(fpp3)
  * Forecasting competition
 
 ## Forecasting competition: forecast the following series
-\small\vspace*{-0.2cm}
 
-  1. Google closing stock price in $US on 17 Aug
-  2. The difference in runs scored between Australia and Bangladesh in the second cricket test to be held 22-26 Aug, Mackay. Give result as (Australia total minus Bangladesh total)
-  3. Maximum temperature in Celsius at Melbourne airport on 13 Sep
-  4. Google closing stock price in $US on 5 Oct
-  5. The seasonally adjusted estimate of total employment for Sep 2026. ABS CAT 6202, to be released on 15 Oct
+`\small\vspace*{-0.2cm}`{=latex}
+
+1. The 7-day moving average of transit trade volumes (in millions of metric tons) through the Strait of Hormuz on 7 Aug 2026.
+2. The difference in runs scored between Australia and Bangladesh in the second cricket test to be held 22--26 Aug 2026, Mackay.
+3. Maximum temperature in Celsius at Melbourne airport on 13 Sep 2026
+4. Google closing stock price in $US on 5 Oct 2026
+5. The seasonally adjusted estimate of the number of employed people (in millions) for Sep 2026.
+   ABS CAT 6202.
 
 \begin{block}{Due Monday 3 August}
 For each of these, give a point forecast and an 80\% prediction interval.
