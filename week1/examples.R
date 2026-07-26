@@ -1,6 +1,11 @@
 #2. Download data and create tsibble
 library(fpp3)
 
+# Use help
+pedestrian
+?pedestrian
+
+# Read data from CSV file and create tsibble
 aus_accommodation <- read.csv(
   "https://workshop.nectric.com.au/user2024/data/aus_accommodation.csv"
 ) |>

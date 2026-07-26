@@ -1,9 +1,9 @@
 Version: 1.0
 ProjectId: 51c07dd0-eff3-42d3-9ac3-940a664f51be
 
-RestoreWorkspace: Default
-SaveWorkspace: Default
-AlwaysSaveHistory: Default
+RestoreWorkspace: No
+SaveWorkspace: No
+AlwaysSaveHistory: No
 
 EnableCodeIndexing: Yes
 UseSpacesForTab: Yes
@@ -17,3 +17,9 @@ AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 
 BuildType: Makefile
+
+UseNativePipeOperator: Yes
+
+SpellingDictionary: en_AU
+
+EditorTheme: Textmate (default)
