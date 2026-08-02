@@ -14,7 +14,10 @@ format:
     keep_tex: yes
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
+
 source(here::here("setup.R"))
 library(patchwork)
 
@@ -22,7 +25,8 @@ global_economy <- global_economy |>
   select(Year, Country, GDP, Imports, Exports, Population)
 tourism <- tourism |>
   mutate(
-    State = recode(State,
+    State = recode(
+      State,
       "Australian Capital Territory" = "ACT",
       "New South Wales" = "NSW",
       "Northern Territory" = "NT",
@@ -39,45 +43,42 @@ tourism <- tourism |>
 
 ## dplyr functions
 
-* filter: choose rows
-* select: choose columns
-* mutate: make new columns
-* group_by: group rows
-* summarise: summarise across groups
-* reframe: summarise multiple rows across groups
-
+- `filter()`: choose rows
+- `select()`: choose columns
+- `mutate()`: make new columns
+- `group_by()`: group rows
+- `summarise()`: summarise across groups
 
 # Time series graphics
 
 ## Time series graphics
 
-* Time plots: `autoplot()`
-* Seasonal plots: `gg_season()`
-* Seasonal subseries plots: `gg_subseries()`
-* Lag plots: `gg_lag()`
-* ACF plots: `ACF() |> autoplot()`
+- Time plots: `autoplot()`
+- Seasonal plots: `gg_season()`
+- Seasonal subseries plots: `gg_subseries()`
+- Lag plots: `gg_lag()`
+- ACF plots: `ACF() |> autoplot()`
 
 # Seasonality and cyclicity
-
 
 ## Time series patterns
 
 Trend
-  : pattern exists when there is a long-term increase or decrease in the data.
+:   pattern exists when there is a long-term increase or decrease in the data.
 
 Seasonal
-  : pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
+:   pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
 
 Cyclic
-  : pattern exists when data exhibit rises and falls that are \emph{not of fixed period} (duration usually of at least 2 years).
+:   pattern exists when data exhibit rises and falls that are \emph{not of fixed period} (duration usually of at least 2 years).
 
 ## Time series components
 
 \alert{Differences between seasonal and cyclic patterns:}
 
-* seasonal pattern constant length; cyclic pattern variable length
-* average length of cycle longer than length of seasonal pattern
-* magnitude of cycle more variable than magnitude of seasonal pattern
+- seasonal pattern constant length; cyclic pattern variable length
+- average length of cycle longer than length of seasonal pattern
+- magnitude of cycle more variable than magnitude of seasonal pattern
 
 \pause
 
@@ -85,41 +86,33 @@ Cyclic
 The timing of peaks and troughs is predictable with seasonal data, but unpredictable in the long term with cyclic data.
 \end{alertblock}
 
-
-# Scatterplots
-
-
 # White noise and random walks
 
 ## White noise and random walks
 
 ### White noise
 
-$\varepsilon_t\sim$ independent and identically distributed with mean zero and constant variance. 
+$\varepsilon_t \sim$ independent and identically distributed with mean zero and constant variance.
 
 ### Random walks
-$y_t = y_{t-1} + \varepsilon_t$
+
+$y_t = y_{t - 1} + \varepsilon_t$
 
 where $\varepsilon_t$ is a white noise variable.
 
-
 # Lag plots and ACFs
-
 
 ## \large Sampling distribution of autocorrelations
 
 Sampling distribution of $r_k$ for white noise data is asymptotically N(0,$1/T$).\pause
 
-  *  95% of all $r_k$ for white noise must lie within $\pm 1.96/\sqrt{T}$.
-  * If this is not the case, the series is probably not WN.
-  * Common to plot lines at $\pm 1.96/\sqrt{T}$ when plotting ACF.
-These are the \alert{critical values}.
-
+- 95% of all $r_k$ for white noise must lie within $\pm 1.96/\sqrt{T}$.
+- If this is not the case, the series is probably not WN.
+- Common to plot lines at $\pm 1.96/\sqrt{T}$ when plotting ACF.
+  These are the \alert{critical values}.
 
 ## Trend and seasonality in ACF plots
 
 - When data have a trend, the autocorrelations for small lags tend to be large and positive.
 - When data are seasonal, the autocorrelations will be larger at the seasonal lags (i.e., at multiples of the seasonal frequency)
 - When data are trended and seasonal, you see a combination of these effects.
-
-

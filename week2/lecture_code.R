@@ -55,7 +55,7 @@ snowy <- tourism |>
   summarise(Trips = sum(Trips))
 snowy |> autoplot(Trips)
 
-snowy |> gg_season(Trips, labels="both")
+snowy |> gg_season(Trips, labels = "both")
 snowy |> gg_subseries(Trips)
 
 snowy |> gg_lag(Trips)
@@ -95,22 +95,22 @@ pelt |>
 
 ## WHITE NOISE --------------------------------------------------------------------
 
-set.seed(30)
 wn <- tsibble(t = seq(50), y = rnorm(50), index = t)
 wn |> autoplot(y)
-
 wn |> ACF(y, lag_max = 10)
-
 wn |> ACF(y) |> autoplot()
+
 
 ## PIGS ---------------------------------------------------------------------------
 
 pigs <- aus_livestock |>
   filter(
-    State == "Victoria", Animal == "Pigs",
+    State == "Victoria",
+    Animal == "Pigs",
     year(Month) >= 2014
   )
-pigs |> autoplot(Count / 1e3) +
+pigs |>
+  autoplot(Count / 1e3) +
   labs(
     y = "Thousands",
     title = "Number of pigs slaughtered in Victoria"
@@ -141,8 +141,28 @@ google_2015 |>
   ACF(diff, lag_max = 100) |>
   autoplot()
 
+## Random walks
+rw <- tsibble(t = 1:100, y = cumsum(rnorm(100)), index = t)
+rw |> autoplot(y)
+rw |> ACF(y) |> autoplot()
 
-library(fpp3)
+# Daily data: OTexts page views
+
+otexts_views
+otexts_views |> autoplot()
+otexts_views |> gg_season(Pageviews)
+otexts_views |> gg_season(Pageviews, period = "week")
+
+
+## Cyclic data
+
+as_tsibble(sunspot.year) |>
+  autoplot(value)
+
+as_tsibble(sunspot.year) |> gg_lag(value, lags = 1:16, geom = "point")
+as_tsibble(sunspot.year) |> ACF() |> print(n = Inf)
+as_tsibble(sunspot.year) |> ACF() |> autoplot()
+
 
 # NSW criminal offences
 
@@ -165,17 +185,6 @@ nsw_offences |>
   group_by(Type) |>
   summarise(Total = sum(Count)) |>
   arrange(desc(Total))
-
-nsw_offences |>
-  as_tibble() |>
-  group_by(Month) |>
-  reframe(
-    Type = Type,
-    Count = Count,
-    PC = Count / sum(Count) * 100
-  ) |>
-  ungroup()
-
 
 nsw_offences |>
   filter(Type == "Theft") |>
@@ -222,9 +231,7 @@ aus_fertility
 aus_fertility |>
   filter(Region == "Australia") |>
   as_tibble() |>
-  group_by(Year) |>
-  summarise(Rate = sum(Rate)) |>
-  ungroup() |>
+  summarise(Rate = sum(Rate), .by = "Year") |>
   ggplot(aes(x = Year, y = Rate)) +
   geom_line()
 
@@ -234,8 +241,7 @@ aus_fertility |>
   filter(Region == "Australia") |>
   mutate(Age = readr::parse_number(Age)) |>
   as_tibble() |>
-  group_by(Age) |>
-  summarise(Rate = sum(Rate)) |>
+  summarise(Rate = sum(Rate), .by = "Age") |>
   filter(Rate == max(Rate))
 
 aus_fertility |>
@@ -243,5 +249,3 @@ aus_fertility |>
   mutate(Age = readr::parse_number(Age)) |>
   summarise(most_babies = Age[which.max(Rate)]) |>
   autoplot(most_babies)
-
-
