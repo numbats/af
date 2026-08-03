@@ -9,9 +9,9 @@ source(here::here("course_info.R"))
 
 ## What you will learn this week
 
-* Different types of plots for time series including time plots, season plots, subseries plots, lag plots and ACF plots
-* The difference between seasonal patterns and cyclic patterns in time series
-* What is "white noise" and how to identify it.
+- Different types of plots for time series including time plots, season plots, subseries plots, lag plots and ACF plots
+- The difference between seasonal patterns and cyclic patterns in time series
+- What is "white noise" and how to identify it.
 
 ## Pre-class activities
 
@@ -21,15 +21,17 @@ Read [Chapter 2 of the textbook](https://otexts.com/fpp3/graphics.html) and watc
 
 ```{r}
 #| output: asis
+
 show_slides(week)
 ```
 
-<!-- * [Code used in lecture](lecture_code.R) -->
+- [Code used in lecture](lecture_code.R)
 
 ## Tuesday workshop
 
 ```{r}
 #| output: asis
+
 #show_activity(week)
 show_quiz(week)
 ```
@@ -38,10 +40,11 @@ show_quiz(week)
 
 ## Exercises (on your own or in tutorial)
 
-* Complete Exercises 1-11 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).
-<!-- * [Solutions to Exercises](ex2-sol.qmd) -->
+- Complete Exercises 1-11 from [Section 2.10 of the book](https://otexts.com/fpp3/graphics-exercises.html).
+  <!-- * [Solutions to Exercises](ex2-sol.qmd) -->
 
 ```{r}
 #| output: asis
+
 show_assignments(week)
 ```
