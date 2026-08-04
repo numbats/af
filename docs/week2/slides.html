@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Week 2: Time series graphics">
 
-<title>Week 5: Accuracy evaluation – ETC3550/ETC5550 Applied forecasting</title>
+<title>ETC3550/ETC5550 Applied forecasting</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -73,6 +74,49 @@ ul.task-list li input[type="checkbox"] {
 <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -223,27 +267,53 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-you-will-learn-this-week" id="toc-what-you-will-learn-this-week" class="nav-link active" data-scroll-target="#what-you-will-learn-this-week">What you will learn this week</a></li>
-  <li><a href="#pre-class-activities" id="toc-pre-class-activities" class="nav-link" data-scroll-target="#pre-class-activities">Pre-class activities</a></li>
-  <li><a href="#monday-lecture" id="toc-monday-lecture" class="nav-link" data-scroll-target="#monday-lecture">Monday lecture</a></li>
-  <li><a href="#tuesday-workshop" id="toc-tuesday-workshop" class="nav-link" data-scroll-target="#tuesday-workshop">Tuesday workshop</a></li>
-  <li><a href="#exercises-on-your-own-or-in-tutorial" id="toc-exercises-on-your-own-or-in-tutorial" class="nav-link" data-scroll-target="#exercises-on-your-own-or-in-tutorial">Exercises (on your own or in tutorial)</a></li>
-  <li><a href="#assignments" id="toc-assignments" class="nav-link" data-scroll-target="#assignments">Assignments</a></li>
+  <li><a href="#dplyr-functions" id="toc-dplyr-functions" class="nav-link active" data-scroll-target="#dplyr-functions">dplyr functions</a>
+  <ul class="collapse">
+  <li><a href="#dplyr-functions-1" id="toc-dplyr-functions-1" class="nav-link" data-scroll-target="#dplyr-functions-1">dplyr functions</a></li>
+  </ul></li>
+  <li><a href="#time-series-graphics" id="toc-time-series-graphics" class="nav-link" data-scroll-target="#time-series-graphics">Time series graphics</a>
+  <ul class="collapse">
+  <li><a href="#time-series-graphics-1" id="toc-time-series-graphics-1" class="nav-link" data-scroll-target="#time-series-graphics-1">Time series graphics</a></li>
+  </ul></li>
+  <li><a href="#seasonality-and-cyclicity" id="toc-seasonality-and-cyclicity" class="nav-link" data-scroll-target="#seasonality-and-cyclicity">Seasonality and cyclicity</a>
+  <ul class="collapse">
+  <li><a href="#time-series-patterns" id="toc-time-series-patterns" class="nav-link" data-scroll-target="#time-series-patterns">Time series patterns</a></li>
+  <li><a href="#time-series-components" id="toc-time-series-components" class="nav-link" data-scroll-target="#time-series-components">Time series components</a></li>
+  </ul></li>
+  <li><a href="#white-noise-and-random-walks" id="toc-white-noise-and-random-walks" class="nav-link" data-scroll-target="#white-noise-and-random-walks">White noise and random walks</a>
+  <ul class="collapse">
+  <li><a href="#white-noise-and-random-walks-1" id="toc-white-noise-and-random-walks-1" class="nav-link" data-scroll-target="#white-noise-and-random-walks-1">White noise and random walks</a>
+  <ul class="collapse">
+  <li><a href="#white-noise" id="toc-white-noise" class="nav-link" data-scroll-target="#white-noise">White noise</a></li>
+  <li><a href="#random-walks" id="toc-random-walks" class="nav-link" data-scroll-target="#random-walks">Random walks</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#lag-plots-and-acfs" id="toc-lag-plots-and-acfs" class="nav-link" data-scroll-target="#lag-plots-and-acfs">Lag plots and ACFs</a>
+  <ul class="collapse">
+  <li><a href="#sampling-distribution-of-autocorrelations" id="toc-sampling-distribution-of-autocorrelations" class="nav-link" data-scroll-target="#sampling-distribution-of-autocorrelations">Sampling distribution of autocorrelations</a></li>
+  <li><a href="#trend-and-seasonality-in-acf-plots" id="toc-trend-and-seasonality-in-acf-plots" class="nav-link" data-scroll-target="#trend-and-seasonality-in-acf-plots">Trend and seasonality in ACF plots</a></li>
+  </ul></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="slides.pdf"><i class="bi bi-file-pdf"></i>Beamer (presentation)</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Week 5: Accuracy evaluation</h1>
+<h1 class="title">ETC3550/ETC5550 Applied forecasting</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Week 2: Time series graphics </p>
+          </div>
+  </div>
     
   
     
@@ -254,45 +324,97 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="what-you-will-learn-this-week" class="level2">
-<h2 class="anchored" data-anchor-id="what-you-will-learn-this-week">What you will learn this week</h2>
+<section id="dplyr-functions" class="level1">
+<h1>dplyr functions</h1>
+<section id="dplyr-functions-1" class="level2">
+<h2 class="anchored" data-anchor-id="dplyr-functions-1">dplyr functions</h2>
 <ul>
-<li>Fitted values, residuals</li>
-<li>Distributional forecasts</li>
-<li>Forecast evaluation</li>
+<li><code>filter()</code>: choose rows</li>
+<li><code>select()</code>: choose columns</li>
+<li><code>mutate()</code>: make new columns</li>
+<li><code>group_by()</code>: group rows</li>
+<li><code>summarise()</code>: summarise across groups</li>
 </ul>
 </section>
-<section id="pre-class-activities" class="level2">
-<h2 class="anchored" data-anchor-id="pre-class-activities">Pre-class activities</h2>
-<p>Read <a href="https://otexts.com/fpp3/toolbox.html">Chapter 5 of the textbook</a>, Sections 5.4 – 5.5, 5.8 – 5.10, and watch all embedded videos</p>
 </section>
-<section id="monday-lecture" class="level2">
-<h2 class="anchored" data-anchor-id="monday-lecture">Monday lecture</h2>
-<iframe src="https://docs.google.com/gview?url=https://af.numbat.space/week5/slides.pdf&amp;embedded=true" width="100%" height="465">
-</iframe>
-<p><a href="https://af.numbat.space/week5/slides.pdf" class="badge badge-small badge-red">Download slides</a></p>
-<!-- * [Code used in lecture](lecture_code.R) -->
-</section>
-<section id="tuesday-workshop" class="level2">
-<h2 class="anchored" data-anchor-id="tuesday-workshop">Tuesday workshop</h2>
+<section id="time-series-graphics" class="level1">
+<h1>Time series graphics</h1>
+<section id="time-series-graphics-1" class="level2">
+<h2 class="anchored" data-anchor-id="time-series-graphics-1">Time series graphics</h2>
 <ul>
-<li><a href="https://learning.monash.edu/mod/quiz/view.php?id=6049183">Week 5 quiz</a></li>
-</ul>
-<!-- * [Code used in workshop](workshop_code.R) -->
-</section>
-<section id="exercises-on-your-own-or-in-tutorial" class="level2">
-<h2 class="anchored" data-anchor-id="exercises-on-your-own-or-in-tutorial">Exercises (on your own or in tutorial)</h2>
-<ul>
-<li>Complete Exercises 8-10, 12 from <a href="https://otexts.com/fpp3/toolbox-exercises.html">Section 5.11 of the book</a>. <!-- * [Solutions to Exercises](ex5-sol.qmd) --></li>
+<li>Time plots: <code>autoplot()</code></li>
+<li>Seasonal plots: <code>gg_season()</code></li>
+<li>Seasonal subseries plots: <code>gg_subseries()</code></li>
+<li>Lag plots: <code>gg_lag()</code></li>
+<li>ACF plots: <code>ACF() |&gt; autoplot()</code></li>
 </ul>
 </section>
-<section id="assignments" class="level2">
-<h2 class="anchored" data-anchor-id="assignments">Assignments</h2>
+</section>
+<section id="seasonality-and-cyclicity" class="level1">
+<h1>Seasonality and cyclicity</h1>
+<section id="time-series-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="time-series-patterns">Time series patterns</h2>
+<dl>
+<dt>Trend</dt>
+<dd>
+pattern exists when there is a long-term increase or decrease in the data.
+</dd>
+<dt>Seasonal</dt>
+<dd>
+pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
+</dd>
+<dt>Cyclic</dt>
+<dd>
+pattern exists when data exhibit rises and falls that are (duration usually of at least 2 years).
+</dd>
+</dl>
+</section>
+<section id="time-series-components" class="level2">
+<h2 class="anchored" data-anchor-id="time-series-components">Time series components</h2>
+<p></p>
 <ul>
-<li><a href="../assignments/A1.html">Assignment 1</a> is due on Monday 24 August.</li>
+<li>seasonal pattern constant length; cyclic pattern variable length</li>
+<li>average length of cycle longer than length of seasonal pattern</li>
+<li>magnitude of cycle more variable than magnitude of seasonal pattern</li>
+</ul>
+</section>
+</section>
+<section id="white-noise-and-random-walks" class="level1">
+<h1>White noise and random walks</h1>
+<section id="white-noise-and-random-walks-1" class="level2">
+<h2 class="anchored" data-anchor-id="white-noise-and-random-walks-1">White noise and random walks</h2>
+<section id="white-noise" class="level3">
+<h3 class="anchored" data-anchor-id="white-noise">White noise</h3>
+<p><span class="math inline">\varepsilon_t \sim</span> independent and identically distributed with mean zero and constant variance.</p>
+</section>
+<section id="random-walks" class="level3">
+<h3 class="anchored" data-anchor-id="random-walks">Random walks</h3>
+<p><span class="math inline">y_t = y_{t - 1} + \varepsilon_t</span></p>
+<p>where <span class="math inline">\varepsilon_t</span> is a white noise variable.</p>
+</section>
+</section>
+</section>
+<section id="lag-plots-and-acfs" class="level1">
+<h1>Lag plots and ACFs</h1>
+<section id="sampling-distribution-of-autocorrelations" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-distribution-of-autocorrelations">Sampling distribution of autocorrelations</h2>
+<p>Sampling distribution of <span class="math inline">r_k</span> for white noise data is asymptotically N(0,<span class="math inline">1/T</span>).</p>
+<ul>
+<li>95% of all <span class="math inline">r_k</span> for white noise must lie within <span class="math inline">\pm 1.96/\sqrt{T}</span>.</li>
+<li>If this is not the case, the series is probably not WN.</li>
+<li>Common to plot lines at <span class="math inline">\pm 1.96/\sqrt{T}</span> when plotting ACF. These are the .</li>
+</ul>
+</section>
+<section id="trend-and-seasonality-in-acf-plots" class="level2">
+<h2 class="anchored" data-anchor-id="trend-and-seasonality-in-acf-plots">Trend and seasonality in ACF plots</h2>
+<ul>
+<li>When data have a trend, the autocorrelations for small lags tend to be large and positive.</li>
+<li>When data are seasonal, the autocorrelations will be larger at the seasonal lags (i.e., at multiples of the seasonal frequency)</li>
+<li>When data are trended and seasonal, you see a combination of these effects.</li>
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

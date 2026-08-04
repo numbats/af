@@ -43,6 +43,8 @@ readRDS(here::here("assignments/competition_leaderboard.rds")) |>
   DT::datatable()
 ```
 
+-->
+
 ## Forecasts
 
 ::: {layout-ncol=5}
@@ -66,4 +68,3 @@ readRDS(here::here("assignments/competition_leaderboard.rds")) |>
 
 [![Seasonally adjusted total employment for September 2026](Q5.png)](Q5.png)
 :::
- -->

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Week 1: Introduction to forecasting &amp; R">
 
-<title>Retail Project – ETC3550/ETC5550 Applied forecasting</title>
+<title>ETC3550/ETC5550 Applied forecasting</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -296,21 +297,88 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#contact-details" id="toc-contact-details" class="nav-link active" data-scroll-target="#contact-details">Contact details</a></li>
+  <li><a href="#brief-bio" id="toc-brief-bio" class="nav-link" data-scroll-target="#brief-bio">Brief bio</a>
+  <ul class="collapse">
+  <li><a href="#how-my-forecasting-methodology-is-used" id="toc-how-my-forecasting-methodology-is-used" class="nav-link" data-scroll-target="#how-my-forecasting-methodology-is-used">How my forecasting methodology is used:</a></li>
+  </ul></li>
+  <li><a href="#case-study-1-paperware-company" id="toc-case-study-1-paperware-company" class="nav-link" data-scroll-target="#case-study-1-paperware-company">CASE STUDY 1: Paperware company</a></li>
+  <li><a href="#case-study-1-paperware-company-1" id="toc-case-study-1-paperware-company-1" class="nav-link" data-scroll-target="#case-study-1-paperware-company-1">CASE STUDY 1: Paperware company</a>
+  <ul class="collapse">
+  <li><a href="#methods-currently-used" id="toc-methods-currently-used" class="nav-link" data-scroll-target="#methods-currently-used">Methods currently used</a></li>
+  </ul></li>
+  <li><a href="#case-study-2-pbs" id="toc-case-study-2-pbs" class="nav-link" data-scroll-target="#case-study-2-pbs">CASE STUDY 2: PBS</a></li>
+  <li><a href="#case-study-2-pbs-1" id="toc-case-study-2-pbs-1" class="nav-link" data-scroll-target="#case-study-2-pbs-1">CASE STUDY 2: PBS</a>
+  <ul class="collapse">
+  <li><a href="#the-pharmaceutical-benefits-scheme-pbs-is-the-australian-government-drugs-subsidy-scheme." id="toc-the-pharmaceutical-benefits-scheme-pbs-is-the-australian-government-drugs-subsidy-scheme." class="nav-link" data-scroll-target="#the-pharmaceutical-benefits-scheme-pbs-is-the-australian-government-drugs-subsidy-scheme.">The Pharmaceutical Benefits Scheme (PBS) is the Australian government drugs subsidy scheme.</a></li>
+  </ul></li>
+  <li><a href="#case-study-2-pbs-2" id="toc-case-study-2-pbs-2" class="nav-link" data-scroll-target="#case-study-2-pbs-2">CASE STUDY 2: PBS</a></li>
+  <li><a href="#case-study-2-pbs-3" id="toc-case-study-2-pbs-3" class="nav-link" data-scroll-target="#case-study-2-pbs-3">CASE STUDY 2: PBS</a></li>
+  <li><a href="#case-study-3-car-fleet-company" id="toc-case-study-3-car-fleet-company" class="nav-link" data-scroll-target="#case-study-3-car-fleet-company">CASE STUDY 3: Car fleet company</a>
+  <ul class="collapse">
+  <li><a href="#additional-information" id="toc-additional-information" class="nav-link" data-scroll-target="#additional-information">Additional information</a></li>
+  </ul></li>
+  <li><a href="#case-study-4-airline" id="toc-case-study-4-airline" class="nav-link" data-scroll-target="#case-study-4-airline">CASE STUDY 4: Airline</a></li>
+  <li><a href="#case-study-4-airline-1" id="toc-case-study-4-airline-1" class="nav-link" data-scroll-target="#case-study-4-airline-1">CASE STUDY 4: Airline</a></li>
+  <li><a href="#case-study-4-airline-2" id="toc-case-study-4-airline-2" class="nav-link" data-scroll-target="#case-study-4-airline-2">CASE STUDY 4: Airline</a>
+  <ul class="collapse">
+  <li><a href="#additional-information-1" id="toc-additional-information-1" class="nav-link" data-scroll-target="#additional-information-1">Additional information</a></li>
+  </ul></li>
+  <li><a href="#unit-objectives" id="toc-unit-objectives" class="nav-link" data-scroll-target="#unit-objectives">Unit objectives</a>
+  <ul class="collapse">
+  <li><a href="#teaching-and-learning-approach" id="toc-teaching-and-learning-approach" class="nav-link" data-scroll-target="#teaching-and-learning-approach">Teaching and learning approach</a></li>
+  </ul></li>
+  <li><a href="#key-reference" id="toc-key-reference" class="nav-link" data-scroll-target="#key-reference">Key reference</a></li>
+  <li><a href="#outline" id="toc-outline" class="nav-link" data-scroll-target="#outline">Outline</a></li>
+  <li><a href="#assessment" id="toc-assessment" class="nav-link" data-scroll-target="#assessment">Assessment</a></li>
+  <li><a href="#unit-website" id="toc-unit-website" class="nav-link" data-scroll-target="#unit-website">Unit website</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  </ul></li>
+  <li><a href="#international-institute-of-forecasters" id="toc-international-institute-of-forecasters" class="nav-link" data-scroll-target="#international-institute-of-forecasters">International Institute of Forecasters</a></li>
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r">R</a></li>
+  <li><a href="#main-packages" id="toc-main-packages" class="nav-link" data-scroll-target="#main-packages">Main packages</a></li>
+  <li><a href="#main-packages-1" id="toc-main-packages-1" class="nav-link" data-scroll-target="#main-packages-1">Main packages</a></li>
+  <li><a href="#exercises-week-1" id="toc-exercises-week-1" class="nav-link" data-scroll-target="#exercises-week-1">Exercises Week 1</a></li>
+  <li><a href="#forecasting-competition-forecast-the-following-series" id="toc-forecasting-competition-forecast-the-following-series" class="nav-link" data-scroll-target="#forecasting-competition-forecast-the-following-series">Forecasting competition: forecast the following series</a></li>
+  <li><a href="#forecasting-competition-scoring" id="toc-forecasting-competition-scoring" class="nav-link" data-scroll-target="#forecasting-competition-scoring">Forecasting competition: scoring</a>
+  <ul class="collapse">
+  <li><a href="#point-forecasts" id="toc-point-forecasts" class="nav-link" data-scroll-target="#point-forecasts">Point forecasts:</a></li>
+  <li><a href="#prediction-intervals" id="toc-prediction-intervals" class="nav-link" data-scroll-target="#prediction-intervals">Prediction intervals:</a></li>
+  </ul></li>
+  <li><a href="#tsibble-objects" id="toc-tsibble-objects" class="nav-link" data-scroll-target="#tsibble-objects"><code>tsibble</code> objects</a></li>
+  <li><a href="#tsibble-objects-1" id="toc-tsibble-objects-1" class="nav-link" data-scroll-target="#tsibble-objects-1"><code>tsibble</code> objects</a></li>
+  <li><a href="#tsibble-objects-2" id="toc-tsibble-objects-2" class="nav-link" data-scroll-target="#tsibble-objects-2"><code>tsibble</code> objects</a></li>
+  <li><a href="#the-tsibble-index" id="toc-the-tsibble-index" class="nav-link" data-scroll-target="#the-tsibble-index">The <code>tsibble</code> index</a>
+  <ul class="collapse">
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="slides.pdf"><i class="bi bi-file-pdf"></i>Beamer (presentation)</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Retail Project</h1>
+<h1 class="title">ETC3550/ETC5550 Applied forecasting</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Week 1: Introduction to forecasting &amp; R </p>
+          </div>
+  </div>
     
   
     
@@ -321,52 +389,342 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Objective:</strong> To forecast a real time series using ETS and ARIMA models.</p>
-<p><strong>Data:</strong> The data are monthly measures of retail trade volume in Australia, <a href="https://www.abs.gov.au/methodologies/retail-trade-australia-methodology/dec-2024">obtained from the ABS</a>. Each student will be use a different time series, selected using their student ID number as follows. This is the same series that you used in previous assignments.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fpp3)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>get_my_data <span class="ot">&lt;-</span> <span class="cf">function</span>(student_id) {</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(student_id)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  all_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(<span class="st">"https://bit.ly/monashretaildata"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(<span class="cn">TRUE</span>) {</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    retail <span class="ot">&lt;-</span> <span class="fu">filter</span>(all_data, <span class="st">`</span><span class="at">Series ID</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">sample</span>(<span class="st">`</span><span class="at">Series ID</span><span class="st">`</span>, <span class="dv">1</span>))</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="sc">!</span><span class="fu">any</span>(<span class="fu">is.na</span>(<span class="fu">fill_gaps</span>(retail)<span class="sc">$</span>Turnover))) <span class="fu">return</span>(retail)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the argument with your student ID</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>retail <span class="ot">&lt;-</span> <span class="fu">get_my_data</span>(<span class="dv">12345678</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Assignment value:</strong> This assignment is worth 12% of the overall unit assessment. You may copy and paste material from previous assignments, but you must take into account any feedback that you have received on these assignments.</p>
-<p><strong>Report:</strong></p>
-<p>You should produce forecasts of the series using ETS and ARIMA models. Write a report of your analysis in Quarto format explaining carefully what you have done and why you have done it. You may use <a href="https://github.com/numbats/af/raw/main/assignments/Assignment_template.qmd">this file</a> as a starting point.Your report should include the following elements.</p>
+<section id="contact-details" class="level2">
+<h2 class="anchored" data-anchor-id="contact-details">Contact details</h2>
+<p></p>
+</section>
+<section id="brief-bio" class="level2">
+<h2 class="anchored" data-anchor-id="brief-bio">Brief bio</h2>
+<p></p>
 <ul>
-<li>Produce some plots of your series, and describe what you learn from each plot. [2&nbsp;marks]</li>
-<li>Discuss the statistical features of the data, including the effect of COVID-19 on your series. [2&nbsp;marks]</li>
-<li>Find an appropriate Box-Cox transformation for your data and explain why you have chosen the particular transformation parameter <span class="math inline">\lambda</span>. [2&nbsp;marks]</li>
-<li>Produce a plot of an STL decomposition of the transformed data. What do you learn from the plot? [2&nbsp;marks]</li>
-<li>What differencing would be required to make the data stationary? You should use a unit-root test as part of the discussion. [2&nbsp;marks]</li>
-<li>Describe the methodology used to create a short-list of appropriate ARIMA models and ETS models. Include discussion of AIC values as well as results from applying the models to a test-set consisting of the last 24 months of the data provided. [6&nbsp;marks]</li>
-<li>Choose one ARIMA model and one ETS model based on this analysis and show parameter estimates, residual diagnostics, forecasts and prediction intervals for both models. Diagnostic checking for both models should include ACF graphs and the Ljung-Box test. [8&nbsp;marks]</li>
-<li>Compare the results obtained from each of your preferred models. Which method do you think gives the better forecasts? Explain with reference to the test-set. [2&nbsp;marks]</li>
-<li>Apply your two chosen models to the full data set, re-estimating the parameters but not changing the model structure. Produce out-of-sample point forecasts and 80% prediction intervals for each model for two years past the end of the data provided. [4&nbsp;marks]</li>
-<li>Obtain up-to-date data from the <a href="https://www.abs.gov.au/statistics/industry/retail-and-wholesale-trade/retail-trade-australia">ABS website</a> (Table 11). You may need to use the previous release of data, rather than the latest release. Compare your forecasts with the actual numbers. How well did you do? [4&nbsp;marks]</li>
-<li>Discuss the benefits and limitations of the models for your data. [3&nbsp;marks]</li>
-<li>Ensure graphs are properly labelled, including appropriate units of measurement. [3&nbsp;marks]</li>
+<li>Professor of Statistics, Monash University</li>
+<li>Co-author of most popular forecasting textbook in the world</li>
+<li>Developer of most popular forecasting software in the world</li>
 </ul>
-<p><strong>ETC5550 students</strong></p>
+<section id="how-my-forecasting-methodology-is-used" class="level3">
+<h3 class="anchored" data-anchor-id="how-my-forecasting-methodology-is-used">How my forecasting methodology is used:</h3>
 <ul>
-<li>Suppose forecasts of your series were required every year based on the most recent data available at the time. Describe the steps you would undertake each year to produce these forecasts. [5&nbsp;marks]</li>
+<li>Pharmaceutical Benefits Scheme</li>
+<li>Electricity demand</li>
+<li>Australian tourism demand</li>
+<li>Ageing population</li>
+<li>COVID-19 cases</li>
 </ul>
-<p><strong>Notes</strong></p>
+</section>
+</section>
+<section id="case-study-1-paperware-company" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-1-paperware-company">CASE STUDY 1: Paperware company</h2>
+<p></p>
+<p></p>
+</section>
+<section id="case-study-1-paperware-company-1" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-1-paperware-company-1">CASE STUDY 1: Paperware company</h2>
+<section id="methods-currently-used" class="level3">
+<h3 class="anchored" data-anchor-id="methods-currently-used">Methods currently used</h3>
+<dl>
+<dt>A</dt>
+<dd>
+12 month average
+</dd>
+<dt>C</dt>
+<dd>
+6 month average
+</dd>
+<dt>E</dt>
+<dd>
+straight line regression over last 12 months
+</dd>
+<dt>G</dt>
+<dd>
+straight line regression over last 6 months
+</dd>
+<dt>H</dt>
+<dd>
+average slope between last year’s and this year’s values. (Equivalent to differencing at lag 12 and taking mean.)
+</dd>
+<dt>I</dt>
+<dd>
+Same as H except over 6 months.
+</dd>
+<dt>K</dt>
+<dd>
+I couldn’t understand the explanation.
+</dd>
+</dl>
+</section>
+</section>
+<section id="case-study-2-pbs" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-2-pbs">CASE STUDY 2: PBS</h2>
+<p></p>
+</section>
+<section id="case-study-2-pbs-1" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-2-pbs-1">CASE STUDY 2: PBS</h2>
+<section id="the-pharmaceutical-benefits-scheme-pbs-is-the-australian-government-drugs-subsidy-scheme." class="level3">
+<h3 class="anchored" data-anchor-id="the-pharmaceutical-benefits-scheme-pbs-is-the-australian-government-drugs-subsidy-scheme.">The Pharmaceutical Benefits Scheme (PBS) is the Australian government drugs subsidy scheme.</h3>
 <ul>
-<li>Your submission must include the Quarto file (<code>.qmd</code>), and should run without error.</li>
-<li>There will be a 5 marks penalty if file does not run without error.</li>
-<li>When using the updated ABS data set, do not edit the downloaded file in any way.</li>
-<li>There is no need to provide the updated ABS data with your submission.</li>
+<li>Many drugs bought from pharmacies are subsidised to allow more equitable access to modern drugs.</li>
+<li>The cost to government is determined by the number and types of drugs purchased. Currently nearly 1% of GDP.</li>
+<li>The total cost is budgeted based on forecasts of drug usage.</li>
 </ul>
-<br><br>
-<hr>
-<p><b>Due: 23 October 2026</b><br><a href="https://learning.monash.edu/mod/assign/view.php?id=6049171" class="badge badge-large badge-blue"><font size="+2">&nbsp;&nbsp;<b>Submit</b>&nbsp;&nbsp;</font><br></a></p>
+</section>
+</section>
+<section id="case-study-2-pbs-2" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-2-pbs-2">CASE STUDY 2: PBS</h2>
+<p></p>
+</section>
+<section id="case-study-2-pbs-3" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-2-pbs-3">CASE STUDY 2: PBS</h2>
+<ul>
+<li>In 2001: $4.5 billion budget, under-forecasted by $800 million.</li>
+<li>Thousands of products. Seasonal demand.</li>
+<li>Subject to covert marketing, volatile products, uncontrollable expenditure.</li>
+<li>Although monthly data available for 10 years, data are aggregated to annual values, and only the first three years are used in estimating the forecasts.</li>
+<li>All forecasts being done with the function in MS-Excel!</li>
+</ul>
+</section>
+<section id="case-study-3-car-fleet-company" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-3-car-fleet-company">CASE STUDY 3: Car fleet company</h2>
+<p><strong>Client:</strong> One of Australia’s largest car fleet companies</p>
+<p><strong>Problem:</strong> how to forecast resale value of vehicles? How should this affect leasing and sales policies?</p>
+<p></p>
+<section id="additional-information" class="level3">
+<h3 class="anchored" data-anchor-id="additional-information">Additional information</h3>
+<ul>
+<li>They can provide a large amount of data on previous vehicles and their eventual resale values.</li>
+<li>The resale values are currently estimated by a group of specialists. They see me as a threat and do not cooperate.</li>
+</ul>
+</section>
+</section>
+<section id="case-study-4-airline" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-4-airline">CASE STUDY 4: Airline</h2>
+<p></p>
+</section>
+<section id="case-study-4-airline-1" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-4-airline-1">CASE STUDY 4: Airline</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="slides_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="case-study-4-airline-2" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-4-airline-2">CASE STUDY 4: Airline</h2>
+<p><strong>Problem:</strong> how to forecast passenger traffic on major routes?</p>
+<section id="additional-information-1" class="level3">
+<h3 class="anchored" data-anchor-id="additional-information-1">Additional information</h3>
+<ul>
+<li>They can provide a large amount of data on previous routes.</li>
+<li>Traffic is affected by school holidays, special events such as the Grand Prix, advertising campaigns, competition behaviour, etc.</li>
+<li>They have a highly capable team of people who are able to do most of the computing.</li>
+</ul>
+</section>
+</section>
+<section id="unit-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="unit-objectives">Unit objectives</h2>
+<p></p>
+<ol type="1">
+<li>To obtain an understanding of common statistical methods used in business and economic forecasting.</li>
+<li>To develop the computer skills required to forecast business and economic time series data;</li>
+<li>To gain insights into the problems of implementing and operating large scale forecasting systems for use in business.</li>
+</ol>
+<p></p>
+<section id="teaching-and-learning-approach" class="level3">
+<h3 class="anchored" data-anchor-id="teaching-and-learning-approach">Teaching and learning approach</h3>
+<p></p>
+<ul>
+<li>Approximately one hour of pre-recorded online videos each week</li>
+<li>One hour online lecture each Monday</li>
+<li>One hour in-person workshop each Tuesday</li>
+<li>One hour in-person tutorial on Wednesday or Thursday</li>
+</ul>
+</section>
+</section>
+<section id="key-reference" class="level2">
+<h2 class="anchored" data-anchor-id="key-reference">Key reference</h2>
+<p></p>
+<ul>
+<li>Free and online</li>
+<li>Data sets in associated R packages</li>
+<li>R code for examples</li>
+<li>Embedded online lectures</li>
+</ul>
+</section>
+<section id="outline" class="level2">
+<h2 class="anchored" data-anchor-id="outline">Outline</h2>
+
+</section>
+<section id="assessment" class="level2">
+<h2 class="anchored" data-anchor-id="assessment">Assessment</h2>
+<p></p>
+<ul>
+<li>Need at least 45% for exam, and 50% for total.</li>
+<li> Extra project and exam questions.</li>
+</ul>
+</section>
+<section id="unit-website" class="level2">
+<h2 class="anchored" data-anchor-id="unit-website">Unit website</h2>
+<p></p>
+<ul>
+<li>Includes all course materials</li>
+<li>Links for assignment submissions</li>
+<li>Link to discussion forum.</li>
+</ul>
+<p></p>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
+<p> </p>
+</section>
+</section>
+<section id="international-institute-of-forecasters" class="level2">
+<h2 class="anchored" data-anchor-id="international-institute-of-forecasters">International Institute of Forecasters</h2>
+<p></p>
+</section>
+<section id="r" class="level2">
+<h2 class="anchored" data-anchor-id="r">R</h2>
+<p></p>
+<p><img src="figs/Rlogo.png" style="height:1.3cm"></p>
+<p>Available for download from CRAN:</p>
+<p><a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a></p>
+<p></p>
+<p><img src="figs/RStudio-Logo-Flat.png" style="height:1.3cm"></p>
+<p>Available for download from Posit:</p>
+<p><a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a></p>
+<!-- \placefig{.4}{1.2}{width=6cm}{figs/Rlogo} -->
+<!-- \placefig{7}{3.5}{width=5.5cm}{figs/RStudio-Ball} -->
+</section>
+<section id="main-packages" class="level2">
+<h2 class="anchored" data-anchor-id="main-packages">Main packages</h2>
+<p> </p>
+</section>
+<section id="main-packages-1" class="level2">
+<h2 class="anchored" data-anchor-id="main-packages-1">Main packages</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install required packages (do once)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"fpp3"</span>, <span class="st">"GGally), dependencies = TRUE)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At the start of each session</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fpp3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="exercises-week-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercises-week-1">Exercises Week 1</h2>
+<p></p>
+<ul>
+<li>Make sure you are familiar with R, RStudio and the tidyverse packages.</li>
+<li>Do the first five modules of <code>startr.numbat.space</code>.</li>
+<li>Forecasting competition</li>
+</ul>
+</section>
+<section id="forecasting-competition-forecast-the-following-series" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-competition-forecast-the-following-series">Forecasting competition: forecast the following series</h2>
+<p></p>
+<ol type="1">
+<li>The 7-day moving average of transit trade volumes (in millions of metric tons) through the Strait of Hormuz on 7 Aug 2026.</li>
+<li>The difference in runs scored between Australia and Bangladesh in the second cricket test to be held 22–26 Aug 2026, Mackay.</li>
+<li>Maximum temperature in Celsius at Melbourne airport on 13 Sep 2026</li>
+<li>Google closing stock price in $US on 5 Oct 2026</li>
+<li>The seasonally adjusted estimate of the number of employed people (in millions) for Sep 2026. ABS CAT 6202.</li>
+</ol>
+</section>
+<section id="forecasting-competition-scoring" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-competition-scoring">Forecasting competition: scoring</h2>
+<p></p>
+<p><span class="math inline">Y =</span> actual, <span class="math inline">F =</span> point forecast, <span class="math inline">[L,U] =</span> prediction interval</p>
+<section id="point-forecasts" class="level3">
+<h3 class="anchored" data-anchor-id="point-forecasts">Point forecasts:</h3>
+<p> <span class="math display">
+  \text{Absolute Error} = |Y - F|
+</span> </p>
+<ul>
+<li>Rank results for all students in class</li>
+<li>Add ranks across all five items</li>
+</ul>
+</section>
+<section id="prediction-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="prediction-intervals">Prediction intervals:</h3>
+<p> <span class="math display">
+  \text{Interval Score} = (U - L) + 10(L - Y)_+ + 10 (Y - U)_+
+</span> </p>
+<ul>
+<li><span class="math inline">u_+ = \text{max}(u,0)</span></li>
+<li>Rank results for all students</li>
+<li>Add ranks across all five items</li>
+</ul>
+</section>
+</section>
+<section id="tsibble-objects" class="level2">
+<h2 class="anchored" data-anchor-id="tsibble-objects"><code>tsibble</code> objects</h2>
+<p></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>global_economy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 15,150 x 6 [1Y]
+# Key:       Country [263]
+    Year Country             GDP Imports Exports Population
+   &lt;dbl&gt; &lt;fct&gt;             &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+ 1  1960 Afghanistan  537777811.    7.02    4.13    8996351
+ 2  1961 Afghanistan  548888896.    8.10    4.45    9166764
+ 3  1962 Afghanistan  546666678.    9.35    4.88    9345868
+ 4  1963 Afghanistan  751111191.   16.9     9.17    9533954
+ 5  1964 Afghanistan  800000044.   18.1     8.89    9731361
+ 6  1965 Afghanistan 1006666638.   21.4    11.3     9938414
+ 7  1966 Afghanistan 1399999967.   18.6     8.57   10152331
+ 8  1967 Afghanistan 1673333418.   14.2     6.77   10372630
+ 9  1968 Afghanistan 1373333367.   15.2     8.90   10604346
+10  1969 Afghanistan 1408888922.   15.0    10.1    10854428
+# ℹ 15,140 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="tsibble-objects-1" class="level2">
+<h2 class="anchored" data-anchor-id="tsibble-objects-1"><code>tsibble</code> objects</h2>
+<p></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tourism</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 24,320 x 5 [1Q]
+# Key:       Region, State, Purpose [304]
+   Quarter Region   State Purpose  Trips
+     &lt;qtr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 1998 Q1 Adelaide SA    Business  135.
+ 2 1998 Q2 Adelaide SA    Business  110.
+ 3 1998 Q3 Adelaide SA    Business  166.
+ 4 1998 Q4 Adelaide SA    Business  127.
+ 5 1999 Q1 Adelaide SA    Business  137.
+ 6 1999 Q2 Adelaide SA    Business  200.
+ 7 1999 Q3 Adelaide SA    Business  169.
+ 8 1999 Q4 Adelaide SA    Business  134.
+ 9 2000 Q1 Adelaide SA    Business  154.
+10 2000 Q2 Adelaide SA    Business  169.
+# ℹ 24,310 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="tsibble-objects-2" class="level2">
+<h2 class="anchored" data-anchor-id="tsibble-objects-2"><code>tsibble</code> objects</h2>
+<ul>
+<li><p>A <code>tsibble</code> allows storage and manipulation of multiple time series in R.</p></li>
+<li><p>It contains:</p>
+<ul>
+<li>An index: time information about the observation</li>
+<li>Measured variable(s): numbers of interest</li>
+<li>Key variable(s): optional unique identifiers for each series</li>
+</ul></li>
+<li><p>It works with tidyverse functions.</p></li>
+</ul>
+</section>
+<section id="the-tsibble-index" class="level2">
+<h2 class="anchored" data-anchor-id="the-tsibble-index">The <code>tsibble</code> index</h2>
+<p>Time index variables can be created with these functions:</p>
+<section id="section-1" class="level3">
+<h3 class="anchored" data-anchor-id="section-1"></h3>
+<p></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
