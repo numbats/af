@@ -24,7 +24,7 @@ Read [Chapter 3 of the textbook](https://otexts.com/fpp3/decomposition.html) and
 show_slides(week)
 ```
 
-<!-- * [Code used in lecture](lecture_code.R) -->
+* [Code used in lecture](lecture_code.R)
 
 ## Tuesday workshop
 
