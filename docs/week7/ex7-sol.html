@@ -2,16 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.15">
+<meta name="generator" content="quarto-1.7.29">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Exercise Week 7: Solutions – ETC3550/ETC5550 Applied forecasting</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -74,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0cd02c8e122b1adf132d3c9bca458be3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed1868018239815f9dba7a573fb42b0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-441fdb1dcad544eecf66e14d9fc7e4fd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-7e0c672d98429cbffec522538947670c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -136,7 +133,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -339,7 +336,7 @@ window.Quarto = {
 
 
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fpp3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fpp3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="fpp3-8.8-ex7" class="level1">
 <h1>fpp3 8.8, Ex7</h1>
@@ -347,7 +344,7 @@ window.Quarto = {
 <p>Find an ETS model for the Gas data from <code>aus_production</code> and forecast the next few years. Why is multiplicative seasonality necessary here? Experiment with making the trend damped. Does it improve the forecasts?</p>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>aus_production <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Gas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>aus_production <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Gas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -360,13 +357,13 @@ window.Quarto = {
 <li>There is a huge increase in variance as the series increases in level. =&gt; That makes it necessary to use multiplicative seasonality.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">hw =</span> <span class="fu">ETS</span>(Gas <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"M"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"M"</span>)),</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">hwdamped =</span> <span class="fu">ETS</span>(Gas <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"M"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"Ad"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"M"</span>)),</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">glance</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">glance</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 9
   .model    sigma2 log_lik   AIC  AICc   BIC   MSE  AMSE    MAE
@@ -379,9 +376,9 @@ window.Quarto = {
 <li>The non-damped model seems to be doing slightly better here, probably because the trend is very strong over most of the historical data.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(hw) <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -389,7 +386,7 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 19 × 3
    .model   term  estimate
@@ -414,10 +411,10 @@ window.Quarto = {
 18 hwdamped s[-2]   1.08  
 19 hwdamped s[-3]   0.817 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">|&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.model <span class="sc">==</span> <span class="st">"hw"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">24</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .model lb_stat lb_pvalue
@@ -430,10 +427,10 @@ window.Quarto = {
 <li>There also appears to be some <em>heteroskedasticity</em> in the residuals with larger variance in the first half the series.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">36</span>) <span class="sc">|&gt;</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.model <span class="sc">==</span> <span class="st">"hw"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_production)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_production)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -455,10 +452,10 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Trips =</span> <span class="fu">sum</span>(Trips))</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Trips)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Trips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -477,12 +474,12 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dcmp <span class="ot">&lt;-</span> aus_trips <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dcmp <span class="ot">&lt;-</span> aus_trips <span class="sc">|&gt;</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">STL</span>(Trips)) <span class="sc">|&gt;</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>()</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>dcmp <span class="sc">|&gt;</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tsibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(season_adjust)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(season_adjust)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -497,14 +494,14 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>stletsdamped <span class="ot">&lt;-</span> <span class="fu">decomposition_model</span>(</span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>stletsdamped <span class="ot">&lt;-</span> <span class="fu">decomposition_model</span>(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">STL</span>(Trips),</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ETS</span>(season_adjust <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"Ad"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>))</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="sc">|&gt;</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">dcmp_AAdN =</span> stletsdamped) <span class="sc">|&gt;</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"2 years"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_trips)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_trips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -519,14 +516,14 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>stletstrend <span class="ot">&lt;-</span> <span class="fu">decomposition_model</span>(</span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>stletstrend <span class="ot">&lt;-</span> <span class="fu">decomposition_model</span>(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">STL</span>(Trips),</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ETS</span>(season_adjust <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>))</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="sc">|&gt;</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">dcmp_AAN =</span> stletstrend) <span class="sc">|&gt;</span></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"2 years"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_trips)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_trips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -541,10 +538,10 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_trips <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_trips <span class="sc">|&gt;</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">ets =</span> <span class="fu">ETS</span>(Trips))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Trips 
 Model: ETS(A,A,A) 
@@ -562,7 +559,7 @@ Model: ETS(A,A,A)
      AIC     AICc      BIC 
 1436.829 1439.400 1458.267 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 3
   .model term      estimate
@@ -577,7 +574,7 @@ Model: ETS(A,A,A)
 8 ets    s[-2]  -325.      
 9 ets    s[-3]  1267.      </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"2 years"</span>) <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(aus_trips)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"2 years"</span>) <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(aus_trips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -592,7 +589,7 @@ Model: ETS(A,A,A)
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_trips <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_trips <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">dcmp_AAdN =</span> stletsdamped,</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dcmp_AAN =</span> stletstrend,</span>
@@ -601,7 +598,7 @@ Model: ETS(A,A,A)
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ets) <span class="sc">|&gt;</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 3
   .model term      estimate
@@ -616,9 +613,9 @@ Model: ETS(A,A,A)
 8 ets    s[-2]  -325.      
 9 ets    s[-3]  1267.      </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ets) <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Trips 
 Model: ETS(A,A,A) 
@@ -636,7 +633,7 @@ Model: ETS(A,A,A)
      AIC     AICc      BIC 
 1436.829 1439.400 1458.267 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 10
   .model    .type       ME  RMSE   MAE   MPE  MAPE  MASE RMSSE     ACF1
@@ -656,9 +653,9 @@ Model: ETS(A,A,A)
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"2 years"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_trips, <span class="at">level =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_trips, <span class="at">level =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -674,10 +671,10 @@ Model: ETS(A,A,A)
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>best <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>best <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dcmp_AAN)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(best)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(best)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Trips 
 Model: STL decomposition model 
@@ -705,7 +702,7 @@ Model: SNAIVE
 
 sigma^2: 3210.8552 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best) <span class="sc">|&gt;</span> <span class="fu">gg_tsdisplay</span>(.resid, <span class="at">lag_max =</span> <span class="dv">24</span>, <span class="at">plot_type =</span> <span class="st">"histogram"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best) <span class="sc">|&gt;</span> <span class="fu">gg_tsdisplay</span>(.resid, <span class="at">lag_max =</span> <span class="dv">24</span>, <span class="at">plot_type =</span> <span class="st">"histogram"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -713,7 +710,7 @@ sigma^2: 3210.8552 </code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best) <span class="sc">|&gt;</span> <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">24</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best) <span class="sc">|&gt;</span> <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .model   lb_stat lb_pvalue
@@ -737,8 +734,8 @@ sigma^2: 3210.8552 </code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>nzarrivals <span class="ot">&lt;-</span> aus_arrivals <span class="sc">|&gt;</span> <span class="fu">filter</span>(Origin <span class="sc">==</span> <span class="st">"NZ"</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>nzarrivals <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Arrivals <span class="sc">/</span> <span class="fl">1e3</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Thousands of people"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>nzarrivals <span class="ot">&lt;-</span> aus_arrivals <span class="sc">|&gt;</span> <span class="fu">filter</span>(Origin <span class="sc">==</span> <span class="st">"NZ"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>nzarrivals <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Arrivals <span class="sc">/</span> <span class="fl">1e3</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Thousands of people"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -757,13 +754,13 @@ sigma^2: 3210.8552 </code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>nz_tr <span class="ot">&lt;-</span> nzarrivals <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>nz_tr <span class="ot">&lt;-</span> nzarrivals <span class="sc">|&gt;</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>(<span class="fu">n</span>() <span class="sc">-</span> <span class="dv">8</span>))</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>nz_tr <span class="sc">|&gt;</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"M"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"M"</span>))) <span class="sc">|&gt;</span></span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"2 years"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(nzarrivals, Arrivals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(nzarrivals, Arrivals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -793,7 +790,7 @@ sigma^2: 3210.8552 </code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> nz_tr <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> nz_tr <span class="sc">|&gt;</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ets =</span> <span class="fu">ETS</span>(Arrivals),</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_ets =</span> <span class="fu">ETS</span>(<span class="fu">log</span>(Arrivals)),</span>
@@ -804,7 +801,7 @@ sigma^2: 3210.8552 </code></pre>
 <span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">level =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(<span class="fu">filter</span>(nzarrivals, <span class="fu">year</span>(Quarter) <span class="sc">&gt;</span> <span class="dv">2000</span>), Arrivals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(<span class="fu">filter</span>(nzarrivals, <span class="fu">year</span>(Quarter) <span class="sc">&gt;</span> <span class="dv">2000</span>), Arrivals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -812,9 +809,9 @@ sigma^2: 3210.8552 </code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">level =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(nzarrivals, Arrivals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(nzarrivals, Arrivals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -829,8 +826,8 @@ sigma^2: 3210.8552 </code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(nzarrivals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(nzarrivals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 11
   .model  Origin .type      ME   RMSE    MAE    MPE  MAPE  MASE RMSSE    ACF1
@@ -845,9 +842,9 @@ sigma^2: 3210.8552 </code></pre>
 <li>The best method is the ETS model on the logged data (based on RMSE), and it passes the residuals tests.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>log_ets <span class="ot">&lt;-</span> nz_tr <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>log_ets <span class="ot">&lt;-</span> nz_tr <span class="sc">|&gt;</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(<span class="fu">log</span>(Arrivals)))</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>log_ets <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>log_ets <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -855,8 +852,8 @@ sigma^2: 3210.8552 </code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(log_ets) <span class="sc">|&gt;</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(log_ets) <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   Origin .model             lb_stat lb_pvalue
@@ -870,7 +867,7 @@ sigma^2: 3210.8552 </code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>nz_cv <span class="ot">&lt;-</span> nzarrivals <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>nz_cv <span class="ot">&lt;-</span> nzarrivals <span class="sc">|&gt;</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>(<span class="fu">n</span>() <span class="sc">-</span> <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stretch_tsibble</span>(<span class="at">.init =</span> <span class="dv">36</span>, <span class="at">.step =</span> <span class="dv">3</span>)</span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -882,7 +879,7 @@ sigma^2: 3210.8552 </code></pre>
 <span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">stl =</span> <span class="fu">decomposition_model</span>(<span class="fu">STL</span>(<span class="fu">log</span>(Arrivals)), <span class="fu">ETS</span>(season_adjust))</span>
 <span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(nzarrivals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(nzarrivals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 11
   .model  Origin .type    ME   RMSE    MAE   MPE  MAPE  MASE RMSSE  ACF1
@@ -907,13 +904,13 @@ sigma^2: 3210.8552 </code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>cement_cv <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>cement_cv <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>(<span class="fu">n</span>() <span class="sc">-</span> <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stretch_tsibble</span>(<span class="at">.init =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">4</span>)</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> cement_cv <span class="sc">|&gt;</span></span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Cement), <span class="fu">SNAIVE</span>(Cement)) <span class="sc">|&gt;</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"1 year"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"1 year"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <blockquote class="blockquote">
 <ol start="2" type="a">
@@ -921,12 +918,12 @@ sigma^2: 3210.8552 </code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(.id, .model) <span class="sc">|&gt;</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">h =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_fable</span>(<span class="at">response =</span> <span class="st">"Cement"</span>, <span class="at">distribution =</span> Cement) <span class="sc">|&gt;</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">".model"</span>, <span class="st">"h"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">".model"</span>, <span class="st">"h"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 11
   .model           h .type      ME  RMSE   MAE    MPE  MAPE  MASE RMSSE     ACF1
@@ -954,7 +951,7 @@ sigma^2: 3210.8552 </code></pre>
 </ul>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Quarter <span class="sc">&lt;</span> <span class="fu">max</span>(Quarter <span class="sc">-</span> <span class="dv">11</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ETS</span>(Beer),</span>
@@ -963,7 +960,7 @@ sigma^2: 3210.8552 </code></pre>
 <span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"3 years"</span>)</span>
 <span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">filter_index</span>(aus_production, <span class="st">"2000 Q1"</span> <span class="sc">~</span> .), <span class="at">level =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">filter_index</span>(aus_production, <span class="st">"2000 Q1"</span> <span class="sc">~</span> .), <span class="at">level =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -971,7 +968,7 @@ sigma^2: 3210.8552 </code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">accuracy</span>(aus_production)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">accuracy</span>(aus_production)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 10
   .model       .type     ME  RMSE   MAE      MPE  MAPE  MASE RMSSE  ACF1
@@ -988,7 +985,7 @@ sigma^2: 3210.8552 </code></pre>
 </ul>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>tidy_bricks <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>tidy_bricks <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Bricks))</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> tidy_bricks <span class="sc">|&gt;</span></span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Quarter <span class="sc">&lt;</span> <span class="fu">max</span>(Quarter <span class="sc">-</span> <span class="dv">11</span>)) <span class="sc">|&gt;</span></span>
@@ -998,7 +995,7 @@ sigma^2: 3210.8552 </code></pre>
 <span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">STLM =</span> <span class="fu">decomposition_model</span>(<span class="fu">STL</span>(<span class="fu">log</span>(Bricks)), <span class="fu">ETS</span>(season_adjust))</span>
 <span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"3 years"</span>)</span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">filter_index</span>(aus_production, <span class="st">"1980 Q1"</span> <span class="sc">~</span> .), <span class="at">level =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">filter_index</span>(aus_production, <span class="st">"1980 Q1"</span> <span class="sc">~</span> .), <span class="at">level =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1006,7 +1003,7 @@ sigma^2: 3210.8552 </code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">accuracy</span>(tidy_bricks)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">accuracy</span>(tidy_bricks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 10
   .model .type    ME  RMSE   MAE   MPE  MAPE  MASE RMSSE    ACF1
@@ -1023,13 +1020,13 @@ sigma^2: 3210.8552 </code></pre>
 </ul>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>subsidies <span class="ot">&lt;-</span> PBS <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>subsidies <span class="ot">&lt;-</span> PBS <span class="sc">|&gt;</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ATC2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"A10"</span>, <span class="st">"H02"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ATC2) <span class="sc">|&gt;</span></span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Cost =</span> <span class="fu">sum</span>(Cost))</span>
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>subsidies <span class="sc">|&gt;</span></span>
 <span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">vars</span>(Cost)) <span class="sc">+</span></span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="fu">vars</span>(ATC2), <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="fu">vars</span>(ATC2), <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1037,7 +1034,7 @@ sigma^2: 3210.8552 </code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> subsidies <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> subsidies <span class="sc">|&gt;</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Month <span class="sc">&lt;</span> <span class="fu">max</span>(Month) <span class="sc">-</span> <span class="dv">35</span>) <span class="sc">|&gt;</span></span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ETS</span>(Cost),</span>
@@ -1045,7 +1042,7 @@ sigma^2: 3210.8552 </code></pre>
 <span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">STLM =</span> <span class="fu">decomposition_model</span>(<span class="fu">STL</span>(<span class="fu">log</span>(Cost)), <span class="fu">ETS</span>(season_adjust))</span>
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"3 years"</span>)</span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(subsidies, <span class="at">level =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(subsidies, <span class="at">level =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1053,9 +1050,9 @@ sigma^2: 3210.8552 </code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(subsidies) <span class="sc">|&gt;</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ATC2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ATC2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 11
   .model      ATC2  .type      ME   RMSE    MAE    MPE  MAPE  MASE RMSSE    ACF1
@@ -1075,7 +1072,7 @@ sigma^2: 3210.8552 </code></pre>
 </ul>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>food_retail <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>food_retail <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Industry <span class="sc">==</span> <span class="st">"Food retailing"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Turnover =</span> <span class="fu">sum</span>(Turnover))</span>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1088,7 +1085,7 @@ sigma^2: 3210.8552 </code></pre>
 <span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"3 years"</span>)</span>
 <span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">filter_index</span>(food_retail, <span class="st">"2005 Jan"</span> <span class="sc">~</span> .), <span class="at">level =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">filter_index</span>(food_retail, <span class="st">"2005 Jan"</span> <span class="sc">~</span> .), <span class="at">level =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1096,7 +1093,7 @@ sigma^2: 3210.8552 </code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">accuracy</span>(food_retail)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span> <span class="fu">accuracy</span>(food_retail)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 10
   .model           .type     ME  RMSE   MAE    MPE  MAPE  MASE RMSSE  ACF1
@@ -1118,11 +1115,11 @@ sigma^2: 3210.8552 </code></pre>
 <section id="tourism" class="level3">
 <h3 class="anchored" data-anchor-id="tourism">tourism</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Trips =</span> <span class="fu">sum</span>(Trips))</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="sc">|&gt;</span></span>
 <span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Trips)) <span class="sc">|&gt;</span></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Trips 
 Model: ETS(A,A,A) 
@@ -1140,10 +1137,10 @@ Model: ETS(A,A,A)
      AIC     AICc      BIC 
 1436.829 1439.400 1458.267 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="sc">|&gt;</span></span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Trips)) <span class="sc">|&gt;</span></span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>() <span class="sc">|&gt;</span></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_trips)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(aus_trips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1157,13 +1154,13 @@ Model: ETS(A,A,A)
 <section id="gafa-stock" class="level3">
 <h3 class="anchored" data-anchor-id="gafa-stock">GAFA stock</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>gafa_regular <span class="ot">&lt;-</span> gafa_stock <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>gafa_regular <span class="ot">&lt;-</span> gafa_stock <span class="sc">|&gt;</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Symbol) <span class="sc">|&gt;</span></span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">trading_day =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tsibble</span>(<span class="at">index =</span> trading_day, <span class="at">regular =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>gafa_stock <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Close)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>gafa_stock <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Close)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1171,8 +1168,8 @@ Model: ETS(A,A,A)
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>gafa_regular <span class="sc">|&gt;</span></span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Close))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>gafa_regular <span class="sc">|&gt;</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Close))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A mable: 4 x 2
 # Key:     Symbol [4]
@@ -1183,10 +1180,10 @@ Model: ETS(A,A,A)
 3 FB     &lt;ETS(M,N,N)&gt;
 4 GOOG   &lt;ETS(M,N,N)&gt;</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>gafa_regular <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>gafa_regular <span class="sc">|&gt;</span></span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Close)) <span class="sc">|&gt;</span></span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">50</span>) <span class="sc">|&gt;</span></span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(gafa_regular <span class="sc">|&gt;</span> <span class="fu">group_by_key</span>() <span class="sc">|&gt;</span> <span class="fu">slice</span>((<span class="fu">n</span>() <span class="sc">-</span> <span class="dv">100</span>)<span class="sc">:</span><span class="fu">n</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(gafa_regular <span class="sc">|&gt;</span> <span class="fu">group_by_key</span>() <span class="sc">|&gt;</span> <span class="fu">slice</span>((<span class="fu">n</span>() <span class="sc">-</span> <span class="dv">100</span>)<span class="sc">:</span><span class="fu">n</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1200,18 +1197,18 @@ Model: ETS(A,A,A)
 <section id="pelt-trading-records" class="level3">
 <h3 class="anchored" data-anchor-id="pelt-trading-records">Pelt trading records</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>pelt <span class="sc">|&gt;</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Lynx))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>pelt <span class="sc">|&gt;</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Lynx))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A mable: 1 x 1
    `ETS(Lynx)`
        &lt;model&gt;
 1 &lt;ETS(A,N,N)&gt;</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>pelt <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>pelt <span class="sc">|&gt;</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Lynx)) <span class="sc">|&gt;</span></span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(pelt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(pelt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1318,14 +1315,13 @@ Model: ETS(A,A,A)
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

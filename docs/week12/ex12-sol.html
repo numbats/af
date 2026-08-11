@@ -2,16 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.15">
+<meta name="generator" content="quarto-1.7.29">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Exercise Week 12: Solutions – ETC3550/ETC5550 Applied forecasting</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -74,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0cd02c8e122b1adf132d3c9bca458be3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed1868018239815f9dba7a573fb42b0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-441fdb1dcad544eecf66e14d9fc7e4fd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-7e0c672d98429cbffec522538947670c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -136,7 +133,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -342,13 +339,13 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> souvenirs <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> souvenirs <span class="sc">|&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> <span class="fu">year</span>(Month) <span class="sc">!=</span> <span class="dv">1987</span>) <span class="sc">|&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">reg =</span> <span class="fu">TSLM</span>(<span class="fu">log</span>(Sales) <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> festival),</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dynreg =</span> <span class="fu">ARIMA</span>(<span class="fu">log</span>(Sales) <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> festival)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n=</span><span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n=</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 31 × 6
    .model term           estimate std.error statistic  p.value
@@ -393,11 +390,11 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>future_souvenirs <span class="ot">&lt;-</span> <span class="fu">new_data</span>(souvenirs, <span class="at">n =</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>future_souvenirs <span class="ot">&lt;-</span> <span class="fu">new_data</span>(souvenirs, <span class="at">n =</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> future_souvenirs)  <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(souvenirs, <span class="at">level=</span><span class="dv">95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(souvenirs, <span class="at">level=</span><span class="dv">95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -413,9 +410,9 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dynreg) <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -432,7 +429,7 @@ window.Quarto = {
 <p>Repeat the daily electricity example, but instead of using a quadratic function of temperature, use a piecewise linear function with the “knot” around 25 degrees Celsius (use predictors <code>Temperature</code> &amp; <code>Temp2</code>). How can you optimize the choice of knot?</p>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vic_elec_daily <span class="ot">&lt;-</span> vic_elec <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vic_elec_daily <span class="ot">&lt;-</span> vic_elec <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(Time) <span class="sc">==</span> <span class="dv">2014</span>) <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Date =</span> <span class="fu">date</span>(Time)) <span class="sc">|&gt;</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
@@ -447,14 +444,14 @@ window.Quarto = {
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">wday</span>(Date) <span class="sc">%in%</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span> <span class="sc">~</span> <span class="st">"Weekday"</span>,</span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Weekend"</span></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First, we will leave the knot at 25 and find the best ARIMA model. This will take a while, but we only have to do it once.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>vic_elec_daily <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>vic_elec_daily <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">fit =</span> <span class="fu">ARIMA</span>(Demand <span class="sc">~</span> Temperature <span class="sc">+</span> Temp2 <span class="sc">+</span> (Day_Type <span class="sc">==</span> <span class="st">"Weekday"</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Demand 
 Model: LM w/ ARIMA(3,1,1)(2,0,0)[7] errors 
@@ -474,7 +471,7 @@ AIC=2544.81   AICc=2545.43   BIC=2583.78</code></pre>
 <p>Now we will use that ARIMA(3,1,1)(2,0,0)[7] model and modify the knot until the AICc is optmized.</p>
 <p>To optimize the knot position, we need to try many knot locations and select the model with the smallest AICc value. The fit is sensitive to the knot placement, with errors occurring at some knot locations. So we need to do a grid search, allowing for null models to be returned.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>best_aicc <span class="ot">&lt;-</span> <span class="cn">Inf</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>best_aicc <span class="ot">&lt;-</span> <span class="cn">Inf</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(knot <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">20</span>, <span class="dv">30</span>, <span class="at">by=</span><span class="fl">0.1</span>)) {</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  elec_model <span class="ot">&lt;-</span> vic_elec_daily <span class="sc">|&gt;</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Temp2 =</span> <span class="fu">pmax</span>(Temperature <span class="sc">-</span> knot, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
@@ -488,7 +485,7 @@ AIC=2544.81   AICc=2545.43   BIC=2583.78</code></pre>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>best_model <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>best_model <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Demand 
 Model: LM w/ ARIMA(2,1,1)(2,0,1)[7] errors 
@@ -507,11 +504,11 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </div>
 <p>The optimal knot (to 1 decimal place) is 28.8 degrees Celsius.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best_model) <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best_model) <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(vic_elec_daily) <span class="sc">|&gt;</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Temperature)) <span class="sc">+</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> Demand)) <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted), <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted), <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -519,11 +516,11 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best_model) <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best_model) <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(vic_elec_daily) <span class="sc">|&gt;</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Demand)) <span class="sc">+</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted)) <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -531,7 +528,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>best_model <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>best_model <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -539,8 +536,8 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best_model) <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">dof =</span> <span class="dv">6</span>, <span class="at">lag =</span> <span class="dv">21</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(best_model) <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">dof =</span> <span class="dv">6</span>, <span class="at">lag =</span> <span class="dv">21</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .model lb_stat lb_pvalue
@@ -550,13 +547,13 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </div>
 <p>The model fails the residual tests but the significant autocorrelations are relatively small, so it should still give reasonable forecasts. The residuals look like they have some heteroskedasticity, but otherwise look ok.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>vic_next_day <span class="ot">&lt;-</span> <span class="fu">new_data</span>(vic_elec_daily, <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>vic_next_day <span class="ot">&lt;-</span> <span class="fu">new_data</span>(vic_elec_daily, <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temperature =</span> <span class="dv">26</span>,</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">I</span>(<span class="fu">pmax</span>(Temperature <span class="sc">-</span> best_knot, <span class="dv">0</span>)),</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Day_Type =</span> <span class="st">"Holiday"</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(best_model, vic_next_day)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(best_model, vic_next_day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 1 x 7 [1D]
 # Key:     .model [1]
@@ -566,7 +563,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 # ℹ 5 more variables: Demand &lt;dist&gt;, .mean &lt;dbl&gt;, Temperature &lt;dbl&gt;,
 #   Temp2 &lt;I&lt;dbl&gt;&gt;, Day_Type &lt;chr&gt;</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>vic_elec_future <span class="ot">&lt;-</span> <span class="fu">new_data</span>(vic_elec_daily, <span class="dv">14</span>) <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>vic_elec_future <span class="ot">&lt;-</span> <span class="fu">new_data</span>(vic_elec_daily, <span class="dv">14</span>) <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temperature =</span> <span class="dv">26</span>,</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">I</span>(<span class="fu">pmax</span>(Temperature <span class="sc">-</span> best_knot, <span class="dv">0</span>)),</span>
@@ -578,7 +575,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(best_model, vic_elec_future) <span class="sc">|&gt;</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(vic_elec_daily) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Electricity demand (GW)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(vic_elec_daily) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Electricity demand (GW)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -594,12 +591,12 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 <p>This exercise concerns <code>aus_accommodation</code>: the total quarterly takings from accommodation and the room occupancy level for hotels, motels, and guest houses in Australia, between January 1998 and June 2016. Total quarterly takings are in millions of Australian dollars. a. Compute the CPI-adjusted takings and plot the result for each state</p>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="ot">&lt;-</span> aus_accommodation <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="ot">&lt;-</span> aus_accommodation <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjTakings =</span> Takings <span class="sc">/</span> CPI <span class="sc">*</span> <span class="dv">100</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="sc">|&gt;</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(adjTakings)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(adjTakings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -614,11 +611,11 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_accommodation <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_accommodation <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ARIMA</span>(adjTakings <span class="sc">~</span> <span class="fu">season</span>() <span class="sc">+</span> <span class="fu">trend</span>(<span class="at">knot =</span> <span class="fu">yearquarter</span>(<span class="st">"2008 Q1"</span>)))</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A mable: 8 x 2
 # Key:     State [8]
@@ -643,9 +640,9 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Victoria"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -661,7 +658,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CPI forecasts</span></span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CPI forecasts</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cpif <span class="ot">&lt;-</span> aus_accommodation <span class="sc">|&gt;</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ARIMA</span>(CPI)) <span class="sc">|&gt;</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">6</span>) <span class="sc">|&gt;</span></span>
@@ -669,7 +666,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Date, State, <span class="at">CPI =</span> .mean)</span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> cpif) <span class="sc">|&gt;</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Takings =</span> adjTakings <span class="sc">*</span> CPI <span class="sc">/</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Takings =</span> adjTakings <span class="sc">*</span> CPI <span class="sc">/</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 48 x 7 [1Q]
 # Key:     State, .model [8]
@@ -710,7 +707,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 <p>Let’s optimize using 2 break points and an unknown number of Fourier terms. Because the number of Fourier terms is integer, we can’t just use <code>optim</code>. Instead, we will loop over a large number of possible values for the breakpoints and Fourier terms. There are more than 2000 models fitted here, but <code>TSLM</code> is relatively fast.</p>
 <p>Note that the possible values of the knots must be restricted so that knot2 is always much larger than knot1. We have set them to be at least 2 years apart here.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>us_gasoline <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Barrels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>us_gasoline <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Barrels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -718,7 +715,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to compute CV given K and knots.</span></span>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to compute CV given K and knots.</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>get_cv <span class="ot">&lt;-</span> <span class="cf">function</span>(K, knot1, knot2) {</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  us_gasoline <span class="sc">|&gt;</span></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">model</span>(<span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">fourier</span>(<span class="at">K =</span> K) <span class="sc">+</span> <span class="fu">trend</span>(<span class="fu">c</span>(knot1, knot2)))) <span class="sc">|&gt;</span></span>
@@ -738,17 +735,17 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(cv)</span>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Best combination</span></span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>(best <span class="ot">&lt;-</span> <span class="fu">head</span>(models, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>(best <span class="ot">&lt;-</span> <span class="fu">head</span>(models, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
       K    knot1    knot2     cv
   &lt;int&gt;   &lt;week&gt;   &lt;week&gt;  &lt;dbl&gt;
 1     6 2007 W01 2013 W01 0.0641</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> us_gasoline <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> us_gasoline <span class="sc">|&gt;</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">fourier</span>(<span class="at">K =</span> best<span class="sc">$</span>K) <span class="sc">+</span> <span class="fu">trend</span>(<span class="fu">c</span>(best<span class="sc">$</span>knot1, best<span class="sc">$</span>knot2)))</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <blockquote class="blockquote">
 <ol start="2" type="a">
@@ -756,9 +753,9 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> us_gasoline <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> us_gasoline <span class="sc">|&gt;</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ARIMA</span>(Barrels <span class="sc">~</span> <span class="fu">fourier</span>(<span class="at">K =</span> best<span class="sc">$</span>K) <span class="sc">+</span> <span class="fu">trend</span>(<span class="fu">c</span>(best<span class="sc">$</span>knot1, best<span class="sc">$</span>knot2)) <span class="sc">+</span> <span class="fu">PDQ</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)))</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Barrels 
 Model: LM w/ ARIMA(1,0,1) errors 
@@ -802,7 +799,7 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_tsresiduals</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_tsresiduals</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -810,7 +807,7 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">features</span>(.innov, ljung_box, <span class="at">dof =</span> <span class="dv">2</span>, <span class="at">lag =</span> <span class="dv">24</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">features</span>(.innov, ljung_box, <span class="at">dof =</span> <span class="dv">2</span>, <span class="at">lag =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .model                                                       lb_stat lb_pvalue
@@ -825,9 +822,9 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"1 year"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(us_gasoline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(us_gasoline)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1013,14 +1010,13 @@ y^*_{t} =  &amp; ~ y^*_{t-1} + y^*_{t-12} - y^*_{t-13}
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
