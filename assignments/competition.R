@@ -8,7 +8,7 @@ competition <- readRDS(here::here("assignments/competition_responses.rds"))
 
 # Actual values
 q1 <- q2 <- q3 <- q4 <- q5 <- NULL
-#q1 <- # https://portwatch.imf.org/pages/cb5856222a5b4105adc6ee7e880a1730
+q1 <- 82247.29 / 1e6 # https://portwatch.imf.org/pages/cb5856222a5b4105adc6ee7e880a1730
 #q2 <- #https://stats.espncricinfo.com/ci/engine/stats/index.html?class=1;opposition=2;opposition=25;orderby=start;team=2;team=25;template=results;type=team;view=match
 #q3 <- #https://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml
 #q4 <- #https://finance.yahoo.com/quote/GOOG/history/
