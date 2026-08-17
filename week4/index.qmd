@@ -27,7 +27,7 @@ source(here::here("course_info.R"))
 show_slides(week)
 ```
 
-<!-- * [Code used in lecture](lecture_code.R) -->
+* [Code used in lecture](lecture_code.R)
 
 ## Tuesday workshop
 

@@ -21,3 +21,5 @@ BuildType: Makefile
 UseNativePipeOperator: Yes
 
 SpellingDictionary: en_AU
+
+EditorTheme: Clouds
