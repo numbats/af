@@ -17,32 +17,27 @@ execute:
   freeze: false
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
+
 source(here::here("setup.R"))
+knitr::opts_chunk$set(dev.args = list(pointsize = 11, bg = "transparent"))
 ```
-
-# Workshop tomorrow
-
-## Workshop tomorrow
-
-The workshop is online tomorrow.
-
-Zoom link on Ed Discussion Forum
-
 
 # Residuals
 
 ## Fitted values
 
- - $\hat{y}_{t|t-1}$ is the forecast of $y_t$ based on observations $y_1,\dots,y_{t-1}$.
- - We call these "fitted values".
- - Sometimes drop the subscript: $\hat{y}_t \equiv \hat{y}_{t|t-1}$.
- - Often not true forecasts since parameters are estimated on all data.
+- $\hat{y}_{t|t - 1}$ is the forecast of $y_t$ based on observations $y_1,\dots,y_{t - 1}$.
+- We call these "fitted values".
+- Sometimes drop the subscript: $\hat{y}_t \equiv \hat{y}_{t|t - 1}$.
+- Often not true forecasts since parameters are estimated on all data.
 
 ### For example:
 
- - $\hat{y}_{t} = \bar{y}$ for average method.
- - $\hat{y}_{t} = y_{t-1} + (y_{T}-y_1)/(T-1)$ for drift method.
+- $\hat{y}_{t} = \bar{y}$ for average method.
+- $\hat{y}_{t} = y_{t - 1} + (y_{T} - y_1)/(T - 1)$ for drift method.
 
 ## Forecasting residuals
 
@@ -53,24 +48,26 @@ Zoom link on Ed Discussion Forum
 
 \alert{Assumptions}
 
-  1. $\{e_t\}$ uncorrelated. If they aren't, then information left in  residuals that should be used in computing forecasts.
-  2. $\{e_t\}$ have mean zero. If they don't, then forecasts are biased.
+1. $\{e_t\}$ uncorrelated.
+   If they aren't, then information left in residuals that should be used in computing forecasts.
+2. $\{e_t\}$ have mean zero.
+   If they don't, then forecasts are biased.
 
 \pause
 
 \alert{Useful properties} (for distributions & prediction intervals)
 
-  3. $\{e_t\}$ have constant variance.
-  4. $\{e_t\}$ are normally distributed.
-
+3. $\{e_t\}$ have constant variance.
+4. $\{e_t\}$ are normally distributed.
 
 ## ACF of residuals
 
-  * We assume that the residuals are white noise (uncorrelated, mean zero, constant variance). If they aren't, then there is information left in  the residuals that should be used in computing forecasts.
+- We assume that the residuals are white noise (uncorrelated, mean zero, constant variance).
+  If they aren't, then there is information left in the residuals that should be used in computing forecasts.
 
-  * So a standard residual diagnostic is to check the ACF of the residuals of a forecasting method.
+- So a standard residual diagnostic is to check the ACF of the residuals of a forecasting method.
 
-  * We *expect* these to look like white noise.
+- We *expect* these to look like white noise.
 
 ## Ljung-Box tests
 
@@ -78,7 +75,7 @@ Zoom link on Ed Discussion Forum
 $r_k = $ autocorrelation of residual at lag $k$
 \end{block}\vspace*{-0.3cm}
 
-Test *whole set* of $r_{k}$  values simultaneously.
+Test *whole set* of $r_{k}$ values simultaneously.
 
 \begin{block}{}
 \centerline{$\displaystyle
@@ -86,16 +83,16 @@ Test *whole set* of $r_{k}$  values simultaneously.
 where $\ell$  is max lag being considered and $T$ is number of observations.
 \end{block}
 
-  * My preferences: $\ell=10$ for non-seasonal data, $\ell=2m$ for seasonal data (where $m$ is seasonal period).
-  * If data are WN, $Q^*$ has $\chi^2$ distribution with  $\ell$ degrees of freedom.
+- My preferences: $\ell = 10$ for non-seasonal data, $\ell = 2m$ for seasonal data (where $m$ is seasonal period).
+- If data are WN, $Q^*$ has $\chi^2$ distribution with $\ell$ degrees of freedom.
 
 # Forecast distributions
 
 ## Forecast distributions
 
- * A forecast $\hat{y}_{T+h|T}$ is (usually) the mean of the conditional distribution $y_{T+h} \mid y_1, \dots, y_{T}$.
- * Most time series models produce normally distributed forecasts.
- * The forecast distribution describes the probability of observing any future value.
+- A forecast $\hat{y}_{T + h|T}$ is (usually) the mean of the conditional distribution $y_{T + h} \mid y_1, \dots, y_{T}$.
+- Most time series models produce normally distributed forecasts.
+- The forecast distribution describes the probability of observing any future value.
 
 ## Forecast distributions
 
@@ -110,41 +107,60 @@ Assuming residuals are normal, uncorrelated, sd = $\hat\sigma$:
 \end{tabular}
 \end{block}
 
-where $k$ is the integer part of $(h-1)/m$.
+where $k$ is the integer part of $(h - 1)/m$.
 
-Note that when $h=1$ and $T$ is large, these all give the same approximate forecast variance: $\hat{\sigma}^2$.
+Note that when $h = 1$ and $T$ is large, these all give the same approximate forecast variance: $\hat{\sigma}^2$.
 
 ## Prediction intervals
 
- * A prediction interval gives a region within which we expect $y_{T+h}$ to lie with a specified probability.
- * Assuming forecast errors are normally distributed, then a 95% PI is
+- A prediction interval gives a region within which we expect $y_{T + h}$ to lie with a specified probability.
+
+- Assuming forecast errors are normally distributed, then a 95% PI is
  \begin{alertblock}{}
 \centerline{$
   \hat{y}_{T+h|T} \pm 1.96 \hat\sigma_h
 $}
 \end{alertblock}
-where $\hat\sigma_h$ is the st dev of the $h$-step distribution.
+  where $\hat\sigma_h$ is the st dev of the $h$-step distribution.
 
- * When $h=1$, $\hat\sigma_h$ can be estimated from the residuals.
+- When $h = 1$, $\hat\sigma_h$ can be estimated from the residuals.
 
 ## Prediction intervals
 
- * Point forecasts are often useless without a measure of uncertainty (such as prediction intervals).
- * Prediction intervals require a stochastic model (with random errors, etc).
- * For most models, prediction intervals get wider as the forecast horizon increases.
- * Use `level` argument to control coverage.
- * Check residual assumptions before believing them.
- * Prediction intervals are usually too narrow due to unaccounted uncertainty.
+- Point forecasts are often useless without a measure of uncertainty (such as prediction intervals).
+- Prediction intervals require a stochastic model (with random errors, etc).
+- For most models, prediction intervals get wider as the forecast horizon increases.
+- Use `level` argument to control coverage.
+- Check residual assumptions before believing them.
+- Prediction intervals are usually too narrow due to unaccounted uncertainty.
 
 # Forecast evaluation
 
 ## Training and test sets
 
-```{r traintest, fig.height=1, echo=FALSE, cache=TRUE}
+\vspace*{-0.3cm}
+
+```{r}
+#| label: traintest
+#| fig-height: 1
+#| echo: false
+#| cache: true
+
 train <- 1:18
 test <- 19:24
-par(mar = c(0, 0, 0, 0))
-plot(0, 0, xlim = c(0, 26), ylim = c(0, 2), xaxt = "n", yaxt = "n", bty = "n", xlab = "", ylab = "", type = "n")
+par(mar = c(0, 0, 0, 0), bg = NA)
+plot(
+  0,
+  0,
+  xlim = c(0, 26),
+  ylim = c(0, 2),
+  xaxt = "n",
+  yaxt = "n",
+  bty = "n",
+  xlab = "",
+  ylab = "",
+  type = "n"
+)
 arrows(0, 0.5, 25, 0.5, 0.05)
 points(train, train * 0 + 0.5, pch = 19, col = "#0072B2")
 points(test, test * 0 + 0.5, pch = 19, col = "#D55E00")
@@ -155,22 +171,22 @@ text(21, 1, "Test data", col = "#D55E00")
 
 \fontsize{13}{14}\sf
 
--   A model which fits the training data well will not necessarily forecast well.
--   A perfect fit can always be obtained by using a model with enough parameters.
--   Over-fitting a model to data is just as bad as failing to identify a systematic pattern in the data.
-  * The test set must not be used for *any* aspect of model development or calculation of forecasts.
-  * Forecast accuracy is based only on the test set.
+- A model which fits the training data well will not necessarily forecast well.
+- A perfect fit can always be obtained by using a model with enough parameters.
+- Over-fitting a model to data is just as bad as failing to identify a systematic pattern in the data.
+- The test set must not be used for *any* aspect of model development or calculation of forecasts.
+- Forecast accuracy is based only on the test set.
 
 ## Forecast errors
 
 Forecast "error": the difference between an observed value and its forecast.
 $$
-  e_{T+h} = y_{T+h} - \hat{y}_{T+h|T},
+  e_{T + h} = y_{T + h} - \hat{y}_{T + h|T},
 $$
 where the training data is given by $\{y_1,\dots,y_T\}$
 
 - Unlike residuals, forecast errors on the test set involve multi-step forecasts.
-- These are *true* forecast errors as the test data is not used in computing $\hat{y}_{T+h|T}$.
+- These are *true* forecast errors as the test data is not used in computing $\hat{y}_{T + h|T}$.
 
 ## Measures of forecast accuracy
 
@@ -228,15 +244,16 @@ $$
 
 where
 $$
-  q^2_{T+h} = \frac{\displaystyle e^2_{T+h}}
-    {\displaystyle\frac{1}{T-m}\sum_{t=m+1}^T (y_{t}-y_{t-m})^2},
+  q^2_{T + h} = \frac{\displaystyle e^2_{T + h}} {\displaystyle\frac{1}{T - m}\sum_{t = m + 1}^T (y_{t} - y_{t - m})^2},
 $$
-and we set $m=1$ for non-seasonal data.
-
+and we set $m = 1$ for non-seasonal data.
 
 # Time series cross-validation
 
-```{r tscvplots, echo=FALSE}
+```{r}
+#| label: tscvplots
+#| echo: false
+
 tscv_plot <- function(.init, .step, h = 1) {
   expand.grid(
     time = seq(26),
@@ -256,16 +273,23 @@ tscv_plot <- function(.init, .step, h = 1) {
     geom_segment(
       aes(x = 0, xend = 27, y = .id, yend = .id),
       arrow = arrow(length = unit(0.015, "npc")),
-      col = "black", size = .25
+      col = "black",
+      size = .25
     ) +
     geom_point(aes(col = observation), size = 2) +
     scale_y_reverse() +
-    scale_color_manual(values = c(train = "#0072B2", test = "#D55E00", unused = "gray")) +
+    scale_color_manual(
+      values = c(train = "#0072B2", test = "#D55E00", unused = "gray")
+    ) +
     guides(col = FALSE) +
     labs(x = "time", y = "") +
     theme_void() +
     theme(axis.title.x = element_text(margin = margin(t = 2))) +
-    theme(text = ggplot2::element_text(family = 'Fira Sans'))
+    theme(text = ggplot2::element_text(family = 'Fira Sans')) +
+    theme(
+      plot.background = element_rect(fill = "transparent", colour = NA),
+      panel.background = element_rect(fill = "transparent", colour = NA)
+    )
 }
 ```
 
@@ -273,73 +297,154 @@ tscv_plot <- function(.init, .step, h = 1) {
 
 **Traditional evaluation**
 
-```{r traintest1, fig.height=1, echo=FALSE}
+\vspace*{-0.8cm}
+
+```{r}
+#| label: traintest1
+#| fig-height: 1
+#| echo: false
 #| cache: false
+
 tscv_plot(.init = 18, .step = 10, h = 1:8) +
-  annotate("text", x = 10, y = 0.8, label = "Training data",
-    color = "#0072B2", family = 'Fira Sans') +
-  annotate("text", x = 21, y = 0.8, label = "Test data",
-    color = "#D55E00", family = 'Fira Sans') +
+  annotate(
+    "text",
+    x = 10,
+    y = 0.8,
+    label = "Training data",
+    color = "#0072B2",
+    family = 'Fira Sans'
+  ) +
+  annotate(
+    "text",
+    x = 21,
+    y = 0.8,
+    label = "Test data",
+    color = "#D55E00",
+    family = 'Fira Sans'
+  ) +
   ylim(1, 0)
 ```
 
 \pause
 
 **Time series cross-validation**
+
 \vspace*{-0.25cm}
 
-```{r tscvggplot1, echo=FALSE, fig.height=2.15}
+```{r}
+#| label: tscvggplot1
+#| echo: false
+#| fig-height: 2.15
+
 tscv_plot(.init = 8, .step = 1, h = 1) +
-  annotate("text", x = 21, y = 0, label = "h = 1",
-    color = "#D55E00", family = 'Fira Sans')
+  annotate(
+    "text",
+    x = 21,
+    y = 0,
+    label = "h = 1",
+    color = "#D55E00",
+    family = 'Fira Sans'
+  )
 ```
 
 ## Time series cross-validation {-}
 
 **Traditional evaluation**
 
-```{r traintest2, ref.label="traintest1", fig.height=1, echo=FALSE}
+\vspace*{-0.8cm}
+
+```{r, ref.label="traintest1"}
+#| label: traintest2
+#| fig-height: 1
+#| echo: false
 ```
 
 **Time series cross-validation**
+
 \vspace*{-0.25cm}
 
-```{r tscvggplot2, echo=FALSE,  fig.height=2.15}
+```{r}
+#| label: tscvggplot2
+#| echo: false
+#| fig-height: 2.15
+
 tscv_plot(.init = 8, .step = 1, h = 2) +
-  annotate("text", x = 21, y = 0, label = "h = 2",
-    color = "#D55E00", family = 'Fira Sans')
+  annotate(
+    "text",
+    x = 21,
+    y = 0,
+    label = "h = 2",
+    color = "#D55E00",
+    family = 'Fira Sans'
+  )
 ```
+
+\vspace*{10cm}
 
 ## Time series cross-validation {-}
 
 **Traditional evaluation**
 
-```{r traintest3, ref.label="traintest1", fig.height=1, echo=FALSE}
+\vspace*{-0.8cm}
+
+```{r, ref.label="traintest1"}
+#| label: traintest3
+#| fig-height: 1
+#| echo: false
 ```
 
 **Time series cross-validation**
+
 \vspace*{-0.25cm}
 
-```{r tscvggplot3, echo=FALSE,  fig.height=2.15}
+```{r}
+#| label: tscvggplot3
+#| echo: false
+#| fig-height: 2.15
+
 tscv_plot(.init = 8, .step = 1, h = 3) +
-  annotate("text", x = 21, y = 0, label = "h = 3",
-    color = "#D55E00", family = 'Fira Sans')
+  annotate(
+    "text",
+    x = 21,
+    y = 0,
+    label = "h = 3",
+    color = "#D55E00",
+    family = 'Fira Sans'
+  )
 ```
+
+\vspace*{10cm}
 
 ## Time series cross-validation {-}
 
 **Traditional evaluation**
 
-```{r traintest4, ref.label="traintest1", fig.height=1, echo=FALSE}
+\vspace*{-0.8cm}
+
+```{r, ref.label="traintest1"}
+#| label: traintest4
+#| fig-height: 1
+#| echo: false
 ```
 
 **Time series cross-validation**
+
 \vspace*{-0.25cm}
 
-```{r tscvggplot4, echo=FALSE, fig.height=2.15}
+```{r}
+#| label: tscvggplot4
+#| echo: false
+#| fig-height: 2.15
+
 tscv_plot(.init = 8, .step = 1, h = 4) +
-  annotate("text", x = 21, y = 0, label = "h = 4",
-    color = "#D55E00", family = 'Fira Sans')
+  annotate(
+    "text",
+    x = 21,
+    y = 0,
+    label = "h = 4",
+    color = "#D55E00",
+    family = 'Fira Sans'
+  )
 ```
 
 \only<2>{\begin{textblock}{8}(.5,6.4)\begin{block}{}\fontsize{12}{13}\sf
@@ -349,10 +454,3 @@ tscv_plot(.init = 8, .step = 1, h = 4) +
 \end{itemize}\end{block}\end{textblock}}
 
 \vspace*{10cm}
-
-## Workshop tomorrow
-
-The workshop is online tomorrow.
-
-Zoom link on Ed Discussion Forum
-
