@@ -9,9 +9,9 @@ source(here::here("course_info.R"))
 
 ## What you will learn this week
 
-* Transforming data to remove some sources of variation
-* Decomposing a time series into trend-cycle, seasonal and remainder components
-* Seasonal adjustment
+- Transforming data to remove some sources of variation
+- Decomposing a time series into trend-cycle, seasonal and remainder components
+- Seasonal adjustment
 
 ## Pre-class activities
 
@@ -21,25 +21,28 @@ Read [Chapter 3 of the textbook](https://otexts.com/fpp3/decomposition.html) and
 
 ```{r}
 #| output: asis
+
 show_slides(week)
 ```
 
-* [Code used in lecture](lecture_code.R)
+- [Code used in lecture](lecture_code.R)
 
 ## Tuesday workshop
 
 ```{r}
 #| output: asis
+
 #show_activity(week)
 show_quiz(week)
 ```
 
 ## Exercises (on your own or in tutorial)
 
-* Complete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).
-<!-- * [Solutions to Exercises](ex3-sol.qmd) -->
+- Complete Exercises 1-5, 9-10 from [Section 3.7 of the book](https://otexts.com/fpp3/decomposition-exercises.html).
+- [Solutions to Exercises](ex3-sol.qmd)
 
 ```{r}
 #| output: asis
+
 show_assignments(week)
 ```

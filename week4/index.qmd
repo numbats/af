@@ -9,30 +9,32 @@ source(here::here("course_info.R"))
 
 ## What you will learn this week
 
-* Forecasting workflow
-* Four benchmark forecasting methods that we will use for comparison
-* Linear trends, dummy seasonality
-* Forecasting with transformations
-* Forecasting with decompositions
+- Forecasting workflow
+- Four benchmark forecasting methods that we will use for comparison
+- Linear trends, dummy seasonality
+- Forecasting with transformations
+- Forecasting with decompositions
 
 ## Pre-class activities
 
-* Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html), Sections 5.1 -- 5.3, 5.6 -- 5.7, and watch all embedded videos
-* Read [Chapter 7.4 of the textbook](https://otexts.com/fpp3/useful-predictors.html), and watch the embedded video
+- Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html), Sections 5.1 -- 5.3, 5.6 -- 5.7, and watch all embedded videos
+- Read [Chapter 7.4 of the textbook](https://otexts.com/fpp3/useful-predictors.html), and watch the embedded video
 
 ## Monday lecture
 
 ```{r}
 #| output: asis
+
 show_slides(week)
 ```
 
-* [Code used in lecture](lecture_code.R)
+- [Code used in lecture](lecture_code.R)
 
 ## Tuesday workshop
 
 ```{r}
 #| output: asis
+
 #show_activity(week)
 show_quiz(week)
 ```
@@ -41,11 +43,12 @@ show_quiz(week)
 
 ## Exercises (on your own or in tutorial)
 
-* Complete Exercises 1-5, 11 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
-* Complete Exercises 2 and 6 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).
-<!-- * [Solutions to Exercises](ex4-sol.qmd) -->
+- Complete Exercises 1-5, 11 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
+- Complete Exercises 2 and 6 from [Section 7.10 of the book](https://otexts.com/fpp3/regression-exercises.html).
+  <!-- - [Solutions to Exercises](ex4-sol.qmd) -->
 
 ```{r}
 #| output: asis
+
 show_assignments(week)
 ```
