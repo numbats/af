@@ -9,9 +9,9 @@ source(here::here("course_info.R"))
 
 ## What you will learn this week
 
-* Fitted values, residuals
-* Distributional forecasts
-* Forecast evaluation
+- Fitted values, residuals
+- Distributional forecasts
+- Forecast evaluation
 
 ## Pre-class activities
 
@@ -21,15 +21,17 @@ Read [Chapter 5 of the textbook](https://otexts.com/fpp3/toolbox.html), Sections
 
 ```{r}
 #| output: asis
+
 show_slides(week)
 ```
 
-<!-- * [Code used in lecture](lecture_code.R) -->
+- [Code used in lecture](lecture_code.R)
 
 ## Tuesday workshop
 
 ```{r}
 #| output: asis
+
 #show_activity(week)
 show_quiz(week)
 ```
@@ -38,10 +40,11 @@ show_quiz(week)
 
 ## Exercises (on your own or in tutorial)
 
-* Complete Exercises 8-10, 12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
-<!-- * [Solutions to Exercises](ex5-sol.qmd) -->
+- Complete Exercises 8-10, 12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
+  <!-- * [Solutions to Exercises](ex5-sol.qmd) -->
 
 ```{r}
 #| output: asis
+
 show_assignments(week)
 ```
