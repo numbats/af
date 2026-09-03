@@ -41,7 +41,7 @@ show_quiz(week)
 ## Exercises (on your own or in tutorial)
 
 - Complete Exercises 8-10, 12 from [Section 5.11 of the book](https://otexts.com/fpp3/toolbox-exercises.html).
-  <!-- * [Solutions to Exercises](ex5-sol.qmd) -->
+- [Solutions to Exercises](ex5-sol.qmd)
 
 ```{r}
 #| output: asis
