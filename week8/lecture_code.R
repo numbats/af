@@ -11,7 +11,6 @@ fb |>
   gg_tsdisplay(difference(Close))
 
 
-
 # aus_production Bricks
 
 aus_production |>
@@ -33,22 +32,22 @@ aus_production |>
   )
 
 # Unit root tests
-fb  |> features(Close, unitroot_kpss)
-fb  |> features(difference(Close), unitroot_kpss)
-fb  |> features(Close, unitroot_ndiffs)
+fb |> features(Close, unitroot_kpss)
+fb |> features(difference(Close), unitroot_kpss)
+fb |> features(Close, unitroot_ndiffs)
 
 ## Seasonal strength
-aus_production  |>
+aus_production |>
   features(
     box_cox(Bricks, lambda = 0.3),
     feat_stl
   )
-aus_production  |>
+aus_production |>
   features(
     box_cox(Bricks, lambda = 0.3),
     unitroot_nsdiffs
   )
-aus_production  |>
+aus_production |>
   features(
     box_cox(Bricks, lambda = 0.3) |>
       difference(lag = 4),
