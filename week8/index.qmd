@@ -9,8 +9,8 @@ source(here::here("course_info.R"))
 
 ## What you will learn this week
 
-* Stationarity and differencing
-* Unit root tests
+- Stationarity and differencing
+- Unit root tests
 
 ## Pre-class activities
 
@@ -20,15 +20,17 @@ Read [Sections 9.1-9.2 of the textbook](https://otexts.com/fpp3/arima.html) and 
 
 ```{r}
 #| output: asis
+
 show_slides(week)
 ```
 
-<!-- * [Code used in lecture](lecture_code.R) -->
+- [Code used in lecture](lecture_code.R)
 
 ## Tuesday workshop
 
 ```{r}
 #| output: asis
+
 #show_activity(week)
 show_quiz(week)
 ```
@@ -37,10 +39,11 @@ show_quiz(week)
 
 ## Exercises (on your own or in tutorial)
 
-* Complete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
-<!-- * [Solutions to Exercises](ex8-sol.qmd) -->
+- Complete Exercises 1-5 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).
+  <!-- * [Solutions to Exercises](ex8-sol.qmd) -->
 
 ```{r}
 #| output: asis
+
 show_assignments(week)
 ```
