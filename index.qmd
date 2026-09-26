@@ -23,7 +23,7 @@ week <- as.integer(1 + ((Sys.Date() - as_date(start_semester)) / 7))
 
 ::: {.column width="25%"}
 
-![](https://robjhyndman.com/img/RJH_AAS_small.png){style="width: 80%;"}
+![](/img/RJH_AAS_small.png){style="width: 80%;"}
 :::
 
 ::: {.column width="75%"}

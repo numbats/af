@@ -29,4 +29,4 @@ AI tools are not to be used in the exam.
 
 The exam will include one page of ETS formulas. Here they are, so you know exactly what you will see on the exam. No other formulas will be provided, but you can write whatever you like on your single A4 page of notes.
 
-![ETS formulas](https://otexts.com/fpp3/figs/statespacemodels-1.png)
+![ETS formulas](/img/statespacemodels-1.png)

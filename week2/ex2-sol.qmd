@@ -555,7 +555,7 @@ The seasonality is seen if we increase the lags to at least 2 years (approx 104 
 > The following time plots and ACF plots correspond to four different time series.
 > Your task is to match each time plot in the first row with one of the ACF plots in the second row.
 
-![](https://otexts.com/fpp3/fpp_files/figure-html/acfguess-1.png)
+![](/img/acfguess-1.png)
 
 1-B, 2-A, 3-D, 4-C
 

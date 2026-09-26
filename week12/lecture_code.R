@@ -35,7 +35,7 @@ autoplot(fc, leisure |> tail(12))
 
 ## 5-minute CALL CENTRE DATA ------------------------------------------------
 
-calls <- readr::read_tsv("http://robjhyndman.com/data/callcenter.txt") |>
+calls <- readr::read_tsv("callcenter.txt") |>
   rename(time = `...1`) |>
   pivot_longer(-time, names_to = "date", values_to = "volume") |>
   mutate(
