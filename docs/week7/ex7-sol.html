@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -450,7 +450,7 @@ window.Quarto = {
 <section id="fpp3-8.8-ex10" class="level1">
 <h1>fpp3 8.8, Ex10</h1>
 <blockquote class="blockquote">
-<p>Compute the total domestic overnight trips for holidays across Australia from the <code>tourism</code> dataset.</p>
+<p>Compute the total domestic overnight trips across Australia from the <code>tourism</code> dataset.</p>
 </blockquote>
 <blockquote class="blockquote">
 <ol type="a">
@@ -724,10 +724,7 @@ sigma^2: 3210.8552 </code></pre>
 1 dcmp_AAN    33.3    0.0976</code></pre>
 </div>
 </div>
-<ul>
-<li>The residuals look okay however there still remains some significant auto-correlation. Nevertheless, the results pass the Ljung-Box test.</li>
-<li>The large spike at lag 14 can probably be ignored.</li>
-</ul>
+<p>The residuals look okay and overall they are not significant.</p>
 </section>
 <section id="fpp3-8.8-ex11" class="level1">
 <h1>fpp3 8.8, Ex11</h1>
@@ -953,7 +950,7 @@ sigma^2: 3210.8552 </code></pre>
 </blockquote>
 <blockquote class="blockquote">
 <ul>
-<li>Beer production from <code>aus_production</code></li>
+<li>Beer and bricks production from <code>aus_production</code>.</li>
 </ul>
 </blockquote>
 <div class="cell">
@@ -985,11 +982,6 @@ sigma^2: 3210.8552 </code></pre>
 </div>
 </div>
 <p>ETS and STLM do best for this dataset based on the test set performance.</p>
-<blockquote class="blockquote">
-<ul>
-<li>Bricks production from <code>aus_production</code></li>
-</ul>
-</blockquote>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>tidy_bricks <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Bricks))</span>
@@ -1022,7 +1014,7 @@ sigma^2: 3210.8552 </code></pre>
 <p>ETS and STLM do best for this dataset based on the test set performance.</p>
 <blockquote class="blockquote">
 <ul>
-<li>Cost of drug subsidies for diabetes (<code>ATC2 == "A10"</code>) and corticosteroids (<code>ATC2 == "H02"</code>) from <code>PBS</code></li>
+<li>Cost of drug subsidies for diabetes (<code>ATC2 == "A10"</code>) and corticosteroids (<code>ATC2 == "H02"</code>) from <code>PBS</code>.</li>
 </ul>
 </blockquote>
 <div class="cell">
@@ -1118,8 +1110,8 @@ sigma^2: 3210.8552 </code></pre>
 <li>Use <code>ETS()</code> to select an appropriate model for the following series: total number of trips across Australia using <code>tourism</code>, the closing prices for the four stocks in <code>gafa_stock</code>, and the lynx series in <code>pelt</code>. Does it always give good forecasts?</li>
 </ol>
 </blockquote>
-<section id="tourism" class="level3">
-<h3 class="anchored" data-anchor-id="tourism">tourism</h3>
+<section id="tourism" class="level2">
+<h2 class="anchored" data-anchor-id="tourism">tourism</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Trips =</span> <span class="fu">sum</span>(Trips))</span>
@@ -1157,8 +1149,8 @@ Model: ETS(A,A,A)
 </div>
 <p>Forecasts appear reasonable.</p>
 </section>
-<section id="gafa-stock" class="level3">
-<h3 class="anchored" data-anchor-id="gafa-stock">GAFA stock</h3>
+<section id="gafa-stock" class="level2">
+<h2 class="anchored" data-anchor-id="gafa-stock">GAFA stock</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>gafa_regular <span class="ot">&lt;-</span> gafa_stock <span class="sc">|&gt;</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Symbol) <span class="sc">|&gt;</span></span>
@@ -1200,8 +1192,8 @@ Model: ETS(A,A,A)
 </div>
 <p>Forecasts look reasonable for an efficient market.</p>
 </section>
-<section id="pelt-trading-records" class="level3">
-<h3 class="anchored" data-anchor-id="pelt-trading-records">Pelt trading records</h3>
+<section id="pelt-trading-records" class="level2">
+<h2 class="anchored" data-anchor-id="pelt-trading-records">Pelt trading records</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>pelt <span class="sc">|&gt;</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Lynx))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1243,27 +1235,37 @@ Model: ETS(A,A,A)
 <p>Show that the point forecasts from an ETS(M,A,M) model are the same as those obtained using Holt-Winters’ multiplicative method.</p>
 </blockquote>
 <p>Point forecasts from the multiplicative Holt-Winters’ method: <span class="math display">
-  \hat{y}_{t+h|t} = (\ell_t + hb_t)s_{t+ h - m(k+1)}
-</span> where <span class="math inline">k</span> is the integer part of <span class="math inline">(h-1)/m</span>.</p>
+  \hat{y}_{t+h|t} = (\ell_t + hb_t)s_{t+h-m(k+1)}
+</span> where <span class="math inline">k</span> is the integer part of <span class="math inline">(h - 1)/m</span>.</p>
 <p>An ETS(M,A,M) model is given by <span class="math display">\begin{align*}
-  y_t    &amp; = (\ell_{t-1}+b_{t-1})s_{t-m}(1+\varepsilon_t) \\
-  \ell_t &amp; = (\ell_{t-1}+b_{t-1})(1+\alpha\varepsilon_t) \\
-  b_t    &amp; = b_{t-1} + \beta(\ell_{t-1}+b_{t-1})\varepsilon_t \\
-  s_t    &amp; = s_{t-m} (1+\gamma\varepsilon_t)
+  y_t    &amp; = (\ell_{t-1} + b_{t-1})s_{t-m}(1 + \varepsilon_t)   \\
+  \ell_t &amp; = (\ell_{t-1} + b_{t-1})(1 + \alpha\varepsilon_t)    \\
+  b_t    &amp; = b_{t-1} + \beta(\ell_{t-1} + b_{t-1})\varepsilon_t \\
+  s_t    &amp; = s_{t-m} (1 + \gamma\varepsilon_t)
 \end{align*}</span> So <span class="math inline">y_{T+h}</span> is given by <span class="math display">
-  y_{T+h} = (\ell_{T+h-1}+b_{T+h-1})s_{T+h-m}(1+\varepsilon_{T+h})
-</span> Replacing <span class="math inline">\varepsilon_{t}</span> by zero for <span class="math inline">t&gt;T</span>, and substituting in from the above equations, we obtain <span class="math display">
-  \hat{y}_{T+h} = (\ell_{T+h-2}+2b_{T+h-2})s_{T+h-m}
-</span> Repeating the process a few times leads to <span class="math display">
-  \hat{y}_{T+h} = (\ell_{T}+hb_{T})s_{T+h-m}
+  y_{T+h} = (\ell_{T+h-1} + b_{T+h-1})s_{T+h-m}(1 + \varepsilon_{T+h})
+</span> Replacing <span class="math inline">\varepsilon_{t}</span> by zero for <span class="math inline">t &gt; T</span>, and substituting in from the above equations, we obtain:</p>
+<p>for <span class="math inline">h = 1</span> <span class="math display">
+  \hat{y}_{T+1|T} = (\ell_{T} + b_{T})s_{T+1-m}
+</span> for <span class="math inline">h = 2</span> <span class="math display">\begin{align*}
+  \hat{y}_{T+2|T} &amp; = (\ell_{T+1} + b_{T+1})s_{T+2-m}       \\
+                  &amp; = ((\ell_{T} + b_{T}) + b_{T})s_{T+2-m} \\
+                  &amp; = (\ell_{T} + 2b_{T})s_{T+2-m}
+\end{align*}</span></p>
+<p>Repeating the process a few times leads to <span class="math display">
+  \hat{y}_{T+h|T} = (\ell_{T} + hb_{T})s_{T+h-m}
 </span></p>
 <p>Now if <span class="math inline">h \le m</span>, then we know the value of <span class="math inline">s_{T+h-m}</span>.</p>
-<p>If <span class="math inline">m &lt; h \le 2m</span>, then we can write <span class="math display">s_{T+h-m} = s_{T+h-2m} (1 + \gamma\varepsilon_{T+h-m})</span> and replace <span class="math inline">\varepsilon_{T+h-m}</span> by 0</p>
-<p>If <span class="math inline">2m &lt; h \le 3m</span>, then we can write <span class="math display">s_{T+h-m} = s_{T+h-3m} (1 + \gamma\varepsilon_{T+h-m})(1+\gamma\varepsilon_{T+h-2m})</span> and replace both <span class="math inline">\varepsilon_{T+h-m}</span> and <span class="math inline">\varepsilon_{T+h-2m}</span> by 0</p>
+<p>If <span class="math inline">m &lt; h \le 2m</span>, then we can write <span class="math display">
+  s_{T+h-m} = s_{T+h-2m} (1 + \gamma\varepsilon_{T+h-m})
+</span> and replace <span class="math inline">\varepsilon_{T+h-m}</span> by 0</p>
+<p>If <span class="math inline">2m &lt; h \le 3m</span>, then we can write <span class="math display">
+  s_{T+h-m} = s_{T+h-3m} (1 + \gamma\varepsilon_{T+h-m})(1 + \gamma\varepsilon_{T+h-2m})
+</span> and replace both <span class="math inline">\varepsilon_{T+h-m}</span> and <span class="math inline">\varepsilon_{T+h-2m}</span> by 0</p>
 <p>etc.</p>
-<p>So we can replace <span class="math inline">s_{T+h-m}</span> by <span class="math inline">s_{T+h - m(k+1)}</span> where <span class="math inline">k</span> is the integer part of <span class="math inline">(k-1)/m</span>.</p>
+<p>So we can replace <span class="math inline">s_{T+h-m}</span> by <span class="math inline">s_{T+h-m(k+1)}</span> where <span class="math inline">k</span> is the integer part of <span class="math inline">(k - 1)/m</span>.</p>
 <p>Thus <span class="math display">
-  \hat{y}_{T+h|T} = (\ell_{T}+hb_{T})s_{T+h -m(k+1)}
+  \hat{y}_{T+h|T} = (\ell_{T} + hb_{T})s_{T+h-m(k+1)}
 </span> as required.</p>
 
 

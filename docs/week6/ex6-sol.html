@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -343,11 +343,11 @@ window.Quarto = {
 <section id="fpp3-8.8-ex1" class="level1">
 <h1>fpp3 8.8, Ex1</h1>
 <blockquote class="blockquote">
-<p>Consider the the number of pigs slaughtered in Victoria, available in the <code>aus_livestock</code> dataset.</p>
+<p>Consider the number of pigs slaughtered in Victoria, available in the <code>aus_livestock</code> dataset.</p>
 </blockquote>
 <blockquote class="blockquote">
 <ol type="a">
-<li>Use the <code>ETS()</code> function in R to estimate the equivalent model for simple exponential smoothing. Find the optimal values of <span class="math inline">\alpha</span> and <span class="math inline">\ell_0</span>, and generate forecasts for the next four months.</li>
+<li>Use the <code>ETS()</code> function to estimate the equivalent model for simple exponential smoothing. Find the optimal values of <span class="math inline">\alpha</span> and <span class="math inline">\ell_0</span>, and generate forecasts for the next four months.</li>
 </ol>
 </blockquote>
 <div class="cell">
@@ -437,7 +437,7 @@ Model: ETS(A,N,N)
 <section id="fpp3-8.8-ex2" class="level1">
 <h1>fpp3 8.8, Ex2</h1>
 <blockquote class="blockquote">
-<p>Write your own function to implement simple exponential smoothing. The function should take arguments <code>y</code> (the response data), <code>alpha</code> (the smoothing parameter <span class="math inline">\alpha</span>) and <code>level</code> (the initial level <span class="math inline">\ell_0</span>). It should return the forecast of the next observation in the series. Does it give the same forecast as <code>ETS()</code>?</p>
+<p>Write your own function to implement simple exponential smoothing. The function should take arguments <code>y</code> (the time series), <code>alpha</code> (the smoothing parameter <span class="math inline">\alpha</span>) and <code>level</code> (the initial level <span class="math inline">\ell_0</span>). It should return the forecast of the next observation in the series. Does it give the same forecast as <code>ETS()</code>?</p>
 </blockquote>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>my_ses <span class="ot">&lt;-</span> <span class="cf">function</span>(y, alpha, level) {</span>
@@ -619,7 +619,7 @@ Model: ETS(A,N,N)
 </ul>
 <blockquote class="blockquote">
 <ol start="6" type="a">
-<li>Calculate a 95% prediction interval for the first forecast for each series, using the RMSE values and assuming normal errors. Compare your intervals with those produced using R.</li>
+<li>Calculate a 95% prediction interval for the first forecast for each model, using the RMSE values and assuming normal errors. Compare your intervals with those produced using R.</li>
 </ol>
 </blockquote>
 <ol type="1">
@@ -665,7 +665,7 @@ Model: ETS(A,N,N)
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
 <span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Argentina"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>()</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span>
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co"># sse method= alpha, level=&gt; 2</span></span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co"># holt linear = alpha, level, trend, b =&gt; 4</span></span>
@@ -690,7 +690,7 @@ Model: ETS(A,N,N)
 <p>Forecast the Chinese GDP from the <code>global_economy</code> data set using an ETS model. Experiment with the various options in the <code>ETS()</code> function to see how much the forecasts change with damped trend, or with a Box-Cox transformation. Try to develop an intuition of what each is doing to the forecasts.</p>
 </blockquote>
 <blockquote class="blockquote">
-<p>[Hint: use <code>h=20</code> when forecasting, so you can clearly see the differences between the various options when plotting the forecasts.]</p>
+<p>[Hint: use a relatively large value of <code>h</code> when forecasting, so you can clearly see the differences between the various options when plotting the forecasts.]</p>
 </blockquote>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>china <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
@@ -725,7 +725,7 @@ Model: ETS(A,N,N)
 </div>
 </div>
 <ul>
-<li><p>Making <span class="math inline">\lambda=0.2</span> looks ok.</p></li>
+<li><p>Making <span class="math inline">\lambda = 0.2</span> looks ok.</p></li>
 <li><p>The Guerrero method suggests an even stronger transformation. Let’s also try a log.</p></li>
 </ul>
 <div class="cell">
@@ -783,24 +783,24 @@ Model: ETS(A,N,N)
 <h1>fpp3 8.8, Ex16</h1>
 <blockquote class="blockquote">
 <p>Show that the forecast variance for an ETS(A,N,N) model is given by <span class="math display">
-\sigma^2\left[1+\alpha^2(h-1)\right].
+  \sigma^2\left[ 1 + \alpha^2(h - 1) \right].
 </span></p>
 </blockquote>
 <p>An ETS(A,N,N) model is defined as <span class="math display">\begin{align*}
-    y_t      &amp; = \ell_{t-1} + \varepsilon_{t} \\
-    \ell_{t} &amp; = \ell_{t-1} + \alpha\varepsilon_{t},
-  \end{align*}</span> where <span class="math inline">\varepsilon_t \sim \text{N}(0,\sigma^2)</span>, and <span class="math inline">h</span>-step forecasts are given by <span class="math display">
-\hat{y}_{T+h|T} = \ell_T.
+  y_t      &amp; = \ell_{t-1} + \varepsilon_{t}        \\
+  \ell_{t} &amp; = \ell_{t-1} + \alpha\varepsilon_{t},
+\end{align*}</span> where <span class="math inline">\varepsilon_t \sim \text{N}(0,\sigma^2)</span>, and <span class="math inline">h</span>-step forecasts are given by <span class="math display">
+  \hat{y}_{T+h|T} = \ell_T.
 </span> So <span class="math display">\begin{align*}
-     y_{T+h} &amp; = \ell_{T+h-1} + \varepsilon_{T+h} \\
-             &amp; = \ell_{T+h-2} + \alpha \varepsilon_{T+h-1} +  \varepsilon_{T+h} \\
-             &amp; = \ell_{T+h-3} + \alpha \varepsilon_{T+h-2}  + \alpha \varepsilon_{T+h-1} +  \varepsilon_{T+h} \\
-             &amp; \dots \\
-             &amp; = \ell_{T} + \alpha \sum_{j=1}^{h-1} \varepsilon_{T+h-j} +  \varepsilon_{T+h}.
-  \end{align*}</span> Therefore <span class="math display">\begin{align*}
-    \text{Var}(y_{T+h} | y_1,\dots,y_T) &amp; = \alpha^2 \sum_{j=1}^{h-1} \sigma^2 +  \sigma^2 \\
-                                        &amp; =  \sigma^2\left[ 1 + \alpha^2 (h-1)\right ].
-  \end{align*}</span></p>
+  y_{T+h} &amp; = \ell_{T+h-1} + \varepsilon_{T+h}                                                           \\
+          &amp; = \ell_{T+h-2} + \alpha \varepsilon_{T+h-1} + \varepsilon_{T+h}                              \\
+          &amp; = \ell_{T+h-3} + \alpha \varepsilon_{T+h-2} + \alpha \varepsilon_{T+h-1} + \varepsilon_{T+h} \\
+          &amp; \dots                                                                                        \\
+          &amp; = \ell_{T} + \alpha \sum_{j=1}^{h-1} \varepsilon_{T+h-j} + \varepsilon_{T+h}.
+\end{align*}</span> Therefore <span class="math display">\begin{align*}
+  \text{Var}(y_{T+h} | y_1,\dots,y_T) &amp; = \alpha^2 \sum_{j=1}^{h-1} \sigma^2 + \sigma^2 \\
+                                      &amp; = \sigma^2\left[ 1 + \alpha^2 (h - 1) \right].
+\end{align*}</span></p>
 </section>
 <section id="fpp3-8.8-ex17" class="level1">
 <h1>fpp3 8.8, Ex17</h1>
@@ -808,7 +808,7 @@ Model: ETS(A,N,N)
 <p>Write down 95% prediction intervals for an ETS(A,N,N) model as a function of <span class="math inline">\ell_T</span>, <span class="math inline">\alpha</span>, <span class="math inline">h</span> and <span class="math inline">\sigma</span>, assuming normally distributed errors.</p>
 </blockquote>
 <p>Using previous result: <span class="math display">
-\ell_T \pm 1.96 \sigma \sqrt{ 1 + \alpha^2 (h-1)}
+  \ell_T \pm 1.96 \sigma \sqrt{1 + \alpha^2 (h - 1)}
 </span></p>
 
 

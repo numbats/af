@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -390,9 +390,11 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>The time plot shows the series “wandering around”, which is a typical indication of non-stationarity. Differencing the series should remove this feature.</p>
-<p>ACF does not drop quickly to zero, moreover the value <span class="math inline">r_1</span> is large and positive (almost 1 in this case). All these are signs of a non-stationary time series. Therefore it should be differenced to obtain a stationary series.</p>
-<p>PACF value <span class="math inline">r_1</span> is almost 1. All other values <span class="math inline">r_i, i&gt;1</span> are small. This is a sign of a non-stationary process that should be differenced in order to obtain a stationary series.</p>
+<ul>
+<li><p>The time plot shows the series “wandering around”, which is a typical indication of non-stationarity. Differencing the series should remove this feature.</p></li>
+<li><p>ACF does not drop quickly to zero, moreover the value <span class="math inline">r_1</span> is large and positive (almost 1 in this case). All these are signs of a non-stationary time series. Therefore it should be differenced to obtain a stationary series.</p></li>
+<li><p>PACF value <span class="math inline">r_1</span> is almost 1. All other values <span class="math inline">r_i, i &gt; 1</span> are small. This is a sign of a non-stationary process that should be differenced in order to obtain a stationary series.</p></li>
+</ul>
 </section>
 <section id="fpp3-9.11-ex3" class="level1">
 <h1>fpp3 9.11, Ex3</h1>
@@ -457,38 +459,11 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tas <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Takings))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="ex8-sol_files/figure-html/ex3b-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tas <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Takings) <span class="sc">|&gt;</span> <span class="fu">difference</span>(<span class="at">lag =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="ex8-sol_files/figure-html/ex3b-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tas <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Takings) <span class="sc">|&gt;</span> <span class="fu">difference</span>(<span class="at">lag =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span> <span class="fu">difference</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="ex8-sol_files/figure-html/ex3b-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tas <span class="sc">|&gt;</span> <span class="fu">features</span>(Takings, guerrero)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
-  State    lambda_guerrero
-  &lt;chr&gt;              &lt;dbl&gt;
-1 Tasmania         0.00182</code></pre>
-</div>
-</div>
+<pre><code>tas |&gt; autoplot(log(Takings))
+tas |&gt; autoplot(log(Takings) |&gt; difference(lag = 4))
+tas |&gt; autoplot(log(Takings) |&gt; difference(lag = 4) |&gt; difference())
+tas |&gt; features(Takings, guerrero)</code></pre>
 <ul>
 <li>Logs followed by seasonal and first differences make the data appear stationary.</li>
 <li>The automatically selected Box-Cox <span class="math inline">\lambda</span> value is very close to zero, confirming the choice of using logs.</li>
@@ -499,7 +474,7 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -507,7 +482,7 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Sales))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Sales))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -515,7 +490,7 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Sales) <span class="sc">|&gt;</span> <span class="fu">difference</span>(<span class="at">lag=</span><span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Sales) <span class="sc">|&gt;</span> <span class="fu">difference</span>(<span class="at">lag =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -523,7 +498,7 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Sales) <span class="sc">|&gt;</span> <span class="fu">difference</span>(<span class="at">lag=</span><span class="dv">12</span>) <span class="sc">|&gt;</span> <span class="fu">difference</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Sales) <span class="sc">|&gt;</span> <span class="fu">difference</span>(<span class="at">lag =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span> <span class="fu">difference</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -531,7 +506,7 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">features</span>(Sales, guerrero)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">features</span>(Sales, guerrero)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   lambda_guerrero
@@ -549,21 +524,21 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>For the <code>souvenirs</code> data, write down the differences you chose above using backshift operator notation.</p>
 </blockquote>
-<p>Let <span class="math inline">y_t =</span> log(Sales). Then <span class="math inline">(1-B^{12})(1-B)y_t</span> gives the differences used above.</p>
+<p>Let <span class="math inline">y_t =</span> log(Sales). Then <span class="math inline">(1 - B^{12})(1 - B)y_t</span> gives the differences used above.</p>
 </section>
 <section id="fpp3-9.11-ex5" class="level1">
 <h1>fpp3 9.11, Ex5</h1>
 <blockquote class="blockquote">
-<p>For your retail data (from Exercise 8 in Section 2.10), find the appropriate order of differencing (after transformation if necessary) to obtain stationary data.</p>
+<p>For your retail data (from Exercise 7 in Section 2.10), find the appropriate order of differencing (after transformation if necessary) to obtain stationary data.</p>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345678</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>myseries <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Series ID</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">sample</span>(aus_retail<span class="sc">$</span><span class="st">`</span><span class="at">Series ID</span><span class="st">`</span>, <span class="dv">1</span>),</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    Month <span class="sc">&lt;</span> <span class="fu">yearmonth</span>(<span class="st">"2018 Jan"</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>myseries <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Turnover)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345678</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>myseries <span class="ot">&lt;-</span> aus_retail <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Series ID</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">sample</span>(aus_retail<span class="sc">$</span><span class="st">`</span><span class="at">Series ID</span><span class="st">`</span>, <span class="dv">1</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    Month <span class="sc">&lt;</span> <span class="fu">yearmonth</span>(<span class="st">"2018 Jan"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>myseries <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Turnover)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -573,8 +548,8 @@ window.Quarto = {
 </div>
 </div>
 <p>Data requires a transformation as the variation is proportional to the level of the series. A log transformation will be okay, although it does seem to be too strong.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>myseries <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Turnover))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell" data-depends-on="ex5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>myseries <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Turnover))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -585,7 +560,7 @@ window.Quarto = {
 </div>
 <p>Data contains seasonality, so a seasonal difference is required.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>myseries <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Turnover) <span class="sc">|&gt;</span> <span class="fu">difference</span>(<span class="at">lag =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>myseries <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Turnover) <span class="sc">|&gt;</span> <span class="fu">difference</span>(<span class="at">lag =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -596,7 +571,7 @@ window.Quarto = {
 </div>
 <p>Data still appears to have extended periods of high values and low values. A first order differencing may be useful.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>myseries <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Turnover) <span class="sc">|&gt;</span> <span class="fu">difference</span>(<span class="at">lag =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span> <span class="fu">difference</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>myseries <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Turnover) <span class="sc">|&gt;</span> <span class="fu">difference</span>(<span class="at">lag =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span> <span class="fu">difference</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -351,7 +351,7 @@ window.Quarto = {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">reg =</span> <span class="fu">TSLM</span>(<span class="fu">log</span>(Sales) <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> festival),</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dynreg =</span> <span class="fu">ARIMA</span>(<span class="fu">log</span>(Sales) <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> festival)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n=</span><span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 31 × 6
    .model term           estimate std.error statistic  p.value
@@ -399,8 +399,8 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>future_souvenirs <span class="ot">&lt;-</span> <span class="fu">new_data</span>(souvenirs, <span class="at">n =</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> future_souvenirs)  <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(souvenirs, <span class="at">level=</span><span class="dv">95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> future_souvenirs) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(souvenirs, <span class="at">level =</span> <span class="dv">95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -432,7 +432,7 @@ window.Quarto = {
 <section id="fpp3-10.7-ex-3" class="level1">
 <h1>fpp3 10.7, Ex 3</h1>
 <blockquote class="blockquote">
-<p>Repeat the daily electricity example, but instead of using a quadratic function of temperature, use a piecewise linear function with the “knot” around 25 degrees Celsius (use predictors <code>Temperature</code> &amp; <code>Temp2</code>). How can you optimize the choice of knot?</p>
+<p>Repeat the daily electricity example, but instead of using a quadratic function of temperature, use a piecewise linear function with the “knot” around 25 degrees Celsius (use predictors <code>Temperature</code> &amp; <code>Temp2</code>). How can you optimise the choice of knot? The data can be created as follows.</p>
 </blockquote>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vic_elec_daily <span class="ot">&lt;-</span> vic_elec <span class="sc">|&gt;</span></span>
@@ -444,7 +444,7 @@ window.Quarto = {
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Holiday =</span> <span class="fu">any</span>(Holiday)</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">I</span>(<span class="fu">pmax</span>(Temperature <span class="sc">-</span> <span class="dv">25</span>, <span class="dv">0</span>)),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">pmax</span>(Temperature <span class="sc">-</span> <span class="dv">25</span>, <span class="dv">0</span>),</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Day_Type =</span> <span class="fu">case_when</span>(</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      Holiday <span class="sc">~</span> <span class="st">"Holiday"</span>,</span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">wday</span>(Date) <span class="sc">%in%</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span> <span class="sc">~</span> <span class="st">"Weekday"</span>,</span>
@@ -452,12 +452,11 @@ window.Quarto = {
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>First, we will leave the knot at 25 and find the best ARIMA model. This will take a while, but we only have to do it once.</p>
+<p>To fit a model with a knot at 25, we can just use <code>ARIMA()</code> as usual:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>vic_elec_daily <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">fit =</span> <span class="fu">ARIMA</span>(Demand <span class="sc">~</span> Temperature <span class="sc">+</span> Temp2 <span class="sc">+</span> (Day_Type <span class="sc">==</span> <span class="st">"Weekday"</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">fit =</span> <span class="fu">ARIMA</span>(Demand <span class="sc">~</span> Temperature <span class="sc">+</span> Temp2 <span class="sc">+</span> (Day_Type <span class="sc">==</span> <span class="st">"Weekday"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Demand 
 Model: LM w/ ARIMA(3,1,1)(2,0,0)[7] errors 
@@ -474,17 +473,16 @@ sigma^2 estimated as 61.42:  log likelihood=-1262.4
 AIC=2544.81   AICc=2545.43   BIC=2583.78</code></pre>
 </div>
 </div>
-<p>Now we will use that ARIMA(3,1,1)(2,0,0)[7] model and modify the knot until the AICc is optmized.</p>
 <p>To optimize the knot position, we need to try many knot locations and select the model with the smallest AICc value. The fit is sensitive to the knot placement, with errors occurring at some knot locations. So we need to do a grid search, allowing for null models to be returned.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>best_aicc <span class="ot">&lt;-</span> <span class="cn">Inf</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(knot <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">20</span>, <span class="dv">30</span>, <span class="at">by=</span><span class="fl">0.1</span>)) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (knot <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">20</span>, <span class="dv">30</span>, <span class="at">by =</span> <span class="fl">0.1</span>)) {</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  elec_model <span class="ot">&lt;-</span> vic_elec_daily <span class="sc">|&gt;</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Temp2 =</span> <span class="fu">pmax</span>(Temperature <span class="sc">-</span> knot, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">model</span>(<span class="at">fit =</span> <span class="fu">ARIMA</span>(Demand <span class="sc">~</span> Temperature <span class="sc">+</span> Temp2 <span class="sc">+</span> (Day_Type <span class="sc">==</span> <span class="st">"Weekday"</span>)))</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is_null_model</span>(elec_model<span class="sc">$</span>fit[[<span class="dv">1</span>]])) {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is_null_model</span>(elec_model<span class="sc">$</span>fit[[<span class="dv">1</span>]])) {</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    aicc <span class="ot">&lt;-</span> <span class="fu">glance</span>(elec_model) <span class="sc">|&gt;</span> <span class="fu">pull</span>(AICc)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(aicc <span class="sc">&lt;</span> best_aicc) {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (aicc <span class="sc">&lt;</span> best_aicc) {</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      best_aicc <span class="ot">&lt;-</span> aicc</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      best_knot <span class="ot">&lt;-</span> knot</span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      best_model <span class="ot">&lt;-</span> elec_model</span>
@@ -556,7 +554,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>vic_next_day <span class="ot">&lt;-</span> <span class="fu">new_data</span>(vic_elec_daily, <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temperature =</span> <span class="dv">26</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">I</span>(<span class="fu">pmax</span>(Temperature <span class="sc">-</span> best_knot, <span class="dv">0</span>)),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">I</span>(<span class="fu">pmax</span>(Temperature <span class="sc">-</span> <span class="fl">28.8</span>, <span class="dv">0</span>)),</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Day_Type =</span> <span class="st">"Holiday"</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(best_model, vic_next_day)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -572,7 +570,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>vic_elec_future <span class="ot">&lt;-</span> <span class="fu">new_data</span>(vic_elec_daily, <span class="dv">14</span>) <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temperature =</span> <span class="dv">26</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">I</span>(<span class="fu">pmax</span>(Temperature <span class="sc">-</span> best_knot, <span class="dv">0</span>)),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Temp2 =</span> <span class="fu">I</span>(<span class="fu">pmax</span>(Temperature <span class="sc">-</span> <span class="fl">28.8</span>, <span class="dv">0</span>)),</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Holiday =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="dv">13</span>)),</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Day_Type =</span> <span class="fu">case_when</span>(</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>      Holiday <span class="sc">~</span> <span class="st">"Holiday"</span>,</span>
@@ -581,7 +579,8 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(best_model, vic_elec_future) <span class="sc">|&gt;</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(vic_elec_daily) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Electricity demand (GW)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(vic_elec_daily) <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Electricity demand (GW)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -594,7 +593,10 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 <section id="fpp3-10.7-ex-4" class="level1">
 <h1>fpp3 10.7, Ex 4</h1>
 <blockquote class="blockquote">
-<p>This exercise concerns <code>aus_accommodation</code>: the total quarterly takings from accommodation and the room occupancy level for hotels, motels, and guest houses in Australia, between January 1998 and June 2016. Total quarterly takings are in millions of Australian dollars. a. Compute the CPI-adjusted takings and plot the result for each state</p>
+<p>This exercise concerns <code>aus_accommodation</code>: the total quarterly takings from accommodation and the room occupancy level for hotels, motels, and guest houses in Australia, between January 1998 and June 2016. Total quarterly takings are in millions of Australian dollars.</p>
+<ol type="a">
+<li>Compute the CPI-adjusted takings and plot the result for each state</li>
+</ol>
 </blockquote>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>aus_accommodation <span class="ot">&lt;-</span> aus_accommodation <span class="sc">|&gt;</span></span>
@@ -705,9 +707,9 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 <section id="fpp3-10.7-ex-5" class="level1">
 <h1>fpp3 10.7, Ex 5</h1>
 <blockquote class="blockquote">
-<p>We fitted a harmonic regression model to part of the <code>us_gasoline</code> series in Exercise 6 in Section 7.10. We will now revisit this model, and extend it to include more data and ARMA errors.</p>
+<p>We fitted a harmonic regression model to part of the <code>us_gasoline</code> series in Exercise 5 in Section 7.10. We will now revisit this model, and extend it to include more data and ARMA errors.</p>
 <ol type="a">
-<li>Using <code>TSLM()</code>, fit a harmonic regression with a piecewise linear time trend to the full <code>gasoline</code> series. Select the position of the knots in the trend and the appropriate number of Fourier terms to include by minimising the AICc or CV value.</li>
+<li>Using <code>TSLM()</code>, fit a harmonic regression with a piecewise linear time trend to the full series. Select the position of the knots in the trend and the appropriate number of Fourier terms to include by minimising the AICc or CV value.</li>
 </ol>
 </blockquote>
 <p>Let’s optimize using 2 break points and an unknown number of Fourier terms. Because the number of Fourier terms is integer, we can’t just use <code>optim</code>. Instead, we will loop over a large number of possible values for the breakpoints and Fourier terms. There are more than 2000 models fitted here, but <code>TSLM</code> is relatively fast.</p>
@@ -760,8 +762,12 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </blockquote>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> us_gasoline <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ARIMA</span>(Barrels <span class="sc">~</span> <span class="fu">fourier</span>(<span class="at">K =</span> best<span class="sc">$</span>K) <span class="sc">+</span> <span class="fu">trend</span>(<span class="fu">c</span>(best<span class="sc">$</span>knot1, best<span class="sc">$</span>knot2)) <span class="sc">+</span> <span class="fu">PDQ</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)))</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ARIMA</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    Barrels <span class="sc">~</span> <span class="fu">fourier</span>(<span class="at">K =</span> best<span class="sc">$</span>K) <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">trend</span>(<span class="fu">c</span>(best<span class="sc">$</span>knot1, best<span class="sc">$</span>knot2)) <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">PDQ</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: Barrels 
 Model: LM w/ ARIMA(1,0,1) errors 
@@ -801,7 +807,7 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 </div>
 <blockquote class="blockquote">
 <ol start="3" type="a">
-<li>Check the residuals of the final model using the <code>gg_tsdisplay()</code> function and a Ljung-Box test. Do they look sufficiently like white noise to continue? If not, try modifying your model, or removing the first few years of data.</li>
+<li>Check the residuals of the final model using the <code>gg_tsresiduals()</code> function and a Ljung-Box test. Do they look sufficiently like white noise to continue? If not, try modifying your model, or removing the first few years of data.</li>
 </ol>
 </blockquote>
 <div class="cell">
@@ -813,15 +819,16 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">features</span>(.innov, ljung_box, <span class="at">dof =</span> <span class="dv">2</span>, <span class="at">lag =</span> <span class="dv">24</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">features</span>(.innov, ljung_box, <span class="at">dof =</span> <span class="dv">2</span>, <span class="at">lag =</span> <span class="dv">26</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .model                                                       lb_stat lb_pvalue
   &lt;chr&gt;                                                          &lt;dbl&gt;     &lt;dbl&gt;
-1 "ARIMA(Barrels ~ fourier(K = best$K) + trend(c(best$knot1, …    23.6     0.369</code></pre>
+1 "ARIMA(Barrels ~ fourier(K = best$K) + trend(c(best$knot1, …    25.8     0.365</code></pre>
 </div>
 </div>
-<p>The model looks pretty good, although there is some heteroskedasticity. So the prediction intervals may not have accurate coverage.</p>
+<p>Usually, we choose <code>lag</code> to be twice the seasonal period, but the seasonal period here is about 52, and 104 lags is too many for the test statistics to have good properties. So we’ve set <code>lag</code> to be 26 which should be plenty.</p>
+<p>The model looks pretty good, and passes the Ljung-Box test, although there is some heteroskedasticity.</p>
 <blockquote class="blockquote">
 <ol start="4" type="a">
 <li>Once you have a model with white noise residuals, produce forecasts for the next year.</li>
@@ -846,7 +853,12 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 <p>Electricity consumption is often modelled as a function of temperature. Temperature is measured by daily heating degrees and cooling degrees. Heating degrees is <span class="math inline">18^\circ</span>C minus the average daily temperature when the daily average is below <span class="math inline">18^\circ</span>C; otherwise it is zero. This provides a measure of our need to heat ourselves as temperature falls. Cooling degrees measures our need to cool ourselves as the temperature rises. It is defined as the average daily temperature minus <span class="math inline">18^\circ</span>C when the daily average is above <span class="math inline">18^\circ</span>C; otherwise it is zero. Let <span class="math inline">y_t</span> denote the monthly total of kilowatt-hours of electricity used, let <span class="math inline">x_{1,t}</span> denote the monthly total of heating degrees, and let <span class="math inline">x_{2,t}</span> denote the monthly total of cooling degrees.</p>
 </blockquote>
 <blockquote class="blockquote">
-<p>An analyst fits the following model to a set of such data: <span class="math display">y^*_t = \beta_1x^*_{1,t} + \beta_2x^*_{2,t} + \eta_t,</span> where <span class="math display">(1-\Phi_{1}B^{12} - \Phi_{2}B^{24})(1-B)(1-B^{12})\eta_t = (1+\theta_1 B)\varepsilon_t</span> and <span class="math inline">y^*_t = \log(y_t)</span>, <span class="math inline">x^*_{1,t} = \sqrt{x_{1,t}}</span> and <span class="math inline">x^*_{2,t}=\sqrt{x_{2,t}}</span>.</p>
+<p>An analyst fits the following model to a set of such data: <span class="math display">
+  y^*_t = \beta_1x^*_{1,t} + \beta_2x^*_{2,t} + \eta_t,
+</span> where <span class="math display">
+  (1 - \Phi_{1}B^{12} - \Phi_{2}B^{24})(1 - B)(1 - B^{12})\eta_t
+  = (1 + \theta_1 B)\varepsilon_t
+</span> and <span class="math inline">y^*_t = \log(y_t)</span>, <span class="math inline">x^*_{1,t} = \sqrt{x_{1,t}}</span> and <span class="math inline">x^*_{2,t} = \sqrt{x_{2,t}}</span>.</p>
 <ol type="a">
 <li>What sort of ARIMA model is identified for <span class="math inline">\eta_t</span>?</li>
 </ol>
@@ -906,7 +918,7 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 </table>
 <p>Explain what the estimates of <span class="math inline">\beta_1</span> and <span class="math inline">\beta_2</span> tell us about electricity consumption.</p>
 </blockquote>
-<p><span class="math inline">b_1</span> is the unit increase in <span class="math inline">y_t^*</span> when <span class="math inline">x_{1,t}^*</span> increases by 1. This is a little hard to interpret, but it is clear that monthly total electricity usage goes up when monthly heating degrees goes up. Similarly, for <span class="math inline">b_2</span>, monthly total electricty usage goes up when monthly cooling degrees goes up.</p>
+<p><span class="math inline">\beta_1</span> is the unit increase in <span class="math inline">y_t^*</span> when <span class="math inline">x_{1,t}^*</span> increases by 1. This is a little hard to interpret, but it is clear that monthly total electricity usage goes up when monthly heating degrees goes up. Similarly, for <span class="math inline">\beta_2</span>, monthly total electricity usage goes up when monthly cooling degrees goes up.</p>
 <blockquote class="blockquote">
 <ol start="3" type="a">
 <li>Write the equation in a form more suitable for forecasting.</li>
@@ -914,41 +926,43 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 </blockquote>
 <p>This turned out to be way more messy than I expected, but for what it’s worth, here it is in all its ugliness.</p>
 <p>First apply the differences to the regression equation. <span class="math display">
-(1-B)(1-B^{12}) y_t^* = b_1^*(1-B)(1-B^{12})x_{1,t}^* + b_2^*(1-B)(1-B^{12})x_{2,t}^* + (1-B)(1-B^{12})\eta_{t}
-</span> So <span class="math display">\begin{align*}
-(y^*_{t} - y^*_{t-1} - y^*_{t-12} +y^*_{t-13})
-=&amp; b_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
-+ b_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13}) + \eta'_t
-\end{align*}</span> Multiplying by the AR polynomial gives <span class="math display">\begin{align*}
-(y^*_{t} &amp; - y^*_{t-1} - y^*_{t-12} +y^*_{t-13})
--\Phi_{1}(y^*_{t-12} - y^*_{t-13} - y^*_{t-24} +y^*_{t-25})
--\Phi_{2}(y^*_{t-24} - y^*_{t-25} - y^*_{t-36} +y^*_{t-37})\\
-= &amp; ~ b_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
--\Phi_{1}b_1(x^*_{1,t-12} - x^*_{1,t-13} - x^*_{1,t-24} + x^*_{1,t-25})
--\Phi_{2}b_1(x^*_{1,t-24} - x^*_{1,t-25} - x^*_{1,t-36} + x^*_{1,t-37}) \\
-&amp; ~ + b_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13})
-  - \Phi_{1}b_2(x^*_{2,t-12} - x^*_{2,t-13} - x^*_{2,t-24} + x^*_{2,t-25})
-  - \Phi_{2}b_2(x^*_{2,t-24} - x^*_{2,t-25} - x^*_{2,t-36} + x^*_{2,t-37}) \\
-&amp; ~ + \varepsilon_t + \theta_1 \varepsilon_{t-1}.
+  (1 - B)(1 - B^{12}) y_t^* = \beta_1^*(1 - B)(1 - B^{12})x_{1,t}^*
+                              + \beta_2^*(1 - B)(1 - B^{12})x_{2,t}^*
+                              + (1 - B)(1 - B^{12})\eta_{t}
+</span> So <span class="math display">
+  (y^*_{t} - y^*_{t-1} - y^*_{t-12} + y^*_{t-13})
+  = \beta_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
+    + \beta_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13}) + \eta'_t
+</span> Multiplying by the AR polynomial gives <span class="math display">\begin{align*}
+  (y^*_{t} &amp; -y^*_{t-1} - y^*_{t-12} + y^*_{t-13})
+  -\Phi_{1}(y^*_{t-12} - y^*_{t-13} - y^*_{t-24} + y^*_{t-25})
+  -\Phi_{2}(y^*_{t-24} - y^*_{t-25} - y^*_{t-36} + y^*_{t-37}) \\
+  =        &amp; ~ \beta_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
+  -\Phi_{1}\beta_1(x^*_{1,t-12} - x^*_{1,t-13} - x^*_{1,t-24} + x^*_{1,t-25})
+  -\Phi_{2}\beta_1(x^*_{1,t-24} - x^*_{1,t-25} - x^*_{1,t-36} + x^*_{1,t-37}) \\
+           &amp; +\beta_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13})
+  -\Phi_{1}\beta_2(x^*_{2,t-12} - x^*_{2,t-13} - x^*_{2,t-24} + x^*_{2,t-25})
+  -\Phi_{2}\beta_2(x^*_{2,t-24} - x^*_{2,t-25} - x^*_{2,t-36} + x^*_{2,t-37}) \\
+           &amp; +\varepsilon_t + \theta_1 \varepsilon_{t-1}.
 \end{align*}</span> Finally, we move all but <span class="math inline">y_t^*</span> to the right hand side: <span class="math display">\begin{align*}
-y^*_{t} =  &amp; ~ y^*_{t-1} + y^*_{t-12} - y^*_{t-13}
-+\Phi_{1}(y^*_{t-12} - y^*_{t-13} - y^*_{t-24} +y^*_{t-25})
-+\Phi_{2}(y^*_{t-24} - y^*_{t-25} - y^*_{t-36} +y^*_{t-37})\\
-&amp; + b_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
--\Phi_{1}b_1(x^*_{1,t-12} - x^*_{1,t-13} - x^*_{1,t-24} + x^*_{1,t-25})
--\Phi_{2}b_1(x^*_{1,t-24} - x^*_{1,t-25} - x^*_{1,t-36} + x^*_{1,t-37}) \\
-&amp; + b_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13})
-  - \Phi_{1}b_2(x^*_{2,t-12} - x^*_{2,t-13} - x^*_{2,t-24} + x^*_{2,t-25})
-  - \Phi_{2}b_2(x^*_{2,t-24} - x^*_{2,t-25} - x^*_{2,t-36} + x^*_{2,t-37}) \\
-&amp;  + \varepsilon_t + \theta_1 \varepsilon_{t-1}.
+  y^*_{t} = &amp; ~ y^*_{t-1} + y^*_{t-12} - y^*_{t-13}
+  +\Phi_{1}(y^*_{t-12} - y^*_{t-13} - y^*_{t-24} + y^*_{t-25})
+  +\Phi_{2}(y^*_{t-24} - y^*_{t-25} - y^*_{t-36} + y^*_{t-37}) \\
+            &amp; +\beta_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
+  -\Phi_{1}\beta_1(x^*_{1,t-12} - x^*_{1,t-13} - x^*_{1,t-24} + x^*_{1,t-25})
+  -\Phi_{2}\beta_1(x^*_{1,t-24} - x^*_{1,t-25} - x^*_{1,t-36} + x^*_{1,t-37}) \\
+            &amp; +\beta_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13})
+  -\Phi_{1}\beta_2(x^*_{2,t-12} - x^*_{2,t-13} - x^*_{2,t-24} + x^*_{2,t-25})
+  -\Phi_{2}\beta_2(x^*_{2,t-24} - x^*_{2,t-25} - x^*_{2,t-36} + x^*_{2,t-37}) \\
+            &amp; +\varepsilon_t + \theta_1 \varepsilon_{t-1}.
 \end{align*}</span></p>
 <blockquote class="blockquote">
 <ol start="4" type="a">
 <li>Describe how this model could be used to forecast electricity demand for the next 12 months.</li>
 </ol>
 </blockquote>
-<p>For <span class="math inline">t=T+1</span>, we use the above equation to find a point forecast of <span class="math inline">y_{T+1}^*</span>, setting <span class="math inline">\varepsilon_{T+1}=0</span> and <span class="math inline">\hat{\varepsilon}_T</span> to the last residual. The actual <span class="math inline">y_t^*</span> values are all known, as are all the <span class="math inline">x_{1,t}^*</span> and <span class="math inline">x_{2,t}^*</span> values up to time <span class="math inline">t=T</span>. For <span class="math inline">x_{1,T+1}^*</span> and <span class="math inline">x_{2,T+1}^*</span>, we could use a forecast (for example, a seasonal naive forecast).</p>
-<p>For <span class="math inline">t=T+2,\dots,T+12</span>, we do something similar, but both <span class="math inline">\varepsilon</span> values are set to 0 and <span class="math inline">y^*_{T+k}</span> (<span class="math inline">k\ge1</span>) is replaced by the forecasts just calculated.</p>
+<p>For <span class="math inline">t = T + 1</span>, we use the above equation to find a point forecast of <span class="math inline">y_{T+1}^*</span>, setting <span class="math inline">\varepsilon_{T+1} = 0</span> and <span class="math inline">\hat{\varepsilon}_T</span> to the last residual. The actual <span class="math inline">y_t^*</span> values are all known, as are all the <span class="math inline">x_{1,t}^*</span> and <span class="math inline">x_{2,t}^*</span> values up to time <span class="math inline">t = T</span>. For <span class="math inline">x_{1,T+1}^*</span> and <span class="math inline">x_{2,T+1}^*</span>, we could use a forecast (for example, a seasonal naive forecast).</p>
+<p>For <span class="math inline">t = T + 2,\dots,T + 12</span>, we do something similar, but both <span class="math inline">\varepsilon</span> values are set to 0 and <span class="math inline">y^*_{T+k}</span> (<span class="math inline">k \ge 1</span>) is replaced by the forecasts just calculated.</p>
 <blockquote class="blockquote">
 <ol start="5" type="a">
 <li>Explain why the <span class="math inline">\eta_t</span> term should be modelled with an ARIMA model rather than modelling the data using a standard regression package. In your discussion, comment on the properties of the estimates, the validity of the standard regression results, and the importance of the <span class="math inline">\eta_t</span> model in producing forecasts.</li>

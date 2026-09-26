@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -306,7 +306,7 @@ window.Quarto = {
   <ul>
   <li><a href="#fpp3-7.10-ex-1" id="toc-fpp3-7.10-ex-1" class="nav-link active" data-scroll-target="#fpp3-7.10-ex-1">fpp3 7.10, Ex 1</a></li>
   <li><a href="#fpp3-7.10-ex-2" id="toc-fpp3-7.10-ex-2" class="nav-link" data-scroll-target="#fpp3-7.10-ex-2">fpp3 7.10, Ex 2</a></li>
-  <li><a href="#fpp3-7.10-ex3" id="toc-fpp3-7.10-ex3" class="nav-link" data-scroll-target="#fpp3-7.10-ex3">fpp3 7.10, Ex3</a></li>
+  <li><a href="#fpp3-7.10-ex-3" id="toc-fpp3-7.10-ex-3" class="nav-link" data-scroll-target="#fpp3-7.10-ex-3">fpp3 7.10, Ex 3</a></li>
   <li><a href="#fpp3-7.10-ex-4" id="toc-fpp3-7.10-ex-4" class="nav-link" data-scroll-target="#fpp3-7.10-ex-4">fpp3 7.10, Ex 4</a></li>
   <li><a href="#fpp3-7.10-ex-5" id="toc-fpp3-7.10-ex-5" class="nav-link" data-scroll-target="#fpp3-7.10-ex-5">fpp3 7.10, Ex 5</a></li>
   <li><a href="#fpp3-7.10-ex-6" id="toc-fpp3-7.10-ex-6" class="nav-link" data-scroll-target="#fpp3-7.10-ex-6">fpp3 7.10, Ex 6</a></li>
@@ -346,22 +346,22 @@ window.Quarto = {
 <h1>fpp3 7.10, Ex 1</h1>
 <blockquote class="blockquote">
 <p>Half-hourly electricity demand for Victoria, Australia is contained in <code>vic_elec</code>. Extract the January 2014 electricity demand, and aggregate this data to daily with daily total demands and maximum temperatures.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>jan_vic_elec <span class="ot">&lt;-</span> vic_elec <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>jan14_vic_elec <span class="ot">&lt;-</span> vic_elec <span class="sc">|&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">yearmonth</span>(Time) <span class="sc">==</span> <span class="fu">yearmonth</span>(<span class="st">"2014 Jan"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Date =</span> <span class="fu">as_date</span>(Time)) <span class="sc">|&gt;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Demand =</span> <span class="fu">sum</span>(Demand), <span class="at">Temperature =</span> <span class="fu">max</span>(Temperature))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="a">
-<li>Plot the data and find the regression model for Demand with temperature as an explanatory variable. Why is there a positive relationship?</li>
+<li>Plot the data and find the regression model for Demand with temperature as a predictor variable. Why is there a positive relationship?</li>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>jan_vic_elec <span class="ot">&lt;-</span> vic_elec <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>jan14_vic_elec <span class="ot">&lt;-</span> vic_elec <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">yearmonth</span>(Time) <span class="sc">==</span> <span class="fu">yearmonth</span>(<span class="st">"2014 Jan"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Date =</span> <span class="fu">as_date</span>(Time)) <span class="sc">|&gt;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Demand =</span> <span class="fu">sum</span>(Demand), <span class="at">Temperature =</span> <span class="fu">max</span>(Temperature))</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>jan_vic_elec <span class="sc">|&gt;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">names_to=</span><span class="st">"key"</span>, <span class="at">values_to=</span><span class="st">"value"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>jan14_vic_elec <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">names_to =</span> <span class="st">"key"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">.vars =</span> value) <span class="sc">+</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="fu">vars</span>(key), <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -371,7 +371,7 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>jan_vic_elec <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>jan14_vic_elec <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Temperature, <span class="at">y =</span> Demand)) <span class="sc">+</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -383,7 +383,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> jan_vic_elec <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> jan14_vic_elec <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">TSLM</span>(Demand <span class="sc">~</span> Temperature))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">report</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -425,20 +425,24 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 <p>The residuals from this section of the data suggest that the model is lacking a trend (although looking at a larger window of the data, this is clearly not a real pattern). Some large variability suggests that there are some outliers in this data.</p>
 <blockquote class="blockquote">
 <ol start="3" type="a">
-<li>Use the model to forecast the electricity demand that you would expect for the next day if the maximum temperature was <span class="math inline">15^\circ\text{C}</span> and compare it with the forecast if the with maximum temperature was <span class="math inline">35^\circ\text{C}</span>. Do you believe these forecasts?</li>
+<li><p>Use the model to forecast the electricity demand that you would expect for the next day if the maximum temperature was <span class="math inline">15^\circ\text{C}</span> and compare it with the forecast if the with maximum temperature was <span class="math inline">35^\circ\text{C}</span>. Do you believe these forecasts? The following R code will get you started:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>jan14_vic_elec <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">TSLM</span>(Demand <span class="sc">~</span> Temperature)) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="fu">new_data</span>(jan14_vic_elec, <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Temperature =</span> <span class="dv">15</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(jan14_vic_elec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>next_day <span class="ot">&lt;-</span> <span class="fu">scenarios</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Cold day</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">new_data</span>(jan_vic_elec, <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Temperature =</span> <span class="dv">15</span>),</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Hot day</span><span class="st">`</span> <span class="ot">=</span>  <span class="fu">new_data</span>(jan_vic_elec, <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Temperature =</span> <span class="dv">35</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> next_day)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(jan_vic_elec, Demand) <span class="sc">+</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(fc[<span class="dv">1</span>,]) <span class="sc">+</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(fc[<span class="dv">2</span>,])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>next_day <span class="ot">&lt;-</span> <span class="fu">scenarios</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Cold day</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">new_data</span>(jan14_vic_elec, <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Temperature =</span> <span class="dv">15</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Hot day</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">new_data</span>(jan14_vic_elec, <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Temperature =</span> <span class="dv">35</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> next_day)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(jan14_vic_elec, Demand) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(fc[<span class="dv">1</span>, ]) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(fc[<span class="dv">2</span>, ])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -454,9 +458,9 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hilo</span>() <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hilo</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 2 x 7 [1D]
 # Key:       .scenario [2]
@@ -474,11 +478,11 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>vic_elec <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Date =</span> <span class="fu">as_date</span>(Time)) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Demand =</span> <span class="fu">sum</span>(Demand), <span class="at">Temperature =</span> <span class="fu">max</span>(Temperature)) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Temperature, <span class="at">y =</span> Demand)) <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vic_elec <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">index_by</span>(<span class="at">Date =</span> <span class="fu">as_date</span>(Time)) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Demand =</span> <span class="fu">sum</span>(Demand), <span class="at">Temperature =</span> <span class="fu">max</span>(Temperature)) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Temperature, <span class="at">y =</span> Demand)) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -494,19 +498,19 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 <blockquote class="blockquote">
 <p>Data set <code>olympic_running</code> contains the winning times (in seconds) in each Olympic Games sprint, middle-distance and long-distance track events from 1896 to 2016.</p>
 <ol type="a">
-<li>Plot the winning time against the year. Describe the main features of the plot.</li>
+<li>Plot the winning time against the year for each event. Describe the main features of the plot.</li>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>olympic_running <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Time, <span class="at">colour =</span> Sex)) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Length, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) <span class="sc">+</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Running time (seconds)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>olympic_running <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Time, <span class="at">colour =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Length, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Running time (seconds)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -518,13 +522,13 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 <p>The running times are generally decreasing as time progresses (although the rate of this decline is slowing down in recent olympics). There are some missing values in the data corresponding to the World Wars (in which the Olympic Games were not held).</p>
 <blockquote class="blockquote">
 <ol start="2" type="a">
-<li>Fit a regression line to the data. Obviously the winning times have been decreasing, but at what <em>average</em> rate per year?</li>
+<li>Fit a regression line to the data for each event. Obviously the winning times have been decreasing, but at what <em>average</em> rate per year?</li>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> olympic_running <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">TSLM</span>(Time <span class="sc">~</span> <span class="fu">trend</span>()))</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> olympic_running <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">TSLM</span>(Time <span class="sc">~</span> <span class="fu">trend</span>()))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 28 × 8
    Length Sex   .model               term  estimate std.error statistic  p.value
@@ -545,18 +549,18 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 <p>The men’s 100 running time has been decreasing by an average of 0.013 seconds each year.<br> The women’s 100 running time has been decreasing by an average of 0.014 seconds each year.<br> The men’s 200 running time has been decreasing by an average of 0.025 seconds each year.<br> The women’s 200 running time has been decreasing by an average of 0.034 seconds each year.<br> The men’s 400 running time has been decreasing by an average of 0.065 seconds each year.<br> The women’s 400 running time has been decreasing by an average of 0.04 seconds each year.<br> The men’s 800 running time has been decreasing by an average of 0.152 seconds each year.<br> The women’s 800 running time has been decreasing by an average of 0.198 seconds each year.<br> The men’s 1500 running time has been decreasing by an average of 0.315 seconds each year.<br> The women’s 1500 running time has been increasing by an average of 0.147 seconds each year.<br> The men’s 5000 running time has been decreasing by an average of 1.03 seconds each year.<br> The women’s 5000 running time has been decreasing by an average of 0.303 seconds each year.<br> The men’s 10000 running time has been decreasing by an average of 2.666 seconds each year.<br> The women’s 10000 running time has been decreasing by an average of 3.496 seconds each year.<br></p>
 <blockquote class="blockquote">
 <ol start="3" type="a">
-<li>Plot the residuals against the year. What does this indicate about the suitability of the fitted line?</li>
+<li>Plot the residuals against the year. What does this indicate about the suitability of the fitted lines?</li>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> .innov, <span class="at">colour =</span> Sex)) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Length, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) <span class="sc">+</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> .innov, <span class="at">colour =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Length, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) <span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -572,10 +576,10 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PI =</span> <span class="fu">hilo</span>(Time, <span class="dv">95</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PI =</span> <span class="fu">hilo</span>(Time, <span class="dv">95</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A fable: 14 x 6 [4Y]
 # Key:     Length, Sex [14]
@@ -600,14 +604,18 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </div>
 <p>Using a linear trend we assume that winning times will decrease in a linear fashion which is unrealistic for running times. As we saw from the residual plots above there are mainly large positive residuals for the last few years, indicating that the decreases in the winning times are not linear. We also assume that the residuals are normally distributed.</p>
 </section>
-<section id="fpp3-7.10-ex3" class="level1">
-<h1>fpp3 7.10, Ex3</h1>
+<section id="fpp3-7.10-ex-3" class="level1">
+<h1>fpp3 7.10, Ex 3</h1>
 <blockquote class="blockquote">
-<p>An elasticity coefficient is the ratio of the percentage change in the forecast variable (<span class="math inline">y</span>) to the percentage change in the predictor variable (<span class="math inline">x</span>). Mathematically, the elasticity is defined as <span class="math inline">(dy/dx)\times(x/y)</span>. Consider the log-log model, <span class="math display">
-\log y=\beta_0+\beta_1 \log x + \varepsilon.
+<p>An elasticity coefficient is the ratio of the percentage change in the forecast variable (<span class="math inline">y</span>) to the percentage change in the predictor variable (<span class="math inline">x</span>). Mathematically, the elasticity is defined as <span class="math inline">(dy/dx) \times (x/y)</span>. Consider the log-log model, <span class="math display">
+  \log y = \beta_0 + \beta_1 \log x + \varepsilon.
 </span> Express <span class="math inline">y</span> as a function of <span class="math inline">x</span> and show that the coefficient <span class="math inline">\beta_1</span> is the elasticity coefficient.</p>
 </blockquote>
-<p>We will take conditional expectation of the left and the right parts of the equation: <span class="math display">\mathrm{E}(\log(y)\mid x) = \mathrm{E}(\beta_0 + \beta_1 \log(x) + \varepsilon\mid x) = \beta_0 + \beta_1\log(x).</span> By taking derivatives of the left and the right parts of the last equation we get: <span class="math inline">\frac{y'}{y} = \frac{\beta_1}{x}</span>, and then <span class="math inline">\beta_1 = \frac{y' x}{y}.</span> It is exactly what we need to prove, taking into account that <span class="math inline">y' = \frac{dy}{dx}</span>.</p>
+<p>We will take conditional expectation of the left and the right parts of the equation: <span class="math display">
+  \mathrm{E}(\log(y) \mid x)
+  = \mathrm{E}(\beta_0 + \beta_1 \log(x) + \varepsilon \mid x) = \beta_0
+    + \beta_1\log(x).
+</span> By taking derivatives of the left and the right parts of the last equation we get: <span class="math inline">\frac{y'}{y} = \frac{\beta_1}{x}</span>, and then <span class="math inline">\beta_1 = \frac{y' x}{y}.</span> It is exactly what we need to prove, taking into account that <span class="math inline">y' = \frac{dy}{dx}</span>.</p>
 </section>
 <section id="fpp3-7.10-ex-4" class="level1">
 <h1>fpp3 7.10, Ex 4</h1>
@@ -620,7 +628,7 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -642,8 +650,8 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </blockquote>
 <p>The last feature above suggests taking logs to make the pattern (and variance) more stable</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking logarithms of the data</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Sales))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking logarithms of the data</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">log</span>(Sales))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -659,12 +667,12 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> souvenirs <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> <span class="fu">year</span>(Month) <span class="sc">!=</span> <span class="dv">1987</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">reg =</span> <span class="fu">TSLM</span>(<span class="fu">log</span>(Sales) <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> festival))</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Sales, <span class="at">col =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">augment</span>(fit), <span class="fu">aes</span>(<span class="at">y =</span> .fitted), <span class="at">col =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> souvenirs <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> <span class="fu">year</span>(Month) <span class="sc">!=</span> <span class="dv">1987</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">reg =</span> <span class="fu">TSLM</span>(<span class="fu">log</span>(Sales) <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">season</span>() <span class="sc">+</span> festival))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>souvenirs <span class="sc">|&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Sales, <span class="at">col =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">augment</span>(fit), <span class="fu">aes</span>(<span class="at">y =</span> .fitted), <span class="at">col =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -679,7 +687,7 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -690,10 +698,10 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </div>
 <p>The residuals are serially correlated. This is both visible from the time plot but also from the ACF. The residuals reveal nonlinearity in the trend.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .innov)) <span class="sc">+</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .innov)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -709,10 +717,10 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">month</span>(Month, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> .innov)) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">month</span>(Month, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> .innov)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -728,7 +736,7 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">pceffect =</span> (<span class="fu">exp</span>(estimate) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">pceffect =</span> (<span class="fu">exp</span>(estimate) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 14 × 7
    .model term           estimate std.error statistic  p.value  pceffect
@@ -763,8 +771,8 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">24</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">24</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .model lb_stat lb_pvalue
@@ -779,11 +787,11 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>future_souvenirs <span class="ot">&lt;-</span> <span class="fu">new_data</span>(souvenirs, <span class="at">n =</span> <span class="dv">36</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> future_souvenirs) <span class="sc">|&gt;</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(souvenirs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>future_souvenirs <span class="ot">&lt;-</span> <span class="fu">new_data</span>(souvenirs, <span class="at">n =</span> <span class="dv">36</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> future_souvenirs) <span class="sc">|&gt;</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(souvenirs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -804,11 +812,14 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 <section id="fpp3-7.10-ex-5" class="level1">
 <h1>fpp3 7.10, Ex 5</h1>
 <blockquote class="blockquote">
-<p>The <code>us_gasoline</code> series consists of weekly data for supplies of US finished motor gasoline product, from 2 February 1991 to 20 January 2017. The units are in “thousand barrels per day”. Consider only the data to the end of 2004. a. Fit a harmonic regression with trend to the data. Experiment with changing the number Fourier terms. Plot the observed gasoline and fitted values and comment on what you see.</p>
+<p>The <code>us_gasoline</code> series consists of weekly data for supplies of US finished motor gasoline product, from 2 February 1991 to 20 January 2017. The units are in “million barrels per day”. Consider only the data to the end of 2004.</p>
+<ol type="a">
+<li>Fit a harmonic regression with trend to the data. Experiment with changing the number Fourier terms. Plot the observed gasoline and fitted values and comment on what you see.</li>
+</ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gas <span class="ot">&lt;-</span> us_gasoline <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">year</span>(Week) <span class="sc">&lt;=</span> <span class="dv">2004</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>gas <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Barrels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>gas <span class="ot">&lt;-</span> us_gasoline <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">year</span>(Week) <span class="sc">&lt;=</span> <span class="dv">2004</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>gas <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(Barrels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -818,27 +829,27 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> gas <span class="sc">|&gt;</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier1 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">1</span>)),</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier2 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">2</span>)),</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier3 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">3</span>)),</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier4 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">4</span>)),</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier5 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">5</span>)),</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier6 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">6</span>)),</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier7 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">7</span>)),</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier8 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">8</span>)),</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier9 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">9</span>)),</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier10 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">10</span>)),</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier11 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">11</span>)),</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier12 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">12</span>)),</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier13 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">13</span>)),</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier14 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">14</span>)),</span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier15 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">15</span>))</span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AICc) <span class="sc">|&gt;</span></span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.model, AICc, CV)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> gas <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier1 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">1</span>)),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier2 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">2</span>)),</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier3 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">3</span>)),</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier4 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">4</span>)),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier5 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">5</span>)),</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier6 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">6</span>)),</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier7 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">7</span>)),</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier8 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">8</span>)),</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier9 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">9</span>)),</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier10 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">10</span>)),</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier11 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">11</span>)),</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier12 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">12</span>)),</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier13 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">13</span>)),</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier14 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">14</span>)),</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">fourier15 =</span> <span class="fu">TSLM</span>(Barrels <span class="sc">~</span> <span class="fu">trend</span>() <span class="sc">+</span> <span class="fu">fourier</span>(<span class="at">K =</span> <span class="dv">15</span>))</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AICc) <span class="sc">|&gt;</span></span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.model, AICc, CV)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 15 × 3
    .model      AICc     CV
@@ -859,13 +870,14 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 14 fourier2  -1814. 0.0819
 15 fourier1  -1809. 0.0825</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Best model has order 7</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>gas <span class="sc">|&gt;</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Barrels, <span class="at">col =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">filter</span>(.model <span class="sc">==</span> <span class="st">"fourier7"</span>),</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> .fitted), <span class="at">col =</span> <span class="st">"blue"</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Best model has order 7</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>gas <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Barrels, <span class="at">col =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">filter</span>(.model <span class="sc">==</span> <span class="st">"fourier7"</span>),</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> .fitted),</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"blue"</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -883,13 +895,13 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 <p>As above.</p>
 <blockquote class="blockquote">
 <ol start="3" type="a">
-<li>Check the residuals of the final model using the <code>gg_tsresiduals()</code> function. Use a Ljung-Box test to check for residual autocorrelation.</li>
+<li>Plot the residuals of the final model using the <code>gg_tsresiduals()</code> function and comment on these. Use a Ljung-Box test to check for residual autocorrelation.</li>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fourier7) <span class="sc">|&gt;</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fourier7) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -900,9 +912,9 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </div>
 <p>There is some small remaining autocorrelation at lag 1.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.model <span class="sc">==</span> <span class="st">"fourier7"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">52</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.model <span class="sc">==</span> <span class="st">"fourier7"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">features</span>(.innov, ljung_box, <span class="at">lag =</span> <span class="dv">52</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .model   lb_stat lb_pvalue
@@ -917,10 +929,10 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"fourier7"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"1 year"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">filter_index</span>(us_gasoline, <span class="st">"2000"</span> <span class="sc">~</span> <span class="st">"2006"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"fourier7"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"1 year"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="fu">filter_index</span>(us_gasoline, <span class="st">"2000"</span> <span class="sc">~</span> <span class="st">"2006"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -942,12 +954,19 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>global_economy <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Population <span class="sc">/</span> <span class="fl">1e6</span>) <span class="sc">+</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Population (millions)"</span>) <span class="sc">+</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="fl">1979.98</span>, <span class="at">xmax =</span> <span class="fl">1989.13</span>), <span class="at">fill =</span> <span class="st">"pink"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">1984.5</span>, <span class="at">y =</span> <span class="dv">10</span>, <span class="at">label =</span> <span class="st">"Soviet-Afghan war"</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>global_economy <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Population <span class="sc">/</span> <span class="fl">1e6</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Population (millions)"</span>) <span class="sc">+</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="fl">1979.98</span>, <span class="at">xmax =</span> <span class="fl">1989.13</span>), <span class="at">fill =</span> <span class="st">"pink"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">1984.5</span>,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="dv">10</span>,</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Soviet-Afghan war"</span>,</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"red"</span>,</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -963,15 +982,15 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear =</span> <span class="fu">TSLM</span>(Population <span class="sc">~</span> <span class="fu">trend</span>()),</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">piecewise =</span> <span class="fu">TSLM</span>(Population <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">knots =</span> <span class="fu">c</span>(<span class="dv">1980</span>, <span class="dv">1989</span>)))</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(.fitted) <span class="sc">+</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Population), <span class="at">colour =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear =</span> <span class="fu">TSLM</span>(Population <span class="sc">~</span> <span class="fu">trend</span>()),</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">piecewise =</span> <span class="fu">TSLM</span>(Population <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">knots =</span> <span class="fu">c</span>(<span class="dv">1980</span>, <span class="dv">1989</span>)))</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(.fitted) <span class="sc">+</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Population), <span class="at">colour =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -987,9 +1006,12 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"5 years"</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(fc) <span class="sc">+</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(<span class="fu">filter</span>(global_economy <span class="sc">|&gt;</span> <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>)), Population)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"5 years"</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(fc) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(global_economy <span class="sc">|&gt;</span> <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>)),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    Population</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1004,213 +1026,170 @@ F-statistic: 104.7 on 1 and 29 DF, p-value: 3.8897e-11</code></pre>
 <section id="fpp3-7.10-ex-7" class="level1">
 <h1>fpp3 7.10, Ex 7</h1>
 <blockquote class="blockquote">
-<p>Using matrix notation it was shown that if <span class="math inline">\mathbf{y}=\mathbf{X}\mathbf{\beta}+\mathbf{\varepsilon}</span>, where <span class="math inline">\mathbf{e}</span> has mean <span class="math inline">\mathbf{0}</span> and variance matrix <span class="math inline">\sigma^2\mathbf{I}</span>, the estimated coefficients are given by <span class="math inline">\hat{\mathbf{\beta}}=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}</span> and a forecast is given by <span class="math inline">\hat{y}=\mathbf{x}^*\hat{\mathbf{\beta}}=\mathbf{x}^*(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}</span> where <span class="math inline">\mathbf{x}^*</span> is a row vector containing the values of the regressors for the forecast (in the same format as <span class="math inline">\mathbf{X}</span>), and the forecast variance is given by <span class="math inline">var(\hat{y})=\sigma^2 \left[1+\mathbf{x}^*(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{x}^*)'\right].</span></p>
+<p>(For advanced readers following on from Section 7.9.)</p>
+<p>Using matrix notation it was shown that if <span class="math inline">\mathbf{y} = \mathbf{X}\mathbf{\beta} + \mathbf{\varepsilon}</span>, where <span class="math inline">\mathbf{\varepsilon}</span> has mean <span class="math inline">\mathbf{0}</span> and variance matrix <span class="math inline">\sigma^2\mathbf{I}</span>, the estimated coefficients are given by <span class="math inline">\hat{\mathbf{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}</span> and a forecast is given by <span class="math inline">\hat{y} = \mathbf{x}^*\hat{\mathbf{\beta}} = \mathbf{x}^*(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}</span> where <span class="math inline">\mathbf{x}^*</span> is a row vector containing the values of the predictors for the forecast (in the same format as <span class="math inline">\mathbf{X}</span>), and the forecast variance is given by <span class="math inline">var(\hat{y}) = \sigma^2 \left[ 1 + \mathbf{x}^*(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{x}^*)' \right].</span></p>
 </blockquote>
 <blockquote class="blockquote">
 <p>Consider the simple time trend model where <span class="math inline">y_t = \beta_0 + \beta_1t</span>. Using the following results, <span class="math display">
-\sum^{T}_{t=1}{t}=\frac{1}{2}T(T+1),\quad \sum^{T}_{t=1}{t^2}=\frac{1}{6}T(T+1)(2T+1)
+  \sum^{T}_{t=1}{t} = \frac{1}{2}T(T + 1),
+  \quad \sum^{T}_{t=1}{t^2} = \frac{1}{6}T(T + 1)(2T + 1)
 </span> derive the following expressions:</p>
 </blockquote>
 <blockquote class="blockquote">
 <ol type="a">
-<li><span class="math inline">\displaystyle\mathbf{X}'\mathbf{X}=\frac{1}{6}\left[
-\begin{array}{cc}
-6T      &amp; 3T(T+1) \\
-3T(T+1) &amp; T(T+1)(2T+1) \\
-\end{array}
-\right]</span></li>
+<li><span class="math inline">\displaystyle\mathbf{X}'\mathbf{X} = \frac{1}{6}\left[ \begin{array}{cc} 6T &amp; 3T(T + 1) \\ 3T(T + 1) &amp; T(T + 1)(2T + 1) \\ \end{array} \right]</span></li>
 </ol>
 </blockquote>
 <blockquote class="blockquote">
 <ol start="2" type="a">
-<li><span class="math inline">\displaystyle(\mathbf{X}'\mathbf{X})^{-1}=\frac{2}{T(T^2-1)}\left[
-\begin{array}{cc}
-(T+1)(2T+1)   &amp; -3(T+1) \\
--3(T+1)       &amp; 6 \\
-\end{array}
-\right]</span></li>
+<li><span class="math inline">\displaystyle(\mathbf{X}'\mathbf{X})^{-1} = \frac{2}{T(T^2 - 1)}\left[ \begin{array}{cc} (T + 1)(2T + 1) &amp;-3(T + 1) \\-3(T + 1) &amp; 6 \\ \end{array} \right]</span></li>
 </ol>
 </blockquote>
 <blockquote class="blockquote">
 <ol start="3" type="a">
-<li><span class="math inline">\displaystyle\hat{\beta}_0=\frac{2}{T(T-1)}\left[(2T+1)\sum^T_{t=1}y_t-3\sum^T_{t=1}ty_t
-\right]</span></li>
+<li><span class="math inline">\displaystyle\hat{\beta}_0 = \frac{2}{T(T - 1)}\left[ (2T + 1)\sum^T_{t=1}y_t - 3\sum^T_{t=1}ty_t \right]</span></li>
 </ol>
 </blockquote>
 <blockquote class="blockquote">
-<p><span class="math inline">\displaystyle\hat{\beta}_1=\frac{6}{T(T^2-1)}\left[2\sum^T_{t=1}ty_t-(T+1)\sum^T_{t=1}y_t \right]</span></p>
+<p><span class="math inline">\displaystyle\hat{\beta}_1 = \frac{6}{T(T^2 - 1)}\left[ 2\sum^T_{t=1}ty_t - (T + 1)\sum^T_{t=1}y_t \right]</span></p>
 </blockquote>
 <blockquote class="blockquote">
 <ol start="4" type="a">
-<li><span class="math inline">\displaystyle\text{Var}(\hat{y}_{t})=\hat{\sigma}^2\left[1+\frac{2}{T(T-1)}\left(1-4T-6h+6\frac{(T+h)^2}{T+1}\right)\right]</span></li>
+<li><span class="math inline">\displaystyle\text{Var}(\hat{y}_{t}) = \hat{\sigma}^2\left[ 1 + \frac{2}{T(T - 1)}\left( 1 - 4T - 6h + 6\frac{(T + h)^2}{T + 1} \right) \right]</span></li>
 </ol>
 </blockquote>
 <p>For a time trend, <span class="math display">
   \mathbf{X} = \begin{bmatrix}
-   1 &amp; 1 \\
-   1 &amp; 2 \\
-   1 &amp; 3 \\
-   \vdots \\
-   1 &amp; T
-   \end{bmatrix}
+                 1 &amp; 1 \\
+                 1 &amp; 2 \\
+                 1 &amp; 3 \\
+                 \vdots \\
+                 1 &amp; T
+               \end{bmatrix}
 </span></p>
 <section id="a" class="level2">
 <h2 class="anchored" data-anchor-id="a">(a)</h2>
 <p>&nbsp; <span class="math display">\begin{align*}
-\mathbf{X}' \mathbf{X}
-&amp; = \begin{bmatrix}
-      1 &amp; 1 &amp; 1 &amp; \dots &amp; 1\\
-      1 &amp; 2 &amp; 3 &amp; \dots &amp; T
-    \end{bmatrix}
-    \begin{bmatrix}
-      1 &amp; 1 \\
-      1 &amp; 2 \\
-      1 &amp; 3 \\
-      \vdots \\
-      1 &amp; T
-    \end{bmatrix} \\
-&amp;= \begin{bmatrix}
-     T &amp; 1 + 2 + 3 + \cdots + T \\
-     1 + 2 + 3 + \cdots + T &amp; 1^2 + 2^2 + 3^2 + \cdots + T^2
-    \end{bmatrix}\\
-&amp;= \begin{bmatrix}
-     T &amp; \frac{1}{2}T(T+1) \\
-     \frac{1}{2}T(T+1) &amp; \frac{1}{6}T(T+1)(2T+1)
-    \end{bmatrix} \\
-&amp;= \frac{1}{6}\begin{bmatrix}
-     6T &amp; 3T(T+1) \\
-     3T(T+1) &amp; T(T+1)(T+1)
-    \end{bmatrix}
+  \mathbf{X}' \mathbf{X}
+   &amp; = \begin{bmatrix}
+         1 &amp; 1 &amp; 1 &amp; \dots &amp; 1 \\
+         1 &amp; 2 &amp; 3 &amp; \dots &amp; T
+       \end{bmatrix}
+  \begin{bmatrix}
+    1 &amp; 1 \\
+    1 &amp; 2 \\
+    1 &amp; 3 \\
+    \vdots \\
+    1 &amp; T
+  \end{bmatrix} \\
+   &amp; = \begin{bmatrix}
+         T                      &amp; 1 + 2 + 3 + \cdots + T         \\
+         1 + 2 + 3 + \cdots + T &amp; 1^2 + 2^2 + 3^2 + \cdots + T^2
+       \end{bmatrix}            \\
+   &amp; = \begin{bmatrix}
+         T                   &amp; \frac{1}{2}T(T + 1)         \\
+         \frac{1}{2}T(T + 1) &amp; \frac{1}{6}T(T + 1)(2T + 1)
+       \end{bmatrix}            \\
+   &amp; = \frac{1}{6}\begin{bmatrix}
+                    6T        &amp; 3T(T + 1)       \\
+                    3T(T + 1) &amp; T(T + 1)(T + 1)
+                  \end{bmatrix}
 \end{align*}</span></p>
 </section>
 <section id="b" class="level2">
 <h2 class="anchored" data-anchor-id="b">(b)</h2>
 <p>&nbsp; <span class="math display">\begin{align*}
-(\mathbf{X}' \mathbf{X} )^{-1}
-&amp;= \frac{6}{(6T)[T(T+1)(2T+1)] - 9T^2(T+1)^2}
-   \begin{bmatrix}
-     T(T+1)(2T+1) &amp; -3T(T+1) \\
-     -3T(T+1) &amp; 6T
-    \end{bmatrix} \\
-&amp;= \frac{6}{6[T(T+1)(2T+1)] - 9T(T+1)^2}
-   \begin{bmatrix}
-     (T+1)(2T+1) &amp; -3(T+1) \\
-     -3(T+1) &amp; 6
-    \end{bmatrix} \\
-&amp;= \frac{2}{2T(T+1)(2T+1) - 3T(T+1)^2}
-   \begin{bmatrix}
-     (T+1)(2T+1) &amp; -3(T+1) \\
-     -3(T+1) &amp; 6
-    \end{bmatrix} \\
-&amp;= \frac{2}{T(T+1)[2(2T+1) - 3(T+1)]}
-   \begin{bmatrix}
-     (T+1)(2T+1) &amp; -3(T+1) \\
-     -3(T+1) &amp; 6
-    \end{bmatrix} \\
-&amp;= \frac{2}{T(T+1)(T-1)}
-   \begin{bmatrix}
-     (T+1)(2T+1) &amp; -3(T+1) \\
-     -3(T+1) &amp; 6
-    \end{bmatrix} \\
-&amp;= \frac{2}{T(T^2-1)}
-   \begin{bmatrix}
-     (T+1)(2T+1) &amp; -3(T+1) \\
-     -3(T+1) &amp; 6
-    \end{bmatrix} \\
+  (\mathbf{X}' \mathbf{X} )^{-1}
+   &amp; = \frac{6}{(6T)[T(T + 1)(2T + 1)] - 9T^2(T + 1)^2}
+  \begin{bmatrix}
+    T(T + 1)(2T + 1) &amp; -3T(T + 1) \\
+    -3T(T + 1)       &amp; 6T
+  \end{bmatrix} \\
+   &amp; = \frac{6}{6[T(T + 1)(2T + 1)] - 9T(T + 1)^2}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) &amp; -3(T + 1) \\
+    -3(T + 1)       &amp; 6
+  \end{bmatrix} \\
+   &amp; = \frac{2}{2T(T + 1)(2T + 1) - 3T(T + 1)^2}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) &amp; -3(T + 1) \\
+    -3(T + 1)       &amp; 6
+  \end{bmatrix} \\
+   &amp; = \frac{2}{T(T + 1)[2(2T + 1) - 3(T + 1)]}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) &amp; -3(T + 1) \\
+    -3(T + 1)       &amp; 6
+  \end{bmatrix} \\
+   &amp; = \frac{2}{T(T + 1)(T - 1)}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) &amp; -3(T + 1) \\
+    -3(T + 1)       &amp; 6
+  \end{bmatrix} \\
+   &amp; = \frac{2}{T(T^2 - 1)}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) &amp; -3(T + 1) \\
+    -3(T + 1)       &amp; 6
+  \end{bmatrix} \\
 \end{align*}</span></p>
 </section>
 <section id="c" class="level2">
 <h2 class="anchored" data-anchor-id="c">(c)</h2>
 <p>&nbsp; <span class="math display">\begin{align*}
-\mathbf{X}' \mathbf{Y}
-=  \begin{bmatrix}
-      1 &amp; 1 &amp; 1 &amp; \dots &amp; 1\\
+  \mathbf{X}' \mathbf{Y}
+  = \begin{bmatrix}
+      1 &amp; 1 &amp; 1 &amp; \dots &amp; 1 \\
       1 &amp; 2 &amp; 3 &amp; \dots &amp; T
     \end{bmatrix}\mathbf{Y}
-= \begin{bmatrix}
-     \sum_{i=1}^T Y_i \\
-     \sum_{i=1}^T iY_i
+  = \begin{bmatrix}
+      \sum_{i=1}^T Y_i \\
+      \sum_{i=1}^T iY_i
     \end{bmatrix}
 \end{align*}</span></p>
-<p>Now the first element of <span class="math display">(\mathbf{X}' \mathbf{X} )^{-1} \mathbf{X}' \mathbf{Y} </span> is <span class="math display">\begin{align*}
-\hat{a}
-&amp;= \frac{2}{T(T^2-1)}
-     \begin{bmatrix}
-       (T+1)(2T+1) &amp; -3(T+1)
-     \end{bmatrix}
-     \begin{bmatrix}
-       \sum_{i=1}^T Y_i \\
-       \sum_{i=1}^T iY_i
-     \end{bmatrix} \\
-&amp;= \frac{2}{T(T^2-1)}
-   \left[
-     (T+1)(2T+1)\sum_{i=1}^T Y_i -3(T+1) \sum_{i=1}^T iY_i
-   \right] \\
-&amp;= \frac{2(T+1)}{T(T^2-1)}
-   \left[
-     (2T+1)\sum_{i=1}^T Y_i -3 \sum_{i=1}^T iY_i
-   \right] \\
-&amp;= \frac{2}{T(T-1)}
-   \left[
-     (2T+1)\sum_{i=1}^T Y_i -3 \sum_{i=1}^T iY_i
-   \right] .
+<p>Now the first element of <span class="math display">
+  (\mathbf{X}' \mathbf{X} )^{-1} \mathbf{X}' \mathbf{Y}
+</span> is <span class="math display">\begin{align*}
+  \hat{a}
+   &amp; = \frac{2}{T(T^2 - 1)}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) &amp; -3(T + 1)
+  \end{bmatrix}
+  \begin{bmatrix}
+    \sum_{i=1}^T Y_i \\
+    \sum_{i=1}^T iY_i
+  \end{bmatrix} \\
+   &amp; = \frac{2}{T(T^2 - 1)}
+  \left[ (T + 1)(2T + 1)\sum_{i=1}^T Y_i - 3(T + 1) \sum_{i=1}^T iY_i \right] \\
+   &amp; = \frac{2(T + 1)}{T(T^2 - 1)}
+  \left[ (2T + 1)\sum_{i=1}^T Y_i - 3 \sum_{i=1}^T iY_i \right] \\
+   &amp; = \frac{2}{T(T - 1)}
+  \left[ (2T + 1)\sum_{i=1}^T Y_i - 3 \sum_{i=1}^T iY_i \right] .
 \end{align*}</span></p>
-<p>The second element of <span class="math display">(\mathbf{X}' \mathbf{X} )^{-1} \mathbf{X}' \mathbf{Y} </span> is <span class="math display">\begin{align*}
-\hat{b}
-&amp;= \frac{2}{T(T^2-1)}
-     \begin{bmatrix}
-       -3(T+1) &amp; 6
-     \end{bmatrix}
-     \begin{bmatrix}
-       \sum_{i=1}^T Y_i \\
-       \sum_{i=1}^T iY_i
-     \end{bmatrix} \\
-&amp;= \frac{2}{T(T^2-1)}
-   \left[
-       -3(T+1) \sum_{i=1}^T Y_i + 6 \sum_{i=1}^T iY_i
-   \right] \\
-&amp;= \frac{6}{T(T^2-1)}
-   \left[
-       2 \sum_{i=1}^T iY_i -(T+1) \sum_{i=1}^T Y_i
-   \right]
+<p>The second element of <span class="math display">
+  (\mathbf{X}' \mathbf{X} )^{-1} \mathbf{X}' \mathbf{Y}
+</span> is <span class="math display">\begin{align*}
+  \hat{b}
+   &amp; = \frac{2}{T(T^2 - 1)}
+  \begin{bmatrix}
+    -3(T + 1) &amp; 6
+  \end{bmatrix}
+  \begin{bmatrix}
+    \sum_{i=1}^T Y_i \\
+    \sum_{i=1}^T iY_i
+  \end{bmatrix} \\
+   &amp; = \frac{2}{T(T^2 - 1)}
+  \left[ -3(T + 1) \sum_{i=1}^T Y_i + 6 \sum_{i=1}^T iY_i \right] \\
+   &amp; = \frac{6}{T(T^2 - 1)}
+  \left[ 2 \sum_{i=1}^T iY_i - (T + 1) \sum_{i=1}^T Y_i \right]
 \end{align*}</span></p>
 </section>
 <section id="d" class="level2">
 <h2 class="anchored" data-anchor-id="d">(d)</h2>
-<p>Now <span class="math inline">\mathbf{X}^* = [1 ~~~ T+h]</span>. So <span class="math inline">\text{Var}(Y^* | \mathbf{Y},\mathbf{X},\mathbf{X}^*)</span> <span class="math display">\begin{align*}
-&amp;= \sigma^2\left\{
-    1 + \mathbf{X}^*(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}^*)'
-\right\}\\
-&amp;= \sigma^2\left\{
-    1 + \frac{2}{T(T^2-1)}
-    \begin{bmatrix} 1 &amp; T+h \end{bmatrix}
-    \begin{bmatrix}
-     (T+1)(2T+1) &amp; -3(T+1) \\
-     -3(T+1) &amp; 6
-    \end{bmatrix}
-    \begin{bmatrix} 1 \\ T+h \end{bmatrix}
-\right\}\\
-&amp;= \sigma^2\left\{
-    1 + \frac{2}{T(T^2-1)}
-    \begin{bmatrix}
-     (T+1)(2T+1) -3(T+1)(T+h) &amp;
-     -3(T+1) + 6(T+h)
-    \end{bmatrix}
-    \begin{bmatrix} 1 \\ T+h \end{bmatrix}
-\right\}\\
-&amp;= \sigma^2\left\{
-    1 + \frac{2}{T(T^2-1)}
-    \left[
-     (T+1)(2T+1) -3(T+1)(T+h) +
-     -3(T+1)(T+h) + 6(T+h)^2
-     \right]
-    \right\}\\
-&amp;= \sigma^2\left\{
-    1 + \frac{2}{T(T-1)}
-    \left[
-     1 -4T-6h + 6\frac{(T+h)^2}{(T+1)}
-     \right]
-    \right\}.
+<p>Now <span class="math inline">\mathbf{X}^* = [1 ~~~ T + h]</span>. So <span class="math inline">\text{Var}(Y^*| \mathbf{Y},\mathbf{X},\mathbf{X}^*)</span> <span class="math display">\begin{align*}
+   &amp; = \sigma^2\left\{ 1 + \mathbf{X}^*(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}^*)' \right\}                                                                                                                        \\
+   &amp; = \sigma^2\left\{ 1 + \frac{2}{T(T^2 - 1)} \begin{bmatrix} 1 &amp; T + h \end{bmatrix} \begin{bmatrix} (T + 1)(2T + 1) &amp;-3(T + 1) \\-3(T + 1) &amp; 6 \end{bmatrix} \begin{bmatrix} 1 \\ T + h \end{bmatrix} \right\} \\
+   &amp; = \sigma^2\left\{ 1 + \frac{2}{T(T^2 - 1)} \begin{bmatrix} (T + 1)(2T + 1) - 3(T + 1)(T + h) &amp;-3(T + 1) + 6(T + h) \end{bmatrix} \begin{bmatrix} 1 \\ T + h \end{bmatrix} \right\}                            \\
+   &amp; = \sigma^2\left\{ 1 + \frac{2}{T(T^2 - 1)} \left[ (T + 1)(2T + 1) - 3(T + 1)(T + h) + -3(T + 1)(T + h) + 6(T + h)^2 \right] \right\}                                                                          \\
+   &amp; = \sigma^2\left\{ 1 + \frac{2}{T(T - 1)} \left[ 1 - 4T - 6h + 6\frac{(T + h)^2}{(T + 1)} \right] \right\}.
 \end{align*}</span></p>
 
 

@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -261,10 +261,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#fpp3-5.10-ex-8" id="toc-fpp3-5.10-ex-8" class="nav-link active" data-scroll-target="#fpp3-5.10-ex-8">fpp3 5.10, Ex 8</a></li>
-  <li><a href="#fpp3-5.10-ex-9" id="toc-fpp3-5.10-ex-9" class="nav-link" data-scroll-target="#fpp3-5.10-ex-9">fpp3 5.10, Ex 9</a></li>
-  <li><a href="#fpp3-5.10-ex-10" id="toc-fpp3-5.10-ex-10" class="nav-link" data-scroll-target="#fpp3-5.10-ex-10">fpp3 5.10, Ex 10</a></li>
-  <li><a href="#fpp3-5.10-ex-12" id="toc-fpp3-5.10-ex-12" class="nav-link" data-scroll-target="#fpp3-5.10-ex-12">fpp3 5.10, Ex 12</a></li>
+  <li><a href="#fpp3-5.11-ex-8" id="toc-fpp3-5.11-ex-8" class="nav-link active" data-scroll-target="#fpp3-5.11-ex-8">fpp3 5.11, Ex 8</a></li>
+  <li><a href="#fpp3-5.11-ex-9" id="toc-fpp3-5.11-ex-9" class="nav-link" data-scroll-target="#fpp3-5.11-ex-9">fpp3 5.11, Ex 9</a></li>
+  <li><a href="#fpp3-5.11-ex-10" id="toc-fpp3-5.11-ex-10" class="nav-link" data-scroll-target="#fpp3-5.11-ex-10">fpp3 5.11, Ex 10</a></li>
+  <li><a href="#fpp3-5.11-ex-12" id="toc-fpp3-5.11-ex-12" class="nav-link" data-scroll-target="#fpp3-5.11-ex-12">fpp3 5.11, Ex 12</a></li>
   </ul>
 </nav>
     </div>
@@ -293,8 +293,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fpp3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="fpp3-5.10-ex-8" class="level1">
-<h1>fpp3 5.10, Ex 8</h1>
+<section id="fpp3-5.11-ex-8" class="level1">
+<h1>fpp3 5.11, Ex 8</h1>
 <blockquote class="blockquote">
 <p>Consider the number of pigs slaughtered in New South Wales (data set <code>aus_livestock</code>).</p>
 <ol type="a">
@@ -389,8 +389,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The residuals do not appear to be white noise as the ACF plot contains many significant lags. It is also clear that the seasonal component is not captured by the drift method, as there exists a strong positive auto-correlation at lag 12 (1 year). The histogram appears to have a slightly long left tail.</p>
 </section>
-<section id="fpp3-5.10-ex-9" class="level1">
-<h1>fpp3 5.10, Ex 9</h1>
+<section id="fpp3-5.11-ex-9" class="level1">
+<h1>fpp3 5.11, Ex 9</h1>
 <blockquote class="blockquote">
 <ol type="a">
 <li>Create a training set for household wealth (<code>hh_budget</code>) by withholding the last four years as a test set.</li>
@@ -509,8 +509,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>In all cases, the residuals look like white noise.</p>
 </section>
-<section id="fpp3-5.10-ex-10" class="level1">
-<h1>fpp3 5.10, Ex 10</h1>
+<section id="fpp3-5.11-ex-10" class="level1">
+<h1>fpp3 5.11, Ex 10</h1>
 <blockquote class="blockquote">
 <ol type="a">
 <li>Create a training set for Australian takeaway food turnover (<code>aus_retail</code>) by withholding the last four years as a test set.</li>
@@ -577,8 +577,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>This is far from white noise. There is strong seasonality and increasing variance that has not been accounted for by the naive model.</p>
 </section>
-<section id="fpp3-5.10-ex-12" class="level1">
-<h1>fpp3 5.10, Ex 12</h1>
+<section id="fpp3-5.11-ex-12" class="level1">
+<h1>fpp3 5.11, Ex 12</h1>
 <blockquote class="blockquote">
 <p><code>tourism</code> contains quarterly visitor nights (in thousands) from 1998 to 2017 for 76 regions of Australia.</p>
 <ol type="a">
@@ -627,7 +627,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  gc_train_1 <span class="sc">|&gt;</span> <span class="fu">model</span>(<span class="at">gc_fc_1 =</span> <span class="fu">SNAIVE</span>(Trips)),</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  gc_train_2 <span class="sc">|&gt;</span> <span class="fu">model</span>(<span class="at">gc_fc_2 =</span> <span class="fu">SNAIVE</span>(Trips)),</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  gc_train_3 <span class="sc">|&gt;</span> <span class="fu">model</span>(<span class="at">gc_fc_3 =</span> <span class="fu">SNAIVE</span>(Trips))</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"1 year"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"1 year"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gc_fc <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(gc_tourism)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

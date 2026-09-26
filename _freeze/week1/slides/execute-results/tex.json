@@ -11,7 +11,7 @@
     ],
     "includes": {
       "include-in-header": [
-        "\\usepackage{booktabs}\n\\usepackage{longtable}\n\\usepackage{array}\n\\usepackage{multirow}\n\\usepackage{wrapfig}\n\\usepackage{float}\n\\usepackage{colortbl}\n\\usepackage{pdflscape}\n\\usepackage{tabu}\n\\usepackage{threeparttable}\n\\usepackage{threeparttablex}\n\\usepackage[normalem]{ulem}\n\\usepackage{makecell}\n\\usepackage{xcolor}\n"
+        "\\usepackage{booktabs}\n\\usepackage{longtable}\n\\usepackage{array}\n\\usepackage{multirow}\n\\usepackage{wrapfig}\n\\usepackage{float}\n\\usepackage{colortbl}\n\\usepackage{pdflscape}\n\\usepackage{tabularx}\n\\usepackage{xltabular}\n\\usepackage{threeparttable}\n\\usepackage{threeparttablex}\n\\usepackage[normalem]{ulem}\n\\usepackage{makecell}\n\\usepackage{xcolor}\n"
       ]
     },
     "engineDependencies": {},
