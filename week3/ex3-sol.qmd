@@ -12,7 +12,10 @@ library(fpp3)
 
 # fpp3 3.7, Ex 1
 
-> Consider the GDP information in `global_economy`. Plot the GDP per capita for each country over time. Which country has the highest GDP per capita? How has this changed over time?
+> Consider the GDP information in `global_economy`.
+> Plot the GDP per capita for each country over time.
+> Which country has the highest GDP per capita?
+> How has this changed over time?
 
 ```{r}
 #| label: gdp_per_capita
@@ -79,12 +82,13 @@ global_economy |>
 
 # fpp3 3.7, Ex 2
 
-> For each of the following series, make a graph of the data. If transforming seems appropriate, do so and describe the effect.
+> For each of the following series, make a graph of the data.
+> If transforming seems appropriate, do so and describe the effect.
 
-> * United States GDP from `global_economy`
-> * Slaughter of Victorian "Bulls, bullocks and steers" in `aus_livestock`
-> * Victorian Electricity Demand from `vic_elec`.
-> * Gas production from `aus_production`
+> - United States GDP from `global_economy`
+> - Slaughter of Victorian "Bulls, bullocks and steers" in `aus_livestock`
+> - Victorian Electricity Demand from `vic_elec`.
+> - Gas production from `aus_production`
 
 ## United States GDP
 
@@ -95,23 +99,21 @@ us_economy |>
   autoplot(GDP)
 ```
 
--   Trend appears exponential, a transformation would be useful.
+- Trend appears exponential, a transformation would be useful.
 
 ```{r}
 us_economy |>
   autoplot(box_cox(GDP, 0))
 ```
 
--   A log transformation (Box-Cox with $\lambda = 0$) appears slightly
-    too strong.
+- A log transformation (Box-Cox with $\lambda = 0$) appears slightly too strong.
 
 ```{r}
 us_economy |>
   autoplot(box_cox(GDP, 0.3))
 ```
 
--   Using $\lambda = 0.3$ looks pretty good, the trend is now almost
-    linear.
+Using $\lambda = 0.3$ looks pretty good, the trend is now almost linear.
 
 Let's see what guerrero's method suggests.
 
@@ -127,8 +129,8 @@ us_economy |>
   autoplot(box_cox(GDP, 0.2819714))
 ```
 
--   More or less the same. Box-Cox transformations are usually
-    insensitive to the choice of $\lambda$.
+More or less the same.
+Box-Cox transformations are usually insensitive to the choice of $\lambda$.
 
 ## Slaughter of Victorian "Bulls, bullocks and steers"
 
@@ -139,26 +141,24 @@ vic_bulls |>
   autoplot(Count)
 ```
 
--   Variation in the series appears to vary slightly with the number of
-    bulls slaughtered in Victoria.
--   A transformation may be useful.
+- Variation in the series appears to vary slightly with the number of bulls slaughtered in Victoria.
+- A transformation may be useful.
 
 ```{r}
 vic_bulls |>
   autoplot(log(Count))
 ```
 
--   A log transformation (Box-Cox $\lambda = 0$) appears to normalise
-    most of the variation. Let's check with guerrero's method.
+- A log transformation (Box-Cox $\lambda = 0$) appears to normalise most of the variation.
+  Let's check with guerrero's method.
 
 ```{r}
 vic_bulls |>
   features(Count, features = guerrero)
 ```
 
--   Pretty close, guerrero suggests $\lambda = -0.045$. This is close
-    enough to zero, so it is probably best to just use a log
-    transformation (allowing better interpretations).
+- Pretty close, guerrero suggests $\lambda = -0.045$.
+  This is close enough to zero, so it is probably best to just use a log transformation (allowing better interpretations).
 
 ## Victorian Electricity Demand
 
@@ -167,23 +167,20 @@ vic_elec |>
   autoplot(Demand)
 ```
 
--   Seasonal patterns for *time of day* hidden due to density of ink.
+- Seasonal patterns for *time of day* hidden due to density of ink.
 
--   *Day-of-week* seasonality just visible.
+- *Day-of-week* seasonality just visible.
 
--   *Time-of-year* seasonality is clear with increasing variance in
-    winter and high skewness in summer.
+- *Time-of-year* seasonality is clear with increasing variance in winter and high skewness in summer.
 
 ```{r}
 vic_elec |>
   autoplot(box_cox(Demand, 0))
 ```
 
--   A log transformation makes the variance more even and reduces the
-    skewness.
+- A log transformation makes the variance more even and reduces the skewness.
 
--   Guerrero's method doesn't work here as there are several types of
-    seasonality.
+- Guerrero's method doesn't work here as there are several types of seasonality.
 
 ## Australian Gas production
 
@@ -192,32 +189,31 @@ aus_production |>
   autoplot(Gas)
 ```
 
--   Variation in seasonal pattern grows proportionally to the amount of
-    gas produced in Australia. A transformation should work well here.
+- Variation in seasonal pattern grows proportionally to the amount of gas produced in Australia.
+  A transformation should work well here.
 
 ```{r}
 aus_production |>
   autoplot(box_cox(Gas, 0))
 ```
 
--   A log transformation appears slightly too strong, where the
-    variation in periods with smaller gas production is now larger than
-    the variation during greater gas production.
+- A log transformation appears slightly too strong, where the variation in periods with smaller gas production is now larger than the variation during greater gas production.
 
 ```{r}
 aus_production |>
   features(Gas, features = guerrero)
 ```
 
--   Guerrero's method agrees by selecting a slightly weaker
-    transformation. Let's see how it looks.
+- Guerrero's method agrees by selecting a slightly weaker transformation.
+  Let's see how it looks.
 
 ```{r}
 aus_production |>
   autoplot(box_cox(Gas, 0.1095))
 ```
 
-Looking good! The variation is now constant across the series.
+Looking good!
+The variation is now constant across the series.
 
 # fpp3 3.7, Ex 3
 
@@ -227,27 +223,23 @@ Looking good! The variation is now constant across the series.
 canadian_gas |>
   autoplot(Volume) +
   labs(
-    x = "Year", y = "Gas production (billion cubic meters)",
+    x = "Year",
+    y = "Gas production (billion cubic meters)",
     title = "Monthly Canadian gas production"
   )
 ```
 
--   Here the variation in the series is not proportional to the amount
-    of gas production in Canada.
+- Here the variation in the series is not proportional to the amount of gas production in Canada.
 
--   When small and large amounts of gas is being produced, we can
-    observe small variation in the seasonal pattern.
+- When small and large amounts of gas is being produced, we can observe small variation in the seasonal pattern.
 
--   However, between 1975 and 1990 the gas production is moderate, and
-    the variation is large.
+- However, between 1975 and 1990 the gas production is moderate, and the variation is large.
 
--   Power transformations (like the Box-Cox transformation) require the
-    variability of the series to vary proportionately to the level of
-    the series.
+- Power transformations (like the Box-Cox transformation) require the variability of the series to vary proportionately to the level of the series.
 
 # fpp3 3.7, Ex 4
 
-> What Box-Cox transformation would you select for your retail data (from Exercise 8 in Section 2.10)?
+> What Box-Cox transformation would you select for your retail data (from Exercise 7 in Section 2.10)?
 
 ```{r}
 set.seed(12345678)
@@ -259,7 +251,8 @@ myseries <- aus_retail |>
 myseries |>
   autoplot(Turnover) +
   labs(
-    y = "Turnover (million $AUD)", x = "Time (Years)",
+    y = "Turnover (million $AUD)",
+    x = "Time (Years)",
     title = myseries$Industry[1],
     subtitle = myseries$State[1]
   )
@@ -291,7 +284,8 @@ Note: your series may be different and require a different transformation than w
 
 # fpp3 3.7, Ex 5
 
-> For the following series, find an appropriate Box-Cox transformation in order to stabilise the variance. Tobacco from `aus_production`, Economy class passengers between Melbourne and Sydney from `ansett`, and Pedestrian counts at Southern Cross Station from `pedestrian`.
+> For the following series, find an appropriate Box-Cox transformation in order to stabilise the variance.
+> Tobacco from `aus_production`, Economy class passengers between Melbourne and Sydney from `ansett`, and Pedestrian counts at Southern Cross Station from `pedestrian`.
 
 ## Australian tobacco production
 
@@ -300,19 +294,17 @@ aus_production |>
   autoplot(Tobacco)
 ```
 
--   This variation in this series appears to be mostly constant across
-    different levels of the series.
--   If any transformation is required, it would be a weak one. This can
-    be seen if a strong transformation (such as log) is used.
+- This variation in this series appears to be mostly constant across different levels of the series.
+- If any transformation is required, it would be a weak one.
+  This can be seen if a strong transformation (such as log) is used.
 
 ```{r}
 aus_production |>
   autoplot(log(Tobacco))
 ```
 
--   Guerrero's method suggests that $\lambda = 0.926$ is appropriate.
-    This is a very weak transformation, as it is close to 1 (probably
-    best to not bother transforming this series).
+- Guerrero's method suggests that $\lambda = 0.926$ is appropriate.
+  This is a very weak transformation, as it is close to 1 (probably best to not bother transforming this series).
 
 ```{r}
 aus_production |>
@@ -324,8 +316,8 @@ aus_production |>
   autoplot(box_cox(Tobacco, 0.926))
 ```
 
--   This series appears very similar to the original. The transformation
-    is having almost no effect.
+- This series appears very similar to the original.
+  The transformation is having almost no effect.
 
 ## Economy passengers between Melbourne and Sydney
 
@@ -336,12 +328,9 @@ ansett |>
   labs(title = "Economy passengers", subtitle = "MEL-SYD")
 ```
 
--   The data does not appear to vary proportionally to the level of the
-    series.
+- The data does not appear to vary proportionally to the level of the series.
 
--   There are many periods in this time series (such as the strike and
-    change in seat classes) that may need further attention, but this is
-    probably better resolved with modelling rather than transformations.
+- There are many periods in this time series (such as the strike and change in seat classes) that may need further attention, but this is probably better resolved with modelling rather than transformations.
 
 ## Pedestrian counts
 
@@ -352,8 +341,8 @@ pedestrian |>
   labs(title = "Southern Cross Pedestrians")
 ```
 
--   There is a high skewness and some zeros (so we can't take logs).
-    Let's try the `log(x+1)` transformation:
+- There is a high skewness and some zeros (so we can't take logs).
+  Let's try the `log(x+1)` transformation:
 
 ```{r}
 pedestrian |>
@@ -366,25 +355,40 @@ That's roughly balanced the two tails.
 
 # fpp3 3.7, Ex 9
 
-> Figures 3.16 and 3.17 show the result of decomposing the number of persons in the civilian labour force in Australia each month from February 1978 to August 1995.
+> Figures 3.19 and 3.20 show the result of decomposing the number of persons in the civilian labour force in Australia each month from February 1978 to August 1995.
 
->   a. Write about 3--5 sentences describing the results of the decomposition. Pay particular attention to the scales of the graphs in making your interpretation.
+> a. Write about 3--5 sentences describing the results of the decomposition.
+>    Pay particular attention to the scales of the graphs in making your interpretation.
 
-* The Australian labour force has been decomposed into 3 components (trend, seasonality, and remainder) using an STL decomposition.
-* The trend element has been captured well by the decomposition, as it smoothly increases with a similar pattern to the data. The trend is of the same scale as the data (indicated by similarly sized grey bars), and contributes most to the decomposition (having the smallest scale bar).
-* The seasonal component changes slowly throughout the series, with the second seasonal peak diminishing as time goes on -- this component is the smallest contribution original data (having the largest scale bar).
-* The remainder is well-behaved until 1991/1992 when there is a sharp drop. There also appears to be a smaller drop in 1993/1994. There is sometimes some leakage of the trend into the remainder component when the trend window is too large. This appears to have happened here. It would be better if the recession of 1991-1992, and the smaller dip in 1993, were both included in the trend estimate rather than the remainder estimate. This would require a smaller trend window than what was used.
-* In the bottom graph, the seasonal component is shown using a sub-series plot. December is the highest employment month, followed by March and September. The seasonal component changes mostly in March (with a decrease in the most recent years). July and August are the months with the next largest changes. The least changing is June with the rest are somewhere between these. December and September show increases in the most recent years.
+- The Australian labour force has been decomposed into 3 components (trend, seasonality, and remainder) using an STL decomposition.
+- The trend element has been captured well by the decomposition, as it smoothly increases with a similar pattern to the data.
+  The trend is of the same scale as the data (indicated by similarly sized grey bars), and contributes most to the decomposition (having the smallest scale bar).
+- The seasonal component changes slowly throughout the series, with the second seasonal peak diminishing as time goes on -- this component is the smallest contribution original data (having the largest scale bar).
+- The remainder is well-behaved until 1991/1992 when there is a sharp drop.
+  There also appears to be a smaller drop in 1993/1994.
+  There is sometimes some leakage of the trend into the remainder component when the trend window is too large.
+  This appears to have happened here.
+  It would be better if the recession of 1991-1992, and the smaller dip in 1993, were both included in the trend estimate rather than the remainder estimate.
+  This would require a smaller trend window than what was used.
+- In the bottom graph, the seasonal component is shown using a sub-series plot.
+  December is the highest employment month, followed by March and September.
+  The seasonal component changes mostly in March (with a decrease in the most recent years).
+  July and August are the months with the next largest changes.
+  The least changing is June with the rest are somewhere between these.
+  December and September show increases in the most recent years.
 
->   b. Is the recession of 1991/1992 visible in the estimated components?
+> b. Is the recession of 1991/1992 visible in the estimated components?
 
-Yes. The remainder shows a substantial drop during 1991 and 1992 coinciding with the recession.
+Yes.
+The remainder shows a substantial drop during 1991 and 1992 coinciding with the recession.
 
 # fpp3 3.7, Ex 10
 
 > This exercise uses the `canadian_gas` data (monthly Canadian gas production in billions of cubic metres, January 1960 -- February 2005).
 >
->   a. Plot the data using `autoplot()`, `gg_subseries()` and `gg_season()` to look at the effect of the changing seasonality over time. What do you think is causing it to change so much?
+> a. Plot the data using `autoplot()`, `gg_subseries()` and `gg_season()` to look at the effect of the changing seasonality over time.[^1]
+
+[^1]: The evolving seasonal pattern is possibly due to changes in the regulation of gas prices --- thanks to Lewis Kirvan for pointing this out.
 
 ```{r}
 #| label: gas1
@@ -396,7 +400,8 @@ canadian_gas |> gg_season(Volume)
 
 - The changes in seasonality are possibly due to changes in the regulation of gas prices.
 
->   b. Do an STL decomposition of the data. You will need to choose a seasonal window to allow for the changing shape of the seasonal component.
+> b. Do an STL decomposition of the data.
+>    You will need to choose a seasonal window to allow for the changing shape of the seasonal component.
 
 ```{r}
 #| label: gas2
@@ -411,7 +416,8 @@ names(fit)
 fit |> autoplot()
 ```
 
->   c. How does the seasonal shape change over time? [Hint: Try plotting the seasonal component using `gg_season()`.]
+> c. How does the seasonal shape change over time?
+>    [Hint: Try plotting the seasonal component using `gg_season()`.]
 
 ```{r}
 #| label: gas3
@@ -419,13 +425,12 @@ fit |> autoplot()
 fit |> gg_season(season_year)
 ```
 
--   Here the changes are easier to see. Up to about 1990 there is strong
-    seasonality with the greatest volume in the Canadian winter.
--   The seasonality increases in size over time. After 1990 the
-    seasonality changes shape and appears to be driven partly by the
-    month length near the end of the series.
+- Here the changes are easier to see.
+  Up to about 1990 there is strong seasonality with the greatest volume in the Canadian winter.
+- The seasonality increases in size over time.
+  After 1990 the seasonality changes shape and appears to be driven partly by the month length near the end of the series.
 
->   d. Can you produce a plausible seasonally adjusted series?
+> d. Can you produce a plausible seasonally adjusted series?
 
 ```{r}
 #| label: gas4
@@ -435,7 +440,8 @@ canadian_gas |>
   autolayer(fit, season_adjust, col = "blue")
 ```
 
->   e. Compare the results with those obtained using SEATS and X11. How are they different?
+> e. Compare the results with those obtained using SEATS and X-11.
+>    How are they different?
 
 ```{r}
 #| label: gas5
@@ -451,10 +457,7 @@ canadian_gas |>
   autoplot()
 ```
 
--   Note that SEATS fits a multiplicative decomposition by default, so
-    it is hard to directly compare the results with the other two
-    methods.
+- Note that SEATS fits a multiplicative decomposition by default, so it is hard to directly compare the results with the other two methods.
 
--   The X11 seasonal component is quite similar to the STL seasonal
-    component. Both SEATS and X11 have estimated a more wiggly trend
-    line than STL.
+- The X11 seasonal component is quite similar to the STL seasonal component.
+  Both SEATS and X11 have estimated a more wiggly trend line than STL.

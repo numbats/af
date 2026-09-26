@@ -12,14 +12,17 @@ library(fpp3)
 
 # fpp3 8.8, Ex7
 
-> Find an ETS model for the Gas data from `aus_production` and forecast the next few years. Why is multiplicative seasonality necessary here? Experiment with making the trend damped. Does it improve the forecasts?
+> Find an ETS model for the Gas data from `aus_production` and forecast the next few years.
+> Why is multiplicative seasonality necessary here?
+> Experiment with making the trend damped.
+> Does it improve the forecasts?
 
 ```{r}
 aus_production |> autoplot(Gas)
 ```
 
--   There is a huge increase in variance as the series increases in level. =\>
-    That makes it necessary to use multiplicative seasonality.
+- There is a huge increase in variance as the series increases in level.
+  =\> That makes it necessary to use multiplicative seasonality.
 
 ```{r}
 fit <- aus_production |>
@@ -60,9 +63,9 @@ While the point forecasts look ok, the intervals are excessively wide.
 
 # fpp3 8.8, Ex10
 
-> Compute the total domestic overnight trips for holidays across Australia from the `tourism` dataset.
+> Compute the total domestic overnight trips across Australia from the `tourism` dataset.
 
->   a. Plot the data and describe the main features of the series.
+> a. Plot the data and describe the main features of the series.
 
 ```{r}
 aus_trips <- tourism |>
@@ -74,7 +77,7 @@ aus_trips |>
 - The data is seasonal.
 - A slightly decreasing trend exists until 2010, after which it is replaced with a stronger upward trend.
 
->   b. Decompose the series using STL and obtain the seasonally adjusted data.
+> b. Decompose the series using STL and obtain the seasonally adjusted data.
 
 ```{r}
 dcmp <- aus_trips |>
@@ -85,7 +88,8 @@ dcmp |>
   autoplot(season_adjust)
 ```
 
->   c. Forecast the next two years of the series using an additive damped trend method applied to the seasonally adjusted data. (This can be specified using `decomposition_model()`.)
+> c. Forecast the next two years of the series using an additive damped trend method applied to the seasonally adjusted data.
+>    (This can be specified using `decomposition_model()`.)
 
 ```{r}
 stletsdamped <- decomposition_model(
@@ -98,7 +102,7 @@ aus_trips |>
   autoplot(aus_trips)
 ```
 
->   d. Forecast the next two years of the series using an appropriate model for Holt’s linear method applied to the seasonally adjusted data (as before but without damped trend).
+> d. Forecast the next two years of the series using an appropriate model for Holt's linear method applied to the seasonally adjusted data (as before but without damped trend).
 
 ```{r}
 stletstrend <- decomposition_model(
@@ -111,7 +115,7 @@ aus_trips |>
   autoplot(aus_trips)
 ```
 
->   e. Now use `ETS()` to choose a seasonal model for the data.
+> e. Now use `ETS()` to choose a seasonal model for the data.
 
 ```{r}
 fit <- aus_trips |>
@@ -124,7 +128,8 @@ fit |> tidy()
 fit |> forecast(h = "2 years") |> autoplot(aus_trips)
 ```
 
->   f. Compare the RMSE of the ETS model with the RMSE of the models you obtained using STL decompositions. Which gives the better in-sample fits?
+> f. Compare the RMSE of the ETS model with the RMSE of the models you obtained using STL decompositions.
+>    Which gives the better in-sample fits?
 
 ```{r}
 fit <- aus_trips |>
@@ -148,7 +153,8 @@ accuracy(fit)
 - The STL decomposition forecasts using the additive trend model, ETS(A,A,N), is slightly better in-sample.
 - However, note that this is a biased comparison as the models have different numbers of parameters.
 
->   g. Compare the forecasts from the three approaches? Which seems most reasonable?
+> g. Compare the forecasts from the three approaches?
+>    Which seems most reasonable?
 
 ```{r}
 fit |>
@@ -156,9 +162,10 @@ fit |>
   autoplot(aus_trips, level = NULL)
 ```
 
-The forecasts are almost identical. So I'll use the decomposition model with additive trend as it has the smallest RMSE.
+The forecasts are almost identical.
+So I'll use the decomposition model with additive trend as it has the smallest RMSE.
 
->   h. Check the residuals of your preferred model.
+> h. Check the residuals of your preferred model.
 
 ```{r}
 best <- fit |>
@@ -170,14 +177,13 @@ augment(best) |> gg_tsdisplay(.resid, lag_max = 24, plot_type = "histogram")
 augment(best) |> features(.innov, ljung_box, lag = 24)
 ```
 
-- The residuals look okay however there still remains some significant auto-correlation. Nevertheless, the results pass the Ljung-Box test.
-- The large spike at lag 14 can probably be ignored.
+The residuals look okay and overall they are not significant.
 
 # fpp3 8.8, Ex11
 
 > For this exercise use the quarterly number of arrivals to Australia from New Zealand, 1981 Q1 -- 2012 Q3, from data set `aus_arrivals`.
 
->   a. Make a time plot of your data and describe the main features of the series.
+> a. Make a time plot of your data and describe the main features of the series.
 
 ```{r}
 nzarrivals <- aus_arrivals |> filter(Origin == "NZ")
@@ -185,9 +191,11 @@ nzarrivals |> autoplot(Arrivals / 1e3) + labs(y = "Thousands of people")
 ```
 
 - The data has an upward trend.
-- The data has a seasonal pattern which increases in size approximately proportionally to the average number of people who arrive per year. Therefore, the data has multiplicative seasonality.
+- The data has a seasonal pattern which increases in size approximately proportionally to the average number of people who arrive per year.
+  Therefore, the data has multiplicative seasonality.
 
->   b. Create a training set that withholds the last two years of available data. Forecast the test set using an appropriate model for Holt-Winters’ multiplicative method.
+> b. Create a training set that withholds the last two years of available data.
+>    Forecast the test set using an appropriate model for Holt-Winters' multiplicative method.
 
 ```{r}
 nz_tr <- nzarrivals |>
@@ -199,16 +207,16 @@ nz_tr |>
   autolayer(nzarrivals, Arrivals)
 ```
 
->   c. Why is multiplicative seasonality necessary here?
+> c. Why is multiplicative seasonality necessary here?
 
 - The multiplicative seasonality is important in this example because the seasonal pattern increases in size proportionally to the level of the series.
 - The behaviour of the seasonal pattern will be captured and projected in a model with multiplicative seasonality.
 
->   d. Forecast the two-year test set using each of the following methods:
->       i) an ETS model;
->       ii) an additive ETS model applied to a log transformed series;
->       iii) a seasonal naïve method;
->       iv) an STL decomposition applied to the log transformed data followed by an ETS model applied to the seasonally adjusted (transformed) data.
+> d. Forecast the two-year test set using each of the following methods:
+>      i) an ETS model;
+>     ii) an additive ETS model applied to a log transformed series;
+>    iii) a seasonal naïve method;
+>     iv) an STL decomposition applied to the log transformed data followed by an ETS model applied to the seasonally adjusted (transformed) data.
 
 ```{r}
 fc <- nz_tr |>
@@ -229,7 +237,8 @@ fc |>
   autolayer(nzarrivals, Arrivals)
 ```
 
->   e. Which method gives the best forecasts? Does it pass the residual tests?
+> e. Which method gives the best forecasts?
+>    Does it pass the residual tests?
 
 ```{r}
 fc |>
@@ -246,7 +255,8 @@ augment(log_ets) |>
   features(.innov, ljung_box, lag = 12)
 ```
 
->   f. Compare the same four methods using time series cross-validation instead of using a training and test set. Do you come to the same conclusions?
+> f. Compare the same four methods using time series cross-validation instead of using a training and test set.
+>    Do you come to the same conclusions?
 
 ```{r}
 nz_cv <- nzarrivals |>
@@ -270,7 +280,8 @@ nz_cv |>
 
 # fpp3 8.8, Ex12
 
->   a. Apply cross-validation techniques to produce 1 year ahead ETS and seasonal naïve forecasts for Portland cement production (from `aus_production`). Use a stretching data window with initial size of 5 years, and increment the window by one observation.
+> a. Apply cross-validation techniques to produce 1 year ahead ETS and seasonal naïve forecasts for Portland cement production (from `aus_production`).
+>    Use a stretching data window with initial size of 5 years, and increment the window by one observation.
 
 ```{r}
 cement_cv <- aus_production |>
@@ -282,7 +293,9 @@ fc <- cement_cv |>
   forecast(h = "1 year")
 ```
 
->   b. Compute the MSE of the resulting $4$-step-ahead errors. Comment on which forecasts are more accurate. Is this what you expected?
+> b. Compute the MSE of the resulting $4$-step-ahead errors.
+>    Comment on which forecasts are more accurate.
+>    Is this what you expected?
 
 ```{r}
 fc |>
@@ -293,13 +306,16 @@ fc |>
   accuracy(aus_production, by = c(".model", "h"))
 ```
 
-The ETS results are better for all horizons, although getting closer as $h$ increases. With a long series like this, I would expect ETS to do better as it should have no trouble estimating the parameters, and it will include trends if required.
+The ETS results are better for all horizons, although getting closer as $h$ increases.
+With a long series like this, I would expect ETS to do better as it should have no trouble estimating the parameters, and it will include trends if required.
 
 # fpp3 8.8, Ex13
 
-> Compare `ETS()`, `SNAIVE()` and `decomposition_model(STL, ???)` on the following five time series. You might need to use a Box-Cox transformation for the STL decomposition forecasts. Use a test set of three years to decide what gives the best forecasts.
+> Compare `ETS()`, `SNAIVE()` and `decomposition_model(STL, ???)` on the following five time series.
+> You might need to use a Box-Cox transformation for the STL decomposition forecasts.
+> Use a test set of three years to decide what gives the best forecasts.
 
->   * Beer production from `aus_production`
+> - Beer and bricks production from `aus_production`.
 
 ```{r}
 fc <- aus_production |>
@@ -316,8 +332,6 @@ fc |> accuracy(aus_production)
 ```
 
 ETS and STLM do best for this dataset based on the test set performance.
-
->   * Bricks production from `aus_production`
 
 ```{r}
 tidy_bricks <- aus_production |>
@@ -336,7 +350,7 @@ fc |> accuracy(tidy_bricks)
 
 ETS and STLM do best for this dataset based on the test set performance.
 
->   * Cost of drug subsidies for diabetes (`ATC2 == "A10"`) and corticosteroids (`ATC2 == "H02"`) from `PBS`
+> - Cost of drug subsidies for diabetes (`ATC2 == "A10"`) and corticosteroids (`ATC2 == "H02"`) from `PBS`.
 
 ```{r}
 subsidies <- PBS |>
@@ -363,7 +377,7 @@ fc |>
 
 The STLM method appears to perform best for both series.
 
->   * Total food retailing turnover for Australia from `aus_retail`.
+> - Total food retailing turnover for Australia from `aus_retail`.
 
 ```{r}
 food_retail <- aus_retail |>
@@ -387,9 +401,10 @@ The STLM model does better than other approaches for this dataset.
 
 # fpp3 8.8, Ex14
 
->   a. Use `ETS()` to select an appropriate model for the following series: total number of trips across Australia using `tourism`, the closing prices for the four stocks in `gafa_stock`, and the lynx series in `pelt`. Does it always give good forecasts?
+> a. Use `ETS()` to select an appropriate model for the following series: total number of trips across Australia using `tourism`, the closing prices for the four stocks in `gafa_stock`, and the lynx series in `pelt`.
+>    Does it always give good forecasts?
 
-### tourism
+## tourism
 
 ```{r}
 aus_trips <- tourism |>
@@ -405,7 +420,7 @@ aus_trips |>
 
 Forecasts appear reasonable.
 
-### GAFA stock
+## GAFA stock
 
 ```{r}
 gafa_regular <- gafa_stock |>
@@ -427,7 +442,7 @@ gafa_regular |>
 
 Forecasts look reasonable for an efficient market.
 
-### Pelt trading records
+## Pelt trading records
 
 ```{r}
 pelt |>
@@ -441,7 +456,8 @@ pelt |>
 - Here the cyclic behaviour of the lynx data is completely lost.
 - ETS models are not designed to handle cyclic data, so there is nothing that can be done to improve this.
 
->   b. Find an example where it does not work well. Can you figure out why?
+> b. Find an example where it does not work well.
+>    Can you figure out why?
 
 - ETS does not work well on cyclic data, as seen in the pelt dataset above.
 
@@ -451,46 +467,59 @@ pelt |>
 
 Point forecasts from the multiplicative Holt-Winters' method:
 $$
-  \hat{y}_{t+h|t} = (\ell_t + hb_t)s_{t+ h - m(k+1)}
+  \hat{y}_{t+h|t} = (\ell_t + hb_t)s_{t+h-m(k+1)}
 $$
-where $k$ is the integer part of $(h-1)/m$.
+where $k$ is the integer part of $(h - 1)/m$.
 
 An ETS(M,A,M) model is given by
 \begin{align*}
-  y_t    & = (\ell_{t-1}+b_{t-1})s_{t-m}(1+\varepsilon_t) \\
-  \ell_t & = (\ell_{t-1}+b_{t-1})(1+\alpha\varepsilon_t) \\
-  b_t    & = b_{t-1} + \beta(\ell_{t-1}+b_{t-1})\varepsilon_t \\
-  s_t    & = s_{t-m} (1+\gamma\varepsilon_t)
+  y_t    & = (\ell_{t-1} + b_{t-1})s_{t-m}(1 + \varepsilon_t)   \\
+  \ell_t & = (\ell_{t-1} + b_{t-1})(1 + \alpha\varepsilon_t)    \\
+  b_t    & = b_{t-1} + \beta(\ell_{t-1} + b_{t-1})\varepsilon_t \\
+  s_t    & = s_{t-m} (1 + \gamma\varepsilon_t)
 \end{align*}
 So $y_{T+h}$ is given by
 $$
-  y_{T+h} = (\ell_{T+h-1}+b_{T+h-1})s_{T+h-m}(1+\varepsilon_{T+h})
+  y_{T+h} = (\ell_{T+h-1} + b_{T+h-1})s_{T+h-m}(1 + \varepsilon_{T+h})
 $$
-Replacing $\varepsilon_{t}$ by zero for $t>T$, and substituting in from the above equations, we obtain
+Replacing $\varepsilon_{t}$ by zero for $t > T$, and substituting in from the above equations, we obtain:
+
+for $h = 1$
 $$
-  \hat{y}_{T+h} = (\ell_{T+h-2}+2b_{T+h-2})s_{T+h-m}
+  \hat{y}_{T+1|T} = (\ell_{T} + b_{T})s_{T+1-m}
 $$
+for $h = 2$
+\begin{align*}
+  \hat{y}_{T+2|T} & = (\ell_{T+1} + b_{T+1})s_{T+2-m}       \\
+                  & = ((\ell_{T} + b_{T}) + b_{T})s_{T+2-m} \\
+                  & = (\ell_{T} + 2b_{T})s_{T+2-m}
+\end{align*}
+
 Repeating the process a few times leads to
 $$
-  \hat{y}_{T+h} = (\ell_{T}+hb_{T})s_{T+h-m}
+  \hat{y}_{T+h|T} = (\ell_{T} + hb_{T})s_{T+h-m}
 $$
 
 Now if $h \le m$, then we know the value of $s_{T+h-m}$.
 
 If $m < h \le 2m$, then we can write
-$$s_{T+h-m} = s_{T+h-2m} (1 + \gamma\varepsilon_{T+h-m})$$
+$$
+  s_{T+h-m} = s_{T+h-2m} (1 + \gamma\varepsilon_{T+h-m})
+$$
 and replace $\varepsilon_{T+h-m}$ by 0
 
 If $2m < h \le 3m$, then we can write
-$$s_{T+h-m} = s_{T+h-3m} (1 + \gamma\varepsilon_{T+h-m})(1+\gamma\varepsilon_{T+h-2m})$$
+$$
+  s_{T+h-m} = s_{T+h-3m} (1 + \gamma\varepsilon_{T+h-m})(1 + \gamma\varepsilon_{T+h-2m})
+$$
 and replace both $\varepsilon_{T+h-m}$ and $\varepsilon_{T+h-2m}$ by 0
 
 etc.
 
-So we can replace $s_{T+h-m}$ by $s_{T+h - m(k+1)}$ where $k$ is the integer part of $(k-1)/m$.
+So we can replace $s_{T+h-m}$ by $s_{T+h-m(k+1)}$ where $k$ is the integer part of $(k - 1)/m$.
 
 Thus
 $$
-  \hat{y}_{T+h|T} = (\ell_{T}+hb_{T})s_{T+h -m(k+1)}
+  \hat{y}_{T+h|T} = (\ell_{T} + hb_{T})s_{T+h-m(k+1)}
 $$
 as required.

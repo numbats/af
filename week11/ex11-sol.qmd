@@ -9,66 +9,82 @@ library(fpp3)
 
 # fpp3 7.10, Ex 1
 
-> Half-hourly electricity demand for Victoria, Australia is contained in `vic_elec`. Extract the January 2014 electricity demand, and aggregate this data to daily with daily total demands and maximum temperatures.
+> Half-hourly electricity demand for Victoria, Australia is contained in `vic_elec`.
+> Extract the January 2014 electricity demand, and aggregate this data to daily with daily total demands and maximum temperatures.
 >
 >   ```r
->   jan_vic_elec <- vic_elec |>
+>   jan14_vic_elec <- vic_elec |>
 >     filter(yearmonth(Time) == yearmonth("2014 Jan")) |>
 >     index_by(Date = as_date(Time)) |>
 >     summarise(Demand = sum(Demand), Temperature = max(Temperature))
 >   ```
->   a. Plot the data and find the regression model for Demand with temperature as an explanatory variable. Why is there a positive relationship?
+> a. Plot the data and find the regression model for Demand with temperature as a predictor variable.
+>    Why is there a positive relationship?
 
 ```{r}
-jan_vic_elec <- vic_elec |>
+jan14_vic_elec <- vic_elec |>
   filter(yearmonth(Time) == yearmonth("2014 Jan")) |>
   index_by(Date = as_date(Time)) |>
   summarise(Demand = sum(Demand), Temperature = max(Temperature))
 
-jan_vic_elec |>
-  pivot_longer(2:3, names_to="key", values_to="value")|>
+jan14_vic_elec |>
+  pivot_longer(2:3, names_to = "key", values_to = "value") |>
   autoplot(.vars = value) +
   facet_grid(vars(key), scales = "free_y")
 
-jan_vic_elec |>
+jan14_vic_elec |>
   ggplot(aes(x = Temperature, y = Demand)) +
   geom_point()
 ```
 
 ```{r}
-fit <- jan_vic_elec |>
+fit <- jan14_vic_elec |>
   model(TSLM(Demand ~ Temperature))
 fit |> report()
 ```
 
-It is clear that a positive relationship exists for this data. It is largely driven by days with high temperatures, that is resulting in more electricity being demanded (presumably to keep things cool).
+It is clear that a positive relationship exists for this data.
+It is largely driven by days with high temperatures, that is resulting in more electricity being demanded (presumably to keep things cool).
 
->   b. Produce a residual plot. Is the model adequate? Are there any outliers or influential observations?
+> b. Produce a residual plot.
+>    Is the model adequate?
+>    Are there any outliers or influential observations?
 
 ```{r}
 fit |> gg_tsresiduals()
 ```
 
-The residuals from this section of the data suggest that the model is lacking a trend (although looking at a larger window of the data, this is clearly not a real pattern). Some large variability suggests that there are some outliers in this data.
+The residuals from this section of the data suggest that the model is lacking a trend (although looking at a larger window of the data, this is clearly not a real pattern).
+Some large variability suggests that there are some outliers in this data.
 
->   c. Use the model to forecast the electricity demand that you would expect for the next day if the maximum temperature was $15^\circ\text{C}$ and compare it with the forecast if the with maximum temperature was $35^\circ\text{C}$. Do you believe these forecasts?
+> c. Use the model to forecast the electricity demand that you would expect for the next day if the maximum temperature was $15^\circ\text{C}$ and compare it with the forecast if the with maximum temperature was $35^\circ\text{C}$.
+>    Do you believe these forecasts?
+>    The following R code will get you started:
+>
+>    ```r
+>    jan14_vic_elec |>
+>      model(TSLM(Demand ~ Temperature)) |>
+>      forecast(new_data(jan14_vic_elec, 1) |> mutate(Temperature = 15)) |>
+>      autoplot(jan14_vic_elec)
+>    ```
 
 ```{r}
 next_day <- scenarios(
-  `Cold day` = new_data(jan_vic_elec, 1) |> mutate(Temperature = 15),
-  `Hot day` =  new_data(jan_vic_elec, 1) |> mutate(Temperature = 35)
+  `Cold day` = new_data(jan14_vic_elec, 1) |> mutate(Temperature = 15),
+  `Hot day` = new_data(jan14_vic_elec, 1) |> mutate(Temperature = 35)
 )
 fc <- fit |>
   forecast(new_data = next_day)
 
-autoplot(jan_vic_elec, Demand) +
-  autolayer(fc[1,]) +
-  autolayer(fc[2,])
+autoplot(jan14_vic_elec, Demand) +
+  autolayer(fc[1, ]) +
+  autolayer(fc[2, ])
 ```
 
-The forecasts seem reasonable. However we should be aware that there is not much data to support the forecasts at these temperature extremes, especially in that no daily maximum below $20^\circ\text{C}$ is observed during January (a summer month in Victoria).
+The forecasts seem reasonable.
+However we should be aware that there is not much data to support the forecasts at these temperature extremes, especially in that no daily maximum below $20^\circ\text{C}$ is observed during January (a summer month in Victoria).
 
->   d. Give prediction intervals for your forecasts.
+> d. Give prediction intervals for your forecasts.
 
 ```{r}
 fc |>
@@ -76,7 +92,8 @@ fc |>
   select(-.model)
 ```
 
->  e. Plot Demand vs Temperature for all of the available data in `vic_elec` aggregated to daily total demand and maximum temperature. What does this say about your model?
+> e. Plot Demand vs Temperature for all of the available data in `vic_elec` aggregated to daily total demand and maximum temperature.
+>    What does this say about your model?
 
 ```{r}
 vic_elec |>
@@ -86,13 +103,15 @@ vic_elec |>
   geom_point()
 ```
 
-The "U" shaped scatterplot suggests that there is a non-linear relationship between electricity demand and daily maximum temperature. The model assumption that electricity demand is linearly predicted by temperature is incorrect.
+The "U" shaped scatterplot suggests that there is a non-linear relationship between electricity demand and daily maximum temperature.
+The model assumption that electricity demand is linearly predicted by temperature is incorrect.
 
 # fpp3 7.10, Ex 2
 
 > Data set `olympic_running` contains the winning times (in seconds) in each Olympic Games sprint, middle-distance and long-distance track events from 1896 to 2016.
 >
->   a. Plot the winning time against the year. Describe the main features of the plot.
+> a. Plot the winning time against the year for each event.
+>    Describe the main features of the plot.
 
 ```{r}
 olympic_running |>
@@ -106,9 +125,11 @@ olympic_running |>
   labs(y = "Running time (seconds)")
 ```
 
-The running times are generally decreasing as time progresses (although the rate of this decline is slowing down in recent olympics). There are some missing values in the data corresponding to the World Wars (in which the Olympic Games were not held).
+The running times are generally decreasing as time progresses (although the rate of this decline is slowing down in recent olympics).
+There are some missing values in the data corresponding to the World Wars (in which the Olympic Games were not held).
 
->   b. Fit a regression line to the data. Obviously the winning times have been decreasing, but at what *average* rate per year?
+> b. Fit a regression line to the data for each event.
+>    Obviously the winning times have been decreasing, but at what *average* rate per year?
 
 ```{r}
 fit <- olympic_running |>
@@ -122,10 +143,13 @@ tidy(fit)
 
 tidy(fit) |>
   filter(term == "trend()") |>
-  glue::glue_data("The {Sex}'s {Length} running time has been {ifelse(estimate<0, 'decreasing', 'increasing')} by an average of {abs(round(estimate/4, 3))} seconds each year.<br>")
+  glue::glue_data(
+    "The {Sex}'s {Length} running time has been {ifelse(estimate<0, 'decreasing', 'increasing')} by an average of {abs(round(estimate/4, 3))} seconds each year.<br>"
+  )
 ```
 
->   c. Plot the residuals against the year. What does this indicate about the suitability of the fitted line?
+> c. Plot the residuals against the year.
+>    What does this indicate about the suitability of the fitted lines?
 
 ```{r}
 augment(fit) |>
@@ -140,7 +164,9 @@ augment(fit) |>
 
 It doesn't seem that the linear trend is appropriate for this data.
 
->   d. Predict the winning time for each race in the 2020 Olympics. Give a prediction interval for your forecasts. What assumptions have you made in these calculations?
+> d. Predict the winning time for each race in the 2020 Olympics.
+>    Give a prediction interval for your forecasts.
+>    What assumptions have you made in these calculations?
 
 ```{r}
 fit |>
@@ -149,28 +175,38 @@ fit |>
   select(-.model)
 ```
 
-Using a linear trend we assume that winning times will decrease in a linear fashion which is unrealistic for running times. As we saw from the residual plots above there are mainly large positive residuals for the last few years, indicating that the decreases in the winning times are not linear. We also assume that the residuals are normally distributed.
+Using a linear trend we assume that winning times will decrease in a linear fashion which is unrealistic for running times.
+As we saw from the residual plots above there are mainly large positive residuals for the last few years, indicating that the decreases in the winning times are not linear.
+We also assume that the residuals are normally distributed.
 
-# fpp3 7.10, Ex3
+# fpp3 7.10, Ex 3
 
-> An elasticity coefficient is the ratio of the percentage change in the forecast variable ($y$) to the percentage change in the predictor variable ($x$). Mathematically, the elasticity is defined as $(dy/dx)\times(x/y)$. Consider the log-log model,
->  $$
-> \log y=\beta_0+\beta_1 \log x + \varepsilon.
+> An elasticity coefficient is the ratio of the percentage change in the forecast variable ($y$) to the percentage change in the predictor variable ($x$).
+> Mathematically, the elasticity is defined as $(dy/dx) \times (x/y)$.
+> Consider the log-log model,
+> $$
+>   \log y = \beta_0 + \beta_1 \log x + \varepsilon.
 > $$
 > Express $y$ as a function of $x$ and show that the coefficient $\beta_1$ is the elasticity coefficient.
 
 We will take conditional expectation of the left and the right parts of the equation:
-$$\mathrm{E}(\log(y)\mid x) = \mathrm{E}(\beta_0 + \beta_1 \log(x) + \varepsilon\mid x) = \beta_0 + \beta_1\log(x).$$
-By taking derivatives of the left and the right parts of the last equation we get:
-$\frac{y'}{y} = \frac{\beta_1}{x}$, and then $\beta_1 = \frac{y' x}{y}.$
-It is exactly what we need to prove, taking into account that
-$y' = \frac{dy}{dx}$.
+$$
+  \mathrm{E}(\log(y) \mid x)
+  = \mathrm{E}(\beta_0 + \beta_1 \log(x) + \varepsilon \mid x) = \beta_0
+    + \beta_1\log(x).
+$$
+By taking derivatives of the left and the right parts of the last equation we get: $\frac{y'}{y} = \frac{\beta_1}{x}$, and then $\beta_1 = \frac{y' x}{y}.$ It is exactly what we need to prove, taking into account that $y' = \frac{dy}{dx}$.
 
 # fpp3 7.10, Ex 4
 
-> The data set `souvenirs` concerns the monthly sales figures of a shop which opened in January 1987 and sells gifts, souvenirs, and novelties. The shop is situated on the wharf at a beach resort town in Queensland, Australia. The sales volume varies with the seasonal population of tourists. There is a large influx of visitors to the town at Christmas and for the local surfing festival, held every March since 1988. Over time, the shop has expanded its premises, range of products, and staff.
+> The data set `souvenirs` concerns the monthly sales figures of a shop which opened in January 1987 and sells gifts, souvenirs, and novelties.
+> The shop is situated on the wharf at a beach resort town in Queensland, Australia.
+> The sales volume varies with the seasonal population of tourists.
+> There is a large influx of visitors to the town at Christmas and for the local surfing festival, held every March since 1988.
+> Over time, the shop has expanded its premises, range of products, and staff.
 
->a. Produce a time plot of the data and describe the patterns in the graph. Identify any unusual or unexpected fluctuations in the time series.
+> a. Produce a time plot of the data and describe the patterns in the graph.
+>    Identify any unusual or unexpected fluctuations in the time series.
 
 ```{r}
 souvenirs |> autoplot(Sales)
@@ -178,11 +214,11 @@ souvenirs |> autoplot(Sales)
 
 Features of the data:
 
-* Seasonal data -- similar scaled pattern repeats every year
-* A spike every March (except for year 1987) is the influence of the surfing festival
-* The size of the pattern increases proportionally to the level of sales
+- Seasonal data -- similar scaled pattern repeats every year
+- A spike every March (except for year 1987) is the influence of the surfing festival
+- The size of the pattern increases proportionally to the level of sales
 
->b. Explain why it is necessary to take logarithms of these data before fitting a model.
+> b. Explain why it is necessary to take logarithms of these data before fitting a model.
 
 The last feature above suggests taking logs to make the pattern (and variance) more stable
 
@@ -193,7 +229,7 @@ souvenirs |> autoplot(log(Sales))
 
 After taking logs, the trend looks more linear and the seasonal variation is roughly constant.
 
->c. Fit a regression model to the logarithms of these sales data with a linear trend, seasonal dummies and a "surfing festival" dummy variable.
+> c. Fit a regression model to the logarithms of these sales data with a linear trend, seasonal dummies and a "surfing festival" dummy variable.
 
 ```{r}
 fit <- souvenirs |>
@@ -204,14 +240,18 @@ souvenirs |>
   geom_line(data = augment(fit), aes(y = .fitted), col = "blue")
 ```
 
->d. Plot the residuals against time and against the fitted values. Do these plots reveal any problems with the model?
+> d. Plot the residuals against time and against the fitted values.
+>    Do these plots reveal any problems with the model?
 
 ```{r}
 #| message: false
+
 fit |> gg_tsresiduals()
 ```
 
-The residuals are serially correlated. This is both visible from the time plot but also from the ACF. The residuals reveal nonlinearity in the trend.
+The residuals are serially correlated.
+This is both visible from the time plot but also from the ACF.
+The residuals reveal nonlinearity in the trend.
 
 ```{r}
 augment(fit) |>
@@ -220,12 +260,15 @@ augment(fit) |>
   scale_x_log10()
 ```
 
-The plot of residuals against fitted values looks fine - no notable patterns emerge. We take logarithms of fitted values because we took logs in the model.
+The plot of residuals against fitted values looks fine - no notable patterns emerge.
+We take logarithms of fitted values because we took logs in the model.
 
->e. Do boxplots of the residuals for each month. Does this reveal any problems with the model?
+> e. Do boxplots of the residuals for each month.
+>    Does this reveal any problems with the model?
 
 ```{r}
 #| message: false
+
 augment(fit) |>
   mutate(month = month(Month, label = TRUE)) |>
   ggplot(aes(x = month, y = .innov)) +
@@ -234,7 +277,7 @@ augment(fit) |>
 
 The boxplots show differences in variation across the months revealing some potential heteroscedasticity.
 
->f. What do the values of the coefficients tell you about each variable?
+> f. What do the values of the coefficients tell you about each variable?
 
 ```{r}
 tidy(fit) |> mutate(pceffect = (exp(estimate) - 1) * 100)
@@ -246,14 +289,14 @@ tidy(fit) |> mutate(pceffect = (exp(estimate) - 1) * 100)
 expcoef <- (exp(coef(fit)$estimate) - 1) * 100
 ```
 
-* `(Intercept)` is not interpretable.
-* `trend` coefficient shows that with every month sales increases on average by `r round(expcoef[2], 1)`%.
-* `season2` coefficient shows that February sales are greater than January on average by `r round(expcoef[3], 1)`%, after allowing for the trend.
-* ...
-* `season12` coefficient shows that December sales are greater than January on average by `r round(expcoef[13], 1)`%, after allowing for the trend.
-* `festivalTRUE` coefficient shows that for months that include the surfing festival, sales increases on average by `r round(expcoef[14], 1)`% compared to months without the festival, after allowing for the trend and seasonality.
+- `(Intercept)` is not interpretable.
+- `trend` coefficient shows that with every month sales increases on average by `r round(expcoef[2], 1)`%.
+- `season2` coefficient shows that February sales are greater than January on average by `r round(expcoef[3], 1)`%, after allowing for the trend.
+- ...
+- `season12` coefficient shows that December sales are greater than January on average by `r round(expcoef[13], 1)`%, after allowing for the trend.
+- `festivalTRUE` coefficient shows that for months that include the surfing festival, sales increases on average by `r round(expcoef[14], 1)`% compared to months without the festival, after allowing for the trend and seasonality.
 
->g. What does the Ljung-Box test tell you about your model?
+> g. What does the Ljung-Box test tell you about your model?
 
 ```{r}
 augment(fit) |>
@@ -262,7 +305,8 @@ augment(fit) |>
 
 The serial correlation in the residuals is significant.
 
->h. Regardless of your answers to the above questions, use your regression model to predict the monthly sales for 1994, 1995, and 1996. Produce prediction intervals for each of your forecasts.
+> h. Regardless of your answers to the above questions, use your regression model to predict the monthly sales for 1994, 1995, and 1996.
+>    Produce prediction intervals for each of your forecasts.
 
 ```{r}
 future_souvenirs <- new_data(souvenirs, n = 36) |>
@@ -272,14 +316,19 @@ fit |>
   autoplot(souvenirs)
 ```
 
->i. How could you improve these predictions by modifying the model?
+> i. How could you improve these predictions by modifying the model?
 
-* The model can be improved by taking into account nonlinearity of the trend.
+- The model can be improved by taking into account nonlinearity of the trend.
 
 # fpp3 7.10, Ex 5
 
-> The `us_gasoline` series consists of weekly data for supplies of US finished motor gasoline product, from 2 February 1991 to 20 January 2017. The units are in "thousand barrels per day". Consider only the data to the end of 2004.
-> a. Fit a harmonic regression with trend to the data. Experiment with changing the number Fourier terms. Plot the observed gasoline and fitted values and comment on what you see.
+> The `us_gasoline` series consists of weekly data for supplies of US finished motor gasoline product, from 2 February 1991 to 20 January 2017.
+> The units are in "million barrels per day".
+> Consider only the data to the end of 2004.
+>
+> a. Fit a harmonic regression with trend to the data.
+>    Experiment with changing the number Fourier terms.
+>    Plot the observed gasoline and fitted values and comment on what you see.
 
 ```{r}
 gas <- us_gasoline |> filter(year(Week) <= 2004)
@@ -313,7 +362,8 @@ gas |>
   autoplot(Barrels, col = "gray") +
   geom_line(
     data = augment(fit) |> filter(.model == "fourier7"),
-    aes(y = .fitted), col = "blue"
+    aes(y = .fitted),
+    col = "blue"
   )
 ```
 
@@ -323,7 +373,8 @@ This seems to have captured the annual seasonality quite well.
 
 As above.
 
-> c. Check the residuals of the final model using the `gg_tsresiduals()` function. Use a Ljung-Box test to check for residual autocorrelation.
+> c. Plot the residuals of the final model using the `gg_tsresiduals()` function and comment on these.
+>    Use a Ljung-Box test to check for residual autocorrelation.
 
 ```{r}
 fit |>
@@ -339,9 +390,12 @@ augment(fit) |>
   features(.innov, ljung_box, lag = 52)
 ```
 
-The Ljung-Box test is not significant. Even if the Ljung-Box test had given a significant result here, the correlations are very small, so it would not make much difference to the forecasts and prediction intervals.
+The Ljung-Box test is not significant.
+Even if the Ljung-Box test had given a significant result here, the correlations are very small, so it would not make much difference to the forecasts and prediction intervals.
 
-> d. Generate forecasts for the next year of data. Plot these along with the actual data for 2005. Comment on the forecasts.
+> d. Generate forecasts for the next year of data.
+>    Plot these along with the actual data for 2005.
+>    Comment on the forecasts.
 
 ```{r}
 fit |>
@@ -356,7 +410,8 @@ The forecasts fit pretty well for the first six months, but not so well after th
 
 > The annual population of Afghanistan is available in the `global_economy` data set.
 
->    a. Plot the data and comment on its features. Can you observe the effect of the Soviet-Afghan war?
+> a. Plot the data and comment on its features.
+>    Can you observe the effect of the Soviet-Afghan war?
 
 ```{r}
 global_economy |>
@@ -364,12 +419,20 @@ global_economy |>
   autoplot(Population / 1e6) +
   labs(y = "Population (millions)") +
   geom_ribbon(aes(xmin = 1979.98, xmax = 1989.13), fill = "pink", alpha = 0.4) +
-  annotate("text", x = 1984.5, y = 10, label = "Soviet-Afghan war", col = "red", size = 3)
+  annotate(
+    "text",
+    x = 1984.5,
+    y = 10,
+    label = "Soviet-Afghan war",
+    col = "red",
+    size = 3
+  )
 ```
 
-The population increases slowly from 1960 to 1980, then decreases during the Soviet-Afghan war (24 Dec 1979 -- 15 Feb 1989), and has increased relatively rapidly since then. The last 30 years has shown an almost linear increase in population.
+The population increases slowly from 1960 to 1980, then decreases during the Soviet-Afghan war (24 Dec 1979 -- 15 Feb 1989), and has increased relatively rapidly since then.
+The last 30 years has shown an almost linear increase in population.
 
->    b. Fit a linear trend model and compare this to a piecewise linear trend model with knots at 1980 and 1989.
+> b. Fit a linear trend model and compare this to a piecewise linear trend model with knots at 1980 and 1989.
 
 ```{r}
 fit <- global_economy |>
@@ -385,229 +448,191 @@ augment(fit) |>
 
 The fitted values show that the piecewise linear model has tracked the data very closely, while the linear model is inaccurate.
 
->    c. Generate forecasts from these two models for the five years after the end of the data, and comment on the results.
+> c. Generate forecasts from these two models for the five years after the end of the data, and comment on the results.
 
 ```{r}
 fc <- fit |> forecast(h = "5 years")
 autoplot(fc) +
-  autolayer(filter(global_economy |> filter(Country == "Afghanistan")), Population)
+  autolayer(
+    filter(global_economy |> filter(Country == "Afghanistan")),
+    Population
+  )
 ```
 
 The linear model is clearly incorrect with prediction intervals too wide, and the point forecasts too low.
 
-The piecewise linear model looks good, but the prediction intervals are probably too narrow. This model assumes that the trend since the last knot will continue unchanged, which is unrealistic.
+The piecewise linear model looks good, but the prediction intervals are probably too narrow.
+This model assumes that the trend since the last knot will continue unchanged, which is unrealistic.
 
 # fpp3 7.10, Ex 7
 
->Using matrix notation it was shown that if $\mathbf{y}=\mathbf{X}\mathbf{\beta}+\mathbf{\varepsilon}$, where $\mathbf{e}$ has mean $\mathbf{0}$ and variance matrix $\sigma^2\mathbf{I}$, the estimated coefficients are given by $\hat{\mathbf{\beta}}=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}$ and a forecast is given by $\hat{y}=\mathbf{x}^*\hat{\mathbf{\beta}}=\mathbf{x}^*(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}$ where $\mathbf{x}^*$ is a row vector containing the values of the regressors for the forecast (in the same format as $\mathbf{X}$), and the forecast variance is given by $var(\hat{y})=\sigma^2 \left[1+\mathbf{x}^*(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{x}^*)'\right].$
+> (For advanced readers following on from Section 7.9.)
+>
+> Using matrix notation it was shown that if $\mathbf{y} = \mathbf{X}\mathbf{\beta} + \mathbf{\varepsilon}$, where $\mathbf{\varepsilon}$ has mean $\mathbf{0}$ and variance matrix $\sigma^2\mathbf{I}$, the estimated coefficients are given by $\hat{\mathbf{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}$ and a forecast is given by $\hat{y} = \mathbf{x}^*\hat{\mathbf{\beta}} = \mathbf{x}^*(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}$ where $\mathbf{x}^*$ is a row vector containing the values of the predictors for the forecast (in the same format as $\mathbf{X}$), and the forecast variance is given by $var(\hat{y}) = \sigma^2 \left[ 1 + \mathbf{x}^*(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{x}^*)' \right].$
 
->Consider the simple time trend model where $y_t = \beta_0 + \beta_1t$. Using the following results,
-$$
-  \sum^{T}_{t=1}{t}=\frac{1}{2}T(T+1),\quad \sum^{T}_{t=1}{t^2}=\frac{1}{6}T(T+1)(2T+1)
-$$
-derive the following expressions:
+> Consider the simple time trend model where $y_t = \beta_0 + \beta_1t$.
+> Using the following results,
+> $$
+>   \sum^{T}_{t=1}{t} = \frac{1}{2}T(T + 1),
+>   \quad \sum^{T}_{t=1}{t^2} = \frac{1}{6}T(T + 1)(2T + 1)
+> $$
+> derive the following expressions:
 
-> a.
-$\displaystyle\mathbf{X}'\mathbf{X}=\frac{1}{6}\left[
-\begin{array}{cc}
-  6T      & 3T(T+1) \\
-  3T(T+1) & T(T+1)(2T+1) \\
-\end{array}
-\right]$
+> a. $\displaystyle\mathbf{X}'\mathbf{X} = \frac{1}{6}\left[ \begin{array}{cc} 6T & 3T(T + 1) \\ 3T(T + 1) & T(T + 1)(2T + 1) \\ \end{array} \right]$
 
-> b.
-  $\displaystyle(\mathbf{X}'\mathbf{X})^{-1}=\frac{2}{T(T^2-1)}\left[
-  \begin{array}{cc}
-    (T+1)(2T+1)   & -3(T+1) \\
-    -3(T+1)       & 6 \\
-  \end{array}
-  \right]$
+> b. $\displaystyle(\mathbf{X}'\mathbf{X})^{-1} = \frac{2}{T(T^2 - 1)}\left[ \begin{array}{cc} (T + 1)(2T + 1) &-3(T + 1) \\-3(T + 1) & 6 \\ \end{array} \right]$
 
->c.
-  $\displaystyle\hat{\beta}_0=\frac{2}{T(T-1)}\left[(2T+1)\sum^T_{t=1}y_t-3\sum^T_{t=1}ty_t
-  \right]$
+> c. $\displaystyle\hat{\beta}_0 = \frac{2}{T(T - 1)}\left[ (2T + 1)\sum^T_{t=1}y_t - 3\sum^T_{t=1}ty_t \right]$
 
-> $\displaystyle\hat{\beta}_1=\frac{6}{T(T^2-1)}\left[2\sum^T_{t=1}ty_t-(T+1)\sum^T_{t=1}y_t \right]$
+> $\displaystyle\hat{\beta}_1 = \frac{6}{T(T^2 - 1)}\left[ 2\sum^T_{t=1}ty_t - (T + 1)\sum^T_{t=1}y_t \right]$
 
->d.
-  $\displaystyle\text{Var}(\hat{y}_{t})=\hat{\sigma}^2\left[1+\frac{2}{T(T-1)}\left(1-4T-6h+6\frac{(T+h)^2}{T+1}\right)\right]$
+> d. $\displaystyle\text{Var}(\hat{y}_{t}) = \hat{\sigma}^2\left[ 1 + \frac{2}{T(T - 1)}\left( 1 - 4T - 6h + 6\frac{(T + h)^2}{T + 1} \right) \right]$
 
 For a time trend,
 $$
   \mathbf{X} = \begin{bmatrix}
-   1 & 1 \\
-   1 & 2 \\
-   1 & 3 \\
-   \vdots \\
-   1 & T
-   \end{bmatrix}
+                 1 & 1 \\
+                 1 & 2 \\
+                 1 & 3 \\
+                 \vdots \\
+                 1 & T
+               \end{bmatrix}
 $$
 
 ## (a)
 
 &nbsp;
 \begin{align*}
-\mathbf{X}' \mathbf{X}
-& = \begin{bmatrix}
-      1 & 1 & 1 & \dots & 1\\
-      1 & 2 & 3 & \dots & T
-    \end{bmatrix}
-    \begin{bmatrix}
-      1 & 1 \\
-      1 & 2 \\
-      1 & 3 \\
-      \vdots \\
-      1 & T
-    \end{bmatrix} \\
-&= \begin{bmatrix}
-     T & 1 + 2 + 3 + \cdots + T \\
-     1 + 2 + 3 + \cdots + T & 1^2 + 2^2 + 3^2 + \cdots + T^2
-    \end{bmatrix}\\
-&= \begin{bmatrix}
-     T & \frac{1}{2}T(T+1) \\
-     \frac{1}{2}T(T+1) & \frac{1}{6}T(T+1)(2T+1)
-    \end{bmatrix} \\
-&= \frac{1}{6}\begin{bmatrix}
-     6T & 3T(T+1) \\
-     3T(T+1) & T(T+1)(T+1)
-    \end{bmatrix}
+  \mathbf{X}' \mathbf{X}
+   & = \begin{bmatrix}
+         1 & 1 & 1 & \dots & 1 \\
+         1 & 2 & 3 & \dots & T
+       \end{bmatrix}
+  \begin{bmatrix}
+    1 & 1 \\
+    1 & 2 \\
+    1 & 3 \\
+    \vdots \\
+    1 & T
+  \end{bmatrix} \\
+   & = \begin{bmatrix}
+         T                      & 1 + 2 + 3 + \cdots + T         \\
+         1 + 2 + 3 + \cdots + T & 1^2 + 2^2 + 3^2 + \cdots + T^2
+       \end{bmatrix}            \\
+   & = \begin{bmatrix}
+         T                   & \frac{1}{2}T(T + 1)         \\
+         \frac{1}{2}T(T + 1) & \frac{1}{6}T(T + 1)(2T + 1)
+       \end{bmatrix}            \\
+   & = \frac{1}{6}\begin{bmatrix}
+                    6T        & 3T(T + 1)       \\
+                    3T(T + 1) & T(T + 1)(T + 1)
+                  \end{bmatrix}
 \end{align*}
 
 ## (b)
+
 &nbsp;
 \begin{align*}
-(\mathbf{X}' \mathbf{X} )^{-1}
-&= \frac{6}{(6T)[T(T+1)(2T+1)] - 9T^2(T+1)^2}
-   \begin{bmatrix}
-     T(T+1)(2T+1) & -3T(T+1) \\
-     -3T(T+1) & 6T
-    \end{bmatrix} \\
-&= \frac{6}{6[T(T+1)(2T+1)] - 9T(T+1)^2}
-   \begin{bmatrix}
-     (T+1)(2T+1) & -3(T+1) \\
-     -3(T+1) & 6
-    \end{bmatrix} \\
-&= \frac{2}{2T(T+1)(2T+1) - 3T(T+1)^2}
-   \begin{bmatrix}
-     (T+1)(2T+1) & -3(T+1) \\
-     -3(T+1) & 6
-    \end{bmatrix} \\
-&= \frac{2}{T(T+1)[2(2T+1) - 3(T+1)]}
-   \begin{bmatrix}
-     (T+1)(2T+1) & -3(T+1) \\
-     -3(T+1) & 6
-    \end{bmatrix} \\
-&= \frac{2}{T(T+1)(T-1)}
-   \begin{bmatrix}
-     (T+1)(2T+1) & -3(T+1) \\
-     -3(T+1) & 6
-    \end{bmatrix} \\
-&= \frac{2}{T(T^2-1)}
-   \begin{bmatrix}
-     (T+1)(2T+1) & -3(T+1) \\
-     -3(T+1) & 6
-    \end{bmatrix} \\
+  (\mathbf{X}' \mathbf{X} )^{-1}
+   & = \frac{6}{(6T)[T(T + 1)(2T + 1)] - 9T^2(T + 1)^2}
+  \begin{bmatrix}
+    T(T + 1)(2T + 1) & -3T(T + 1) \\
+    -3T(T + 1)       & 6T
+  \end{bmatrix} \\
+   & = \frac{6}{6[T(T + 1)(2T + 1)] - 9T(T + 1)^2}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) & -3(T + 1) \\
+    -3(T + 1)       & 6
+  \end{bmatrix} \\
+   & = \frac{2}{2T(T + 1)(2T + 1) - 3T(T + 1)^2}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) & -3(T + 1) \\
+    -3(T + 1)       & 6
+  \end{bmatrix} \\
+   & = \frac{2}{T(T + 1)[2(2T + 1) - 3(T + 1)]}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) & -3(T + 1) \\
+    -3(T + 1)       & 6
+  \end{bmatrix} \\
+   & = \frac{2}{T(T + 1)(T - 1)}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) & -3(T + 1) \\
+    -3(T + 1)       & 6
+  \end{bmatrix} \\
+   & = \frac{2}{T(T^2 - 1)}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) & -3(T + 1) \\
+    -3(T + 1)       & 6
+  \end{bmatrix} \\
 \end{align*}
 
 ## (c)
+
 &nbsp;
 \begin{align*}
-\mathbf{X}' \mathbf{Y}
-=  \begin{bmatrix}
-      1 & 1 & 1 & \dots & 1\\
+  \mathbf{X}' \mathbf{Y}
+  = \begin{bmatrix}
+      1 & 1 & 1 & \dots & 1 \\
       1 & 2 & 3 & \dots & T
     \end{bmatrix}\mathbf{Y}
-= \begin{bmatrix}
-     \sum_{i=1}^T Y_i \\
-     \sum_{i=1}^T iY_i
+  = \begin{bmatrix}
+      \sum_{i=1}^T Y_i \\
+      \sum_{i=1}^T iY_i
     \end{bmatrix}
 \end{align*}
 
 Now the first element of
-$$(\mathbf{X}' \mathbf{X} )^{-1} \mathbf{X}' \mathbf{Y} $$
+$$
+  (\mathbf{X}' \mathbf{X} )^{-1} \mathbf{X}' \mathbf{Y}
+$$
 is
 \begin{align*}
-\hat{a}
-&= \frac{2}{T(T^2-1)}
-     \begin{bmatrix}
-       (T+1)(2T+1) & -3(T+1)
-     \end{bmatrix}
-     \begin{bmatrix}
-       \sum_{i=1}^T Y_i \\
-       \sum_{i=1}^T iY_i
-     \end{bmatrix} \\
-&= \frac{2}{T(T^2-1)}
-   \left[
-     (T+1)(2T+1)\sum_{i=1}^T Y_i -3(T+1) \sum_{i=1}^T iY_i
-   \right] \\
-&= \frac{2(T+1)}{T(T^2-1)}
-   \left[
-     (2T+1)\sum_{i=1}^T Y_i -3 \sum_{i=1}^T iY_i
-   \right] \\
-&= \frac{2}{T(T-1)}
-   \left[
-     (2T+1)\sum_{i=1}^T Y_i -3 \sum_{i=1}^T iY_i
-   \right] .
+  \hat{a}
+   & = \frac{2}{T(T^2 - 1)}
+  \begin{bmatrix}
+    (T + 1)(2T + 1) & -3(T + 1)
+  \end{bmatrix}
+  \begin{bmatrix}
+    \sum_{i=1}^T Y_i \\
+    \sum_{i=1}^T iY_i
+  \end{bmatrix} \\
+   & = \frac{2}{T(T^2 - 1)}
+  \left[ (T + 1)(2T + 1)\sum_{i=1}^T Y_i - 3(T + 1) \sum_{i=1}^T iY_i \right] \\
+   & = \frac{2(T + 1)}{T(T^2 - 1)}
+  \left[ (2T + 1)\sum_{i=1}^T Y_i - 3 \sum_{i=1}^T iY_i \right] \\
+   & = \frac{2}{T(T - 1)}
+  \left[ (2T + 1)\sum_{i=1}^T Y_i - 3 \sum_{i=1}^T iY_i \right] .
 \end{align*}
 
 The second element of
-$$(\mathbf{X}' \mathbf{X} )^{-1} \mathbf{X}' \mathbf{Y} $$
+$$
+  (\mathbf{X}' \mathbf{X} )^{-1} \mathbf{X}' \mathbf{Y}
+$$
 is
 \begin{align*}
-\hat{b}
-&= \frac{2}{T(T^2-1)}
-     \begin{bmatrix}
-       -3(T+1) & 6
-     \end{bmatrix}
-     \begin{bmatrix}
-       \sum_{i=1}^T Y_i \\
-       \sum_{i=1}^T iY_i
-     \end{bmatrix} \\
-&= \frac{2}{T(T^2-1)}
-   \left[
-       -3(T+1) \sum_{i=1}^T Y_i + 6 \sum_{i=1}^T iY_i
-   \right] \\
-&= \frac{6}{T(T^2-1)}
-   \left[
-       2 \sum_{i=1}^T iY_i -(T+1) \sum_{i=1}^T Y_i
-   \right]
+  \hat{b}
+   & = \frac{2}{T(T^2 - 1)}
+  \begin{bmatrix}
+    -3(T + 1) & 6
+  \end{bmatrix}
+  \begin{bmatrix}
+    \sum_{i=1}^T Y_i \\
+    \sum_{i=1}^T iY_i
+  \end{bmatrix} \\
+   & = \frac{2}{T(T^2 - 1)}
+  \left[ -3(T + 1) \sum_{i=1}^T Y_i + 6 \sum_{i=1}^T iY_i \right] \\
+   & = \frac{6}{T(T^2 - 1)}
+  \left[ 2 \sum_{i=1}^T iY_i - (T + 1) \sum_{i=1}^T Y_i \right]
 \end{align*}
 
 ## (d)
 
-Now $\mathbf{X}^* = [1 ~~~ T+h]$. So $\text{Var}(Y^* | \mathbf{Y},\mathbf{X},\mathbf{X}^*)$
+Now $\mathbf{X}^* = [1 ~~~ T + h]$.
+So $\text{Var}(Y^*| \mathbf{Y},\mathbf{X},\mathbf{X}^*)$
 \begin{align*}
-&= \sigma^2\left\{
-    1 + \mathbf{X}^*(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}^*)'
-\right\}\\
-&= \sigma^2\left\{
-    1 + \frac{2}{T(T^2-1)}
-    \begin{bmatrix} 1 & T+h \end{bmatrix}
-    \begin{bmatrix}
-     (T+1)(2T+1) & -3(T+1) \\
-     -3(T+1) & 6
-    \end{bmatrix}
-    \begin{bmatrix} 1 \\ T+h \end{bmatrix}
-\right\}\\
-&= \sigma^2\left\{
-    1 + \frac{2}{T(T^2-1)}
-    \begin{bmatrix}
-     (T+1)(2T+1) -3(T+1)(T+h) &
-     -3(T+1) + 6(T+h)
-    \end{bmatrix}
-    \begin{bmatrix} 1 \\ T+h \end{bmatrix}
-\right\}\\
-&= \sigma^2\left\{
-    1 + \frac{2}{T(T^2-1)}
-    \left[
-     (T+1)(2T+1) -3(T+1)(T+h) +
-     -3(T+1)(T+h) + 6(T+h)^2
-     \right]
-    \right\}\\
-&= \sigma^2\left\{
-    1 + \frac{2}{T(T-1)}
-    \left[
-     1 -4T-6h + 6\frac{(T+h)^2}{(T+1)}
-     \right]
-    \right\}.
+   & = \sigma^2\left\{ 1 + \mathbf{X}^*(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}^*)' \right\}                                                                                                                        \\
+   & = \sigma^2\left\{ 1 + \frac{2}{T(T^2 - 1)} \begin{bmatrix} 1 & T + h \end{bmatrix} \begin{bmatrix} (T + 1)(2T + 1) &-3(T + 1) \\-3(T + 1) & 6 \end{bmatrix} \begin{bmatrix} 1 \\ T + h \end{bmatrix} \right\} \\
+   & = \sigma^2\left\{ 1 + \frac{2}{T(T^2 - 1)} \begin{bmatrix} (T + 1)(2T + 1) - 3(T + 1)(T + h) &-3(T + 1) + 6(T + h) \end{bmatrix} \begin{bmatrix} 1 \\ T + h \end{bmatrix} \right\}                            \\
+   & = \sigma^2\left\{ 1 + \frac{2}{T(T^2 - 1)} \left[ (T + 1)(2T + 1) - 3(T + 1)(T + h) + -3(T + 1)(T + h) + 6(T + h)^2 \right] \right\}                                                                          \\
+   & = \sigma^2\left\{ 1 + \frac{2}{T(T - 1)} \left[ 1 - 4T - 6h + 6\frac{(T + h)^2}{(T + 1)} \right] \right\}.
 \end{align*}
