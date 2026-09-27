@@ -33,7 +33,7 @@ library(purrr)
 * When $\phi_1=0$, $y_t$ is **equivalent to WN** (with mean $c$)
 * When $\phi_1=1$ and $c=0$, $y_t$ is **equivalent to a RW**
 * When $\phi_1=1$ and $c\ne0$, $y_t$ is **equivalent to a RW with drift**
-* When $\phi_1<0$, $y_t$ tends to **oscillate between positive and negative values**.
+* When $\phi_1<0$ and $c=0$, $y_t$ tends to **oscillate between positive and negative values**.
 
 ## Autoregressive models
 

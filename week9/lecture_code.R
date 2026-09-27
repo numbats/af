@@ -15,7 +15,7 @@ arima_model(p = 0, d = 0, q = 1, theta = -0.9, constant = 0, sigma = 1) |>
   generate(n = 1) |>
   gg_tsdisplay(value, plot_type = "partial")
 
-arima_model(d = 0, q=5, p=0, sigma = 1) |>
+arima_model(d = 0, q = 5, p = 0, sigma = 1) |>
   generate(n = 1) |>
   gg_tsdisplay(value, plot_type = "partial")
 
@@ -29,7 +29,7 @@ global_economy |>
 
 fit <- global_economy |>
   filter(Code == "EGY") |>
-  model(ARIMA(Exports ~ pdq(p=4, d=0, q=0)))
+  model(ARIMA(Exports ~ pdq(p = 4, d = 0, q = 0)))
 
 report(fit)
 gg_tsresiduals(fit)
@@ -42,7 +42,7 @@ fit |>
 
 fit <- global_economy |>
   filter(Code == "EGY") |>
-  model(ARIMA(Exports, stepwise = FALSE, approximation = FALSE))
+  model(ARIMA(Exports))
 
 report(fit)
 gg_tsresiduals(fit)
@@ -68,8 +68,8 @@ global_economy |>
 fit <- global_economy |>
   filter(Code == "NOR") |>
   model(
-    ma2 = ARIMA(Imports ~ pdq(p=0, d=1, q=2)),
-    ar4 = ARIMA(Imports ~ pdq(p=4, d=1, q=0))
+    ma2 = ARIMA(Imports ~ pdq(p = 0, d = 1, q = 2)),
+    ar4 = ARIMA(Imports ~ pdq(p = 4, d = 1, q = 0))
   )
 glance(fit)
 
@@ -83,13 +83,15 @@ fit |>
 
 fit |>
   forecast(h = 50) |>
-  autoplot(global_economy) +
+  autoplot(global_economy, level = NULL) +
   labs(y = "% of GDP", title = "Norwegian Imports")
 
 
 fit <- global_economy |>
   filter(Code == "NOR") |>
   model(
+    ma2 = ARIMA(Imports ~ pdq(p = 0, d = 1, q = 2)),
+    ar4 = ARIMA(Imports ~ pdq(p = 4, d = 1, q = 0)),
     auto = ARIMA(Imports),
     tryhard = ARIMA(
       Imports,
