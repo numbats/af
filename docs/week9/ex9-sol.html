@@ -363,18 +363,18 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ar1</span>(<span class="fl">0.6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 100 x 2 [1]
-     idx      y
-   &lt;int&gt;  &lt;dbl&gt;
- 1     1  0    
- 2     2 -0.395
- 3     3 -0.804
- 4     4  0.739
- 5     5 -0.926
- 6     6  0.308
- 7     7 -0.703
- 8     8  0.209
- 9     9 -0.247
-10    10 -1.25 
+     idx       y
+   &lt;int&gt;   &lt;dbl&gt;
+ 1     1  0     
+ 2     2  0.0770
+ 3     3  0.411 
+ 4     4 -1.46  
+ 5     5 -1.57  
+ 6     6 -1.66  
+ 7     7 -0.957 
+ 8     8 -0.921 
+ 9     9 -0.870 
+10    10 -1.55  
 # ℹ 90 more rows</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ar1</span>(<span class="fl">0.6</span>) <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(y) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(phi, <span class="st">"=0.6"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
