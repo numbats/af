@@ -3,10 +3,7 @@ library(fpp3)
 ## US leisure employment
 
 leisure <- us_employment |>
-  filter(
-    Title == "Leisure and Hospitality",
-    year(Month) > 2000
-  ) |>
+  filter(Title == "Leisure and Hospitality", year(Month) > 2000) |>
   mutate(Employed = Employed / 1000) |>
   select(Month, Employed)
 leisure |>
@@ -51,9 +48,6 @@ leisure_fit |>
   select(best) |>
   gg_tsresiduals(lag = 36)
 
-leisure_fit |>
-  select(best) |>
-  report()
 augment(leisure_fit) |>
   filter(.model == "best") |>
   features(.innov, ljung_box, lag = 24, dof = 4)
@@ -65,7 +59,6 @@ forecast(leisure_fit, h = 36) |>
     title = "US employment: leisure and hospitality",
     y = "Number of people (millions)"
   )
-
 
 # QUARTERLY CEMENT ETS vs ARIMA
 
