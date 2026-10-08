@@ -1,9 +1,11 @@
 {
-  "hash": "8272bf41f8b938ab97aebb2c2073fc01",
+  "hash": "6f8e2571aa3b2acfe2fbac68feb5dd80",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Week 9: ARIMA models (part 2)\"\n---\n\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n- AR, MA, ARMA and ARIMA models\n- Selecting model orders manually and automatically\n\n## Pre-class activities\n\nRead [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n## Monday lecture\n\n<iframe src='https://docs.google.com/gview?url=https://af.numbat.space/week9/slides.pdf&embedded=true' width='100%' height=465></iframe>\n\n<a href=https://af.numbat.space/week9/slides.pdf class='badge badge-small badge-red'>Download slides</a>\n\n- [Code used in lecture](lecture_code.R)\n\n## Tuesday workshop\n\n\n* [Week 9 quiz](https://learning.monash.edu/mod/quiz/view.php?id=6049191)\n\n<!-- * [Code used in workshop](workshop_code.R) -->\n\n## Exercises (on your own or in tutorial)\n\n- Complete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n  <!-- * [Solutions to Exercises](ex9-sol.qmd) -->\n\n\n## Assignments\n\n* [Assignment 3](../assignments/A3.qmd) is due on Monday 12 October.\n",
-    "supporting": [],
+    "markdown": "---\ntitle: \"Week 9: ARIMA models (part 2)\"\n---\n\n\n::: {.cell}\n\n:::\n\n\n## What you will learn this week\n\n- AR, MA, ARMA and ARIMA models\n- Selecting model orders manually and automatically\n\n## Pre-class activities\n\nRead [Sections 9.3-9.8 of the textbook](https://otexts.com/fpp3/arima.html) and watch all embedded videos\n\n## Monday lecture\n\n<iframe src='https://docs.google.com/gview?url=https://af.numbat.space/week9/slides.pdf&embedded=true' width='100%' height=465></iframe>\n\n<a href=https://af.numbat.space/week9/slides.pdf class='badge badge-small badge-red'>Download slides</a>\n\n- [Code used in lecture](lecture_code.R)\n\n## Tuesday workshop\n\n\n* [Week 9 quiz](https://learning.monash.edu/mod/quiz/view.php?id=6049191)\n\n<!-- * [Code used in workshop](workshop_code.R) -->\n\n## Exercises (on your own or in tutorial)\n\n- Complete Exercises 6-10 from [Section 9.11 of the book](https://otexts.com/fpp3/arima-exercises.html).\n- [Solutions to Exercises](ex9-sol.qmd)\n\n\n## Assignments\n\n* [Assignment 3](../assignments/A3.qmd) is due on Monday 12 October.\n",
+    "supporting": [
+      "index_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
