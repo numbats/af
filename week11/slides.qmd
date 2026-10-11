@@ -13,7 +13,10 @@ format:
     keep_tex: yes
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
+
 source(here::here("setup.R"))
 ```
 
@@ -21,48 +24,46 @@ source(here::here("setup.R"))
 
 \vspace*{0.2cm}\begin{block}{}\vspace*{-0.3cm}
 $$
-  y_t = \beta_0 + \beta_1 x_{1,t} + \beta_2 x_{2,t} + \cdots + \beta_kx_{k,t} + \varepsilon_t.
+  y_t = \beta_0 + \beta_1 x_{1,t} + \beta_2 x_{2,t}
+        + \cdots + \beta_kx_{k,t} + \varepsilon_t.
 $$
 \end{block}
 
-* $y_t$ is the variable we want to predict: the "response" variable
-* Each $x_{j,t}$ is numerical and is called a "predictor".
- They are usually assumed to be known for all past and future times.
-* The coefficients $\beta_1,\dots,\beta_k$ measure the effect of each
-predictor *after taking account of the effect of all other predictors
-in the model*.
-* $\varepsilon_t$ is a white noise error term
-
+- $y_t$ is the variable we want to predict: the "response" variable
+- Each $x_{j,t}$ is numerical and is called a "predictor".
+  They are usually assumed to be known for all past and future times.
+- The coefficients $\beta_1,\dots,\beta_k$ measure the effect of each predictor *after taking account of the effect of all other predictors in the model*.
+- $\varepsilon_t$ is a white noise error term
 
 ## Uses of dummy variables
 \fontsize{13}{14}\sf
 
 **Seasonal dummies**
 
-* For quarterly data: use 3 dummies
-* For monthly data: use 11 dummies
-* For daily data: use 6 dummies
-* What to do with weekly data?
+- For quarterly data: use 3 dummies
+- For monthly data: use 11 dummies
+- For daily data: use 6 dummies
+- What to do with weekly data?
 
 \pause
 
 **Outliers**
 
-* A dummy variable can remove its effect.
+- A dummy variable can remove its effect.
 
 \pause
 
 **Public holidays**
 
-* For daily data: if it is a public holiday, dummy=1, otherwise dummy=0.
+- For daily data: if it is a public holiday, dummy=1, otherwise dummy=0.
 
 ## Holidays
 
 **For monthly data**
 
-* Christmas: always in December so part of monthly seasonal effect
-* Easter: use a dummy variable $v_t=1$ if any part of Easter is in that month, $v_t=0$ otherwise.
-* Ramadan and Chinese New Year similar.
+- Christmas: always in December so part of monthly seasonal effect
+- Easter: use a dummy variable $v_t = 1$ if any part of Easter is in that month, $v_t = 0$ otherwise.
+- Ramadan and Chinese New Year similar.
 
 ## Distributed lags
 
@@ -70,33 +71,33 @@ Lagged values of a predictor.
 
 Example: $x$ is advertising which has a delayed effect
 
-\vspace*{-0.8cm}\begin{align*}
-  x_{1} &= \text{advertising for previous month;} \\
-  x_{2} &= \text{advertising for two months previously;} \\
-        & \vdots \\
-  x_{m} &= \text{advertising for $m$ months previously.}
+```{=latex}
+\vspace*{-0.8cm}
+\begin{align*}
+x_{1} &= \text{advertising for previous month;} \\ 
+x_{2} &= \text{advertising for two months previously;} \\ 
+      & \vdots \\ 
+x_{m} &= \text{advertising for $m$ months previously.}
 \end{align*}
+```
 
 ## Fourier series
 
-Periodic seasonality can be handled using pairs of Fourier \rlap{terms:}\vspace*{-0.3cm}
-$$
-s_{k}(t) = \sin\left(\frac{2\pi k t}{m}\right)\qquad c_{k}(t) = \cos\left(\frac{2\pi k t}{m}\right)
-$$
-$$
-y_t = a + bt + \sum_{k=1}^K \left[\alpha_k s_k(t) + \beta_k c_k(t)\right] + \varepsilon_t$$\vspace*{-0.8cm}
+Periodic seasonality can be handled using pairs of Fourier \rlap{terms:}\vspace*{-0.3cm} $$
+s_{\ell}(t) = \sin\left(\frac{2\pi \ell t}{m}\right)\qquad c_{\ell}(t) = \cos\left(\frac{2\pi \ell t}{m}\right)
+$$ $$
+y_t = a + bt + \sum_{\ell=1}^K \left[\alpha_\ell s_\ell(t) + \beta_\ell c_\ell(t)\right] + \varepsilon_t$$\vspace*{-0.8cm}
 
-* Every periodic function can be approximated by sums of sin and cos terms for large enough $K$.
-* Choose $K$ by minimizing AICc or CV.
-* Called "harmonic regression"
-
+- Every periodic function can be approximated by sums of sin and cos terms for large enough $K$.
+- Choose $K$ by minimizing AICc or CV.
+- Called "harmonic regression"
 
 ## Comparing regression models
 \fontsize{13}{14}\sf
 
-* $R^2$  does not allow for "degrees of freedom".
-* Adding *any* variable tends to increase the value of $R^2$, even if that variable is irrelevant.
-\pause
+- $R^2$ does not allow for "degrees of freedom".
+- Adding *any* variable tends to increase the value of $R^2$, even if that variable is irrelevant.
+  \pause
 
 To overcome this problem, we can use *adjusted $R^2$*:
 \begin{block}{}
@@ -120,25 +121,29 @@ where $k=$ no.\ predictors and $T=$ no.\ observations.
 \centerline{$\text{AIC} = -2\log(L) + 2(k+2)$}
 \end{block}\vspace*{-0.5cm}
 
-* $L=$ likelihood
-* $k=$ \# predictors in model.
-* AIC penalizes terms more heavily than $\bar{R}^2$.
+- $L =$ likelihood
+- $k =$ \# predictors in model.
+- AIC penalizes terms more heavily than $\bar{R}^2$.
 
 \pause\begin{block}{}
 \centerline{$\text{AIC}_{\text{C}} = \text{AIC} + \frac{2(k+2)(k+3)}{T-k-3}$}
 \end{block}
 
-* Minimizing the AIC or AICc is asymptotically equivalent to minimizing MSE via **leave-one-out cross-validation** (for any linear regression).
+- Minimizing the AIC or AICc is asymptotically equivalent to minimizing MSE via **leave-one-out cross-validation** (for any linear regression).
 
 ## Leave-one-out cross-validation
 
 For regression, leave-one-out cross-validation is faster and more efficient than time-series cross-validation.
 
-* Select one observation for test set, and use *remaining* observations in training set. Compute error on test observation.
-* Repeat using each possible observation as the test set.
-* Compute accuracy measure over all errors.
+- Select one observation for test set, and use *remaining* observations in training set.
+  Compute error on test observation.
+- Repeat using each possible observation as the test set.
+- Compute accuracy measure over all errors.
 
-```{r tscvplots, echo=FALSE}
+```{r}
+#| label: tscvplots
+#| echo: false
+
 tscv_plot <- function(.init, .step, h = 1) {
   expand.grid(
     time = seq(26),
@@ -158,11 +163,14 @@ tscv_plot <- function(.init, .step, h = 1) {
     geom_segment(
       aes(x = 0, xend = 27, y = .id, yend = .id),
       arrow = arrow(length = unit(0.015, "npc")),
-      col = "black", size = .25
+      col = "black",
+      size = .25
     ) +
     geom_point(aes(col = observation), size = 2) +
     scale_y_reverse() +
-    scale_color_manual(values = c(train = "#0072B2", test = "#D55E00", unused = "gray")) +
+    scale_color_manual(
+      values = c(train = "#0072B2", test = "#D55E00", unused = "gray")
+    ) +
     # theme_void() +
     # geom_label(aes(x = 28.5, y = 1, label = "time")) +
     guides(col = FALSE) +
@@ -180,11 +188,14 @@ loocv_plot <- function() {
     geom_segment(
       aes(x = 0, xend = 27, y = .id, yend = .id),
       arrow = arrow(length = unit(0.015, "npc")),
-      col = "black", size = .25
+      col = "black",
+      size = .25
     ) +
     geom_point(aes(col = observation), size = 2) +
     scale_y_reverse() +
-    scale_color_manual(values = c(train = "#0072B2", test = "#D55E00", unused = "gray")) +
+    scale_color_manual(
+      values = c(train = "#0072B2", test = "#D55E00", unused = "gray")
+    ) +
     guides(col = FALSE) +
     labs(x = "time", y = "") +
     theme_void() +
@@ -196,7 +207,11 @@ loocv_plot <- function() {
 
 **Traditional evaluation**
 
-```{r traintest1, fig.height=1, echo=FALSE}
+```{r}
+#| label: traintest1
+#| fig-height: 1
+#| echo: false
+
 tscv_plot(.init = 18, .step = 20, h = 1:8) +
   geom_text(aes(x = 10, y = 0.8, label = "Training data"), color = "#0072B2") +
   geom_text(aes(x = 21, y = 0.8, label = "Test data"), color = "#D55E00") +
@@ -207,7 +222,10 @@ tscv_plot(.init = 18, .step = 20, h = 1:8) +
 
 **Time series cross-validation**
 
-```{r tscvggplot1, echo=FALSE}
+```{r}
+#| label: tscvggplot1
+#| echo: false
+
 tscv_plot(.init = 3, .step = 1, h = 1) +
   geom_text(aes(x = 21, y = 0, label = "h = 1"), color = "#D55E00")
 ```
@@ -216,7 +234,11 @@ tscv_plot(.init = 3, .step = 1, h = 1) +
 
 **Traditional evaluation**
 
-```{r traintest1a, fig.height=1, echo=FALSE}
+```{r}
+#| label: traintest1a
+#| fig-height: 1
+#| echo: false
+
 tscv_plot(.init = 18, .step = 20, h = 1:8) +
   geom_text(aes(x = 10, y = 0.8, label = "Training data"), color = "#0072B2") +
   geom_text(aes(x = 21, y = 0.8, label = "Test data"), color = "#D55E00") +
@@ -225,7 +247,9 @@ tscv_plot(.init = 18, .step = 20, h = 1:8) +
 
 **Leave-one-out cross-validation**
 
-```{r, echo=FALSE}
+```{r}
+#| echo: false
+
 loocv_plot() +
   geom_text(aes(x = 21, y = 0, label = "h = 1"), color = "#ffffff")
 ```
@@ -238,22 +262,24 @@ CV = MSE on \textcolor[HTML]{D55E00}{test sets}\end{block}\end{textblock}}
 
 **Best subsets regression**
 
-* Fit all possible regression models using one or more of the predictors.
-* Choose the best model based on one of the measures of predictive ability (CV, AIC, AICc).
-\pause
+- Fit all possible regression models using one or more of the predictors.
+- Choose the best model based on one of the measures of predictive ability (CV, AIC, AICc).
+  \pause
 
 **Backwards stepwise regression**
 
-* Start with a model containing all variables.
-* Subtract one variable at a time. Keep model if lower CV.
-* Iterate until no further improvement.
-* Not guaranteed to lead to best model.
+- Start with a model containing all variables.
+- Subtract one variable at a time.
+  Keep model if lower CV.
+- Iterate until no further improvement.
+- Not guaranteed to lead to best model.
 
 ## Ex-ante versus ex-post forecasts
 
- * *Ex ante forecasts* are made using only information available in advance.
-    - require forecasts of predictors
- * *Ex post forecasts* are made using later information on the predictors.
-    - useful for studying behaviour of forecasting models.
+- *Ex ante forecasts* are made using only information available in advance.
+  - require forecasts of predictors
 
- * trend, seasonal and calendar variables are all known in advance, so these don't need to be forecast.
+- *Ex post forecasts* are made using later information on the predictors.
+  - useful for studying behaviour of forecasting models.
+
+- trend, seasonal and calendar variables are all known in advance, so these don't need to be forecast.

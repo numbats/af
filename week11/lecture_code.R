@@ -29,7 +29,7 @@ fit <- us_gasoline |>
   )
 glance(fit) |>
   select(.model, r_squared, adj_r_squared, df, AICc, CV) |>
-  arrange(CV)
+  arrange(AICc)
 
 augment(fit) |>
   filter(.model %in% c("K06", "K01", "K26")) |>
@@ -46,6 +46,8 @@ fit |>
 fit |>
   select(K06) |>
   gg_tsresiduals()
+
+fit |> select(K06) |> report()
 
 # US consumption quarterly changes
 
@@ -123,7 +125,6 @@ fit_consBest |> forecast(
   new_data(us_change, 4) |>
     mutate(Income = c(0, 1, 3, 0), Savings = 0, Unemployment = 0, Production = 0)
 )
-
 
 future_scenarios <- scenarios(
   Increase = new_data(us_change, 4) |>
