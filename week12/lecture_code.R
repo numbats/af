@@ -11,15 +11,23 @@ autoplot(leisure, Employed) +
   labs(y = "Employed (millions)")
 fit <- leisure |>
   model(
-    lm = TSLM(Employed ~
-           trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
-           fourier(K = 6)),
-    dhr = ARIMA(Employed  ~
-           trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
-           fourier(K = 6)),
-    dhr2 = ARIMA(Employed  ~
-                   trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
-                   fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0)),
+    lm = TSLM(
+      Employed ~
+        trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
+        fourier(K = 6)
+    ),
+    dhr = ARIMA(
+      Employed ~
+        trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
+        fourier(K = 6)
+    ),
+    dhr2 = ARIMA(
+      Employed ~
+        trend(knot = yearmonth(c("2008 Jan", "2010 Jan"))) +
+        fourier(K = 6) +
+        pdq(0, 0, 0) +
+        PDQ(0, 0, 0)
+    )
   )
 glance(fit)
 fit |> select(dhr) |> report()
@@ -29,13 +37,13 @@ fit |>
   gg_tsresiduals()
 
 fc <- fit |>
-  forecast(h=24)
+  forecast(h = 24)
 autoplot(fc, leisure |> tail(12))
 
 
 ## 5-minute CALL CENTRE DATA ------------------------------------------------
 
-calls <- readr::read_tsv("callcenter.txt") |>
+calls <- readr::read_tsv("week12/callcenter.txt") |>
   rename(time = `...1`) |>
   pivot_longer(-time, names_to = "date", values_to = "volume") |>
   mutate(
@@ -86,9 +94,16 @@ gasfit <- us_gasoline |>
     fourier12 = ARIMA(Barrels ~ fourier(K = 12) + PDQ(0, 0, 0)),
     fourier13 = ARIMA(Barrels ~ fourier(K = 13) + PDQ(0, 0, 0)),
     fourier14 = ARIMA(Barrels ~ fourier(K = 14) + PDQ(0, 0, 0)),
-    best_lm = TSLM(Barrels ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) + fourier(K = 6)),
-    best_lm2 = ARIMA(Barrels ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) +
-                       fourier(K = 6) + pdq(0,0,0) + PDQ(0,0,0))
+    best_lm = TSLM(
+      Barrels ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) +
+        fourier(K = 6)
+    ),
+    best_lm2 = ARIMA(
+      Barrels ~ trend(knots = yearweek(c("2006 W1", "2011 W1"))) +
+        fourier(K = 6) +
+        pdq(0, 0, 0) +
+        PDQ(0, 0, 0)
+    )
   )
 
 glance(gasfit) |> arrange(AICc) |> select(.model, AICc)
@@ -114,11 +129,13 @@ vic_elec_daily <- vic_elec |>
     Temperature = max(Temperature),
     Holiday = any(Holiday)
   ) |>
-  mutate(Day_Type = case_when(
-    Holiday ~ "Holiday",
-    wday(Date) %in% 2:6 ~ "Weekday",
-    TRUE ~ "Weekend"
-  ))
+  mutate(
+    Day_Type = case_when(
+      Holiday ~ "Holiday",
+      wday(Date) %in% 2:6 ~ "Weekday",
+      TRUE ~ "Weekend"
+    )
+  )
 
 vic_elec_daily |>
   ggplot(aes(x = Temperature, y = Demand, colour = Day_Type)) +
@@ -126,10 +143,7 @@ vic_elec_daily |>
   labs(x = "Maximum temperature", y = "Electricity demand (GW)")
 
 vic_elec_daily |>
-  pivot_longer(c(Demand, Temperature),
-    names_to = "var",
-    values_to = "value"
-  ) |>
+  pivot_longer(c(Demand, Temperature), names_to = "var", values_to = "value") |>
   ggplot(aes(x = Date, y = value)) +
   geom_line() +
   facet_grid(vars(var), scales = "free_y")
@@ -138,11 +152,15 @@ elec_fit <- vic_elec_daily |>
   model(
     ets = ETS(Demand),
     arima = ARIMA(log(Demand)),
-    dhr = ARIMA(log(Demand) ~ Temperature + I(Temperature^2) +
-        (Day_Type == "Weekday") + fourier(period = "year", K = 4))
+    dhr = ARIMA(
+      log(Demand) ~ Temperature +
+        I(Temperature^2) +
+        (Day_Type == "Weekday") +
+        fourier(period = "year", K = 4)
+    )
   )
 elec_fit |>
-  pivot_longer(ets:dhr, names_to="model", values_to="model_fit")
+  pivot_longer(ets:dhr, names_to = "model", values_to = "model_fit")
 
 accuracy(elec_fit)
 
@@ -214,12 +232,19 @@ elec_fit |>
 vic_elec_future <- new_data(vic_elec_daily, 365) |>
   mutate(
     Temperature = tail(vic_elec_daily$Temperature, 365),
-    Holiday = Date %in% as.Date(c(
-      "2015-01-01", "2015-01-26", "2015-03-09",
-      "2015-04-03", "2015-04-06", "2015-04-25",
-      "2015-06-08", "2015-10-02", "2015-11-03",
-      "2015-12-25"
-    )),
+    Holiday = Date %in%
+      as.Date(c(
+        "2015-01-01",
+        "2015-01-26",
+        "2015-03-09",
+        "2015-04-03",
+        "2015-04-06",
+        "2015-04-25",
+        "2015-06-08",
+        "2015-10-02",
+        "2015-11-03",
+        "2015-12-25"
+      )),
     Day_Type = case_when(
       Holiday ~ "Holiday",
       wday(Date) %in% 2:6 ~ "Weekday",
