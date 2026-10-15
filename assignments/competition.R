@@ -12,7 +12,7 @@ q1 <- 82247.29 / 1e6 # https://portwatch.imf.org/pages/cb5856222a5b4105adc6ee7e8
 q2 <- 51 #https://stats.espncricinfo.com/ci/engine/stats/index.html?class=1;opposition=2;opposition=25;orderby=start;team=2;team=25;template=results;type=team;view=match
 q3 <- 22.8 #https://www.bom.gov.au/climate/dwo/IDCJDW3049.latest.shtml
 q4 <- 343.83 #https://finance.yahoo.com/quote/GOOG/history/
-#q5 <- #https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release
+q5 <- 14.782700 #https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release
 
 # Create leaderboard
 leaders <- tibble(
