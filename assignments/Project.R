@@ -9,20 +9,31 @@ download.file(
 )
 
 # Read data and meta data from xlsx file
-series <- read_excel(here::here("assignments/8501011.xlsx"), sheet = 2, skip = 9) |>
+series <- read_excel(
+  here::here("assignments/8501011.xlsx"),
+  sheet = 2,
+  skip = 9
+) |>
   rename(Month = `Series ID`) |>
-  gather(`Series ID`, Turnover, -Month) |>
+  pivot_longer(-Month, names_to = "Series ID", values_to = "Turnover") |>
   mutate(Month = yearmonth(Month))
-dict <- read_excel(here::here("assignments/8501011.xlsx"), sheet = 1, skip = 9) |>
+dict <- read_excel(
+  here::here("assignments/8501011.xlsx"),
+  sheet = 1,
+  skip = 9
+) |>
   filter(`Series Type` == "Original") |>
-  separate(`Data Item Description`, c("Category", "State", "Industry"), sep = ";", extra = "drop") |>
-  transmute(
-    State = trimws(State),
-    Industry = trimws(Industry),
-    `Series ID`
+  separate_wider_delim(
+    `Data Item Description`,
+    delim = ";",
+    names = c("Category", "State", "Industry"),
+    too_many = "drop",
+    too_few = "align_start"
   ) |>
+  select(State, Industry, `Series ID`) |>
+  mutate(across(c(State, Industry), str_trim)) |>
   filter(
-    Industry  != "Total (Industry)",
+    Industry != "Total (Industry)",
     State != "Total (State)"
   )
 
@@ -33,7 +44,7 @@ aus_retail <- left_join(dict, series, by = "Series ID") |>
 
 # Make sure series go right to end
 short_series <- aus_retail |>
-  summarise(Month = max(Month), .by="Series ID") |>
+  summarise(Month = max(Month), .by = "Series ID") |>
   filter(Month < max(Month)) |>
   pull(`Series ID`)
 
