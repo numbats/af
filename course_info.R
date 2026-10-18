@@ -84,7 +84,8 @@ lastmon <- function(x) {
 
 assignments <- read_csv(here::here("assignments.csv")) |>
   mutate(
-    Date = lastmon(Due),
+    # Assignments due after the last teaching week are attached to that week
+    Date = pmin(lastmon(Due), max(schedule$Date)),
     Moodle = paste0(
       "https://learning.monash.edu/mod/",
       c("quiz", rep("assign", 4)),
