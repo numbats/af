@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -350,6 +350,7 @@ window.Quarto = {
 <li>Use the <code>ETS()</code> function to estimate the equivalent model for simple exponential smoothing. Find the optimal values of <span class="math inline">\alpha</span> and <span class="math inline">\ell_0</span>, and generate forecasts for the next four months.</li>
 </ol>
 </blockquote>
+<p>Simple exponential smoothing is equivalent to an ETS(A,N,N) model.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_livestock <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Animal <span class="sc">==</span> <span class="st">"Pigs"</span>, State <span class="sc">==</span> <span class="st">"Victoria"</span>) <span class="sc">|&gt;</span></span>
@@ -371,7 +372,7 @@ Model: ETS(A,N,N)
 13737.10 13737.14 13750.07 </code></pre>
 </div>
 </div>
-<p>Optimal values are <span class="math inline">\alpha = 0.3221247</span> and <span class="math inline">\ell_0 = 100646.6</span></p>
+<p>Optimal values are <span class="math inline">\alpha = 0.3221247</span> and <span class="math inline">\ell_0 = 100646.6</span>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"4 months"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>fc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -401,6 +402,7 @@ Model: ETS(A,N,N)
 <li>Compute a 95% prediction interval for the first forecast using <span class="math inline">\hat{y} \pm 1.96s</span> where <span class="math inline">s</span> is the standard deviation of the residuals. Compare your interval with the interval produced by R.</li>
 </ol>
 </blockquote>
+<p>For part b, we need the residuals and the first point forecast.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(.resid) <span class="sc">|&gt;</span></span>
@@ -423,8 +425,7 @@ Model: ETS(A,N,N)
 [1] [76854.79, 113518.3]95</code></pre>
 </div>
 </div>
-<p>The intervals are close but not identical. This is because R estimates the variance of the residuals differently, taking account of the degrees of freedom properly (and also using a more accurate critical value rather than just 1.96).</p>
-<p>Try the following.</p>
+<p>The intervals are close but not identical. This is because fable estimates the variance of the residuals differently, taking account of the degrees of freedom (and also using a more accurate critical value rather than just 1.96). fable divides the sum of squared residuals by <span class="math inline">T-2</span> (that is, <span class="math inline">T</span> minus the two estimated parameters <span class="math inline">\alpha</span> and <span class="math inline">\ell_0</span>).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">augment</span>(fit) <span class="sc">|&gt;</span> <span class="fu">pull</span>(.resid)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(res<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (<span class="fu">length</span>(res) <span class="sc">-</span> <span class="fu">NROW</span>(<span class="fu">tidy</span>(fit))))</span>
@@ -433,6 +434,7 @@ Model: ETS(A,N,N)
 <pre><code>[1]  76854.79 113518.33</code></pre>
 </div>
 </div>
+<p>This reproduces the interval from fable.</p>
 </section>
 <section id="fpp3-8.8-ex2" class="level1">
 <h1>fpp3 8.8, Ex2</h1>
@@ -462,7 +464,7 @@ Model: ETS(A,N,N)
 95186.59 95186.56 </code></pre>
 </div>
 </div>
-<p>Yes, the same forecasts are obtained. The slight differences are due to rounding of <span class="math inline">\alpha</span> and <span class="math inline">\ell_0</span>.</p>
+<p>Yes, the same forecast is obtained. The slight differences are due to rounding of <span class="math inline">\alpha</span> and <span class="math inline">\ell_0</span>.</p>
 </section>
 <section id="fpp3-8.8-ex3" class="level1">
 <h1>fpp3 8.8, Ex3</h1>
@@ -495,7 +497,7 @@ Model: ETS(A,N,N)
 2 Pigs   Victoria ses    l[0]  100647.   </code></pre>
 </div>
 </div>
-<p>Similar, but not identical estimates. This is due to different starting values being used.</p>
+<p>The estimates are similar, but not identical. This is due to the different starting values: the SSE surface is very flat near the optimum, so the two optimisations stop at slightly different points.</p>
 </section>
 <section id="fpp3-8.8-ex4" class="level1">
 <h1>fpp3 8.8, Ex4</h1>
@@ -519,6 +521,7 @@ Model: ETS(A,N,N)
 <pre><code>[1] 95186.69</code></pre>
 </div>
 </div>
+<p>This is very close to the forecast of <code>ETS()</code> in Exercise 1 (95186.6), the small difference being due to the slightly different parameter estimates.</p>
 </section>
 <section id="fpp3-8.8-ex5" class="level1">
 <h1>fpp3 8.8, Ex5</h1>
@@ -540,7 +543,7 @@ Model: ETS(A,N,N)
 </div>
 </div>
 </div>
-<p>There is a huge jump in Exports in 2002, due to the deregulation of the Argentinian peso. Since then, Exports (as a percentage of GDP) has gradually returned to 1990 levels.</p>
+<p>There is a huge jump in Exports in 2002, due to the devaluation of the Argentinian peso. Since then, Exports (as a percentage of GDP) has gradually fallen back towards the levels of the 1990s.</p>
 <blockquote class="blockquote">
 <ol start="2" type="a">
 <li>Use an ETS(A,N,N) model to forecast the series, and plot the forecasts.</li>
@@ -596,7 +599,7 @@ Model: ETS(A,N,N)
 2 Argentina holt   Training 0.00795  2.78  1.64 -2.51  15.9 0.994 0.986 0.0271 </code></pre>
 </div>
 </div>
-<p>There is very little difference in training RMSE between these models. So the extra parameter is not doing much.</p>
+<p>There is very little difference in training RMSE between these models (the Holt model is very slightly worse on MAE, MAPE and MASE). So the extra parameter is not doing much.</p>
 <blockquote class="blockquote">
 <ol start="5" type="a">
 <li>Compare the forecasts from both methods. Which do you think is best?</li>
@@ -614,18 +617,13 @@ Model: ETS(A,N,N)
 </div>
 </div>
 </div>
-<ul>
-<li>The forecasts are similar. In this case, the <em>simpler</em> model is preferred.</li>
-</ul>
+<p>The forecasts are similar: the estimated trend in the Holt model is small (about 0.07 percentage points per year). In this case, the <em>simpler</em> model is preferred.</p>
 <blockquote class="blockquote">
 <ol start="6" type="a">
 <li>Calculate a 95% prediction interval for the first forecast for each model, using the RMSE values and assuming normal errors. Compare your intervals with those produced using R.</li>
 </ol>
 </blockquote>
-<ol type="1">
-<li>standard error. (from RMSE)</li>
-<li>mean (from forecast)</li>
-</ol>
+<p>For part f, we need the standard error (from the RMSE) and the mean (from the forecasts).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">accuracy</span>(fit) <span class="sc">|&gt;</span> <span class="fu">pull</span>(RMSE)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(.mean)</span>
@@ -652,10 +650,7 @@ Model: ETS(A,N,N)
 # ℹ 3 more variables: Exports &lt;dist&gt;, .mean &lt;dbl&gt;, PI &lt;hilo&gt;</code></pre>
 </div>
 </div>
-<ul>
-<li><p>Using RMSE yields narrower prediction interval while using the values from <code>hilo()</code> function gives wider prediction interval.</p></li>
-<li><p>Using RMSE has failed to take account of the degrees of freedom for each model. Compare the following</p></li>
-</ul>
+<p>Using the RMSE yields narrower prediction intervals than those produced by fable. Using the RMSE has failed to take account of the degrees of freedom for each model. Compare the following, where the sum of squared errors is divided by <span class="math inline">T</span> minus the number of estimated parameters.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sse <span class="ot">&lt;-</span> <span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
@@ -667,8 +662,8 @@ Model: ETS(A,N,N)
 <span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Argentina"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span>
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co"># sse method= alpha, level=&gt; 2</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co"># holt linear = alpha, level, trend, b =&gt; 4</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co"># SES: 2 parameters (alpha, l0)</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Holt's linear: 4 parameters (alpha, beta, l0, b0)</span></span>
 <span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(sse <span class="sc">/</span> (n <span class="sc">-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)))</span>
 <span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
@@ -683,6 +678,7 @@ Model: ETS(A,N,N)
 <pre><code>[1]  5.79226 17.07016</code></pre>
 </div>
 </div>
+<p>These reproduce the fable intervals. The difference from the RMSE-based intervals is larger for Holt’s method as it has more parameters.</p>
 </section>
 <section id="fpp3-8.8-ex6" class="level1">
 <h1>fpp3 8.8, Ex6</h1>
@@ -704,9 +700,7 @@ Model: ETS(A,N,N)
 </div>
 </div>
 </div>
-<ul>
-<li>It clearly needs a relatively strong transformation due to the increasing variance.</li>
-</ul>
+<p>It clearly needs a relatively strong transformation due to the increasing variance.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>china <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="fu">box_cox</span>(GDP, <span class="fl">0.2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -724,10 +718,7 @@ Model: ETS(A,N,N)
 1 China           -0.0345</code></pre>
 </div>
 </div>
-<ul>
-<li><p>Making <span class="math inline">\lambda = 0.2</span> looks ok.</p></li>
-<li><p>The Guerrero method suggests an even stronger transformation. Let’s also try a log.</p></li>
-</ul>
+<p>Making <span class="math inline">\lambda = 0.2</span> looks ok. The Guerrero method suggests an even stronger transformation (a small negative <span class="math inline">\lambda</span>), so let’s also try a log.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> china <span class="sc">|&gt;</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
@@ -775,8 +766,9 @@ Model: ETS(A,N,N)
 </div>
 </div>
 <ul>
-<li>The transformations have a big effect, with small lambda values creating big increases in the forecasts.</li>
-<li>The damping has relatively a small effect.</li>
+<li>The transformations have a big effect, with small <span class="math inline">\lambda</span> values creating big increases in the forecasts. A linear trend on the transformed scale becomes a rapidly increasing trend on the original scale.</li>
+<li>The damping has a relatively small effect (the estimated <span class="math inline">\phi</span> is 0.98, close to 1).</li>
+<li>Without a transformation, <code>ETS()</code> chooses multiplicative errors, ETS(M,A,N), and its forecasts follow a linear trend from the end of the series.</li>
 </ul>
 </section>
 <section id="fpp3-8.8-ex16" class="level1">

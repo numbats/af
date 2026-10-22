@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -389,14 +389,14 @@ window.Quarto = {
 31 dynreg intercept        7.60    0.0857      88.7   8.60e-85</code></pre>
 </div>
 </div>
-<p>The coefficients are all relatively close.</p>
+<p>The error process selected is ARIMA(1,0,2). The regression coefficients are all relatively close in the two models, although the effect of the surfing festival is a little smaller when the errors are allowed to be autocorrelated.</p>
 <blockquote class="blockquote">
 <ol start="2" type="a">
 <li>How much difference does the ARIMA error process make to the forecasts?</li>
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>future_souvenirs <span class="ot">&lt;-</span> <span class="fu">new_data</span>(souvenirs, <span class="at">n =</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>future_souvenirs <span class="ot">&lt;-</span> <span class="fu">new_data</span>(souvenirs, <span class="at">n =</span> <span class="dv">36</span>) <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">festival =</span> <span class="fu">month</span>(Month) <span class="sc">==</span> <span class="dv">3</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">new_data =</span> future_souvenirs) <span class="sc">|&gt;</span></span>
@@ -409,7 +409,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>The forecasts are also extremely close.</p>
+<p>The forecasts are similar, but those from the model with ARIMA errors are slightly higher. The prediction intervals from the model with ARIMA errors are narrower at all horizons.</p>
 <blockquote class="blockquote">
 <ol start="3" type="a">
 <li>Check the residuals of the fitted model to ensure the ARIMA process has adequately addressed the autocorrelations seen in the <code>TSLM</code> model.</li>
@@ -427,7 +427,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>These look fine.</p>
+<p>The residuals from the model with ARIMA errors look like white noise.</p>
 </section>
 <section id="fpp3-10.7-ex-3" class="level1">
 <h1>fpp3 10.7, Ex 3</h1>
@@ -549,7 +549,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 1 fit       21.8     0.114</code></pre>
 </div>
 </div>
-<p>The model fails the residual tests but the significant autocorrelations are relatively small, so it should still give reasonable forecasts. The residuals look like they have some heteroskedasticity, but otherwise look ok.</p>
+<p>Some of the standard errors are <code>NaN</code>, suggesting some of the ARIMA parameters are poorly identified. The model passes the Ljung-Box test, and the few significant autocorrelations are relatively small, so it should give reasonable forecasts. The residuals look like they have some heteroskedasticity, but otherwise look ok.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>vic_next_day <span class="ot">&lt;-</span> <span class="fu">new_data</span>(vic_elec_daily, <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -613,6 +613,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </div>
 </div>
 </div>
+<p>CPI-adjusted takings have increased in all states over the period, with strong seasonality in most states (but little in the ACT and Western Australia). Takings in New South Wales and Victoria grew faster after about 2014, Queensland was flat from about 2007 to 2014, and Western Australia has fallen since about 2012.</p>
 <blockquote class="blockquote">
 <ol start="2" type="a">
 <li>For each state, fit a dynamic regression model of CPI-adjusted takings with seasonal dummy variables, a piecewise linear time trend with one knot at 2008 Q1, and ARIMA errors.</li>
@@ -641,7 +642,7 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 #   ¹​`ARIMA(adjTakings ~ season() + trend(knot = yearquarter("2008 Q1")))`</code></pre>
 </div>
 </div>
-<p>The seasonal dummy variable has not adequately handled the seasonality, so there are seasonal ARIMA components.</p>
+<p>For six of the eight states (all except the ACT and Western Australia), the seasonal dummy variables have not adequately handled the seasonality, so there are seasonal ARIMA components in the error models.</p>
 <blockquote class="blockquote">
 <ol start="3" type="a">
 <li>Check that the residuals of the model look like white noise.</li>
@@ -659,12 +660,13 @@ AIC=2522.22   AICc=2522.84   BIC=2561.19</code></pre>
 </div>
 </div>
 </div>
-<p>No apparent problems. Similar plots needed for the other states.</p>
+<p>There are no apparent problems for Victoria. Similar plots are needed for the other states.</p>
 <blockquote class="blockquote">
 <ol start="4" type="a">
 <li>Forecast the takings for each state to the end of 2017. (Hint: You will need to produce forecasts of the CPI first.)</li>
 </ol>
 </blockquote>
+<p>The data end in 2016 Q2, so we need forecasts for the next six quarters. We forecast the CPI using an ARIMA model, then forecast the CPI-adjusted takings, and multiply them by the CPI forecasts to obtain forecasts of takings.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CPI forecasts</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cpif <span class="ot">&lt;-</span> aus_accommodation <span class="sc">|&gt;</span></span>
@@ -895,9 +897,9 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\theta_1</span></td>
-<td style="text-align: right;">0.5830</td>
+<td style="text-align: right;">-0.5830</td>
 <td style="text-align: center;">0.0720</td>
-<td style="text-align: right;">8.10</td>
+<td style="text-align: right;">-8.10</td>
 <td style="text-align: center;">0.000</td>
 </tr>
 <tr class="even">
@@ -918,7 +920,7 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 </table>
 <p>Explain what the estimates of <span class="math inline">\beta_1</span> and <span class="math inline">\beta_2</span> tell us about electricity consumption.</p>
 </blockquote>
-<p><span class="math inline">\beta_1</span> is the unit increase in <span class="math inline">y_t^*</span> when <span class="math inline">x_{1,t}^*</span> increases by 1. This is a little hard to interpret, but it is clear that monthly total electricity usage goes up when monthly heating degrees goes up. Similarly, for <span class="math inline">\beta_2</span>, monthly total electricity usage goes up when monthly cooling degrees goes up.</p>
+<p><span class="math inline">\beta_1</span> is the unit increase in <span class="math inline">y_t^*</span> when <span class="math inline">x_{1,t}^*</span> increases by 1. As <span class="math inline">y_t^* = \log(y_t)</span>, a unit increase in the square root of heating degrees is associated with an increase of about 0.77% in electricity consumption, holding cooling degrees constant. This is a little hard to interpret, but it is clear that monthly total electricity usage goes up when monthly heating degrees goes up. Similarly, for <span class="math inline">\beta_2</span>, a unit increase in the square root of cooling degrees is associated with an increase of about 2.1% in electricity consumption, so monthly total electricity usage goes up when monthly cooling degrees goes up.</p>
 <blockquote class="blockquote">
 <ol start="3" type="a">
 <li>Write the equation in a form more suitable for forecasting.</li>
@@ -926,14 +928,14 @@ AIC=64.76   AICc=65.33   BIC=163.78</code></pre>
 </blockquote>
 <p>This turned out to be way more messy than I expected, but for what it’s worth, here it is in all its ugliness.</p>
 <p>First apply the differences to the regression equation. <span class="math display">
-  (1 - B)(1 - B^{12}) y_t^* = \beta_1^*(1 - B)(1 - B^{12})x_{1,t}^*
-                              + \beta_2^*(1 - B)(1 - B^{12})x_{2,t}^*
+  (1 - B)(1 - B^{12}) y_t^* = \beta_1(1 - B)(1 - B^{12})x_{1,t}^*
+                              + \beta_2(1 - B)(1 - B^{12})x_{2,t}^*
                               + (1 - B)(1 - B^{12})\eta_{t}
 </span> So <span class="math display">
   (y^*_{t} - y^*_{t-1} - y^*_{t-12} + y^*_{t-13})
   = \beta_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
     + \beta_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13}) + \eta'_t
-</span> Multiplying by the AR polynomial gives <span class="math display">\begin{align*}
+</span> where <span class="math inline">\eta'_t = (1 - B)(1 - B^{12})\eta_t</span> satisfies <span class="math inline">(1 - \Phi_{1}B^{12} - \Phi_{2}B^{24})\eta'_t = (1 + \theta_1 B)\varepsilon_t</span>. Multiplying by the AR polynomial gives <span class="math display">\begin{align*}
   (y^*_{t} &amp; -y^*_{t-1} - y^*_{t-12} + y^*_{t-13})
   -\Phi_{1}(y^*_{t-12} - y^*_{t-13} - y^*_{t-24} + y^*_{t-25})
   -\Phi_{2}(y^*_{t-24} - y^*_{t-25} - y^*_{t-36} + y^*_{t-37}) \\

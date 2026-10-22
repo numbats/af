@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -387,7 +387,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>The residuals do not appear to be white noise as the ACF plot contains many significant lags. It is also clear that the seasonal component is not captured by the drift method, as there exists a strong positive auto-correlation at lag 12 (1 year). The histogram appears to have a slightly long left tail.</p>
+<p>The residuals do not appear to be white noise as the ACF plot contains many significant lags. It is also clear that the seasonal component is not captured by the drift method, as there exists a strong positive auto-correlation at lag 12 (1 year). The histogram is fairly symmetric, with a slightly long left tail.</p>
 </section>
 <section id="fpp3-5.11-ex-9" class="level1">
 <h1>fpp3 5.11, Ex 9</h1>
@@ -405,6 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Fit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.</li>
 </ol>
 </blockquote>
+<p>The data are annual, so there is no seasonality and the seasonal naive method is not appropriate.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> train <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
@@ -507,7 +508,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>In all cases, the residuals look like white noise.</p>
+<p>In all cases, the residuals look like white noise: no autocorrelations are outside the bounds. With only 17 residuals per country, though, the ACF plots have little power to detect autocorrelation.</p>
 </section>
 <section id="fpp3-5.11-ex-10" class="level1">
 <h1>fpp3 5.11, Ex 10</h1>
@@ -575,7 +576,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>This is far from white noise. There is strong seasonality and increasing variance that has not been accounted for by the naive model.</p>
+<p>This is far from white noise. There is strong seasonality (large autocorrelations at lags 12 and 24) and increasing variance that has not been accounted for by the naive model.</p>
 </section>
 <section id="fpp3-5.11-ex-12" class="level1">
 <h1>fpp3 5.11, Ex 12</h1>
@@ -656,7 +657,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 3 gc_fc_3 Test   35.8  91.4  83.9  3.56  9.07 1.46  1.30   0.239</code></pre>
 </div>
 </div>
-<p>The second set of forecasts are most accurate (as can be seen in the previous plot), however this is likely due to chance.</p>
+<p>The second set of forecasts are most accurate (as can be seen in the previous plot), however this is likely due to chance. The MAPE varies from about 4% for 2016 to about 15% for 2017, so the accuracy measured on a single year of test data depends heavily on which year is used. Averaging over several test sets (as in time series cross-validation) gives a more reliable measure of accuracy.</p>
 
 
 </section>

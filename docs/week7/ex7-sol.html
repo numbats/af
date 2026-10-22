@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -311,7 +311,7 @@ window.Quarto = {
   <li><a href="#fpp3-8.8-ex13" id="toc-fpp3-8.8-ex13" class="nav-link" data-scroll-target="#fpp3-8.8-ex13">fpp3 8.8, Ex13</a></li>
   <li><a href="#fpp3-8.8-ex14" id="toc-fpp3-8.8-ex14" class="nav-link" data-scroll-target="#fpp3-8.8-ex14">fpp3 8.8, Ex14</a>
   <ul class="collapse">
-  <li><a href="#tourism" id="toc-tourism" class="nav-link" data-scroll-target="#tourism">tourism</a></li>
+  <li><a href="#tourism" id="toc-tourism" class="nav-link" data-scroll-target="#tourism">Tourism</a></li>
   <li><a href="#gafa-stock" id="toc-gafa-stock" class="nav-link" data-scroll-target="#gafa-stock">GAFA stock</a></li>
   <li><a href="#pelt-trading-records" id="toc-pelt-trading-records" class="nav-link" data-scroll-target="#pelt-trading-records">Pelt trading records</a></li>
   </ul></li>
@@ -359,9 +359,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<ul>
-<li>There is a huge increase in variance as the series increases in level. =&gt; That makes it necessary to use multiplicative seasonality.</li>
-</ul>
+<p>The size of the seasonal fluctuations increases hugely as the level of the series increases. That makes it necessary to use multiplicative seasonality.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> aus_production <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
@@ -378,9 +376,7 @@ window.Quarto = {
 2 hwdamped 0.00329   -832. 1684. 1685. 1718.  21.1  32.0 0.0417</code></pre>
 </div>
 </div>
-<ul>
-<li>The non-damped model seems to be doing slightly better here, probably because the trend is very strong over most of the historical data.</li>
-</ul>
+<p>The non-damped model has a slightly lower AICc, probably because the trend is very strong over most of the historical data.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(hw) <span class="sc">|&gt;</span></span>
@@ -429,8 +425,8 @@ window.Quarto = {
 </div>
 </div>
 <ul>
-<li>There is still some small <em>correlations</em> left in the residuals, showing the model has not fully captured the available information.</li>
-<li>There also appears to be some <em>heteroskedasticity</em> in the residuals with larger variance in the first half the series.</li>
+<li>There are still some correlations left in the residuals, and the Ljung-Box test is significant, showing the model has not fully captured the available information.</li>
+<li>There also appears to be some heteroskedasticity in the residuals, with larger variance in the first half of the series.</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
@@ -589,6 +585,7 @@ Model: ETS(A,A,A)
 </div>
 </div>
 </div>
+<p><code>ETS()</code> chooses an ETS(A,A,A) model.</p>
 <blockquote class="blockquote">
 <ol start="6" type="a">
 <li>Compare the RMSE of the ETS model with the RMSE of the models you obtained using STL decompositions. Which gives the better in-sample fits?</li>
@@ -650,8 +647,8 @@ Model: ETS(A,A,A)
 </div>
 </div>
 <ul>
-<li>The STL decomposition forecasts using the additive trend model, ETS(A,A,N), is slightly better in-sample.</li>
-<li>However, note that this is a biased comparison as the models have different numbers of parameters.</li>
+<li>The STL decomposition with the additive trend model, ETS(A,A,N), for the seasonally adjusted data is slightly better in-sample, with the damped trend version close behind.</li>
+<li>However, note that this is a biased comparison as the models have different numbers of parameters (and the STL decomposition itself is not counted).</li>
 </ul>
 <blockquote class="blockquote">
 <ol start="7" type="a">
@@ -724,7 +721,7 @@ sigma^2: 3210.8552 </code></pre>
 1 dcmp_AAN    33.3    0.0976</code></pre>
 </div>
 </div>
-<p>The residuals look okay and overall they are not significant.</p>
+<p>The residuals look okay. There is one significant autocorrelation at lag 14 (and two on the boundary at lags 20 and 23), but the Ljung-Box test is not significant.</p>
 </section>
 <section id="fpp3-8.8-ex11" class="level1">
 <h1>fpp3 8.8, Ex11</h1>
@@ -784,12 +781,12 @@ sigma^2: 3210.8552 </code></pre>
 <blockquote class="blockquote">
 <ol start="4" type="a">
 <li>Forecast the two-year test set using each of the following methods:
-<ol type="i">
+<ul>
 <li>an ETS model;</li>
 <li>an additive ETS model applied to a log transformed series;</li>
 <li>a seasonal naïve method;</li>
 <li>an STL decomposition applied to the log transformed data followed by an ETS model applied to the seasonally adjusted (transformed) data.</li>
-</ol></li>
+</ul></li>
 </ol>
 </blockquote>
 <div class="cell">
@@ -841,9 +838,7 @@ sigma^2: 3210.8552 </code></pre>
 4 stl     NZ     Test  -12535. 22723. 16172. -4.02   5.23 1.09  1.17   0.109 </code></pre>
 </div>
 </div>
-<ul>
-<li>The best method is the ETS model on the logged data (based on RMSE), and it passes the residuals tests.</li>
-</ul>
+<p>The ETS model on the logged data gives the best forecasts on RMSE, although the ETS model on the original data is better on MAE, MAPE and MASE. (The test set is only 8 observations, so this comparison is not very reliable.) The ETS model chosen by <code>ETS()</code> for the logged data is an ETS(A,N,A) model.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>log_ets <span class="ot">&lt;-</span> nz_tr <span class="sc">|&gt;</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(<span class="fu">log</span>(Arrivals)))</span>
@@ -864,6 +859,7 @@ sigma^2: 3210.8552 </code></pre>
 1 NZ     ETS(log(Arrivals))    11.0     0.530</code></pre>
 </div>
 </div>
+<p>The residuals look like white noise (a few autocorrelations are close to the boundaries, but none are clearly significant), and the Ljung-Box test is not significant, so it passes the residual tests.</p>
 <blockquote class="blockquote">
 <ol start="6" type="a">
 <li>Compare the same four methods using time series cross-validation instead of using a training and test set. Do you come to the same conclusions?</li>
@@ -894,9 +890,9 @@ sigma^2: 3210.8552 </code></pre>
 </div>
 </div>
 <ul>
-<li>An initial fold size (<code>.init</code>) of 36 has been selected to ensure that sufficient data is available to make reasonable forecasts.</li>
-<li>A step size of 3 (and forecast horizon of 3) has been used to reduce the computation time.</li>
-<li>The ETS model on the log data still appears best (based on 3-step ahead forecast RMSE).</li>
+<li>The step size of 3 and forecast horizon of 3 reduce the computation time, and the initial training set of 36 quarters (<code>.init = 36</code>) has sufficient data to make reasonable forecasts.</li>
+<li>The ETS model on the log data is best on all measures except MAPE (where the STL model is slightly better), followed by the ETS model on the original data (on RMSE and MAE).</li>
+<li>So the conclusions are the same: the ETS model on the log data gives the best forecasts on RMSE.</li>
 </ul>
 </section>
 <section id="fpp3-8.8-ex12" class="level1">
@@ -915,6 +911,7 @@ sigma^2: 3210.8552 </code></pre>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Cement), <span class="fu">SNAIVE</span>(Cement)) <span class="sc">|&gt;</span></span>
 <span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"1 year"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>The last four observations are dropped before stretching, so that every training set is followed by a full year of actual values against which the 4-step forecasts can be compared.</p>
 <blockquote class="blockquote">
 <ol start="2" type="a">
 <li>Compute the MSE of the resulting <span class="math inline">4</span>-step-ahead errors. Comment on which forecasts are more accurate. Is this what you expected?</li>
@@ -926,19 +923,21 @@ sigma^2: 3210.8552 </code></pre>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">h =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_fable</span>(<span class="at">response =</span> <span class="st">"Cement"</span>, <span class="at">distribution =</span> Cement) <span class="sc">|&gt;</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">".model"</span>, <span class="st">"h"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(aus_production, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">".model"</span>, <span class="st">"h"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MSE =</span> RMSE<span class="sc">^</span><span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.model, h, MSE)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 × 11
-  .model           h .type      ME  RMSE   MAE    MPE  MAPE  MASE RMSSE     ACF1
-  &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-1 ETS(Cement)      1 Test  -0.0902  82.9  60.1 -0.227  3.95 0.597 0.625 -0.00185
-2 ETS(Cement)      2 Test  -0.653  101.   72.0 -0.325  4.74 0.708 0.756  0.495  
-3 ETS(Cement)      3 Test  -1.71   119.   87.0 -0.492  5.80 0.856 0.894  0.616  
-4 ETS(Cement)      4 Test  -0.729  137.  102.  -0.543  6.65 1.01  1.03   0.699  
-5 SNAIVE(Ceme…     1 Test  30.9    138.  107.   1.97   6.99 1.06  1.04   0.640  
-6 SNAIVE(Ceme…     2 Test  30.0    139.  107.   1.90   6.96 1.05  1.04   0.649  
-7 SNAIVE(Ceme…     3 Test  29.5    139.  107.   1.85   6.95 1.05  1.04   0.651  
-8 SNAIVE(Ceme…     4 Test  30.8    140.  108    1.91   6.99 1.06  1.05   0.637  </code></pre>
+<pre><code># A tibble: 8 × 3
+  .model             h    MSE
+  &lt;chr&gt;          &lt;int&gt;  &lt;dbl&gt;
+1 ETS(Cement)        1  6874.
+2 ETS(Cement)        2 10223.
+3 ETS(Cement)        3 14267.
+4 ETS(Cement)        4 18874.
+5 SNAIVE(Cement)     1 19176.
+6 SNAIVE(Cement)     2 19205.
+7 SNAIVE(Cement)     3 19215.
+8 SNAIVE(Cement)     4 19512.</code></pre>
 </div>
 </div>
 <p>The ETS results are better for all horizons, although getting closer as <span class="math inline">h</span> increases. With a long series like this, I would expect ETS to do better as it should have no trouble estimating the parameters, and it will include trends if required.</p>
@@ -1111,7 +1110,7 @@ sigma^2: 3210.8552 </code></pre>
 </ol>
 </blockquote>
 <section id="tourism" class="level2">
-<h2 class="anchored" data-anchor-id="tourism">tourism</h2>
+<h2 class="anchored" data-anchor-id="tourism">Tourism</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>aus_trips <span class="ot">&lt;-</span> tourism <span class="sc">|&gt;</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Trips =</span> <span class="fu">sum</span>(Trips))</span>
@@ -1151,6 +1150,7 @@ Model: ETS(A,A,A)
 </section>
 <section id="gafa-stock" class="level2">
 <h2 class="anchored" data-anchor-id="gafa-stock">GAFA stock</h2>
+<p>The stock prices are only observed on trading days, so we re-index them by trading day, giving regularly spaced observations.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>gafa_regular <span class="ot">&lt;-</span> gafa_stock <span class="sc">|&gt;</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Symbol) <span class="sc">|&gt;</span></span>
@@ -1181,7 +1181,7 @@ Model: ETS(A,A,A)
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>gafa_regular <span class="sc">|&gt;</span></span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Close)) <span class="sc">|&gt;</span></span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">50</span>) <span class="sc">|&gt;</span></span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(gafa_regular <span class="sc">|&gt;</span> <span class="fu">group_by_key</span>() <span class="sc">|&gt;</span> <span class="fu">slice</span>((<span class="fu">n</span>() <span class="sc">-</span> <span class="dv">100</span>)<span class="sc">:</span><span class="fu">n</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(gafa_regular <span class="sc">|&gt;</span> <span class="fu">group_by_key</span>() <span class="sc">|&gt;</span> <span class="fu">slice</span>((<span class="fu">n</span>() <span class="sc">-</span> <span class="dv">100</span>)<span class="sc">:</span><span class="fu">n</span>()) <span class="sc">|&gt;</span> <span class="fu">ungroup</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1190,7 +1190,7 @@ Model: ETS(A,A,A)
 </div>
 </div>
 </div>
-<p>Forecasts look reasonable for an efficient market.</p>
+<p><code>ETS()</code> chooses ETS(M,N,N) models (no trend) for all four stocks. Forecasts look reasonable for an efficient market.</p>
 </section>
 <section id="pelt-trading-records" class="level2">
 <h2 class="anchored" data-anchor-id="pelt-trading-records">Pelt trading records</h2>
@@ -1216,7 +1216,7 @@ Model: ETS(A,A,A)
 </div>
 </div>
 <ul>
-<li>Here the cyclic behaviour of the lynx data is completely lost.</li>
+<li>Here the cyclic behaviour of the lynx data is completely lost: the ETS(A,N,N) model gives flat forecasts equal to the last observation, and the prediction intervals extend well below zero.</li>
 <li>ETS models are not designed to handle cyclic data, so there is nothing that can be done to improve this.</li>
 </ul>
 <blockquote class="blockquote">
@@ -1224,9 +1224,7 @@ Model: ETS(A,A,A)
 <li>Find an example where it does not work well. Can you figure out why?</li>
 </ol>
 </blockquote>
-<ul>
-<li>ETS does not work well on cyclic data, as seen in the pelt dataset above.</li>
-</ul>
+<p>ETS does not work well on cyclic data, as seen in the pelt dataset above. ETS models can only extrapolate a level, trend and (fixed period) seasonality, while the cycles in the lynx series have irregular lengths, so ETS treats them as random fluctuations around a level.</p>
 </section>
 </section>
 <section id="fpp3-8.8-ex15" class="level1">
@@ -1263,7 +1261,7 @@ Model: ETS(A,A,A)
   s_{T+h-m} = s_{T+h-3m} (1 + \gamma\varepsilon_{T+h-m})(1 + \gamma\varepsilon_{T+h-2m})
 </span> and replace both <span class="math inline">\varepsilon_{T+h-m}</span> and <span class="math inline">\varepsilon_{T+h-2m}</span> by 0</p>
 <p>etc.</p>
-<p>So we can replace <span class="math inline">s_{T+h-m}</span> by <span class="math inline">s_{T+h-m(k+1)}</span> where <span class="math inline">k</span> is the integer part of <span class="math inline">(k - 1)/m</span>.</p>
+<p>So we can replace <span class="math inline">s_{T+h-m}</span> by <span class="math inline">s_{T+h-m(k+1)}</span> where <span class="math inline">k</span> is the integer part of <span class="math inline">(h - 1)/m</span>.</p>
 <p>Thus <span class="math display">
   \hat{y}_{T+h|T} = (\ell_{T} + hb_{T})s_{T+h-m(k+1)}
 </span> as required.</p>

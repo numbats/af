@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-f523fc32e588dafca3c07c0325613577.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d83124588d9e742b6b75314db3ff40ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b359a26909324d3140dc66b071862f70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -456,6 +456,7 @@ window.Quarto = {
 </section>
 <section id="household-wealth" class="level2">
 <h2 class="anchored" data-anchor-id="household-wealth">Household wealth</h2>
+<p>The <code>hh_budget</code> data contains annual data for four countries; <code>Wealth</code> is household wealth as a percentage of net disposable income.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>hh_budget <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Wealth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -497,7 +498,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>This data has strong seasonality and strong trend, so we will use a seasonal naive model with drift.</p>
+<p>This data has strong seasonality and strong trend. Of the three methods, the seasonal naive method is the only one that captures the seasonality, but its forecasts would not follow the trend. A seasonal naive method with drift is sometimes a useful benchmark when there is strong seasonality and strong trend. It is not one of the four benchmark methods discussed in the book, but <code>SNAIVE()</code> allows a drift term, so we use it here.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>takeaway <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">SNAIVE</span>(Turnover <span class="sc">~</span> <span class="fu">drift</span>())) <span class="sc">|&gt;</span></span>
@@ -511,10 +512,10 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>This is actually not one of the four benchmark methods discussed in the book, but is sometimes a useful benchmark when there is strong seasonality and strong trend.</p>
 <p>The corresponding equation is <span class="math display">
-  \hat{y}_{T+h|T} = y_{T+h-m(k+1)} + \frac{h}{T - m}\sum_{t=m+1}^T(y_t - y_{t-m}),
+  \hat{y}_{T+h|T} = y_{T+h-m(k+1)} + \frac{k+1}{T - m}\sum_{t=m+1}^T(y_t - y_{t-m}),
 </span> where <span class="math inline">m = 12</span> and <span class="math inline">k</span> is the integer part of <span class="math inline">(h - 1)/m</span> (i.e., the number of complete years in the forecast period prior to time <span class="math inline">T + h</span>).</p>
+<p>The seasonal naive with drift forecasts continue the upward trend, rising each year by the average annual change in the data.</p>
 </section>
 </section>
 <section id="fpp3-5.11-ex-2" class="level1">
@@ -546,13 +547,12 @@ window.Quarto = {
 <li>Produce forecasts using the drift method and plot them.</li>
 </ol>
 </blockquote>
-<p>The data must be made regular before it can be modelled. We will use trading days as our regular index.</p>
+<p>The data must be made regular before it can be modelled. We will use trading days as our regular index (as in the book’s Google example).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fb_stock <span class="ot">&lt;-</span> fb_stock <span class="sc">|&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">trading_day =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_tsibble</span>(<span class="at">index =</span> trading_day, <span class="at">regular =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Time to model a random walk with drift.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fb_stock <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">RW</span>(Close <span class="sc">~</span> <span class="fu">drift</span>())) <span class="sc">|&gt;</span></span>
@@ -571,7 +571,7 @@ window.Quarto = {
 <li>Show that the forecasts are identical to extending the line drawn between the first and last observations.</li>
 </ol>
 </blockquote>
-<p>Prove drift methods are extrapolations from the first and last observation. First, we will demonstrate it graphically.</p>
+<p>First, we will demonstrate it graphically, by adding a dashed line through the first and last observations.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fb_stock <span class="sc">|&gt;</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">RW</span>(Close <span class="sc">~</span> <span class="fu">drift</span>())) <span class="sc">|&gt;</span></span>
@@ -591,6 +591,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>The forecasts continue the dashed line.</p>
 <p>To prove it algebraically, note that <span class="math display">\begin{align*}
   \hat{y}_{T+h|T} = y_T + h\left( \frac{y_T - y_1}{T - 1} \right)
 \end{align*}</span> which is a straight line with slope <span class="math inline">(y_T - y_1)/(T - 1)</span> that goes through the point <span class="math inline">(T,y_T)</span>.</p>
@@ -602,7 +603,7 @@ window.Quarto = {
 <li>Try using some of the other benchmark functions to forecast the same data set. Which do you think is best? Why?</li>
 </ol>
 </blockquote>
-<p>Use other appropriate benchmark methods. The most appropriate benchmark method is the naive model. The mean forecast is terrible for this type of data, and the data is non-seasonal.</p>
+<p>The mean forecast is terrible for this type of data, and the data is non-seasonal, so the seasonal naive method is not appropriate.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fb_stock <span class="sc">|&gt;</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">NAIVE</span>(Close)) <span class="sc">|&gt;</span></span>
@@ -616,7 +617,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>The naive method is most appropriate, and will also be best if the efficient market hypothesis holds true.</p>
+<p>The naive method is most appropriate, and will also be best if the efficient market hypothesis holds true. The drift method continues the long-run upward trend, which is not supported by the recent fall in the stock price.</p>
 </section>
 <section id="fpp3-5.11-ex-3" class="level1">
 <h1>fpp3 5.11, Ex 3</h1>
@@ -642,7 +643,7 @@ window.Quarto = {
 </div>
 <ul>
 <li>The residuals are not centred around 0 (typically being slightly below it), this is due to the model failing to capture the negative trend in the data.</li>
-<li>Peaks and troughs in residuals spaced roughly 4 observations apart are apparent leading to a negative spike at lag 4 in the ACF. So they do not resemble white noise. Lags 1 and 3 are also significant, however they are very close to the threshold and are of little concern.</li>
+<li>Peaks and troughs in residuals spaced roughly 4 observations apart are apparent leading to a negative spike at lag 4 in the ACF. So they do not resemble white noise. The autocorrelations at lags 1 and 3 are right on the threshold, and are of little concern.</li>
 <li>The distribution of the residuals does not appear very normal, however it is probably close enough for the accuracy of our intervals (it being not centred on 0 is more concerning).</li>
 </ul>
 <div class="cell">
@@ -684,10 +685,10 @@ window.Quarto = {
 </div>
 </div>
 <ul>
-<li>The ACF plot reveals that the first lag exceeds the significance threshold.</li>
-<li>This data may still be white noise, as it is the only lag that exceeds the blue dashed lines (5% of the lines are expected to exceed it). However as it is the first lag, it is probable that there exists some real auto-correlation in the residuals that can be modelled.</li>
+<li>The ACF plot reveals that the first lag (about <span class="math inline">-0.3</span>) exceeds the significance threshold.</li>
+<li>This data may still be white noise, as it is the only lag that exceeds the significance threshold (5% of the lags are expected to exceed it). However as it is the first lag, it is probable that there exists some real auto-correlation in the residuals that can be modelled.</li>
 <li>The distribution appears normal.</li>
-<li>The residual plot appears mostly random, however more observations appear to be above zero. This again, is due to the model not capturing the trend.</li>
+<li>The residual plot appears mostly random, however slightly more observations are above zero than below it. This again, is due to the model not capturing the trend.</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at some forecasts</span></span>
@@ -799,7 +800,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Data is multiplicative, and so a transformation should be used.</p>
+<p>The seasonal variation increases with the level of the series, so the data are multiplicative, and a log transformation should be used.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dcmp <span class="ot">&lt;-</span> tidy_bricks <span class="sc">|&gt;</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">STL</span>(<span class="fu">log</span>(Bricks))) <span class="sc">|&gt;</span></span>
@@ -814,7 +815,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Seasonality varies slightly.</p>
+<p>The seasonal pattern on the log scale is much more stable, although it still varies slightly over time.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>dcmp <span class="ot">&lt;-</span> tidy_bricks <span class="sc">|&gt;</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(<span class="fu">log</span>(Bricks) <span class="sc">~</span> <span class="fu">season</span>(<span class="at">window =</span> <span class="st">"periodic"</span>))) <span class="sc">|&gt;</span></span>
@@ -910,9 +911,12 @@ window.Quarto = {
 </blockquote>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fit_robust <span class="ot">&lt;-</span> tidy_bricks <span class="sc">|&gt;</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">stl_mdl =</span> <span class="fu">decomposition_model</span>(<span class="fu">STL</span>(<span class="fu">log</span>(Bricks)), <span class="fu">NAIVE</span>(season_adjust)))</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>fit_robust <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">stl_mdl =</span> <span class="fu">decomposition_model</span>(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">STL</span>(<span class="fu">log</span>(Bricks), <span class="at">robust =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">NAIVE</span>(season_adjust)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>fit_robust <span class="sc">|&gt;</span> <span class="fu">gg_tsresiduals</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -988,7 +992,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>The running times are generally decreasing as time progresses (although the rate of this decline is slowing down in recent olympics). There are some missing values in the data corresponding to the World Wars (in which the Olympic Games were not held).</p>
+<p>The running times are generally decreasing as time progresses (although the rate of this decline is slowing down in recent Olympics). There are some missing values in the data corresponding to the World Wars (in which the Olympic Games were not held), and the women’s events started much later than the men’s.</p>
 <blockquote class="blockquote">
 <ol start="2" type="a">
 <li>Fit a regression line to the data for each event. Obviously the winning times have been decreasing, but at what <em>average</em> rate per year?</li>
@@ -1015,7 +1019,9 @@ window.Quarto = {
 # ℹ 18 more rows</code></pre>
 </div>
 </div>
+<p>The Games are held every four years, so the <code>trend()</code> coefficient is the average change per Games, and we divide it by 4 to get the average change per year.</p>
 <p>The men’s 100 running time has been decreasing by an average of 0.013 seconds each year.<br> The women’s 100 running time has been decreasing by an average of 0.014 seconds each year.<br> The men’s 200 running time has been decreasing by an average of 0.025 seconds each year.<br> The women’s 200 running time has been decreasing by an average of 0.034 seconds each year.<br> The men’s 400 running time has been decreasing by an average of 0.065 seconds each year.<br> The women’s 400 running time has been decreasing by an average of 0.04 seconds each year.<br> The men’s 800 running time has been decreasing by an average of 0.152 seconds each year.<br> The women’s 800 running time has been decreasing by an average of 0.198 seconds each year.<br> The men’s 1500 running time has been decreasing by an average of 0.315 seconds each year.<br> The women’s 1500 running time has been increasing by an average of 0.147 seconds each year.<br> The men’s 5000 running time has been decreasing by an average of 1.03 seconds each year.<br> The women’s 5000 running time has been decreasing by an average of 0.303 seconds each year.<br> The men’s 10000 running time has been decreasing by an average of 2.666 seconds each year.<br> The women’s 10000 running time has been decreasing by an average of 3.496 seconds each year.<br></p>
+<p>The slopes give the average change in winning time per year: for example, 0.013 seconds per year for the men’s 100m and 2.67 seconds per year for the men’s 10000m. All the winning times have been decreasing except the women’s 1500m, where the times since the event was introduced in 1972 have been getting slower on average (the fastest times were in the 1980s and early 1990s, and the 2012 and 2016 races were the slowest).</p>
 <blockquote class="blockquote">
 <ol start="3" type="a">
 <li>Plot the residuals against the year. What does this indicate about the suitability of the fitted lines?</li>
@@ -1038,7 +1044,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>It doesn’t seem that the linear trend is appropriate for this data.</p>
+<p>It doesn’t seem that the linear trend is appropriate for this data. For many of the men’s events, the residuals show curvature: they are mostly positive at the start and end of the series, and negative in the middle. This reflects a change in slope: the winning times fell quickly in the early decades, but have improved much more slowly in recent decades. There are also some outliers, most obviously the 1896 times for the men’s 400m, 800m and 1500m, which were much slower than the fitted lines.</p>
 <blockquote class="blockquote">
 <ol start="4" type="a">
 <li>Predict the winning time for each race in the 2020 Olympics. Give a prediction interval for your forecasts. What assumptions have you made in these calculations?</li>
@@ -1071,7 +1077,46 @@ window.Quarto = {
 # ℹ 3 more variables: Time &lt;dist&gt;, .mean &lt;dbl&gt;, PI &lt;hilo&gt;</code></pre>
 </div>
 </div>
-<p>Using a linear trend we assume that winning times will decrease in a linear fashion which is unrealistic for running times. As we saw from the residual plots above there are mainly large positive residuals for the last few years, indicating that the decreases in the winning times are not linear. We also assume that the residuals are normally distributed.</p>
+<p>Using a linear trend we assume that winning times will decrease in a linear fashion which is unrealistic for running times. As we saw from the residual plots above there are mainly large positive residuals for the last few years, indicating that the decreases in the winning times are not linear. Because the rate of improvement has slowed, assuming a constant rate means the forecasts are probably too low (i.e., too optimistic). We also assume that the residuals are normally distributed and uncorrelated with constant variance.</p>
+<p>The 2020 Olympics were held in Tokyo in 2021, so we can compare the forecasts with the actual winning times.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>tokyo <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>Length, <span class="sc">~</span>Sex, <span class="sc">~</span>Actual,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span>, <span class="st">"men"</span>, <span class="fl">9.80</span>, <span class="dv">100</span>, <span class="st">"women"</span>, <span class="fl">10.61</span>,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">200</span>, <span class="st">"men"</span>, <span class="fl">19.62</span>, <span class="dv">200</span>, <span class="st">"women"</span>, <span class="fl">21.53</span>,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">400</span>, <span class="st">"men"</span>, <span class="fl">43.85</span>, <span class="dv">400</span>, <span class="st">"women"</span>, <span class="fl">48.36</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">800</span>, <span class="st">"men"</span>, <span class="fl">105.06</span>, <span class="dv">800</span>, <span class="st">"women"</span>, <span class="fl">115.21</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1500</span>, <span class="st">"men"</span>, <span class="fl">208.32</span>, <span class="dv">1500</span>, <span class="st">"women"</span>, <span class="fl">233.11</span>,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5000</span>, <span class="st">"men"</span>, <span class="fl">778.15</span>, <span class="dv">5000</span>, <span class="st">"women"</span>, <span class="fl">876.79</span>,</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10000</span>, <span class="st">"men"</span>, <span class="fl">1663.22</span>, <span class="dv">10000</span>, <span class="st">"women"</span>, <span class="fl">1795.32</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hilo</span>(<span class="dv">95</span>) <span class="sc">|&gt;</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Length, Sex, .mean, <span class="st">`</span><span class="at">95%</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(tokyo, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Length"</span>, <span class="st">"Sex"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 14 × 5
+   Length Sex     .mean                       `95%` Actual
+    &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;                      &lt;hilo&gt;  &lt;dbl&gt;
+ 1    100 men      9.53 [   9.049446,   10.01957]95    9.8
+ 2    100 women   10.5  [  10.056992,   11.01183]95   10.6
+ 3    200 men     19.1  [  18.423087,   19.81179]95   19.6
+ 4    200 women   21.2  [  20.106551,   22.29293]95   21.5
+ 5    400 men     42.0  [  39.668596,   44.41603]95   43.8
+ 6    400 women   48.4  [  46.123295,   50.74923]95   48.4
+ 7    800 men     99.2  [  92.137378,  106.33802]95  105. 
+ 8    800 women  111.   [ 104.105124,  118.86174]95  115. 
+ 9   1500 men    207.   [ 190.091940,  223.90462]95  208. 
+10   1500 women  245.   [ 233.786710,  257.12632]95  233. 
+11   5000 men    773.   [ 739.735488,  805.91363]95  778. 
+12   5000 women  892.   [ 814.664722,  969.56461]95  877. 
+13  10000 men   1580.   [1519.300480, 1641.40196]95 1663. 
+14  10000 women 1763.   [1717.895285, 1808.13543]95 1795. </code></pre>
+</div>
+</div>
+<p>The actual winning time was slower than the point forecast in 11 of the 14 events, consistent with the forecasts being too optimistic. For example, the men’s 400m was won in 43.85 seconds, well above the point forecast of 42.04 seconds, although inside the 95% prediction interval. Two of the actual times lay outside the 95% prediction intervals: the men’s 10000m was much slower than predicted, while the women’s 1500m was faster.</p>
 </section>
 <section id="fpp3-7.10-ex-6" class="level1">
 <h1>fpp3 7.10, Ex 6</h1>
@@ -1084,23 +1129,23 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>global_economy <span class="sc">|&gt;</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Population <span class="sc">/</span> <span class="fl">1e6</span>) <span class="sc">+</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Population (millions)"</span>) <span class="sc">+</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="fl">1979.98</span>, <span class="at">xmax =</span> <span class="fl">1989.13</span>), <span class="at">fill =</span> <span class="st">"pink"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>,</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">1984.5</span>,</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="dv">10</span>,</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Soviet-Afghan war"</span>,</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"red"</span>,</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>global_economy <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Population <span class="sc">/</span> <span class="fl">1e6</span>) <span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Population (millions)"</span>) <span class="sc">+</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="fl">1979.98</span>, <span class="at">xmax =</span> <span class="fl">1989.13</span>), <span class="at">fill =</span> <span class="st">"pink"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>,</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">1984.5</span>,</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="dv">10</span>,</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Soviet-Afghan war"</span>,</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"red"</span>,</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="ex4-sol_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="ex4-sol_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1112,19 +1157,19 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear =</span> <span class="fu">TSLM</span>(Population <span class="sc">~</span> <span class="fu">trend</span>()),</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">piecewise =</span> <span class="fu">TSLM</span>(Population <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">knots =</span> <span class="fu">c</span>(<span class="dv">1980</span>, <span class="dv">1989</span>)))</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(.fitted) <span class="sc">+</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Population), <span class="at">colour =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> global_economy <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">linear =</span> <span class="fu">TSLM</span>(Population <span class="sc">~</span> <span class="fu">trend</span>()),</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">piecewise =</span> <span class="fu">TSLM</span>(Population <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">knots =</span> <span class="fu">c</span>(<span class="dv">1980</span>, <span class="dv">1989</span>)))</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(.fitted) <span class="sc">+</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Population), <span class="at">colour =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="ex4-sol_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="ex4-sol_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1136,16 +1181,16 @@ window.Quarto = {
 </ol>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"5 years"</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(fc) <span class="sc">+</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(global_economy <span class="sc">|&gt;</span> <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>)),</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    Population</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"5 years"</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(fc) <span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(global_economy <span class="sc">|&gt;</span> <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Afghanistan"</span>)),</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    Population</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="ex4-sol_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="ex4-sol_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
