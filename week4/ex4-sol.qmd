@@ -79,6 +79,8 @@ nsw_lambs |>
 
 ## Household wealth
 
+The `hh_budget` data contains annual data for four countries; `Wealth` is household wealth as a percentage of net disposable income.
+
 ```{r}
 hh_budget |>
   autoplot(Wealth)
@@ -102,7 +104,10 @@ takeaway <- aus_retail |>
 takeaway |> autoplot(Turnover)
 ```
 
-This data has strong seasonality and strong trend, so we will use a seasonal naive model with drift.
+This data has strong seasonality and strong trend.
+Of the three methods, the seasonal naive method is the only one that captures the seasonality, but its forecasts would not follow the trend.
+A seasonal naive method with drift is sometimes a useful benchmark when there is strong seasonality and strong trend.
+It is not one of the four benchmark methods discussed in the book, but `SNAIVE()` allows a drift term, so we use it here.
 
 ```{r}
 takeaway |>
@@ -111,13 +116,13 @@ takeaway |>
   autoplot(takeaway)
 ```
 
-This is actually not one of the four benchmark methods discussed in the book, but is sometimes a useful benchmark when there is strong seasonality and strong trend.
-
 The corresponding equation is
 $$
-  \hat{y}_{T+h|T} = y_{T+h-m(k+1)} + \frac{h}{T - m}\sum_{t=m+1}^T(y_t - y_{t-m}),
+  \hat{y}_{T+h|T} = y_{T+h-m(k+1)} + \frac{k+1}{T - m}\sum_{t=m+1}^T(y_t - y_{t-m}),
 $$
 where $m = 12$ and $k$ is the integer part of $(h - 1)/m$ (i.e., the number of complete years in the forecast period prior to time $T + h$).
+
+The seasonal naive with drift forecasts continue the upward trend, rising each year by the average annual change in the data.
 
 # fpp3 5.11, Ex 2
 
@@ -136,15 +141,13 @@ An upward trend is evident until mid-2018, after which the closing stock price d
 > b. Produce forecasts using the drift method and plot them.
 
 The data must be made regular before it can be modelled.
-We will use trading days as our regular index.
+We will use trading days as our regular index (as in the book's Google example).
 
 ```{r}
 fb_stock <- fb_stock |>
   mutate(trading_day = row_number()) |>
   update_tsibble(index = trading_day, regular = TRUE)
 ```
-
-Time to model a random walk with drift.
 
 ```{r}
 fb_stock |>
@@ -155,8 +158,7 @@ fb_stock |>
 
 > c. Show that the forecasts are identical to extending the line drawn between the first and last observations.
 
-Prove drift methods are extrapolations from the first and last observation.
-First, we will demonstrate it graphically.
+First, we will demonstrate it graphically, by adding a dashed line through the first and last observations.
 
 ```{r}
 fb_stock |>
@@ -170,6 +172,8 @@ fb_stock |>
     data = fb_stock |> filter(trading_day %in% range(trading_day))
   )
 ```
+
+The forecasts continue the dashed line.
 
 To prove it algebraically, note that
 \begin{align*}
@@ -187,9 +191,7 @@ so $c = y_1$.
 >    Which do you think is best?
 >    Why?
 
-Use other appropriate benchmark methods.
-The most appropriate benchmark method is the naive model.
-The mean forecast is terrible for this type of data, and the data is non-seasonal.
+The mean forecast is terrible for this type of data, and the data is non-seasonal, so the seasonal naive method is not appropriate.
 
 ```{r}
 fb_stock |>
@@ -199,6 +201,7 @@ fb_stock |>
 ```
 
 The naive method is most appropriate, and will also be best if the efficient market hypothesis holds true.
+The drift method continues the long-run upward trend, which is not supported by the recent fall in the stock price.
 
 # fpp3 5.11, Ex 3
 
@@ -221,7 +224,7 @@ fit |> gg_tsresiduals()
 - The residuals are not centred around 0 (typically being slightly below it), this is due to the model failing to capture the negative trend in the data.
 - Peaks and troughs in residuals spaced roughly 4 observations apart are apparent leading to a negative spike at lag 4 in the ACF.
   So they do not resemble white noise.
-  Lags 1 and 3 are also significant, however they are very close to the threshold and are of little concern.
+  The autocorrelations at lags 1 and 3 are right on the threshold, and are of little concern.
 - The distribution of the residuals does not appear very normal, however it is probably close enough for the accuracy of our intervals (it being not centred on 0 is more concerning).
 
 ```{r}
@@ -252,11 +255,11 @@ fit <- aus_exports |> model(NAIVE(Exports))
 fit |> gg_tsresiduals()
 ```
 
-- The ACF plot reveals that the first lag exceeds the significance threshold.
-- This data may still be white noise, as it is the only lag that exceeds the blue dashed lines (5\% of the lines are expected to exceed it).
+- The ACF plot reveals that the first lag (about $-0.3$) exceeds the significance threshold.
+- This data may still be white noise, as it is the only lag that exceeds the significance threshold (5\% of the lags are expected to exceed it).
   However as it is the first lag, it is probable that there exists some real auto-correlation in the residuals that can be modelled.
 - The distribution appears normal.
-- The residual plot appears mostly random, however more observations appear to be above zero.
+- The residual plot appears mostly random, however slightly more observations are above zero than below it.
   This again, is due to the model not capturing the trend.
 
 ```{r}
@@ -338,7 +341,7 @@ tidy_bricks |>
   autoplot()
 ```
 
-Data is multiplicative, and so a transformation should be used.
+The seasonal variation increases with the level of the series, so the data are multiplicative, and a log transformation should be used.
 
 ```{r}
 dcmp <- tidy_bricks |>
@@ -348,7 +351,7 @@ dcmp |>
   autoplot()
 ```
 
-Seasonality varies slightly.
+The seasonal pattern on the log scale is much more stable, although it still varies slightly over time.
 
 ```{r}
 dcmp <- tidy_bricks |>
@@ -405,7 +408,10 @@ The residuals do not appear uncorrelated as there are several lags of the ACF wh
 
 ```{r}
 fit_robust <- tidy_bricks |>
-  model(stl_mdl = decomposition_model(STL(log(Bricks)), NAIVE(season_adjust)))
+  model(stl_mdl = decomposition_model(
+    STL(log(Bricks), robust = TRUE),
+    NAIVE(season_adjust)
+  ))
 
 fit_robust |> gg_tsresiduals()
 ```
@@ -458,8 +464,8 @@ olympic_running |>
   labs(y = "Running time (seconds)")
 ```
 
-The running times are generally decreasing as time progresses (although the rate of this decline is slowing down in recent olympics).
-There are some missing values in the data corresponding to the World Wars (in which the Olympic Games were not held).
+The running times are generally decreasing as time progresses (although the rate of this decline is slowing down in recent Olympics).
+There are some missing values in the data corresponding to the World Wars (in which the Olympic Games were not held), and the women's events started much later than the men's.
 
 > b. Fit a regression line to the data for each event.
 >    Obviously the winning times have been decreasing, but at what *average* rate per year?
@@ -469,6 +475,8 @@ fit <- olympic_running |>
   model(TSLM(Time ~ trend()))
 tidy(fit)
 ```
+
+The Games are held every four years, so the `trend()` coefficient is the average change per Games, and we divide it by 4 to get the average change per year.
 
 ```{r}
 #| echo: false
@@ -480,6 +488,9 @@ tidy(fit) |>
     "The {Sex}'s {Length} running time has been {ifelse(estimate<0, 'decreasing', 'increasing')} by an average of {abs(round(estimate/4, 3))} seconds each year.<br>"
   )
 ```
+
+The slopes give the average change in winning time per year: for example, 0.013 seconds per year for the men's 100m and 2.67 seconds per year for the men's 10000m.
+All the winning times have been decreasing except the women's 1500m, where the times since the event was introduced in 1972 have been getting slower on average (the fastest times were in the 1980s and early 1990s, and the 2012 and 2016 races were the slowest).
 
 > c. Plot the residuals against the year.
 >    What does this indicate about the suitability of the fitted lines?
@@ -496,6 +507,9 @@ augment(fit) |>
 ```
 
 It doesn't seem that the linear trend is appropriate for this data.
+For many of the men's events, the residuals show curvature: they are mostly positive at the start and end of the series, and negative in the middle.
+This reflects a change in slope: the winning times fell quickly in the early decades, but have improved much more slowly in recent decades.
+There are also some outliers, most obviously the 1896 times for the men's 400m, 800m and 1500m, which were much slower than the fitted lines.
 
 > d. Predict the winning time for each race in the 2020 Olympics.
 >    Give a prediction interval for your forecasts.
@@ -510,7 +524,33 @@ fit |>
 
 Using a linear trend we assume that winning times will decrease in a linear fashion which is unrealistic for running times.
 As we saw from the residual plots above there are mainly large positive residuals for the last few years, indicating that the decreases in the winning times are not linear.
-We also assume that the residuals are normally distributed.
+Because the rate of improvement has slowed, assuming a constant rate means the forecasts are probably too low (i.e., too optimistic).
+We also assume that the residuals are normally distributed and uncorrelated with constant variance.
+
+The 2020 Olympics were held in Tokyo in 2021, so we can compare the forecasts with the actual winning times.
+
+```{r}
+tokyo <- tribble(
+  ~Length, ~Sex, ~Actual,
+  100, "men", 9.80, 100, "women", 10.61,
+  200, "men", 19.62, 200, "women", 21.53,
+  400, "men", 43.85, 400, "women", 48.36,
+  800, "men", 105.06, 800, "women", 115.21,
+  1500, "men", 208.32, 1500, "women", 233.11,
+  5000, "men", 778.15, 5000, "women", 876.79,
+  10000, "men", 1663.22, 10000, "women", 1795.32
+)
+fit |>
+  forecast(h = 1) |>
+  hilo(95) |>
+  as_tibble() |>
+  select(Length, Sex, .mean, `95%`) |>
+  left_join(tokyo, by = c("Length", "Sex"))
+```
+
+The actual winning time was slower than the point forecast in 11 of the 14 events, consistent with the forecasts being too optimistic.
+For example, the men's 400m was won in 43.85 seconds, well above the point forecast of 42.04 seconds, although inside the 95% prediction interval.
+Two of the actual times lay outside the 95% prediction intervals: the men's 10000m was much slower than predicted, while the women's 1500m was faster.
 
 # fpp3 7.10, Ex 6
 

@@ -48,20 +48,25 @@ p1 | p2 | p3
 ```
 
 - The figures show different critical values (blue dashed lines).
-- All figures indicate that the data is white noise.
+- All figures indicate that the data are white noise.
+  A few spikes just outside the critical values are expected by chance (about 1 in 20 for white noise).
 
 > b. Why are the critical values at different distances from the mean of zero?
 >    Why are the autocorrelations different in each figure when they each refer to white noise?
 
-- The critical values are at different distances from zero because the data sets have different number of observations.
-  The more observations in a data set, the less noise appears in the correlation estimates (spikes).
-  Therefore the critical values for bigger data sets can be smaller in order to check if the data is not white noise.
+- The critical values are at different distances from zero because the data sets have different numbers of observations.
+  The critical values are at $\pm 1.96/\sqrt{T}$, where $T$ is the length of the series.
+  The more observations in a data set, the less noise appears in the correlation estimates (spikes), so the critical values for larger data sets are closer to zero.
+- The autocorrelations differ because each figure is based on a different random sample.
+  Even for white noise, the sample autocorrelations are random variables that vary around zero, with smaller variation for larger samples.
 
 # fpp3 9.11, Ex2
 
 > A classic example of a non-stationary series are stock prices.
 > Plot the daily closing prices for Amazon stock (contained in `gafa_stock`), along with the ACF and PACF.
 > Explain how each plot shows that the series is non-stationary and should be differenced.
+
+The stock is only traded on trading days, so we index the series by trading day.
 
 ```{r}
 #| label: ex2
@@ -75,13 +80,10 @@ gafa_stock |>
 
 - The time plot shows the series "wandering around", which is a typical indication of non-stationarity.
   Differencing the series should remove this feature.
-
-- ACF does not drop quickly to zero, moreover the value $r_1$ is large and positive (almost 1 in this case).
+- The ACF does not drop quickly to zero; moreover the value $r_1$ is large and positive (almost 1 in this case).
   All these are signs of a non-stationary time series.
   Therefore it should be differenced to obtain a stationary series.
-
-- PACF value $r_1$ is almost 1.
-  All other values $r_i, i > 1$ are small.
+- The first partial autocorrelation is almost 1, and all other partial autocorrelations are small.
   This is a sign of a non-stationary process that should be differenced in order to obtain a stationary series.
 
 # fpp3 9.11, Ex3
@@ -101,7 +103,7 @@ turkey |> features(GDP, guerrero)
 ```
 
 - Logs and differences make the data appear stationary.
-- Using a Box-Cox transformation with $\lambda$ between 0 and 0.2 would also have worked well.
+- The automatically selected Box-Cox $\lambda$ value is 0.16, so a Box-Cox transformation with $\lambda$ between 0 and 0.2 would also have worked well.
 
 > b. Accommodation takings in the state of Tasmania from `aus_accommodation`.
 
@@ -110,16 +112,14 @@ turkey |> features(GDP, guerrero)
 
 tas <- aus_accommodation |> filter(State == "Tasmania")
 tas |> autoplot(Takings)
-```
-```
 tas |> autoplot(log(Takings))
 tas |> autoplot(log(Takings) |> difference(lag = 4))
 tas |> autoplot(log(Takings) |> difference(lag = 4) |> difference())
 tas |> features(Takings, guerrero)
 ```
 
-- Logs followed by seasonal and first differences make the data appear stationary.
 - The automatically selected Box-Cox $\lambda$ value is very close to zero, confirming the choice of using logs.
+- The seasonally differenced logged data still wander, so we also take a first difference; the doubly differenced data appear stationary.
 
 > c. Monthly sales from `souvenirs`.
 
@@ -133,8 +133,8 @@ souvenirs |> autoplot(log(Sales) |> difference(lag = 12) |> difference())
 souvenirs |> features(Sales, guerrero)
 ```
 
-- Logs followed by seasonal and first differences make the data appear stationary.
 - The automatically selected Box-Cox $\lambda$ value is very close to zero, confirming the choice of using logs.
+- The seasonally differenced logged data still show some wandering, so we also take a first difference; the doubly differenced data appear stationary.
 
 # fpp3 9.11, Ex4
 

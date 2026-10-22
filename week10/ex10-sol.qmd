@@ -22,7 +22,7 @@ aus_production |>
   autoplot(Electricity)
 ```
 
-Yes, these need transforming.
+Yes, these need transforming, as the seasonal variation increases with the level of the series.
 
 ```{r}
 #| label: ex11a2
@@ -34,7 +34,7 @@ aus_production |>
   autoplot(box_cox(Electricity, lambda))
 ```
 
-`guerrero()` suggests using Box-Cox transformation with parameter $\lambda = `r round(lambda,2)`$.
+The Guerrero method suggests using a Box-Cox transformation with parameter $\lambda = `r round(lambda,2)`$.
 
 > b. Are the data stationary?
 >    If not, find an appropriate differencing which yields stationary data.
@@ -57,15 +57,14 @@ aus_production |>
   )
 ```
 
-- It seems that we could have continued with only taking seasonal differences.
-  You may try this option.
-- We opt to take a first order difference as well.
+- The seasonally differenced data still wander a little, although we could have continued with only taking seasonal differences (you may try this option).
+- We take a first order difference as well.
 
 > c. Identify a couple of ARIMA models that might be useful in describing the time series.
 >    Which of your models is the best according to their AIC values?
 
 From the above graph, an AR(1) or an MA(1) with a seasonal MA(2) might work.
-So an ARIMA(1,1,0)(0,1,2) model for the transformed data.
+So we try an ARIMA(1,1,0)(0,1,2)$_4$ model for the transformed data, along with the model chosen by `ARIMA()`.
 
 ```{r}
 #| label: ex11c
@@ -83,12 +82,14 @@ fit |>
 glance(fit)
 ```
 
-Automatic model selection with `ARIMA()` has also taken a first order difference, and so we can compare the AICc values.
-This is a challenging ARIMA model to select manually and the automatic model is clearly better.
+Automatic model selection with `ARIMA()` has also taken a first order difference and a seasonal difference, and so we can compare the AIC (or AICc) values.
+This is a challenging ARIMA model to select manually and the automatic model is clearly better than mine.
 
 > d. Estimate the parameters of your best model and do diagnostic testing on the residuals.
 >    Do the residuals resemble white noise?
 >    If not, try to find another ARIMA model which fits better.
+
+The automatic model has 6 parameters, so we use `dof = 6` in the Ljung-Box test.
 
 ```{r}
 #| label: ex11d
@@ -108,7 +109,7 @@ fit |>
   features(.innov, ljung_box, dof = 6, lag = 12)
 ```
 
-Residuals look reasonable, they resemble white noise.
+The residuals look reasonable: there is a small spike in the ACF at lag 22, but the Ljung-Box test is not significant, so they resemble white noise.
 
 > e. Forecast the next 24 months of data using your preferred model.
 
@@ -171,8 +172,33 @@ fc <- aus_production |>
 fc |> autoplot(aus_production |> filter(year(Quarter) > 2000), level = 95)
 ```
 
-The STL-ARIMA approach has higher values and narrower prediction intervals.
-It is hard to know which is best without comparing against a test set.
+The STL-ARIMA approach has higher point forecasts (except in the first two quarters).
+Its prediction intervals are narrower than those from ETS, but are only narrower than those from ARIMA for the first two quarters.
+To decide which approach is best, we compare them on a test set consisting of the last two years of data.
+
+```{r}
+#| label: ex12b
+
+train <- aus_production |>
+  filter(Quarter <= max(Quarter) - 8)
+fc <- train |>
+  model(
+    ets = ETS(Electricity),
+    arima = ARIMA(box_cox(Electricity, lambda)),
+    stlarima = stlarima
+  ) |>
+  forecast(h = "2 years")
+fc |>
+  accuracy(
+    aus_production,
+    list(RMSE = RMSE, MAE = MAE, MAPE = MAPE, winkler = winkler_score),
+    level = 95
+  )
+```
+
+On this test set, ETS is best on all measures, followed by the seasonal ARIMA model, with the STL-ARIMA approach the worst.
+The Winkler scores show that the narrower prediction intervals from the ARIMA and STL-ARIMA models are too narrow, rather than more precise.
+One test set of eight quarters is not much evidence, but I would use the ETS model here.
 
 # fpp3 9.11, Ex13
 
@@ -198,6 +224,9 @@ fc |>
 ```
 
 Both sets of forecasts appear to have captured the underlying trend and seasonality effectively.
+The strong seasonality of holiday travel to the Snowy Mountains is reproduced in the forecasts, while the other Snowy Mountains series have no clear trend or seasonality, so their forecasts are flat.
+All four Melbourne series have increased in recent years, and their forecasts continue the upward trends.
+One problem is that the lower prediction interval limits for business and other travel to the Snowy Mountains are negative, which is impossible; a log transformation would avoid this.
 
 # fpp3 9.11, Ex14
 
@@ -214,11 +243,30 @@ myseries <- aus_retail |>
     `Series ID` == sample(aus_retail$`Series ID`, 1),
     Month < yearmonth("2018 Jan")
   )
+myseries |>
+  gg_tsdisplay(log(Turnover) |> difference(lag = 12), plot_type = "partial")
+```
+
+In Exercise 5, we found that logs and a seasonal difference were needed, possibly with a first difference as well.
+The ACF of the seasonally differenced data decays slowly, while the PACF has large spikes at lags 1 and 2, suggesting a non-seasonal AR(2) component.
+The PACF also has significant spikes at lags 12 and 24, suggesting a seasonal AR(2) component.
+So an ARIMA(2,0,0)(2,1,0)$_{12}$ model is a reasonable starting point.
+
+```{r}
+#| label: ex14a2
+
 fit <- myseries |>
   model(arima = ARIMA(log(Turnover)))
 report(fit)
 gg_tsresiduals(fit)
+fit |>
+  augment() |>
+  features(.innov, ljung_box, lag = 24, dof = 6)
 ```
+
+`ARIMA()` has chosen the same differencing and AR orders, but has also added non-seasonal and seasonal MA(1) terms.
+The AR coefficients sum to `r round(sum(coef(fit)$estimate[1:2]), 2)`, so the model is close to having a unit root, and is similar to a model with a first difference as well as a seasonal difference.
+The residuals look like white noise: there are a couple of small spikes in the ACF, but the Ljung-Box test is not significant.
 
 > b. compare the forecasts with those you obtained in earlier chapters;
 
@@ -252,25 +300,28 @@ From these 4 models, the STL-ARIMA model is doing better than the others.
 > c. Obtain up-to-date retail data from the [ABS website](https://bit.ly/absretail) (Cat 8501.0, Table 11), and compare your forecasts with the actual numbers.
 >    How good were the forecasts from the various models?
 
+The ABS stopped publishing the Retail Trade series after the June 2025 release, and in that release the Northern Territory clothing series (A3349767W) ends in September 2021. The data below are from Table 11 of that release, for January 2018 -- September 2021.
+
 ```{r}
 #| label: ex14c
-#| message: false
 
-update <- readabs::read_abs(
-  series_id = myseries$`Series ID`[1]
-) |>
-  mutate(
-    Month = yearmonth(date),
-    Turnover = value
-  ) |>
-  select(Month, Turnover) |>
-  filter(Month > max(myseries$Month), !is.na(Turnover)) |>
-  as_tsibble(index = Month)
+# ABS Retail Trade, Australia, June 2025, Table 11, Series A3349767W
+update <- tsibble(
+  Month = yearmonth("2018 Jan") + 0:44,
+  Turnover = c(
+    11.9, 10.5, 11.6, 12.7, 14.3, 15.3, 16.5, 16.0, 14.3, 14.3, 15.2, 20.1,
+    11.7, 10.4, 11.9, 12.3, 13.6, 14.2, 15.5, 15.4, 13.4, 13.5, 14.5, 20.1,
+    11.1, 9.8, 9.1, 5.4, 11.8, 14.0, 18.6, 16.4, 15.9, 16.4, 16.7, 25.7,
+    13.5, 11.3, 13.6, 14.8, 15.7, 14.9, 16.5, 15.9, 17.4
+  ),
+  index = Month
+)
 fc |>
   accuracy(update)
 ```
 
 With a longer test set, the STL-ARIMA model is still best.
+None of the models could have anticipated the sharp drop in April 2020 due to COVID-19 restrictions.
 
 # fpp3 9.11, Ex15
 
@@ -296,13 +347,14 @@ pelt |>
 > c. By examining the ACF and PACF of the data, explain why this model is appropriate.
 
 ```{r}
-pelt |> gg_tsdisplay(Hare, plot = "partial")
+pelt |> gg_tsdisplay(Hare, plot_type = "partial")
 fit <- pelt |> model(AR4 = ARIMA(Hare ~ pdq(4, 0, 0)))
 fit |> gg_tsresiduals()
 ```
 
-- The significant spike at lag 4 of the PACF indicates an AR(4).
-- The residuals from this model are clearly whhite noise.
+- The PACF has significant spikes at lags 1, 2 and 4 (and almost at lag 3), and no significant partial autocorrelations after lag 4, which indicates an AR(4).
+- The ACF shows a damped sinusoidal pattern, consistent with an AR model.
+- The residuals from this model look like white noise.
 
 > d. The last five values of the series are given below:
 
@@ -400,14 +452,15 @@ This is an ARIMA(3,1,0), hence $p = 3$, $d = 1$ and $q = 0$.
 > c. Explain why this model was chosen using the ACF and PACF of the differenced series.
 
 ```{r}
-swiss_pop |> gg_tsdisplay(Population, plot = "partial")
+swiss_pop |> gg_tsdisplay(Population, plot_type = "partial")
 ```
 
 ```{r}
-swiss_pop |> gg_tsdisplay(difference(Population), plot = "partial")
+swiss_pop |> gg_tsdisplay(difference(Population), plot_type = "partial")
 ```
 
-The significant spike at lag 3 in the PACF, coupled with the exponential decay in the ACF, for the differenced series, signals an AR(3) for the differenced series.
+The original series is clearly non-stationary (with a slowly decaying ACF), so it needs differencing.
+For the differenced series, the last significant spike in the PACF is at lag 3, and the ACF decays in a damped sinusoidal pattern, which signals an AR(3) for the differenced series.
 
 > d. The last five values of the series are given below.
 

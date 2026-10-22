@@ -25,21 +25,23 @@ fit <- souvenirs |>
 tidy(fit) |> print(n = 50)
 ```
 
-The coefficients are all relatively close.
+The error process selected is ARIMA(1,0,2).
+The regression coefficients are all relatively close in the two models, although the effect of the surfing festival is a little smaller when the errors are allowed to be autocorrelated.
 
 > b. How much difference does the ARIMA error process make to the forecasts?
 
 ```{r}
 #| label: ex2b
 
-future_souvenirs <- new_data(souvenirs, n = 24) |>
+future_souvenirs <- new_data(souvenirs, n = 36) |>
   mutate(festival = month(Month) == 3)
 fit |>
   forecast(new_data = future_souvenirs) |>
   autoplot(souvenirs, level = 95)
 ```
 
-The forecasts are also extremely close.
+The forecasts are similar, but those from the model with ARIMA errors are slightly higher.
+The prediction intervals from the model with ARIMA errors are narrower at all horizons.
 
 > c. Check the residuals of the fitted model to ensure the ARIMA process has adequately addressed the autocorrelations seen in the `TSLM` model.
 
@@ -51,7 +53,7 @@ fit |>
   gg_tsresiduals()
 ```
 
-These look fine.
+The residuals from the model with ARIMA errors look like white noise.
 
 # fpp3 10.7, Ex 3
 
@@ -144,7 +146,8 @@ augment(best_model) |>
   features(.innov, ljung_box, dof = 6, lag = 21)
 ```
 
-The model fails the residual tests but the significant autocorrelations are relatively small, so it should still give reasonable forecasts.
+Some of the standard errors are `NaN`, suggesting some of the ARIMA parameters are poorly identified.
+The model passes the Ljung-Box test, and the few significant autocorrelations are relatively small, so it should give reasonable forecasts.
 The residuals look like they have some heteroskedasticity, but otherwise look ok.
 
 ```{r}
@@ -192,6 +195,9 @@ aus_accommodation |>
   autoplot(adjTakings)
 ```
 
+CPI-adjusted takings have increased in all states over the period, with strong seasonality in most states (but little in the ACT and Western Australia).
+Takings in New South Wales and Victoria grew faster after about 2014, Queensland was flat from about 2007 to 2014, and Western Australia has fallen since about 2012.
+
 > b. For each state, fit a dynamic regression model of CPI-adjusted takings with seasonal dummy variables, a piecewise linear time trend with one knot at 2008 Q1, and ARIMA errors.
 
 ```{r}
@@ -204,7 +210,7 @@ fit <- aus_accommodation |>
 fit
 ```
 
-The seasonal dummy variable has not adequately handled the seasonality, so there are seasonal ARIMA components.
+For six of the eight states (all except the ACT and Western Australia), the seasonal dummy variables have not adequately handled the seasonality, so there are seasonal ARIMA components in the error models.
 
 > c. Check that the residuals of the model look like white noise.
 
@@ -216,11 +222,14 @@ fit |>
   gg_tsresiduals()
 ```
 
-No apparent problems.
-Similar plots needed for the other states.
+There are no apparent problems for Victoria.
+Similar plots are needed for the other states.
 
 > d. Forecast the takings for each state to the end of 2017.
 >    (Hint: You will need to produce forecasts of the CPI first.)
+
+The data end in 2016 Q2, so we need forecasts for the next six quarters.
+We forecast the CPI using an ARIMA model, then forecast the CPI-adjusted takings, and multiply them by the CPI forecasts to obtain forecasts of takings.
 
 ```{r}
 #| label: ex4d
@@ -363,15 +372,16 @@ ARIMA(0,1,1)(2,1,0)$_{12}$
 > | :--------- | -------: | :----: | ----: | :-------: |
 > | $\beta_1$  |   0.0077 | 0.0015 |  4.98 |   0.000   |
 > | $\beta_2$  |   0.0208 | 0.0023 |  9.23 |   0.000   |
-> | $\theta_1$ |   0.5830 | 0.0720 |  8.10 |   0.000   |
+> | $\theta_1$ |  -0.5830 | 0.0720 | -8.10 |   0.000   |
 > | $\Phi_{1}$ |  -0.5373 | 0.0856 | -6.27 |   0.000   |
 > | $\Phi_{2}$ |  -0.4667 | 0.0862 | -5.41 |   0.000   |
 >
 > Explain what the estimates of $\beta_1$ and $\beta_2$ tell us about electricity consumption.
 
 $\beta_1$ is the unit increase in $y_t^*$ when $x_{1,t}^*$ increases by 1.
+As $y_t^* = \log(y_t)$, a unit increase in the square root of heating degrees is associated with an increase of about 0.77% in electricity consumption, holding cooling degrees constant.
 This is a little hard to interpret, but it is clear that monthly total electricity usage goes up when monthly heating degrees goes up.
-Similarly, for $\beta_2$, monthly total electricity usage goes up when monthly cooling degrees goes up.
+Similarly, for $\beta_2$, a unit increase in the square root of cooling degrees is associated with an increase of about 2.1% in electricity consumption, so monthly total electricity usage goes up when monthly cooling degrees goes up.
 
 > c. Write the equation in a form more suitable for forecasting.
 
@@ -379,8 +389,8 @@ This turned out to be way more messy than I expected, but for what it's worth, h
 
 First apply the differences to the regression equation.
 $$
-  (1 - B)(1 - B^{12}) y_t^* = \beta_1^*(1 - B)(1 - B^{12})x_{1,t}^*
-                              + \beta_2^*(1 - B)(1 - B^{12})x_{2,t}^*
+  (1 - B)(1 - B^{12}) y_t^* = \beta_1(1 - B)(1 - B^{12})x_{1,t}^*
+                              + \beta_2(1 - B)(1 - B^{12})x_{2,t}^*
                               + (1 - B)(1 - B^{12})\eta_{t}
 $$
 So
@@ -389,6 +399,7 @@ $$
   = \beta_1(x^*_{1,t} - x^*_{1,t-1} - x^*_{1,t-12} + x^*_{1,t-13})
     + \beta_2(x^*_{2,t} - x^*_{2,t-1} - x^*_{2,t-12} + x^*_{2,t-13}) + \eta'_t
 $$
+where $\eta'_t = (1 - B)(1 - B^{12})\eta_t$ satisfies $(1 - \Phi_{1}B^{12} - \Phi_{2}B^{24})\eta'_t = (1 + \theta_1 B)\varepsilon_t$.
 Multiplying by the AR polynomial gives
 \begin{align*}
   (y^*_{t} & -y^*_{t-1} - y^*_{t-12} + y^*_{t-13})

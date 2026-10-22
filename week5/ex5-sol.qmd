@@ -67,7 +67,7 @@ fit |>
 
 The residuals do not appear to be white noise as the ACF plot contains many significant lags.
 It is also clear that the seasonal component is not captured by the drift method, as there exists a strong positive auto-correlation at lag 12 (1 year).
-The histogram appears to have a slightly long left tail.
+The histogram is fairly symmetric, with a slightly long left tail.
 
 # fpp3 5.11, Ex 9
 
@@ -81,6 +81,8 @@ train <- hh_budget |>
 ```
 
 > b. Fit all the appropriate benchmark methods to the training set and forecast the periods covered by the test set.
+
+The data are annual, so there is no seasonality and the seasonal naive method is not appropriate.
 
 ```{r}
 #| label: ex92
@@ -136,7 +138,8 @@ fit |>
   gg_tsresiduals()
 ```
 
-In all cases, the residuals look like white noise.
+In all cases, the residuals look like white noise: no autocorrelations are outside the bounds.
+With only 17 residuals per country, though, the ACF plots have little power to detect autocorrelation.
 
 # fpp3 5.11, Ex 10
 
@@ -191,7 +194,7 @@ fit |>
 ```
 
 This is far from white noise.
-There is strong seasonality and increasing variance that has not been accounted for by the naive model.
+There is strong seasonality (large autocorrelations at lags 12 and 24) and increasing variance that has not been accounted for by the naive model.
 
 # fpp3 5.11, Ex 12
 
@@ -240,3 +243,5 @@ gc_fc |> accuracy(gc_tourism)
 ```
 
 The second set of forecasts are most accurate (as can be seen in the previous plot), however this is likely due to chance.
+The MAPE varies from about 4% for 2016 to about 15% for 2017, so the accuracy measured on a single year of test data depends heavily on which year is used.
+Averaging over several test sets (as in time series cross-validation) gives a more reliable measure of accuracy.

@@ -36,6 +36,7 @@ aus_production
 ```
 
 The observations are quarterly.
+The `Bricks` column has some missing values (at the end of the series).
 
 ```{r}
 aus_production |> autoplot(Bricks)
@@ -66,8 +67,7 @@ gafa_stock
 ```
 
 Interval is daily.
-Looking closer at the data, we can see that the index is a Date variable.
-It also appears that observations occur only on trading days, creating lots of implicit missing values.
+Looking closer at the data, we can see that the index is a Date variable, and that observations occur only on trading days, creating lots of implicit missing values (weekends and public holidays).
 
 ```{r}
 gafa_stock |>
@@ -127,7 +127,7 @@ vic_elec |>
 ```
 
 Here the annual seasonality is clear, with high volatility in summer, and peaks in summer and winter.
-The weekly seasonality is also visible, but the daily seasonality is hidden due to the compression on the horizontal axis.
+The weekly and daily seasonality are hidden due to the compression on the horizontal axis.
 
 # fpp3 2.10, Ex 2
 
@@ -143,7 +143,7 @@ gafa_stock |>
 
 # fpp3 2.10, Ex 3
 
-> Download the file `tute1.csv` from [the book website](http://OTexts.com/fpp3/extrafiles/tute1.csv), open it in Excel (or some other spreadsheet application), and review its contents.
+> Download the file `tute1.csv` from [the book website](https://bit.ly/fpptute1), open it in Excel (or some other spreadsheet application), and review its contents.
 > You should find four columns of information.
 > Columns B through D each contain a quarterly series, labelled Sales, AdBudget and GDP.
 > Sales contains the quarterly sales for a small company over the period 1981-2005.
@@ -156,14 +156,14 @@ gafa_stock |>
 >    View(tute1)
 >    ```
 >
-> b. Convert the data to time series:
+> b. Convert the data to time series
 >    ```r
 >    mytimeseries <- tute1 |>
 >      mutate(Quarter = yearquarter(Quarter)) |>
 >      as_tsibble(index = Quarter)
 >    ```
 >
-> c. Construct time series plots of each of the three series:
+> c. Construct time series plots of each of the three series
 >    ```r
 >    mytimeseries |>
 >      pivot_longer(-Quarter) |>
@@ -194,16 +194,18 @@ mytimeseries |>
   geom_line()
 ```
 
+Each series is shown in its own panel, with its own scale.
+If we plot the three series on the same axes instead, the scales of the series are very different, so it is harder to see the patterns in GDP.
+
 # fpp3 2.10, Ex 4
 
 > The `USgas` package contains data on the demand for natural gas in the US.
-
+>
 > a. Install the `USgas` package.
 > b. Create a tsibble from `us_total` with year as the index and state as the key.
 > c. Plot the annual natural gas consumption by state for the New England area (comprising the states of Maine, Vermont, New Hampshire, Massachusetts, Connecticut and Rhode Island).
 
 ```{r}
-install.packages("USgas", repos = "https://cran.ms.unimelb.edu.au/")
 library(USgas)
 us_tsibble <- us_total |>
   as_tsibble(index = year, key = state)
@@ -226,7 +228,7 @@ us_tsibble |>
 
 # fpp3 2.10, Ex 5
 
-> a. Download `tourism.xlsx` from [the book website](http://OTexts.com/fpp3/extrafiles/tourism.xlsx) and read it into R using `readxl::read_excel()`.
+> a. Download `tourism.xlsx` from [the book website](https://bit.ly/fpptourism) and read it into R using `readxl::read_excel()`.
 > b. Create a tsibble which is identical to the `tourism` tsibble from the `tsibble` package.
 > c. Find what combination of `Region` and `Purpose` had the maximum number of overnight trips on average.
 > d. Create a new tsibble which combines the Purposes and Regions, and just has total trips by State.
@@ -257,8 +259,9 @@ state_tourism
 # fpp3 2.10, Ex 6
 
 > The `aus_arrivals` data set comprises quarterly international arrivals to Australia from Japan, New Zealand, UK and the US.
-> Use `autoplot()`, `gg_season()` and `gg_subseries()` to compare the differences between the arrivals from these four countries.
-> Can you identify any unusual observations?
+>
+> - Use `autoplot()`, `gg_season()` and `gg_subseries()` to compare the differences between the arrivals from these four countries.
+> - Can you identify any unusual observations?
 
 ```{r}
 aus_arrivals |> autoplot(Arrivals)
@@ -270,14 +273,14 @@ Interestingly, the number of visitors from NZ peaks sharply in 1988.
 The seasonal pattern from Japan appears to change substantially.
 
 ```{r}
-#! fig-height: 10
+#| fig-height: 10
 aus_arrivals |> gg_season(Arrivals, labels = "both")
 ```
 
-The seasonal pattern of arrivals appears to vary between each country.
-In particular, arrivals from the UK appears to be lowest in Q2 and Q3, and increase substantially for Q4 and Q1.
-Whereas for NZ visitors, the lowest period of arrivals is in Q1, and highest in Q3.
-Similar variations can be seen for Japan and US.
+The seasonal pattern of arrivals varies between countries.
+Arrivals from the UK and the US peak in Q4 and Q1, which include the Australian summer and the Christmas and New Year holiday period, with Q2 and Q3 being the troughs.
+Arrivals from Japan are lowest in Q2, and usually highest in Q1 or Q4, although in some years Q3 is the peak; Q3 arrivals possibly correspond to the winter ski season or to visits to northern Australia during the dry season.
+New Zealand is noticeably different: arrivals are lowest in Q1 (the summer quarter) in every year, and usually highest in Q3.
 
 ```{r}
 aus_arrivals |> gg_subseries(Arrivals)
@@ -287,17 +290,17 @@ The subseries plot reveals more interesting features.
 It is evident that whilst the UK arrivals is increasing, most of this increase is seasonal.
 More arrivals are coming during Q1 and Q4, whilst the increase in Q2 and Q3 is less extreme.
 The growth in arrivals from NZ and US appears fairly similar across all quarters.
-There exists an unusual spike in arrivals from the US in 1992 Q3.
+There exists an unusual spike in arrivals from the US in 1991 Q3.
 
 Unusual observations:
 
 - 2000 Q3: Spikes from the US (Sydney Olympics arrivals)
 - 2001 Q3-Q4 are unusual for US (9/11 effect)
-- 1991 Q3 is unusual for the US (Gulf war effect?)
+- 1991 Q3 is unusually high for the US
 
 # fpp3 2.10, Ex 7
 
-> Monthly Australian retail data is provided in aus_retail.
+> Monthly Australian retail data is provided in `aus_retail`.
 > Select one of the time series as follows (but choose your own seed value):
 >
 >    ```r
@@ -308,9 +311,9 @@ Unusual observations:
 >
 > Explore your chosen retail time series using the following functions:
 >
->    ```r
->    autoplot(), gg_season(), gg_subseries(), gg_lag(), ACF() |> autoplot()
->    ```
+> `autoplot()`, `gg_season()`, `gg_subseries()`, `gg_lag()`,
+>
+> `ACF() |> autoplot()`
 >
 > Can you spot any seasonality, cyclicity and trend?
 > What do you learn about the series?
@@ -331,6 +334,7 @@ myseries |>
   )
 ```
 
+With this seed, we have turnover for clothing, footwear and personal accessory retailing in the Northern Territory.
 The data features a non-linear upward trend and a strong seasonal pattern.
 The variability in the data appears proportional to the amount of turnover (level of the series) over the time period.
 
@@ -371,6 +375,8 @@ myseries |>
   ACF(Turnover, lag_max = 50) |>
   autoplot()
 ```
+
+The lag plots and ACF show strong positive autocorrelation that decays slowly (due to the trend), with peaks at lags 12, 24, 36 and 48 (due to the seasonality).
 
 # fpp3 2.10, Ex 8
 
@@ -428,7 +434,8 @@ aus_production |>
 ```
 
 A positive trend in the first 20 years, and a negative trend in the next 25 years.
-Strong quarterly seasonality, with some cyclicity -- note the recessions in the 1970s and 1980s.
+Clear quarterly seasonality, although it is small compared to the trend, with some cyclicity -- note the recessions in the 1970s and 1980s, which show up as unusually low production in 1975 Q1, and in 1982 Q4 and 1983 Q1.
+Production was also unusually low in early 2001.
 
 ```{r}
 aus_production |>
@@ -452,7 +459,8 @@ aus_production |>
   autoplot()
 ```
 
-The seasonality shows up as peaks at lags 4, 8, 12, 16, 20, .... The trend is seen with the slow decline on the positive side.
+The strong positive relationships in the lag plots are dominated by the trend.
+The seasonality shows up as small peaks at lags 4, 8, 12, 16, 20, .... The trend is seen with the slow decline on the positive side.
 
 ## Snow hare trappings in Canada
 
@@ -462,6 +470,8 @@ pelt |>
 ```
 
 There is some cyclic behaviour with substantial variation in the length of the period.
+The peaks in 1863--1864 and 1885--1886 are unusually high.
+This is annual data, so there is no seasonality and we don't need seasonal plots.
 
 ```{r}
 pelt |>
@@ -490,7 +500,7 @@ h02 |>
   autoplot(Cost)
 ```
 
-A positive trend with strong monthly seasonality, dropping suddenly every February.
+A positive trend with strong annual seasonality: costs rise through the year to a peak in December or January, and drop suddenly every February.
 
 ```{r}
 h02 |>
@@ -512,8 +522,8 @@ h02 |>
   autoplot()
 ```
 
-The large January sales show up as a separate cluster of points in the lag plots.
-The strong seasonality is clear in the ACF plot.
+The sudden drop every February splits the lag plots into two clusters: pairs of months that straddle the drop fall well below the main band of points.
+At lag 12 the points lie close to a straight line, and the strong seasonality is clear in the ACF plot, with a peak at lag 12.
 
 ## US gasoline sales
 
@@ -531,14 +541,15 @@ us_gasoline |>
 ```
 
 There is a lot of noise making it hard to see the overall seasonal pattern.
-However, it seems to drop towards the end of quarter 4.
+However, sales tend to be highest in Q3 (the northern summer) and lowest in Q1.
 
 ```{r}
 us_gasoline |>
   gg_subseries(Barrels)
 ```
 
-The blue lines are helpful in seeing the average seasonal pattern.
+The seasonal period of weekly data is not an integer (about 52.18 weeks per year), but `gg_subseries()` handles this by grouping the observations by week of the year.
+With 52 panels, the individual subseries are too cramped to be useful, but the blue lines are helpful in seeing the average seasonal pattern.
 
 ```{r}
 us_gasoline |>
@@ -548,7 +559,8 @@ us_gasoline |>
   autoplot()
 ```
 
-The seasonality is seen if we increase the lags to at least 2 years (approx 104 weeks)
+The lag plots are not very useful, as the seasonal period (about 52 weeks) is much longer than the lags shown; they mostly reflect the trend.
+The seasonality is seen in the ACF if we increase the lags to at least 2 years (approx 104 weeks).
 
 # fpp3 2.10, Ex 9
 
@@ -589,7 +601,7 @@ In contrast, a white noise plot does not exhibit any trend.
 vic_pigs |> ACF(Count) |> autoplot()
 ```
 
-The first 14 lags are significant, as the ACF slowly decays.
+The first 15 lags are significant, as the ACF slowly decays.
 This suggests that the data contains a trend.
 A white noise ACF plot would not usually contain any significant lags.
 The large spike at lag 12 suggests there is some seasonality in the data.
@@ -601,7 +613,7 @@ aus_livestock |>
   autoplot()
 ```
 
-The longer series has much larger autocorrelations, plus clear evidence of seasonality at the seasonal lags of $12, 24, \dots$.
+The longer series has much larger autocorrelations that decay more slowly, as the trend dominates over the longer period, plus a clear seasonal peak at lag 12.
 
 # fpp3 2.10, Ex 11
 
@@ -630,12 +642,12 @@ dgoog <- gafa_stock |>
 ```
 
 The tsibble needed re-indexing as trading happens irregularly.
-The new index is based only on trading days.
+The new index is based only on trading days, so consecutive observations are one step apart.
 
 ```{r}
 dgoog |> autoplot(diff)
 dgoog |> ACF(diff, lag_max = 100) |> autoplot()
 ```
 
-There are some small significant autocorrelations out to lag 24, but nothing after that.
+There are only two small significant autocorrelations (at lags 8 and 24) out of 100.
 Given the probability of a false positive is 5%, these look similar to white noise.

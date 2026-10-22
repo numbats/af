@@ -17,6 +17,8 @@ library(fpp3)
 > a. Use the `ETS()` function to estimate the equivalent model for simple exponential smoothing.
 >    Find the optimal values of $\alpha$ and $\ell_0$, and generate forecasts for the next four months.
 
+Simple exponential smoothing is equivalent to an ETS(A,N,N) model.
+
 ```{r}
 #| label: ex1a
 
@@ -26,7 +28,7 @@ fit <- aus_livestock |>
 report(fit)
 ```
 
-Optimal values are $\alpha = `r format(broom::tidy(fit)[["estimate"]][1])`$ and $\ell_0 = `r format(broom::tidy(fit)[["estimate"]][2])`$
+Optimal values are $\alpha = `r format(broom::tidy(fit)[["estimate"]][1])`$ and $\ell_0 = `r format(broom::tidy(fit)[["estimate"]][2])`$.
 
 ```{r}
 #| label: ex1b
@@ -40,6 +42,8 @@ fc |>
 
 > b. Compute a 95% prediction interval for the first forecast using $\hat{y} \pm 1.96s$ where $s$ is the standard deviation of the residuals.
 >    Compare your interval with the interval produced by R.
+
+For part b, we need the residuals and the first point forecast.
 
 ```{r}
 #| label: ex1c
@@ -65,9 +69,8 @@ fc |>
 ```
 
 The intervals are close but not identical.
-This is because R estimates the variance of the residuals differently, taking account of the degrees of freedom properly (and also using a more accurate critical value rather than just 1.96).
-
-Try the following.
+This is because fable estimates the variance of the residuals differently, taking account of the degrees of freedom (and also using a more accurate critical value rather than just 1.96).
+fable divides the sum of squared residuals by $T-2$ (that is, $T$ minus the two estimated parameters $\alpha$ and $\ell_0$).
 
 ```{r}
 #| label: ex1e
@@ -77,6 +80,8 @@ res <- augment(fit) |> pull(.resid)
 s <- sqrt(sum(res^2) / (length(res) - NROW(tidy(fit))))
 yhat + c(-1, 1) * qnorm(0.975) * s
 ```
+
+This reproduces the interval from fable.
 
 # fpp3 8.8, Ex2
 
@@ -105,7 +110,7 @@ ses_fc <- vic_pigs_vec |>
 c(my_ses = ses_fc, fable = fc$.mean[1])
 ```
 
-Yes, the same forecasts are obtained.
+Yes, the same forecast is obtained.
 The slight differences are due to rounding of $\alpha$ and $\ell_0$.
 
 # fpp3 8.8, Ex3
@@ -131,8 +136,8 @@ optim(c(0.1, vic_pigs_vec[1]), my_ses_sse, y = vic_pigs_vec)$par
 tidy(fit)
 ```
 
-Similar, but not identical estimates.
-This is due to different starting values being used.
+The estimates are similar, but not identical.
+This is due to the different starting values: the SSE surface is very flat near the optimum, so the two optimisations stop at slightly different points.
 
 # fpp3 8.8, Ex4
 
@@ -153,6 +158,8 @@ my_ses <- function(y) {
 my_ses(vic_pigs_vec)
 ```
 
+This is very close to the forecast of `ETS()` in Exercise 1 (95186.6), the small difference being due to the slightly different parameter estimates.
+
 # fpp3 8.8, Ex5
 
 > Data set `global_economy` contains the annual Exports from many countries.
@@ -166,8 +173,8 @@ global_economy |>
   autoplot(Exports)
 ```
 
-There is a huge jump in Exports in 2002, due to the deregulation of the Argentinian peso.
-Since then, Exports (as a percentage of GDP) has gradually returned to 1990 levels.
+There is a huge jump in Exports in 2002, due to the devaluation of the Argentinian peso.
+Since then, Exports (as a percentage of GDP) has gradually fallen back towards the levels of the 1990s.
 
 > b. Use an ETS(A,N,N) model to forecast the series, and plot the forecasts.
 
@@ -200,7 +207,7 @@ fit <- global_economy |>
 accuracy(fit)
 ```
 
-There is very little difference in training RMSE between these models.
+There is very little difference in training RMSE between these models (the Holt model is very slightly worse on MAE, MAPE and MASE).
 So the extra parameter is not doing much.
 
 > e. Compare the forecasts from both methods.
@@ -212,15 +219,13 @@ fit |>
   autoplot(global_economy)
 ```
 
-- The forecasts are similar.
-  In this case, the *simpler* model is preferred.
+The forecasts are similar: the estimated trend in the Holt model is small (about 0.07 percentage points per year).
+In this case, the *simpler* model is preferred.
 
 > f. Calculate a 95% prediction interval for the first forecast for each model, using the RMSE values and assuming normal errors.
 >    Compare your intervals with those produced using R.
 
-1. standard error.
-   (from RMSE)
-2. mean (from forecast)
+For part f, we need the standard error (from the RMSE) and the mean (from the forecasts).
 
 ```{r}
 s <- accuracy(fit) |> pull(RMSE)
@@ -234,10 +239,9 @@ fit |>
   mutate(PI = hilo(Exports, level = 95))
 ```
 
-- Using RMSE yields narrower prediction interval while using the values from `hilo()` function gives wider prediction interval.
-
-- Using RMSE has failed to take account of the degrees of freedom for each model.
-  Compare the following
+Using the RMSE yields narrower prediction intervals than those produced by fable.
+Using the RMSE has failed to take account of the degrees of freedom for each model.
+Compare the following, where the sum of squared errors is divided by $T$ minus the number of estimated parameters.
 
 ```{r}
 sse <- augment(fit) |>
@@ -250,8 +254,8 @@ n <- global_economy |>
   filter(Country == "Argentina") |>
   nrow()
 
-# sse method= alpha, level=> 2
-# holt linear = alpha, level, trend, b => 4
+# SES: 2 parameters (alpha, l0)
+# Holt's linear: 4 parameters (alpha, beta, l0, b0)
 
 s <- sqrt(sse / (n - c(2, 4)))
 
@@ -260,6 +264,9 @@ yhat[1] + c(-1, 1) * qnorm(0.975) * s[1]
 # Holt
 yhat[2] + c(-1, 1) * qnorm(0.975) * s[2]
 ```
+
+These reproduce the fable intervals.
+The difference from the RMSE-based intervals is larger for Holt's method as it has more parameters.
 
 # fpp3 8.8, Ex6
 
@@ -275,17 +282,15 @@ china <- global_economy |>
 china |> autoplot(GDP)
 ```
 
-- It clearly needs a relatively strong transformation due to the increasing variance.
+It clearly needs a relatively strong transformation due to the increasing variance.
 
 ```{r}
 china |> autoplot(box_cox(GDP, 0.2))
 china |> features(GDP, guerrero)
 ```
 
-- Making $\lambda = 0.2$ looks ok.
-
-- The Guerrero method suggests an even stronger transformation.
-  Let's also try a log.
+Making $\lambda = 0.2$ looks ok.
+The Guerrero method suggests an even stronger transformation (a small negative $\lambda$), so let's also try a log.
 
 ```{r}
 fit <- china |>
@@ -305,8 +310,10 @@ fit |>
   autoplot(china, level = NULL)
 ```
 
-- The transformations have a big effect, with small lambda values creating big increases in the forecasts.
-- The damping has relatively a small effect.
+- The transformations have a big effect, with small $\lambda$ values creating big increases in the forecasts.
+  A linear trend on the transformed scale becomes a rapidly increasing trend on the original scale.
+- The damping has a relatively small effect (the estimated $\phi$ is 0.98, close to 1).
+- Without a transformation, `ETS()` chooses multiplicative errors, ETS(M,A,N), and its forecasts follow a linear trend from the end of the series.
 
 # fpp3 8.8, Ex16
 

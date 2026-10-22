@@ -49,6 +49,10 @@ ar1(0.05) |> autoplot(y) + labs(title = expression(paste(phi, "=0.05")))
 ar1(-0.65) |> autoplot(y) + labs(title = expression(paste(phi, "=-0.65")))
 ```
 
+- With $\phi_1$ close to 1, the series wanders, with long excursions away from zero (it is close to a random walk).
+- With $\phi_1$ close to 0, the series looks like white noise.
+- With $\phi_1 < 0$, the series oscillates rapidly around zero, as consecutive observations tend to have opposite signs.
+
 > c. Write your own code to generate data from an MA(1) model with $\theta_{1} = 0.6$ and $\sigma^2 = 1$.
 
 ```{r}
@@ -75,6 +79,10 @@ ma1(0.95) |> autoplot(y) + labs(title = expression(paste(theta, "=0.95")))
 ma1(0.05) |> autoplot(y) + labs(title = expression(paste(theta, "=0.05")))
 ma1(-0.65) |> autoplot(y) + labs(title = expression(paste(theta, "=-0.65")))
 ```
+
+The MA(1) series all look fairly similar to white noise.
+With $\theta_1 > 0$, the series is a little smoother (consecutive observations are positively correlated), and with $\theta_1 < 0$ it is a little more jagged.
+The variance of the series, $(1 + \theta_1^2)\sigma^2$, increases with $|\theta_1|$.
 
 > e. Generate data from an ARMA(1,1) model with $\phi_{1} = 0.6$, $\theta_{1} = 0.6$ and $\sigma^2 = 1$.
 
@@ -112,7 +120,8 @@ ar2(-0.8, 0.3) |> autoplot(y)
 > g. Graph the latter two series and compare them.
 
 See graphs above.
-The non-stationarity of the AR(2) process has led to increasing oscillations
+The ARMA(1,1) series is stationary, and wanders around zero with positive autocorrelation.
+The non-stationarity of the AR(2) process has led to increasing oscillations.
 
 # fpp3 9.11, Ex7
 
@@ -134,6 +143,10 @@ fit |> gg_tsresiduals()
 fit |> forecast(h = 10) |> autoplot(aus_airpassengers)
 ```
 
+An ARIMA(0,2,1) model was selected.
+The residuals look like white noise: there are no significant autocorrelations.
+The histogram suggests the residuals may not be normally distributed, but that only affects the prediction intervals.
+
 > b. Write the model in terms of the backshift operator.
 
 ```{r}
@@ -148,7 +161,7 @@ sigma2
 $$
   (1 - B)^2y_t = (1 + \theta B)\varepsilon_t
 $$
-where $\varepsilon \sim \text{N}(0,\sigma^2)$, $\theta = `r sprintf("%.2f",theta)`$ and $\sigma^2 = `r sprintf("%.2f",sigma2)`$.
+where $\varepsilon_t \sim \text{N}(0,\sigma^2)$, $\theta = `r sprintf("%.2f",theta)`$ and $\sigma^2 = `r sprintf("%.2f",sigma2)`$.
 
 > c. Plot forecasts from an ARIMA(0,1,0) model with drift and compare these to part a.
 
@@ -161,7 +174,8 @@ aus_airpassengers |>
   autoplot(aus_airpassengers)
 ```
 
-- Both containing increasing trends, but the ARIMA(0,2,1) model has an implicit trend due to the double-differencing, while the ARIMA(0,1,0) with drift models the trend directly via the trend coefficient.
+- Both contain increasing trends, but the ARIMA(0,2,1) model has an implicit trend due to the double-differencing, while the ARIMA(0,1,0) with drift models the trend directly via the drift coefficient.
+- The ARIMA(0,2,1) forecasts have a steeper slope (about 2.2 million passengers per year, compared with 1.4 million for the model with drift), as they follow the more recent growth.
 - The intervals are narrower when there are fewer differences.
 
 > d. Plot forecasts from an ARIMA(2,1,2) model with drift and compare these to parts a and c.
@@ -169,6 +183,7 @@ aus_airpassengers |>
 
 ```{r}
 #| label: ex7d
+#| warning: true
 
 aus_airpassengers |>
   model(arima = ARIMA(Passengers ~ 1 + pdq(2, 1, 2))) |>
@@ -178,8 +193,10 @@ aus_airpassengers |>
   model(arima = ARIMA(Passengers ~ 0 + pdq(2, 1, 2)))
 ```
 
-- There is little difference between ARIMA(2,1,2) with drift and ARIMA(0,1,0) with drift.
-- Removing the constant causes an error because the model cannot be estimated.
+- The point forecasts from the ARIMA(2,1,2) model with drift are very similar to those from the ARIMA(0,1,0) model with drift, apart from some small oscillations in the first few years.
+  The prediction intervals are slightly wider.
+- Removing the constant makes the estimation fail, with a "non-stationary AR part from CSS" error.
+  Without the drift, the AR terms have to account for the trend, which pushes the AR polynomial towards non-stationarity.
 
 > e. Plot forecasts from an ARIMA(0,2,1) model with a constant.
 >    What happens?
@@ -196,12 +213,13 @@ aus_airpassengers |>
 ```
 
 The forecast trend is now quadratic, and there is a warning that this is generally a bad idea.
+A constant with two differences implies a quadratic trend in the forecasts, which is rarely sensible.
 
 # fpp3 9.11, Ex8
 
 > For the United States GDP series (from `global_economy`):
 >
-> a. If necessary, find a suitable Box-Cox transformation for the data;
+> a. if necessary, find a suitable Box-Cox transformation for the data;
 
 ```{r}
 #| label: ex8a
@@ -219,7 +237,8 @@ lambda
 us_economy |>
   autoplot(box_cox(GDP, lambda))
 ```
-It seems that a Box-Cox transformation may be useful here.
+The Guerrero method gives $\lambda = 0.28$.
+The transformed series is closer to linear, so a Box-Cox transformation may be useful here.
 
 > b. fit a suitable ARIMA model to the transformed data using `ARIMA()`;
 
@@ -230,6 +249,8 @@ fit <- us_economy |>
   model(ARIMA(box_cox(GDP, lambda)))
 report(fit)
 ```
+
+An ARIMA(1,1,0) model with drift was selected.
 
 > c. try some other plausible models by experimenting with the orders chosen;
 
@@ -268,7 +289,7 @@ fit |>
   select(.model, AICc)
 ```
 
-The best according to the AICc values is the `r model_sum(fit[[glance(fit)[[".model"]][[which.min(glance(fit)$AICc)]]]][[1]])` model.
+The best according to the AICc values is the `r model_sum(fit[[glance(fit)[[".model"]][[which.min(glance(fit)$AICc)]]]][[1]])` model, the same model that was chosen by `ARIMA()`.
 
 ```{r}
 #| label: ex8d2
@@ -280,7 +301,7 @@ best_fit |> gg_tsresiduals()
 augment(best_fit) |> features(.innov, ljung_box, dof = 1, lag = 10)
 ```
 
-The residuals pass the Ljung-Box test, but the histogram looks like negatively skewed.
+The residuals pass the Ljung-Box test, but the histogram looks negatively skewed.
 
 > e. produce forecasts of your fitted model.
 >    Do the forecasts look reasonable?
@@ -305,6 +326,7 @@ fit1 |>
   autoplot(us_economy)
 ```
 
+Without a transformation, `ARIMA()` selects an ARIMA(0,2,2) model.
 Notice the effect of the transformation on the forecasts.
 Increase the forecast horizon to see what happens.
 Notice also the width of the prediction intervals.
@@ -321,6 +343,8 @@ us_economy |>
   autoplot(us_economy)
 ```
 
+The forecasts from the transformed data grow faster than those from the untransformed data, and their prediction intervals are wider and asymmetric.
+
 > f. compare the results with what you would obtain using `ETS()` (with no transformation).
 
 ```{r}
@@ -332,7 +356,9 @@ us_economy |>
   autoplot(us_economy)
 ```
 
-The point forecasts are similar, however the ETS forecast intervals are much wider.
+`ETS()` selects an ETS(M,A,N) model.
+Its point forecasts are similar to those from the ARIMA model for the untransformed data (26.1 and 25.6 trillion dollars in 2027), and lower than those from the ARIMA model for the transformed data (28.2 trillion dollars in 2027).
+However, the ETS forecast intervals are much wider.
 
 # fpp3 9.11, Ex9
 
@@ -367,7 +393,7 @@ aus_arrivals |>
 > c. What can you learn from the ACF graph of the differenced data?
 
 - The non-seasonal lags suggest an MA(1) component.
-- The seasonal lags suggest a seasonal MA(1) component
+- The seasonal lags suggest a seasonal MA(1) component.
 
 > d. What can you learn from the PACF graph of the differenced data?
 
@@ -378,7 +404,7 @@ aus_arrivals |>
 
 > e. What model do these graphs suggest?
 
-- The suggested model is an ARIMA(0,1,1)(0,1,1).
+- The suggested model is an ARIMA(0,1,1)(0,1,1)$_4$.
 
 > f. Does `ARIMA()` give the same model that you chose?
 >    If not, which model do you think is better?
@@ -386,10 +412,13 @@ aus_arrivals |>
 ```{r}
 #| label: ex9e
 
-aus_arrivals |>
+fit <- aus_arrivals |>
   filter(Origin == "Japan") |>
-  model(ARIMA(Arrivals)) |>
-  report()
+  model(ARIMA(Arrivals))
+report(fit)
+cf <- tidy(fit) |>
+  select(term, estimate) |>
+  tibble::deframe()
 ```
 
 The resulting model has an additional seasonal AR(1) component compared to what I guessed.
@@ -428,8 +457,9 @@ $$
 $$
   y_t = y_{t-1} + (1 + \Phi)y_{t-4} - (1 + \Phi) y_{t-5} - \Phi y_{t-8}
         + \Phi y_{t-9} + \varepsilon_t + \theta \varepsilon_{t-1}
-        + \Theta \varepsilon_{t-4} + \theta\Theta \varepsilon_{t-5}.
+        + \Theta \varepsilon_{t-4} + \theta\Theta \varepsilon_{t-5},
 $$
+where $\theta = `r round(cf["ma1"], 2)`$, $\Phi = `r round(cf["sar1"], 2)`$ and $\Theta = `r round(cf["sma1"], 2)`$.
 
 # fpp3 9.11 Ex 10
 
@@ -461,7 +491,7 @@ leisure |>
 ```
 
 - With such a long series, it is not surprising to see the seasonality change a lot over time.
-- The seasonal pattern changed in the 1990s to what is is now.
+- The seasonal pattern changed in the 1990s to what it is now.
 - The period of change was rapid, and the seasonal component hasn't fully captured the change, leading to some seasonality ending up in the remainder series.
 - The trend is increasing.
 
@@ -478,8 +508,8 @@ No transformation or log transformations led to the remainder series appearing t
 leisure |> features(Employed, guerrero)
 ```
 
-- The automatically selected transformation is close to logs.
-- My preference is for something a little larger.
+- The automatically selected transformation ($\lambda = -0.22$) is a little stronger than logs.
+- My preference is for something weaker.
 - I think the automatic procedure is confusing the changing seasonality with the increasing variance.
 
 > c. Are the data stationary?
@@ -492,7 +522,7 @@ leisure |>
   autoplot(sqrt(Employed) |> difference(lag = 12) |> difference())
 ```
 
-The double differenced logged data is close to stationary, although the variance has decreased over time.
+The double differenced square-rooted data is close to stationary, although the variance is not constant (it is smaller in the 1970s and 1980s than before or after), and there are some large values around 1990 when the seasonal pattern changed.
 
 > d. Identify a couple of ARIMA models that might be useful in describing the time series.
 >    Which of your models is the best according to their AICc values?
@@ -507,8 +537,8 @@ leisure |>
   )
 ```
 
-- This suggests that an ARIMA(2,1,0)(0,1,1) would be a good start.
-- An alternative would be an ARIMA(0,1,2)(0,1,1).
+- The ACF and PACF of the doubly differenced data suggest that an ARIMA(2,1,0)(0,1,1)$_{12}$ would be a good start: the PACF has a significant spike at lag 2, and the ACF has a large negative spike at lag 12.
+- An alternative would be an ARIMA(0,1,2)(0,1,1)$_{12}$.
 
 ```{r}
 #| label: ex10d2
@@ -521,7 +551,7 @@ fit <- leisure |>
 glance(fit)
 ```
 
-The ARIMA(2,1,0)(0,1,1) model is better.
+The ARIMA(2,1,0)(0,1,1)$_{12}$ model is better.
 
 > e. Estimate the parameters of your best model and do diagnostic testing on the residuals.
 >    Do the residuals resemble white noise?
@@ -550,7 +580,7 @@ glance(fit)
 fit |> select(auto) |> report()
 ```
 
-The automatically selected ARIMA(2,1,2)(0,1,1) model is better than either of my selections.
+The automatically selected ARIMA(2,1,2)(0,1,1)$_{12}$ model is better than either of my selections.
 
 ```{r}
 #| label: ex10e3
@@ -575,7 +605,7 @@ fc |>
   autoplot(us_employment |> filter(year(Month) > 2000))
 ```
 
-- Data downloaded from https://fred.stlouisfed.org/series/CEU7000000001
+Data downloaded from [https://fred.stlouisfed.org/series/CEU7000000001](https://fred.stlouisfed.org/series/CEU7000000001).
 
 ```{r}
 #| label: ex10f2
@@ -596,10 +626,30 @@ fc |>
   geom_line(data = update, aes(x = Month, y = Employed), col = 'red')
 ```
 
+The forecasts from the automatically selected model are shown in blue, and the actual values in red.
 The initial forecasts look great, but then the pandemic led to a huge impact on the employment in this industry.
+All three models have similar (and large) errors over the three years, with the automatically selected model slightly worse than the other two.
 
 > g. Eventually, the prediction intervals are so wide that the forecasts are not particularly useful.
 >    How many years of forecasts do you think are sufficiently accurate to be usable?
 
-Given the pandemic, about 5 months.
-Otherwise, perhaps 2--3 years.
+```{r}
+#| label: ex10g
+
+# Width of 95% prediction intervals relative to the point forecasts
+fit |>
+  select(auto) |>
+  forecast(h = "10 years") |>
+  mutate(h = row_number()) |>
+  filter(h %in% c(1, 6, 12, 24, 36, 60, 120)) |>
+  hilo(level = 95) |>
+  unpack_hilo(`95%`) |>
+  mutate(rel_width = (`95%_upper` - `95%_lower`) / .mean) |>
+  as_tibble() |>
+  select(Month, h, .mean, rel_width)
+```
+
+The 95% prediction intervals are narrow: their width is about 4% of the point forecast after one year, 11% after three years, 19% after five years and 42% after ten years.
+On that basis, the forecasts would be usable for about five years, after which the intervals become too wide to be of much use.
+However, the intervals assume that the future is like the past, and they do not allow for shocks such as the pandemic.
+The actual values fell outside the 95% intervals from March 2020 onwards, so in practice only the first 5 months of forecasts were usable.

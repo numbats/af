@@ -21,8 +21,8 @@ library(fpp3)
 aus_production |> autoplot(Gas)
 ```
 
-- There is a huge increase in variance as the series increases in level.
-  =\> That makes it necessary to use multiplicative seasonality.
+The size of the seasonal fluctuations increases hugely as the level of the series increases.
+That makes it necessary to use multiplicative seasonality.
 
 ```{r}
 fit <- aus_production |>
@@ -34,7 +34,7 @@ fit <- aus_production |>
 fit |> glance()
 ```
 
-- The non-damped model seems to be doing slightly better here, probably because the trend is very strong over most of the historical data.
+The non-damped model has a slightly lower AICc, probably because the trend is very strong over most of the historical data.
 
 ```{r}
 fit |>
@@ -49,8 +49,8 @@ fit |>
   features(.innov, ljung_box, lag = 24)
 ```
 
-- There is still some small *correlations* left in the residuals, showing the model has not fully captured the available information.
-- There also appears to be some *heteroskedasticity* in the residuals with larger variance in the first half the series.
+- There are still some correlations left in the residuals, and the Ljung-Box test is significant, showing the model has not fully captured the available information.
+- There also appears to be some heteroskedasticity in the residuals, with larger variance in the first half of the series.
 
 ```{r}
 fit |>
@@ -128,6 +128,8 @@ fit |> tidy()
 fit |> forecast(h = "2 years") |> autoplot(aus_trips)
 ```
 
+`ETS()` chooses an ETS(A,A,A) model.
+
 > f. Compare the RMSE of the ETS model with the RMSE of the models you obtained using STL decompositions.
 >    Which gives the better in-sample fits?
 
@@ -150,8 +152,8 @@ fit |>
 accuracy(fit)
 ```
 
-- The STL decomposition forecasts using the additive trend model, ETS(A,A,N), is slightly better in-sample.
-- However, note that this is a biased comparison as the models have different numbers of parameters.
+- The STL decomposition with the additive trend model, ETS(A,A,N), for the seasonally adjusted data is slightly better in-sample, with the damped trend version close behind.
+- However, note that this is a biased comparison as the models have different numbers of parameters (and the STL decomposition itself is not counted).
 
 > g. Compare the forecasts from the three approaches?
 >    Which seems most reasonable?
@@ -177,7 +179,8 @@ augment(best) |> gg_tsdisplay(.resid, lag_max = 24, plot_type = "histogram")
 augment(best) |> features(.innov, ljung_box, lag = 24)
 ```
 
-The residuals look okay and overall they are not significant.
+The residuals look okay.
+There is one significant autocorrelation at lag 14 (and two on the boundary at lags 20 and 23), but the Ljung-Box test is not significant.
 
 # fpp3 8.8, Ex11
 
@@ -213,10 +216,10 @@ nz_tr |>
 - The behaviour of the seasonal pattern will be captured and projected in a model with multiplicative seasonality.
 
 > d. Forecast the two-year test set using each of the following methods:
->      i) an ETS model;
->     ii) an additive ETS model applied to a log transformed series;
->    iii) a seasonal naïve method;
->     iv) an STL decomposition applied to the log transformed data followed by an ETS model applied to the seasonally adjusted (transformed) data.
+>    - an ETS model;
+>    - an additive ETS model applied to a log transformed series;
+>    - a seasonal naïve method;
+>    - an STL decomposition applied to the log transformed data followed by an ETS model applied to the seasonally adjusted (transformed) data.
 
 ```{r}
 fc <- nz_tr |>
@@ -245,7 +248,9 @@ fc |>
   accuracy(nzarrivals)
 ```
 
-- The best method is the ETS model on the logged data (based on RMSE), and it passes the residuals tests.
+The ETS model on the logged data gives the best forecasts on RMSE, although the ETS model on the original data is better on MAE, MAPE and MASE.
+(The test set is only 8 observations, so this comparison is not very reliable.)
+The ETS model chosen by `ETS()` for the logged data is an ETS(A,N,A) model.
 
 ```{r}
 log_ets <- nz_tr |>
@@ -254,6 +259,8 @@ log_ets |> gg_tsresiduals()
 augment(log_ets) |>
   features(.innov, ljung_box, lag = 12)
 ```
+
+The residuals look like white noise (a few autocorrelations are close to the boundaries, but none are clearly significant), and the Ljung-Box test is not significant, so it passes the residual tests.
 
 > f. Compare the same four methods using time series cross-validation instead of using a training and test set.
 >    Do you come to the same conclusions?
@@ -274,9 +281,9 @@ nz_cv |>
   accuracy(nzarrivals)
 ```
 
-- An initial fold size (`.init`) of 36 has been selected to ensure that sufficient data is available to make reasonable forecasts.
-- A step size of 3 (and forecast horizon of 3) has been used to reduce the computation time.
-- The ETS model on the log data still appears best (based on 3-step ahead forecast RMSE).
+- The step size of 3 and forecast horizon of 3 reduce the computation time, and the initial training set of 36 quarters (`.init = 36`) has sufficient data to make reasonable forecasts.
+- The ETS model on the log data is best on all measures except MAPE (where the STL model is slightly better), followed by the ETS model on the original data (on RMSE and MAE).
+- So the conclusions are the same: the ETS model on the log data gives the best forecasts on RMSE.
 
 # fpp3 8.8, Ex12
 
@@ -293,6 +300,8 @@ fc <- cement_cv |>
   forecast(h = "1 year")
 ```
 
+The last four observations are dropped before stretching, so that every training set is followed by a full year of actual values against which the 4-step forecasts can be compared.
+
 > b. Compute the MSE of the resulting $4$-step-ahead errors.
 >    Comment on which forecasts are more accurate.
 >    Is this what you expected?
@@ -303,7 +312,9 @@ fc |>
   mutate(h = row_number()) |>
   ungroup() |>
   as_fable(response = "Cement", distribution = Cement) |>
-  accuracy(aus_production, by = c(".model", "h"))
+  accuracy(aus_production, by = c(".model", "h")) |>
+  mutate(MSE = RMSE^2) |>
+  select(.model, h, MSE)
 ```
 
 The ETS results are better for all horizons, although getting closer as $h$ increases.
@@ -404,7 +415,7 @@ The STLM model does better than other approaches for this dataset.
 > a. Use `ETS()` to select an appropriate model for the following series: total number of trips across Australia using `tourism`, the closing prices for the four stocks in `gafa_stock`, and the lynx series in `pelt`.
 >    Does it always give good forecasts?
 
-## tourism
+## Tourism
 
 ```{r}
 aus_trips <- tourism |>
@@ -422,6 +433,8 @@ Forecasts appear reasonable.
 
 ## GAFA stock
 
+The stock prices are only observed on trading days, so we re-index them by trading day, giving regularly spaced observations.
+
 ```{r}
 gafa_regular <- gafa_stock |>
   group_by(Symbol) |>
@@ -437,9 +450,10 @@ gafa_regular |>
 gafa_regular |>
   model(ETS(Close)) |>
   forecast(h = 50) |>
-  autoplot(gafa_regular |> group_by_key() |> slice((n() - 100):n()))
+  autoplot(gafa_regular |> group_by_key() |> slice((n() - 100):n()) |> ungroup())
 ```
 
+`ETS()` chooses ETS(M,N,N) models (no trend) for all four stocks.
 Forecasts look reasonable for an efficient market.
 
 ## Pelt trading records
@@ -453,13 +467,14 @@ pelt |>
   autoplot(pelt)
 ```
 
-- Here the cyclic behaviour of the lynx data is completely lost.
+- Here the cyclic behaviour of the lynx data is completely lost: the ETS(A,N,N) model gives flat forecasts equal to the last observation, and the prediction intervals extend well below zero.
 - ETS models are not designed to handle cyclic data, so there is nothing that can be done to improve this.
 
 > b. Find an example where it does not work well.
 >    Can you figure out why?
 
-- ETS does not work well on cyclic data, as seen in the pelt dataset above.
+ETS does not work well on cyclic data, as seen in the pelt dataset above.
+ETS models can only extrapolate a level, trend and (fixed period) seasonality, while the cycles in the lynx series have irregular lengths, so ETS treats them as random fluctuations around a level.
 
 # fpp3 8.8, Ex15
 
@@ -516,7 +531,7 @@ and replace both $\varepsilon_{T+h-m}$ and $\varepsilon_{T+h-2m}$ by 0
 
 etc.
 
-So we can replace $s_{T+h-m}$ by $s_{T+h-m(k+1)}$ where $k$ is the integer part of $(k - 1)/m$.
+So we can replace $s_{T+h-m}$ by $s_{T+h-m(k+1)}$ where $k$ is the integer part of $(h - 1)/m$.
 
 Thus
 $$
